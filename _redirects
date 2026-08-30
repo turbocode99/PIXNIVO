@@ -1,0 +1,23 @@
+# Netlify Clean URL Rewrites for PIXNIVO
+/pdf-tools                          /pdf-tools.html                          200
+/image-upscaler                     /image-upscaler.html                     200
+/blog                               /blog.html                               200
+/about                              /about.html                              200
+/contact                            /contact.html                            200
+/privacy                            /privacy.html                            200
+/terms                              /terms.html                              200
+
+# Blog & Guide Pages
+/upscale-image-without-blur         /upscale-image-without-blur.html         200
+/image-quality-checklist            /image-quality-checklist.html            200
+/convert-photos-to-pdf              /convert-photos-to-pdf.html              200
+/merge-pdf-files-privately          /merge-pdf-files-privately.html          200
+/compress-pdf-too-large             /compress-pdf-too-large.html             200
+/compress-images-for-whatsapp       /compress-images-for-whatsapp.html       200
+/jpg-vs-png-vs-webp                 /jpg-vs-png-vs-webp.html                 200
+/reduce-photo-size-for-online-forms /reduce-photo-size-for-online-forms.html 200
+/how-ai-background-removal-works    /how-ai-background-removal-works.html    200
+/white-background-product-photos    /white-background-product-photos.html    200
+/photos-too-large-for-email         /photos-too-large-for-email.html         200
+/passport-size-photo-at-home        /passport-size-photo-at-home.html        200
+/resolution-dpi-file-size-explained /resolution-dpi-file-size-explained.html 200

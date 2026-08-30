@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Image Upscaler &amp; Enhancer — 2x &amp; 4x | PIXNIVO</title>
+  <meta name="description" content="Upscale images 2x or 4x and sharpen them cleanly in your browser. 100% private with live before &amp; after comparison slider." />
+  <meta name="theme-color" content="#08070b" />
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pixnivo.app/image-upscaler" />
+  <meta property="og:title" content="Free Image Upscaler &amp; Enhancer — 2x &amp; 4x | PIXNIVO" />
+  <meta property="og:description" content="Upscale images 2x or 4x and sharpen them in your browser with interactive comparison." />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9RDW8F1H9D"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9RDW8F1H9D');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8972850134795669" crossorigin="anonymous"></script>
+
+  <!-- Modern Design System Stylesheet -->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+
+  <!-- Instant Theme Detection Script -->
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('pixnivo_theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Dynamic Colorful Aurora Background -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+    <div class="ambient-orb orb-4"></div>
+    <div class="ambient-orb orb-5"></div>
+  </div>
+
+  <!-- Floating Glass Navigation -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a class="brand" href="/">
+        <div class="brand-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </div>
+        PIX<span>NIVO</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a class="nav-link" href="/">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Image Tools
+        </a>
+        <a class="nav-link" href="/pdf-tools">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          PDF Tools
+        </a>
+        <a class="nav-link active" href="/image-upscaler">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          AI Upscaler
+        </a>
+        <a class="nav-link" href="/blog">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Guides
+        </a>
+        <a class="nav-link" href="/about">About</a>
+        <a class="nav-link" href="/contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme" title="Toggle Theme">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="badge-privacy">
+      <span class="pulse-dot"></span>
+      100% In-Browser • Stepwise Super-Sampling
+    </div>
+    <h1>Image <em>Super-Resolution</em> &amp; Sharpening Studio</h1>
+    <p class="hero-subtitle">Enlarge photos 2× or 4× without harsh pixelation, recover crisp contours with unsharp masking, and inspect live results with the split comparison slider.</p>
+  </section>
+
+  <!-- Studio Workspace Card -->
+  <main class="studio-container">
+    <section class="studio-card active">
+      <div class="studio-header">
+        <h2>Enhance &amp; Upscale</h2>
+        <p>Smooth multi-step bicubic interpolation paired with unsharp edge enhancement.</p>
+      </div>
+
+      <div class="dropzone" id="drop">
+        <div class="dropzone-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+        <h3>Drop an image here to upscale</h3>
+        <p>Supports JPG, PNG, WebP, AVIF &amp; iPhone HEIC</p>
+        <span class="formats-badge">Instant local processing • Hardware-accelerated</span>
+        <input type="file" id="file" accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp,.avif,.heic,.heif" />
+      </div>
+
+      <div class="workspace-grid" id="work">
+        <div class="canvas-viewport">
+          <div class="compare-container" id="compare">
+            <canvas id="cvBefore"></canvas>
+            <div class="compare-after-wrap" id="afterWrap">
+              <canvas id="cvAfter"></canvas>
+            </div>
+            <div class="compare-handle" id="handle"></div>
+            <span class="tag-label tag-left">Original</span>
+            <span class="tag-label tag-right">Upscaled</span>
+          </div>
+          <div class="busy-overlay" id="busy">
+            <div class="spinner-ring"></div>
+            <span id="busyTxt">Processing super-resolution…</span>
+          </div>
+        </div>
+
+        <div class="control-panel">
+          <div class="stat-box">
+            <div class="stat-item">Original<b id="dimFrom">—</b></div>
+            <div class="stat-arrow">→</div>
+            <div class="stat-item to">Upscaled<b id="dimTo">—</b></div>
+          </div>
+
+          <div class="panel-section-title">Magnification Scale</div>
+          <div class="chips">
+            <div class="chip" data-scale="1">1× Baseline</div>
+            <div class="chip on" data-scale="2">2× Double</div>
+            <div class="chip" data-scale="4">4× Quad</div>
+          </div>
+
+          <div class="panel-section-title">Unsharp Edge Masking</div>
+          <div class="field">
+            <label>Sharpening Strength <span class="val" id="shVal">55</span></label>
+            <input type="range" id="sharpen" min="0" max="100" value="55" />
+          </div>
+          <p class="hint">Recovers edge sharpness softened during enlargement without creating halo artifacts.</p>
+
+          <div class="panel-section-title">Lighting &amp; Tone Balance</div>
+          <div class="field"><label>Brightness <span class="val" id="brVal">100%</span></label><input type="range" id="brightness" min="50" max="160" value="100" /></div>
+          <div class="field"><label>Contrast <span class="val" id="coVal">100%</span></label><input type="range" id="contrast" min="50" max="170" value="100" /></div>
+          <div class="field"><label>Saturation <span class="val" id="saVal">100%</span></label><input type="range" id="saturation" min="0" max="200" value="100" /></div>
+
+          <div class="panel-section-title">Export Settings</div>
+          <div class="field">
+            <label>Export Format</label>
+            <select id="format">
+              <option value="image/png">PNG — Lossless crisp fidelity</option>
+              <option value="image/jpeg">JPG — Compressed smaller file</option>
+            </select>
+          </div>
+          <div class="field" id="qWrap" style="display:none; margin-top:8px;">
+            <label>JPG Quality <span class="val" id="qVal">92%</span></label>
+            <input type="range" id="quality" min="50" max="100" value="92" />
+          </div>
+
+          <button class="btn btn-primary" id="download">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Enhanced Result
+          </button>
+          <button class="btn btn-ghost" id="reset">Reset Adjustments</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical Note Card -->
+    <div style="margin-top:30px;">
+      <div class="callout-box">
+        <h3 style="color:var(--primary-light); margin-bottom:8px;">Super-Resolution Science &amp; Limitations</h3>
+        <p>Upscaling increases pixel dimensions cleanly through iterative interpolation stages rather than a harsh single jump. Apparent sharpness is restored using a custom box-blur difference matrix. It produces exceptional results on photos, graphics, and text scans that possess moderate starting clarity.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modern Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-nav">
+      <a href="/">Home</a>
+      <span class="dot">·</span>
+      <a href="/pdf-tools">PDF Tools</a>
+      <span class="dot">·</span>
+      <a href="/image-upscaler">AI Upscaler</a>
+      <span class="dot">·</span>
+      <a href="/blog">Guides &amp; Blog</a>
+      <span class="dot">·</span>
+      <a href="/about">About</a>
+      <span class="dot">·</span>
+      <a href="/privacy">Privacy Policy</a>
+      <span class="dot">·</span>
+      <a href="/terms">Terms &amp; Conditions</a>
+      <span class="dot">·</span>
+      <a href="/contact">Contact</a>
+    </div>
+    <div class="footer-bottom">
+      <span>PIXNIVO</span>
+      <span class="dot">●</span>
+      <span>AI Super-Resolution &amp; Image Enhancer</span>
+      <span class="dot">●</span>
+      <span>© 2026 PIXNIVO</span>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    /* Theme Toggle */
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'dark';
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('pixnivo_theme', next); } catch(e) {}
+      });
+    }
+
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (mobileToggle && navLinks) {
+      mobileToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+    }
+
+    (function(){
+      'use strict';
+
+      const $ = id => document.getElementById(id);
+      const clamp = v => v < 0 ? 0 : v > 255 ? 255 : v;
+
+      function loadScriptOnce(src){
+        return new Promise((resolve, reject) => {
+          const s = document.createElement('script');
+          s.src = src; s.onload = resolve;
+          s.onerror = () => reject(new Error('Failed to load ' + src));
+          document.body.appendChild(s);
+        });
+      }
+
+      function looksHeic(file){
+        const n = (file.name || '').toLowerCase(), t = (file.type || '').toLowerCase();
+        return n.endsWith('.heic') || n.endsWith('.heif') || t.includes('heic') || t.includes('heif');
+      }
+
+      let heicNoteEl = null;
+      function heicNote(show){
+        if (!heicNoteEl){
+          heicNoteEl = document.createElement('div');
+          heicNoteEl.style.cssText =
+            'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);max-width:88vw;' +
+            'background:rgba(21,19,29,0.95);color:#f5f3ef;border:1px solid rgba(255,255,255,0.12);padding:13px 24px;' +
+            'border-radius:9999px;font-size:14px;font-weight:600;z-index:9999;box-shadow:0 10px 30px rgba(0,0,0,.5);backdrop-filter:blur(16px);';
+          heicNoteEl.textContent = 'Converting iPhone photo…';
+          document.body.appendChild(heicNoteEl);
+        }
+        heicNoteEl.style.display = show ? 'block' : 'none';
+      }
+
+      async function convertHeic(file){
+        heicNote(true);
+        try{
+          if (!window.HeicTo) await loadScriptOnce('https://cdn.jsdelivr.net/npm/heic-to@1.5.2/dist/iife/heic-to.js');
+          if (window.HeicTo) return await window.HeicTo({ blob:file, type:'image/jpeg', quality:0.92 });
+          throw new Error('HeicTo unavailable');
+        } catch(e){
+          if (!window.heic2any) await loadScriptOnce('https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js');
+          const out = await window.heic2any({ blob:file, toType:'image/jpeg', quality:0.92 });
+          return Array.isArray(out) ? out[0] : out;
+        } finally { heicNote(false); }
+      }
+
+      function whyFailed(file){
+        const name = (file && file.name) ? file.name : 'This file';
+        const ext = name.includes('.') ? name.split('.').pop().toUpperCase() : '';
+        if (['HEIC','HEIF'].includes(ext))
+          return 'Could not open "' + name + '".\n\nThis iPhone photo could not be converted. Try saving as JPG.';
+        if (['TIF','TIFF','PSD','SVG','CR2','NEF','DNG','RAW','ARW'].includes(ext))
+          return 'Could not open "' + name + '".\n\nThis format is not supported by browsers. Please use JPG/PNG.';
+        return 'Could not open "' + name + '".\n\nThe file may be damaged or too large.';
+      }
+
+      function loadImageFile(file){
+        return new Promise((resolve, reject) => {
+          if (!file){ reject(new Error('No file')); return; }
+          if (file.size === 0){ reject(new Error(whyFailed(file))); return; }
+
+          const decode = blob => {
+            if (window.createImageBitmap){
+              return createImageBitmap(blob).then(resolve).catch(() => legacy(blob));
+            }
+            return legacy(blob);
+          };
+          const legacy = blob => new Promise(res => {
+            const url = URL.createObjectURL(blob);
+            const img = new Image();
+            img.onload = () => { URL.revokeObjectURL(url); resolve(img); res(); };
+            img.onerror = () => { URL.revokeObjectURL(url); reject(new Error(whyFailed(file))); res(); };
+            img.src = url;
+          });
+
+          if (looksHeic(file)){
+            convertHeic(file).then(decode).catch(() => reject(new Error(whyFailed(file))));
+            return;
+          }
+          if (window.createImageBitmap){
+            createImageBitmap(file).then(resolve).catch(() => {
+              convertHeic(file).then(decode).catch(() => legacy(file));
+            });
+            return;
+          }
+          legacy(file);
+        });
+      }
+
+      let source = null;
+      let baseUp = null;
+      let outCanvas = null;
+      let scale = 2;
+      let origName = 'image';
+      let renderTimer = null;
+
+      const cvBefore = $('cvBefore'), cvAfter = $('cvAfter');
+
+      function wireDrop(zone, input, cb){
+        zone.addEventListener('click', () => input.click());
+        input.addEventListener('change', e => { if (e.target.files.length) cb(e.target.files[0]); });
+        ['dragover','dragenter'].forEach(ev => zone.addEventListener(ev, e => { e.preventDefault(); zone.classList.add('drag'); }));
+        ['dragleave','drop'].forEach(ev => zone.addEventListener(ev, e => { e.preventDefault(); zone.classList.remove('drag'); }));
+        zone.addEventListener('drop', e => { if (e.dataTransfer.files.length) cb(e.dataTransfer.files[0]); });
+      }
+
+      wireDrop($('drop'), $('file'), async file => {
+        origName = file.name.replace(/\.[^.]+$/, '');
+        try{
+          source = await loadImageFile(file);
+          $('work').classList.add('on');
+          rebuild();
+        } catch(err){
+          alert(err.message || 'Could not open that image.');
+        }
+      });
+
+      function busy(on, txt){
+        $('busy').classList.toggle('on', !!on);
+        if (txt) $('busyTxt').textContent = txt;
+      }
+
+      function upscaleStepwise(img, targetW, targetH){
+        let cur = document.createElement('canvas');
+        cur.width = img.width; cur.height = img.height;
+        cur.getContext('2d').drawImage(img, 0, 0);
+
+        while (cur.width < targetW){
+          const nw = Math.min(targetW, Math.round(cur.width * 1.5));
+          const nh = Math.round(nw * (targetH / targetW));
+          const next = document.createElement('canvas');
+          next.width = nw; next.height = nh;
+          const cx = next.getContext('2d');
+          cx.imageSmoothingEnabled = true;
+          cx.imageSmoothingQuality = 'high';
+          cx.drawImage(cur, 0, 0, nw, nh);
+          cur = next;
+        }
+
+        if (cur.width !== targetW || cur.height !== targetH){
+          const fin = document.createElement('canvas');
+          fin.width = targetW; fin.height = targetH;
+          const cx = fin.getContext('2d');
+          cx.imageSmoothingEnabled = true;
+          cx.imageSmoothingQuality = 'high';
+          cx.drawImage(cur, 0, 0, targetW, targetH);
+          cur = fin;
+        }
+        return cur;
+      }
+
+      function unsharpMask(canvas, amount){
+        if (amount <= 0) return;
+        const w = canvas.width, h = canvas.height;
+        if (w * h > 12000000) return;
+        const ctx = canvas.getContext('2d');
+        const id = ctx.getImageData(0, 0, w, h);
+        const d = id.data;
+
+        const tmp = new Float32Array(w * h * 3);
+        for (let y = 0; y < h; y++){
+          for (let x = 0; x < w; x++){
+            const x0 = x > 0 ? x-1 : 0, x2 = x < w-1 ? x+1 : w-1;
+            const i = (y*w + x) * 3;
+            for (let c = 0; c < 3; c++){
+              tmp[i+c] = (d[((y*w+x0)<<2)+c] + d[((y*w+x)<<2)+c] + d[((y*w+x2)<<2)+c]) / 3;
+            }
+          }
+        }
+        const k = amount / 100 * 1.6;
+        for (let y = 0; y < h; y++){
+          const y0 = y > 0 ? y-1 : 0, y2 = y < h-1 ? y+1 : h-1;
+          for (let x = 0; x < w; x++){
+            const p = (y*w + x) << 2;
+            for (let c = 0; c < 3; c++){
+              const blur = (tmp[((y0*w+x)*3)+c] + tmp[((y*w+x)*3)+c] + tmp[((y2*w+x)*3)+c]) / 3;
+              d[p+c] = clamp(d[p+c] + (d[p+c] - blur) * k);
+            }
+          }
+        }
+        ctx.putImageData(id, 0, 0);
+      }
+
+      function adjust(canvas, bF, cF, sF){
+        if (bF === 1 && cF === 1 && sF === 1) return;
+        const w = canvas.width, h = canvas.height;
+        const ctx = canvas.getContext('2d');
+        const id = ctx.getImageData(0, 0, w, h);
+        const d = id.data;
+        for (let i = 0; i < d.length; i += 4){
+          let r = d[i] * bF, g = d[i+1] * bF, b = d[i+2] * bF;
+          r = (r-128)*cF + 128; g = (g-128)*cF + 128; b = (b-128)*cF + 128;
+          r = clamp(r); g = clamp(g); b = clamp(b);
+          if (sF !== 1){
+            const grey = 0.299*r + 0.587*g + 0.114*b;
+            r = clamp(grey + (r-grey)*sF);
+            g = clamp(grey + (g-grey)*sF);
+            b = clamp(grey + (b-grey)*sF);
+          }
+          d[i] = r; d[i+1] = g; d[i+2] = b;
+        }
+        ctx.putImageData(id, 0, 0);
+      }
+
+      async function rebuild(){
+        if (!source) return;
+        busy(true, 'Computing Super-Resolution…');
+        await new Promise(r => setTimeout(r, 30));
+
+        const MAX_PIXELS = 40000000;
+        let tw = Math.round(source.width * scale);
+        let th = Math.round(source.height * scale);
+        if (tw * th > MAX_PIXELS){
+          const f = Math.sqrt(MAX_PIXELS / (tw * th));
+          tw = Math.round(tw * f); th = Math.round(th * f);
+        }
+
+        baseUp = upscaleStepwise(source, tw, th);
+
+        $('dimFrom').textContent = source.width + ' × ' + source.height;
+        $('dimTo').textContent   = baseUp.width + ' × ' + baseUp.height;
+
+        cvBefore.width = baseUp.width; cvBefore.height = baseUp.height;
+        const bx = cvBefore.getContext('2d');
+        bx.imageSmoothingEnabled = true;
+        bx.imageSmoothingQuality = 'low';
+        bx.drawImage(source, 0, 0, baseUp.width, baseUp.height);
+
+        await applyAdjustments();
+        busy(false);
+      }
+
+      async function applyAdjustments(){
+        if (!baseUp) return;
+        const out = document.createElement('canvas');
+        out.width = baseUp.width; out.height = baseUp.height;
+        out.getContext('2d').drawImage(baseUp, 0, 0);
+
+        unsharpMask(out, parseInt($('sharpen').value));
+        adjust(out,
+          parseInt($('brightness').value) / 100,
+          parseInt($('contrast').value) / 100,
+          parseInt($('saturation').value) / 100);
+
+        outCanvas = out;
+        cvAfter.width = out.width; cvAfter.height = out.height;
+        cvAfter.getContext('2d').drawImage(out, 0, 0);
+        syncAfterSize();
+      }
+
+      function syncAfterSize(){
+        const r = cvBefore.getBoundingClientRect();
+        cvAfter.style.width = r.width + 'px';
+        cvAfter.style.height = r.height + 'px';
+      }
+      window.addEventListener('resize', syncAfterSize);
+
+      function queueAdjust(){
+        clearTimeout(renderTimer);
+        renderTimer = setTimeout(() => {
+          busy(true, 'Rendering…');
+          setTimeout(async () => { await applyAdjustments(); busy(false); }, 20);
+        }, 220);
+      }
+
+      document.querySelectorAll('.chip[data-scale]').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.querySelectorAll('.chip[data-scale]').forEach(c => c.classList.remove('on'));
+          chip.classList.add('on');
+          scale = parseInt(chip.dataset.scale);
+          rebuild();
+        });
+      });
+
+      const pairs = [['sharpen','shVal',''], ['brightness','brVal','%'], ['contrast','coVal','%'], ['saturation','saVal','%']];
+      pairs.forEach(([id, lab, suffix]) => {
+        $(id).addEventListener('input', () => { $(lab).textContent = $(id).value + suffix; queueAdjust(); });
+      });
+
+      $('format').addEventListener('change', e => {
+        $('qWrap').style.display = e.target.value === 'image/jpeg' ? 'block' : 'none';
+      });
+      $('quality').addEventListener('input', e => $('qVal').textContent = e.target.value + '%');
+
+      $('reset').addEventListener('click', () => {
+        $('sharpen').value = 55;    $('shVal').textContent = '55';
+        $('brightness').value = 100; $('brVal').textContent = '100%';
+        $('contrast').value = 100;   $('coVal').textContent = '100%';
+        $('saturation').value = 100; $('saVal').textContent = '100%';
+        queueAdjust();
+      });
+
+      $('download').addEventListener('click', () => {
+        if (!outCanvas) return;
+        const type = $('format').value;
+        const q = parseInt($('quality').value) / 100;
+        const ext = type === 'image/jpeg' ? 'jpg' : 'png';
+        outCanvas.toBlob(blob => {
+          if (!blob){ alert('Could not build file. Try a smaller scale.'); return; }
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url; a.download = origName + '-upscaled-' + scale + 'x.' + ext;
+          a.style.display = 'none';
+          document.body.appendChild(a); a.click(); document.body.removeChild(a);
+          setTimeout(() => URL.revokeObjectURL(url), 4000);
+        }, type, type === 'image/jpeg' ? q : undefined);
+      });
+
+      /* Comparison Slider */
+      (function(){
+        const wrap = $('compare'), after = $('afterWrap'), handle = $('handle');
+        let dragging = false;
+
+        function setPos(clientX){
+          const r = wrap.getBoundingClientRect();
+          let pct = ((clientX - r.left) / r.width) * 100;
+          pct = Math.max(0, Math.min(100, pct));
+          after.style.width = pct + '%';
+          handle.style.left = pct + '%';
+        }
+        const start = e => { dragging = true; setPos(e.clientX ?? e.touches[0].clientX); e.preventDefault(); };
+        const move  = e => { if (dragging) setPos(e.clientX ?? e.touches[0].clientX); };
+        const end   = () => { dragging = false; };
+
+        wrap.addEventListener('pointerdown', start);
+        window.addEventListener('pointermove', move);
+        window.addEventListener('pointerup', end);
+        window.addEventListener('pointercancel', end);
+      })();
+
+    })();
+  </script>
+</body>
+</html>

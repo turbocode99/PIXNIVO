@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guides &amp; Blog — PIXNIVO | Image &amp; PDF Optimization Knowledge Base</title>
+  <meta name="description" content="Plain-English practical guides on compressing photos, choosing file formats, PDF workflows, resolution math, and AI background removal." />
+  <meta name="theme-color" content="#08070b" />
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pixnivo.app/blog" />
+  <meta property="og:title" content="Guides &amp; Blog — PIXNIVO" />
+  <meta property="og:description" content="Practical guides on making images smaller, choosing formats, and preparing documents without quality loss." />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9RDW8F1H9D"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9RDW8F1H9D');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8972850134795669" crossorigin="anonymous"></script>
+
+  <!-- Modern Design System Stylesheet -->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+
+  <!-- Instant Theme Detection Script -->
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('pixnivo_theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Dynamic Colorful Aurora Background -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+    <div class="ambient-orb orb-4"></div>
+    <div class="ambient-orb orb-5"></div>
+  </div>
+
+  <!-- Floating Glass Navigation -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a class="brand" href="/">
+        <div class="brand-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </div>
+        PIX<span>NIVO</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a class="nav-link" href="/">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Image Tools
+        </a>
+        <a class="nav-link" href="/pdf-tools">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          PDF Tools
+        </a>
+        <a class="nav-link" href="/image-upscaler">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          AI Upscaler
+        </a>
+        <a class="nav-link active" href="/blog">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Guides
+        </a>
+        <a class="nav-link" href="/about">About</a>
+        <a class="nav-link" href="/contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme" title="Toggle Theme">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="badge-privacy">
+      <span class="pulse-dot"></span>
+      Knowledge Base &amp; Guides
+    </div>
+    <h1>The Image &amp; PDF <em>Optimization Library</em></h1>
+    <p class="hero-subtitle">Comprehensive, jargon-free guides on image algorithms, format tradeoffs, document security, and photographic quality standards.</p>
+  </section>
+
+  <!-- Main Article Directory Grid -->
+  <main class="guides-section" style="margin-top:20px;">
+    <div class="guides-grid">
+
+      <a class="guide-card" href="/upscale-image-without-blur">
+        <span class="card-tag">Super-Resolution</span>
+        <h4>How to Upscale an Image Without It Looking Blurry</h4>
+        <p>Understand what enlarging can and can't recover, how to select a realistic magnification factor, and how unsharp masking works.</p>
+        <div class="meta"><span>12 August 2026</span><span>8 min read</span></div>
+      </a>
+
+      <a class="guide-card" href="/image-quality-checklist">
+        <span class="card-tag">Workflow</span>
+        <h4>The Image Quality Checklist: 7 Steps That Fix Most Problems</h4>
+        <p>The optimal sequence to crop, edit, resize, and compress images without cumulative generation loss.</p>
+        <div class="meta"><span>5 August 2026</span><span>7 min read</span></div>
+      </a>
+
+      <a class="guide-card" href="/convert-photos-to-pdf">
+        <span class="card-tag">PDF Tools</span>
+        <h4>How to Convert Photos to PDF on Your Phone</h4>
+        <p>Turn document photos into a cleanly ordered, multi-page PDF document on mobile without uploading private papers.</p>
+        <div class="meta"><span>2 August 2026</span><span>7 min read</span></div>
+      </a>
+
+      <a class="guide-card" href="/merge-pdf-files-privately">
+        <span class="card-tag">Privacy</span>
+        <h4>How to Merge PDF Files Without Uploading Them Anywhere</h4>
+        <p>Join sensitive documents, contracts, and financial statements directly in browser memory without server exposure.</p>
+        <div class="meta"><span>26 July 2026</span><span>6 min read</span></div>
+      </a>
+
+      <a class="guide-card" href="/compress-pdf-too-large">
+        <span class="card-tag">Compression</span>
+        <h4>How to Compress a PDF That's Too Large to Email</h4>
+        <p>Why scanned PDFs balloon in size, how page re-sampling reduces weight by up to 90%, and the tradeoffs involved.</p>
+        <div class="meta"><span>19 July 2026</span><span>8 min read</span></div>
+      </a>
+
+      <a class="guide-card" href="/compress-images-for-whatsapp">
+        <span class="card-tag">Messaging</span>
+        <h4>How to Compress Images for WhatsApp Without Losing Quality</h4>
+        <p>WhatsApp aggressively compresses media attachments. Discover 3 practical workarounds to preserve sharp detail.</p>
+        <div class="meta"><span>12 July 2026</span><span>6 min read</span></div>
+      </a>
+
+      <a class="guide-card" href="/jpg-vs-png-vs-webp">
+        <span class="card-tag">File Formats</span>
+        <h4>JPG vs PNG vs WebP: Which Format Should You Actually Use?</h4>
+        <p>A definitive guide comparing DCT compression, DEFLATE lossless algorithms, and modern WebP predictive coding.</p>
+        <div class="meta"><span>5 July 2026</span><span>8 min read</span></div>
+      </a>
+
+      <a class="guide-card" href="/reduce-photo-size-for-online-forms">
+        <span class="card-tag">Applications</span>
+        <h4>How to Reduce Photo Size for Online Forms &amp; Job Portals</h4>
+        <p>Meet strict 100 KB and 200 KB submission limits on government and corporate portals without failing review checks.</p>
+        <div class="meta"><span>28 June 2026</span><span>7 min read</span></div>
+      </a>
+
+      <a class="guide-card" href="/how-ai-background-removal-works">
+        <span class="card-tag">Neural AI</span>
+        <h4>How AI Background Removal Actually Works</h4>
+        <p>How deep convolutional networks perform semantic subject segmentation, alpha matting, and on-device inference.</p>
+        <div class="meta"><span>20 June 2026</span><span>8 min read</span></div>
+      </a>
+
+      <a class="guide-card" href="/white-background-product-photos">
+        <span class="card-tag">E-Commerce</span>
+        <h4>How to Make White Background Product Photos for Online Selling</h4>
+        <p>Amazon and Shopify product photography: create crisp, marketplace-compliant white backdrops with natural lighting.</p>
+        <div class="meta"><span>14 June 2026</span><span>9 min read</span></div>
+      </a>
+
+      <a class="guide-card" href="/photos-too-large-for-email">
+        <span class="card-tag">Email Limits</span>
+        <h4>Why Your Photos Are Too Large for Email — and How to Fix It</h4>
+        <p>Why modern smartphone cameras exceed 25MB attachment limits and how to optimize image sets for fast delivery.</p>
+        <div class="meta"><span>6 June 2026</span><span>6 min read</span></div>
+      </a>
+
+      <a class="guide-card" href="/passport-size-photo-at-home">
+        <span class="card-tag">ID Compliance</span>
+        <h4>How to Make a Passport-Size Photo at Home</h4>
+        <p>Biometric photo checklists: 2x2 inch and 35x45mm sizing, lighting rules, neutral background prep, and framing.</p>
+        <div class="meta"><span>30 May 2026</span><span>8 min read</span></div>
+      </a>
+
+      <a class="guide-card" href="/resolution-dpi-file-size-explained">
+        <span class="card-tag">Resolution Math</span>
+        <h4>Resolution, DPI and File Size — Explained Without the Jargon</h4>
+        <p>Why 300 DPI is a print concept, how pixel grids translate to physical dimensions, and what controls file weight.</p>
+        <div class="meta"><span>22 May 2026</span><span>9 min read</span></div>
+      </a>
+
+    </div>
+  </main>
+
+  <!-- Modern Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-nav">
+      <a href="/">Home</a>
+      <span class="dot">·</span>
+      <a href="/pdf-tools">PDF Tools</a>
+      <span class="dot">·</span>
+      <a href="/image-upscaler">AI Upscaler</a>
+      <span class="dot">·</span>
+      <a href="/blog">Guides &amp; Blog</a>
+      <span class="dot">·</span>
+      <a href="/about">About</a>
+      <span class="dot">·</span>
+      <a href="/privacy">Privacy Policy</a>
+      <span class="dot">·</span>
+      <a href="/terms">Terms &amp; Conditions</a>
+      <span class="dot">·</span>
+      <a href="/contact">Contact</a>
+    </div>
+    <div class="footer-bottom">
+      <span>PIXNIVO</span>
+      <span class="dot">●</span>
+      <span>Image &amp; PDF Knowledge Base</span>
+      <span class="dot">●</span>
+      <span>© 2026 PIXNIVO</span>
+    </div>
+  </footer>
+
+  <script>
+    /* Theme Toggle */
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'dark';
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('pixnivo_theme', next); } catch(e) {}
+      });
+    }
+
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (mobileToggle && navLinks) {
+      mobileToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+    }
+  </script>
+</body>
+</html>

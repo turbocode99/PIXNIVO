@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free PDF Tools — Image to PDF, Merge &amp; Compress | PIXNIVO</title>
+  <meta name="description" content="Convert images to PDF, merge multiple PDF files, and compress PDFs in your browser. 100% private, client-side execution." />
+  <meta name="theme-color" content="#08070b" />
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pixnivo.app/pdf-tools" />
+  <meta property="og:title" content="Free PDF Tools — Image to PDF, Merge &amp; Compress | PIXNIVO" />
+  <meta property="og:description" content="Convert images to PDF, merge PDF files, and compress PDFs free in your browser." />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9RDW8F1H9D"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9RDW8F1H9D');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8972850134795669" crossorigin="anonymous"></script>
+
+  <!-- Modern Design System Stylesheet -->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+
+  <!-- Instant Theme Detection Script -->
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('pixnivo_theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Dynamic Colorful Aurora Background -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+    <div class="ambient-orb orb-4"></div>
+    <div class="ambient-orb orb-5"></div>
+  </div>
+
+  <!-- Floating Glass Navigation -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a class="brand" href="/">
+        <div class="brand-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </div>
+        PIX<span>NIVO</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a class="nav-link" href="/">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Image Tools
+        </a>
+        <a class="nav-link active" href="/pdf-tools">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          PDF Tools
+        </a>
+        <a class="nav-link" href="/image-upscaler">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          AI Upscaler
+        </a>
+        <a class="nav-link" href="/blog">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Guides
+        </a>
+        <a class="nav-link" href="/about">About</a>
+        <a class="nav-link" href="/contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme" title="Toggle Theme">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="badge-privacy">
+      <span class="pulse-dot"></span>
+      100% Client-Side • Secure Document Processing
+    </div>
+    <h1>Professional <em>PDF Studio</em> in Your Browser</h1>
+    <p class="hero-subtitle">Convert multi-page image sets into formatted PDFs, merge documents into a single file, or shrink bulky PDFs for email and portals — completely offline.</p>
+  </section>
+
+  <!-- PDF Tool Tabs -->
+  <div class="tab-nav-wrapper">
+    <div class="tab-nav">
+      <button class="tab-btn active" data-tab="img2pdf">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Images to PDF
+      </button>
+      <button class="tab-btn" data-tab="merge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Merge PDFs
+      </button>
+      <button class="tab-btn" data-tab="ocr">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        AI OCR
+      </button>
+      <button class="tab-btn" data-tab="compress">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+        Compress PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- Studio Workspaces -->
+  <main class="studio-container">
+
+    <!-- ==================== TAB 1: IMAGES TO PDF ==================== -->
+    <section class="studio-card active" id="stage-img2pdf">
+      <div class="studio-header">
+        <h2>Images to PDF Builder</h2>
+        <p>Combine multiple photos or scans into a single, beautifully formatted PDF document.</p>
+      </div>
+
+      <div class="dropzone" id="dropI">
+        <div class="dropzone-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </div>
+        <h3>Drop photos or document scans here</h3>
+        <p>Supports JPG, PNG, WebP &amp; iPhone HEIC • Add as many files as needed</p>
+        <span class="formats-badge">Drag &amp; drop or click to browse</span>
+        <input type="file" id="fileI" accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp,.avif,.heic,.heif" multiple />
+      </div>
+
+      <div class="filelist" id="listI"></div>
+
+      <div class="workspace-grid" style="display:grid; grid-template-columns:1fr 1fr; margin-top:20px;">
+        <div class="field">
+          <label>Page Size</label>
+          <select id="pageSize">
+            <option value="fit">Fit Page to Image (Preserves native proportions)</option>
+            <option value="a4">Standard A4 Sheet</option>
+            <option value="letter">US Letter Format</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Orientation</label>
+          <select id="orientation">
+            <option value="auto">Auto-Detect per Image</option>
+            <option value="portrait">Portrait</option>
+            <option value="landscape">Landscape</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="workspace-grid" style="display:grid; grid-template-columns:1fr 1fr; margin-top:14px;">
+        <div class="field">
+          <label>Page Margins <span class="val" id="marginVal">0 mm</span></label>
+          <input type="range" id="margin" min="0" max="30" value="0" />
+        </div>
+        <div class="field">
+          <label>Image Quality <span class="val" id="iqVal">85%</span></label>
+          <input type="range" id="imgQuality" min="40" max="100" value="85" />
+        </div>
+      </div>
+
+      <div class="prog" id="progI"><div class="bar"><i></i></div><div class="txt"></div></div>
+      <div class="result" id="resI"><div class="h"></div><div class="d"></div></div>
+
+      <div class="btn-row" style="margin-top:24px;">
+        <button class="btn btn-primary" id="makePdf" disabled style="flex:2;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          Create PDF Document
+        </button>
+        <button class="btn btn-ghost" id="clearI" style="flex:1;">Clear All</button>
+      </div>
+
+      <p class="hint" style="margin-top:16px;"><b>Pro Tip:</b> "Fit Page" creates clean edge-to-edge margins ideal for photo albums and smartphone scans.</p>
+    </section>
+
+    <!-- ==================== TAB 2: MERGE PDFS ==================== -->
+    <section class="studio-card" id="stage-merge">
+      <div class="studio-header">
+        <h2>Merge Multiple PDFs</h2>
+        <p>Combine contracts, bank statements, and reports into a single file with custom page ordering.</p>
+      </div>
+
+      <div class="dropzone" id="dropM">
+        <div class="dropzone-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </div>
+        <h3>Drop PDF files here to merge</h3>
+        <p>Select two or more PDF files • Reorder pages with arrows below</p>
+        <span class="formats-badge">Lossless combination • Vector crispness preserved</span>
+        <input type="file" id="fileM" accept="application/pdf" multiple />
+      </div>
+
+      <div class="filelist" id="listM"></div>
+
+      <div class="prog" id="progM"><div class="bar"><i></i></div><div class="txt"></div></div>
+      <div class="result" id="resM"><div class="h"></div><div class="d"></div></div>
+
+      <div class="btn-row" style="margin-top:24px;">
+        <button class="btn btn-primary" id="doMerge" disabled style="flex:2;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          Merge PDF Files
+        </button>
+        <button class="btn btn-ghost" id="clearM" style="flex:1;">Clear All</button>
+      </div>
+
+      <p class="hint" style="margin-top:16px;">All pages maintain their original vector typography and embedded links. Password-protected PDFs must be unlocked prior to merging.</p>
+    </section>
+
+    <!-- ==================== TAB 3: COMPRESS PDF ==================== -->
+    <section class="studio-card" id="stage-compress">
+      <div class="studio-header">
+        <h2>PDF File Compressor</h2>
+        <p>Shrink heavy, scanned, and graphic-dense PDFs to fit email attachment and portal size limits.</p>
+      </div>
+
+      <div class="dropzone" id="dropC">
+        <div class="dropzone-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+        </div>
+        <h3>Drop a PDF file here to compress</h3>
+        <p>One document at a time • Live raster re-sampling</p>
+        <span class="formats-badge">Optimized for scanned documents &amp; large attachments</span>
+        <input type="file" id="fileC" accept="application/pdf" />
+      </div>
+
+      <div class="filelist" id="listC"></div>
+
+      <div class="workspace-grid" style="display:grid; grid-template-columns:1fr 1fr; margin-top:20px;">
+        <div class="field">
+          <label>Compression Preset <span class="val" id="cqVal">Balanced</span></label>
+          <input type="range" id="compLevel" min="1" max="3" value="2" />
+        </div>
+        <div class="field">
+          <label>Raster Density <span class="val" id="dpiVal">150 DPI</span></label>
+          <input type="range" id="dpi" min="72" max="220" step="1" value="150" />
+        </div>
+      </div>
+
+      <div class="prog" id="progC"><div class="bar"><i></i></div><div class="txt"></div></div>
+      <div class="result" id="resC"><div class="h"></div><div class="d"></div></div>
+
+      <div class="btn-row" style="margin-top:24px;">
+        <button class="btn btn-primary" id="doCompress" disabled style="flex:2;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Compress PDF Document
+        </button>
+        <button class="btn btn-ghost" id="clearC" style="flex:1;">Clear</button>
+      </div>
+
+      <p class="hint" style="margin-top:16px;"><b>Technical Note:</b> Scanned pages are re-rendered with smooth anti-aliased resampling. For text-only contracts, original PDFs may already be minimal in size.</p>
+    </section>
+
+
+    <!-- ==================== TAB 4: AI OCR ==================== -->
+    <section class="studio-card" id="stage-ocr">
+      <div class="studio-header">
+        <h2>AI Document OCR</h2>
+        <p>Extract multi-lingual text from PDFs, receipts, and images completely offline.</p>
+      </div>
+
+      <div class="dropzone" id="dropO">
+        <div class="dropzone-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M10 13l-1.5 5"/><path d="M14 13l1.5 5"/><path d="M9.5 16.5h5"/></svg>
+        </div>
+        <h3 id="dropOH3">Drop a PDF or Image here to extract text</h3>
+        <p>Supports handwriting and degraded scans</p>
+        <span class="formats-badge">Powered by Tesseract Neural Nets</span>
+        <input type="file" id="fileO" accept="application/pdf,image/*" />
+      </div>
+
+      <!-- Preview Pane -->
+      <div id="ocrPreviewContainer" style="display:none; margin-top: 20px; text-align: center;">
+        <h4 style="margin-bottom: 10px; opacity: 0.8;">Document Preview</h4>
+        <div style="max-height: 400px; overflow-y: auto; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 10px; background: rgba(0,0,0,0.2);">
+           <img id="ocrPreviewImg" style="max-width: 100%; height: auto; border-radius: 4px; display:none;" />
+           <canvas id="ocrPreviewCanvas" style="max-width: 100%; height: auto; border-radius: 4px; display:none; margin: 0 auto;"></canvas>
+        </div>
+      </div>
+
+      <div class="workspace-grid" style="display:grid; grid-template-columns:1fr 1fr; margin-top:20px; gap: 15px;">
+        <div class="field">
+          <label>OCR Engine</label>
+          <style>
+             .glass-select {
+                width: 100%; padding: 12px; border-radius: 12px; 
+                border: 1px solid rgba(255,255,255,0.2); 
+                background: rgba(255,255,255,0.05); 
+                color: #ffffff; 
+                font-family: inherit;
+                backdrop-filter: blur(10px);
+                outline: none;
+                cursor: pointer;
+             }
+             .glass-select option {
+                background: #1e1e24;
+                color: #ffffff;
+             }
+             .glass-btn {
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                backdrop-filter: blur(10px);
+                color: white;
+                padding: 14px 28px;
+                border-radius: 12px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-size: 16px;
+                font-weight: 500;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+             }
+             .glass-btn:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateY(-1px);
+             }
+             .glass-btn:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+             }
+          </style>
+          <select id="ocrEngine" class="glass-select">
+            <option value="tesseract">Tesseract AI Core (Fast, Reliable)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Pre-processing</label>
+          <select id="ocrEnhance" class="glass-select">
+            <option value="auto">Auto-Enhance (High Contrast for Smudges)</option>
+            <option value="none">None (Raw Image)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- MOVED ABOVE THE BUTTON -->
+      <div class="prog" id="progO" style="display:none; margin-top:25px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+        <div class="txt" style="font-size: 14px; font-weight: bold; color: #fff; text-align: center; margin-bottom: 10px;" id="progTxtO">Initializing...</div>
+        <div class="bar" style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
+           <i id="progBarO" style="display: block; height: 100%; width: 0%; background: #4caf50; transition: width 0.3s;"></i>
+        </div>
+      </div>
+
+      <!-- MOVED ABOVE THE BUTTON -->
+      <div class="result" id="resO" style="display:none; margin-top: 25px;">
+        <label style="display:block; margin-bottom: 8px; font-weight: bold;">Extracted Text:</label>
+        <textarea id="ocrOut" style="width:100%; height:250px; padding:15px; border-radius:12px; border:1px solid rgba(255,255,255,0.2); background:rgba(0,0,0,0.3); color:#fff; font-family:monospace; resize:vertical; line-height:1.5;" placeholder="Extracted text will appear here..."></textarea>
+        <div id="ocrDownloadContainer" style="margin-top: 15px; display: flex; gap: 15px; justify-content: center;">
+           <button id="btnDownloadTxt" class="glass-btn" style="max-width:200px;">Download .TXT</button>
+           <button id="btnCopyText" class="glass-btn" style="max-width:200px;">Copy to Clipboard</button>
+        </div>
+      </div>
+
+      <div style="margin-top:25px; text-align:center;">
+          <button id="btnOcr" class="glass-btn" style="display:none; max-width:300px; margin: 0 auto; background: rgba(76, 175, 80, 0.2); border-color: rgba(76, 175, 80, 0.4);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Run OCR Extraction
+          </button>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Modern Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-nav">
+      <a href="/">Home</a>
+      <span class="dot">·</span>
+      <a href="/pdf-tools">PDF Tools</a>
+      <span class="dot">·</span>
+      <a href="/image-upscaler">AI Upscaler</a>
+      <span class="dot">·</span>
+      <a href="/blog">Guides &amp; Blog</a>
+      <span class="dot">·</span>
+      <a href="/about">About</a>
+      <span class="dot">·</span>
+      <a href="/privacy">Privacy Policy</a>
+      <span class="dot">·</span>
+      <a href="/terms">Terms &amp; Conditions</a>
+      <span class="dot">·</span>
+      <a href="/contact">Contact</a>
+    </div>
+    <div class="footer-bottom">
+      <span>PIXNIVO</span>
+      <span class="dot">●</span>
+      <span>Private In-Browser Image &amp; PDF Studio</span>
+      <span class="dot">●</span>
+      <span>© 2026 PIXNIVO</span>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+  <script>
+    /* Theme Toggle */
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'dark';
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('pixnivo_theme', next); } catch(e) {}
+      });
+    }
+
+    /* Mobile Menu */
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (mobileToggle && navLinks) {
+      mobileToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+    }
+
+    (function(){
+      'use strict';
+
+      if (window.pdfjsLib){
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+          'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+      }
+
+      const MM_PER_PT = 0.352777778;
+      const A4     = { w: 595.28, h: 841.89 };
+      const LETTER = { w: 612,    h: 792    };
+
+      const $ = id => document.getElementById(id);
+      const fmt = b => b < 1024 ? b + ' B'
+                     : b < 1048576 ? (b/1024).toFixed(1) + ' KB'
+                     : (b/1048576).toFixed(2) + ' MB';
+
+      function loadScriptOnce(src){
+        return new Promise((resolve, reject) => {
+          const s = document.createElement('script');
+          s.src = src; s.onload = resolve;
+          s.onerror = () => reject(new Error('Failed to load ' + src));
+          document.body.appendChild(s);
+        });
+      }
+
+      function looksHeic(file){
+        const n = (file.name || '').toLowerCase(), t = (file.type || '').toLowerCase();
+        return n.endsWith('.heic') || n.endsWith('.heif') || t.includes('heic') || t.includes('heif');
+      }
+
+      let heicNoteEl = null;
+      function heicNote(show){
+        if (!heicNoteEl){
+          heicNoteEl = document.createElement('div');
+          heicNoteEl.style.cssText =
+            'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);max-width:88vw;' +
+            'background:rgba(21,19,29,0.95);color:#f5f3ef;border:1px solid rgba(255,255,255,0.12);padding:13px 24px;' +
+            'border-radius:9999px;font-size:14px;font-weight:600;z-index:9999;box-shadow:0 10px 30px rgba(0,0,0,.5);backdrop-filter:blur(16px);';
+          heicNoteEl.textContent = 'Converting iPhone photo…';
+          document.body.appendChild(heicNoteEl);
+        }
+        heicNoteEl.style.display = show ? 'block' : 'none';
+      }
+
+      async function convertHeic(file){
+        heicNote(true);
+        try{
+          if (!window.HeicTo) await loadScriptOnce('https://cdn.jsdelivr.net/npm/heic-to@1.5.2/dist/iife/heic-to.js');
+          if (window.HeicTo) return await window.HeicTo({ blob:file, type:'image/jpeg', quality:0.92 });
+          throw new Error('HeicTo unavailable');
+        } catch(e){
+          if (!window.heic2any) await loadScriptOnce('https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js');
+          const out = await window.heic2any({ blob:file, toType:'image/jpeg', quality:0.92 });
+          return Array.isArray(out) ? out[0] : out;
+        } finally { heicNote(false); }
+      }
+
+      function whyFailed(file){
+        const name = (file && file.name) ? file.name : 'This file';
+        const ext = name.includes('.') ? name.split('.').pop().toUpperCase() : '';
+        if (['HEIC','HEIF'].includes(ext))
+          return 'Could not open "' + name + '".\n\nThis iPhone photo could not be converted. Try saving as JPG.';
+        if (['TIF','TIFF','PSD','SVG','CR2','NEF','DNG','RAW','ARW'].includes(ext))
+          return 'Could not open "' + name + '".\n\nThis format is not supported by browsers. Please use JPG/PNG.';
+        return 'Could not open "' + name + '".\n\nThe file may be damaged or too large.';
+      }
+
+      function loadImageFile(file){
+        return new Promise((resolve, reject) => {
+          if (!file){ reject(new Error('No file')); return; }
+          if (file.size === 0){ reject(new Error(whyFailed(file))); return; }
+
+          const decode = blob => {
+            if (window.createImageBitmap){
+              return createImageBitmap(blob).then(resolve).catch(() => legacy(blob));
+            }
+            return legacy(blob);
+          };
+          const legacy = blob => new Promise(res => {
+            const url = URL.createObjectURL(blob);
+            const img = new Image();
+            img.onload = () => { URL.revokeObjectURL(url); resolve(img); res(); };
+            img.onerror = () => { URL.revokeObjectURL(url); reject(new Error(whyFailed(file))); res(); };
+            img.src = url;
+          });
+
+          if (looksHeic(file)){
+            convertHeic(file).then(decode).catch(() => reject(new Error(whyFailed(file))));
+            return;
+          }
+          if (window.createImageBitmap){
+            createImageBitmap(file).then(resolve).catch(() => {
+              convertHeic(file).then(decode).catch(() => legacy(file));
+            });
+            return;
+          }
+          legacy(file);
+        });
+      }
+
+      /* Tabs */
+      document.querySelectorAll('.tab-btn[data-tab]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn[data-tab]').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.studio-card').forEach(s => s.classList.remove('active'));
+          btn.classList.add('active');
+          $('stage-' + btn.dataset.tab).classList.add('active');
+        });
+      });
+
+      function wireDrop(zone, input, onFiles){
+        zone.addEventListener('click', () => input.click());
+        input.addEventListener('change', e => { if (e.target.files.length) onFiles([...e.target.files]); input.value=''; });
+        ['dragover','dragenter'].forEach(ev =>
+          zone.addEventListener(ev, e => { e.preventDefault(); zone.classList.add('drag'); }));
+        ['dragleave','drop'].forEach(ev =>
+          zone.addEventListener(ev, e => { e.preventDefault(); zone.classList.remove('drag'); }));
+        zone.addEventListener('drop', e => { if (e.dataTransfer.files.length) onFiles([...e.dataTransfer.files]); });
+      }
+
+      function progress(el, pct, msg){
+        el.classList.add('on');
+        el.querySelector('i').style.width = pct + '%';
+        el.querySelector('.txt').textContent = msg || '';
+      }
+      function progressDone(el){ el.classList.remove('on'); el.querySelector('i').style.width = '0%'; }
+
+      function showResult(el, head, detail){
+        el.classList.add('on');
+        el.querySelector('.h').textContent = head;
+        el.querySelector('.d').textContent = detail;
+      }
+      function hideResult(el){ el.classList.remove('on'); }
+
+      function save(bytes, name, type){
+        const blob = new Blob([bytes], { type: type || 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = name; a.style.display = 'none';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 4000);
+        return blob.size;
+      }
+
+      function renderList(container, files, onChange, thumbs){
+        container.innerHTML = '';
+        container.classList.toggle('on', files.length > 0);
+        files.forEach((f, i) => {
+          const row = document.createElement('div');
+          row.className = 'fitem';
+
+          const th = document.createElement('div');
+          th.className = 'thumb';
+          if (thumbs && f.type.startsWith('image/')){
+            const im = document.createElement('img');
+            im.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:7px;';
+            im.src = URL.createObjectURL(f);
+            im.onload = () => URL.revokeObjectURL(im.src);
+            th.appendChild(im);
+          } else {
+            th.textContent = '📄';
+          }
+
+          const nm = document.createElement('div');
+          nm.className = 'fname'; nm.textContent = (i+1) + '. ' + f.name;
+
+          const sz = document.createElement('div');
+          sz.className = 'fsize'; sz.textContent = fmt(f.size);
+
+          const mv = document.createElement('div');
+          mv.className = 'mv';
+          const up = document.createElement('button'); up.textContent = '↑'; up.title = 'Move up';
+          const dn = document.createElement('button'); dn.textContent = '↓'; dn.title = 'Move down';
+          up.disabled = i === 0; dn.disabled = i === files.length - 1;
+          up.onclick = e => { e.stopPropagation(); [files[i-1], files[i]] = [files[i], files[i-1]]; onChange(); };
+          dn.onclick = e => { e.stopPropagation(); [files[i+1], files[i]] = [files[i], files[i+1]]; onChange(); };
+          mv.append(up, dn);
+
+          const rm = document.createElement('button');
+          rm.textContent = '✕'; rm.title = 'Remove';
+          rm.onclick = e => { e.stopPropagation(); files.splice(i,1); onChange(); };
+
+          row.append(th, nm, sz, mv, rm);
+          container.appendChild(row);
+        });
+      }
+
+      /* 1. Images to PDF */
+      (function(){
+        let files = [];
+        const list = $('listI'), prog = $('progI'), res = $('resI'), go = $('makePdf');
+
+        function refresh(){
+          renderList(list, files, refresh, true);
+          go.disabled = files.length === 0;
+          go.textContent = files.length
+            ? 'Create PDF from ' + files.length + ' image' + (files.length>1?'s':'')
+            : 'Create PDF Document';
+          hideResult(res);
+        }
+
+        wireDrop($('dropI'), $('fileI'), incoming => {
+          const imgs = incoming.filter(f => f.type.startsWith('image/'));
+          if (imgs.length !== incoming.length) alert('Only image files can be added here.');
+          files = files.concat(imgs);
+          refresh();
+        });
+
+        $('margin').addEventListener('input', e => $('marginVal').textContent = e.target.value + ' mm');
+        $('imgQuality').addEventListener('input', e => $('iqVal').textContent = e.target.value + '%');
+        $('clearI').addEventListener('click', () => { files = []; refresh(); progressDone(prog); });
+
+        async function toJpeg(file, quality){
+          const img = await loadImageFile(file);
+          const cap = 2400;
+          const scale = Math.min(1, cap / Math.max(img.width, img.height));
+          const c = document.createElement('canvas');
+          c.width  = Math.max(1, Math.round(img.width  * scale));
+          c.height = Math.max(1, Math.round(img.height * scale));
+          const cx = c.getContext('2d');
+          cx.fillStyle = '#ffffff';
+          cx.fillRect(0, 0, c.width, c.height);
+          cx.drawImage(img, 0, 0, c.width, c.height);
+          const blob = await new Promise(r => c.toBlob(r, 'image/jpeg', quality));
+          if (!blob) throw new Error('Could not encode ' + file.name);
+          const ab = await blob.arrayBuffer();
+          return { bytes: new Uint8Array(ab), w: c.width, h: c.height };
+        }
+
+        go.addEventListener('click', async () => {
+          if (!files.length) return;
+          go.disabled = true; hideResult(res);
+          try{
+            const { PDFDocument } = PDFLib;
+            const pdf = await PDFDocument.create();
+            const quality = parseInt($('imgQuality').value) / 100;
+            const marginPt = parseInt($('margin').value) / MM_PER_PT;
+            const sizeMode = $('pageSize').value;
+            const orient   = $('orientation').value;
+
+            for (let i = 0; i < files.length; i++){
+              progress(prog, Math.round(i / files.length * 100), 'Adding page ' + (i+1) + ' of ' + files.length + '…');
+              await new Promise(r => setTimeout(r, 0));
+
+              const { bytes, w, h } = await toJpeg(files[i], quality);
+              const embedded = await pdf.embedJpg(bytes);
+
+              let pw, ph;
+              if (sizeMode === 'fit'){
+                pw = w + marginPt*2; ph = h + marginPt*2;
+              } else {
+                const base = sizeMode === 'a4' ? A4 : LETTER;
+                const landscape = orient === 'landscape' || (orient === 'auto' && w > h);
+                pw = landscape ? base.h : base.w;
+                ph = landscape ? base.w : base.h;
+              }
+
+              const page = pdf.addPage([pw, ph]);
+              const availW = pw - marginPt*2, availH = ph - marginPt*2;
+              const fit = Math.min(availW / w, availH / h);
+              const dw = w * fit, dh = h * fit;
+              page.drawImage(embedded, {
+                x: (pw - dw)/2, y: (ph - dh)/2, width: dw, height: dh
+              });
+            }
+
+            progress(prog, 100, 'Finalizing PDF…');
+            const out = await pdf.save();
+            const size = save(out, 'pixnivo-document.pdf');
+            progressDone(prog);
+            showResult(res, 'PDF Created Successfully',
+              files.length + ' page' + (files.length>1?'s':'') + ' · ' + fmt(size) + ' · Saved to your device.');
+          } catch(err){
+            console.error(err);
+            progressDone(prog);
+            alert('Could not create PDF: ' + (err.message || err));
+          }
+          go.disabled = false;
+        });
+
+        refresh();
+      })();
+
+      /* 2. Merge PDFs */
+      (function(){
+        let files = [];
+        const list = $('listM'), prog = $('progM'), res = $('resM'), go = $('doMerge');
+
+        function refresh(){
+          renderList(list, files, refresh, false);
+          go.disabled = files.length < 2;
+          go.textContent = files.length >= 2 ? 'Merge ' + files.length + ' PDFs' : 'Merge PDFs';
+          hideResult(res);
+        }
+
+        wireDrop($('dropM'), $('fileM'), incoming => {
+          const pdfs = incoming.filter(f => f.type === 'application/pdf' || /\.pdf$/i.test(f.name));
+          if (pdfs.length !== incoming.length) alert('Only PDF files can be merged.');
+          files = files.concat(pdfs);
+          refresh();
+        });
+
+        $('clearM').addEventListener('click', () => { files = []; refresh(); progressDone(prog); });
+
+        go.addEventListener('click', async () => {
+          if (files.length < 2) return;
+          go.disabled = true; hideResult(res);
+          try{
+            const { PDFDocument } = PDFLib;
+            const merged = await PDFDocument.create();
+            let pageCount = 0;
+
+            for (let i = 0; i < files.length; i++){
+              progress(prog, Math.round(i / files.length * 100), 'Merging ' + files[i].name + '…');
+              await new Promise(r => setTimeout(r, 0));
+              const buf = await files[i].arrayBuffer();
+              let src;
+              try{
+                src = await PDFDocument.load(buf, { ignoreEncryption: false });
+              } catch(e){
+                throw new Error(files[i].name + ' could not be read. It may be password-protected or damaged.');
+              }
+              const pages = await merged.copyPages(src, src.getPageIndices());
+              pages.forEach(p => { merged.addPage(p); pageCount++; });
+            }
+
+            progress(prog, 100, 'Saving merged file…');
+            const out = await merged.save();
+            const size = save(out, 'pixnivo-merged.pdf');
+            progressDone(prog);
+            showResult(res, 'PDFs Merged Successfully', pageCount + ' total pages · ' + fmt(size) + ' · Saved to device.');
+          } catch(err){
+            console.error(err);
+            progressDone(prog);
+            alert(err.message || 'Could not merge these PDFs.');
+          }
+          go.disabled = false;
+        });
+
+        refresh();
+      })();
+
+      /* 3. Compress PDF */
+      (function(){
+        let file = null;
+        const list = $('listC'), prog = $('progC'), res = $('resC'), go = $('doCompress');
+        const LEVELS = { 1:{q:.75,label:'Light'}, 2:{q:.6,label:'Balanced'}, 3:{q:.42,label:'Maximum'} };
+
+        function refresh(){
+          const arr = file ? [file] : [];
+          renderList(list, arr, () => { file = arr[0] || null; refresh(); }, false);
+          go.disabled = !file;
+          hideResult(res);
+        }
+
+        wireDrop($('dropC'), $('fileC'), incoming => {
+          const f = incoming.find(x => x.type === 'application/pdf' || /\.pdf$/i.test(x.name));
+          if (!f){ alert('Please choose a PDF file.'); return; }
+          file = f; refresh();
+        });
+
+        $('compLevel').addEventListener('input', e => $('cqVal').textContent = LEVELS[e.target.value].label);
+        $('dpi').addEventListener('input', e => $('dpiVal').textContent = e.target.value + ' DPI');
+        $('clearC').addEventListener('click', () => { file = null; refresh(); progressDone(prog); });
+
+        go.addEventListener('click', async () => {
+          if (!file) return;
+          if (!window.pdfjsLib){ alert('PDF engine did not load. Please check your connection and reload.'); return; }
+          go.disabled = true; hideResult(res);
+          const originalSize = file.size;
+
+          try{
+            const { PDFDocument } = PDFLib;
+            const quality = LEVELS[$('compLevel').value].q;
+            const targetDpi = parseInt($('dpi').value);
+            const scale = targetDpi / 72;
+
+            const buf = await file.arrayBuffer();
+            const src = await pdfjsLib.getDocument({ data: buf }).promise;
+            const out = await PDFDocument.create();
+
+            for (let n = 1; n <= src.numPages; n++){
+              progress(prog, Math.round((n-1) / src.numPages * 100), 'Compressing page ' + n + ' of ' + src.numPages + '…');
+              await new Promise(r => setTimeout(r, 0));
+
+              const page = await src.getPage(n);
+              const vp = page.getViewport({ scale: scale });
+
+              const c = document.createElement('canvas');
+              c.width = Math.max(1, Math.round(vp.width));
+              c.height = Math.max(1, Math.round(vp.height));
+              const cx = c.getContext('2d');
+              cx.fillStyle = '#ffffff';
+              cx.fillRect(0, 0, c.width, c.height);
+              await page.render({ canvasContext: cx, viewport: vp }).promise;
+
+              const blob = await new Promise(r => c.toBlob(r, 'image/jpeg', quality));
+              const bytes = new Uint8Array(await blob.arrayBuffer());
+              const img = await out.embedJpg(bytes);
+
+              const orig = page.getViewport({ scale: 1 });
+              const p = out.addPage([orig.width, orig.height]);
+              p.drawImage(img, { x:0, y:0, width: orig.width, height: orig.height });
+            }
+
+            progress(prog, 100, 'Saving compressed file…');
+            const bytes = await out.save();
+            const newSize = save(bytes, file.name.replace(/\.pdf$/i,'') + '-compressed.pdf');
+            progressDone(prog);
+
+            const saved = originalSize - newSize;
+            if (saved > 0){
+              showResult(res, 'Compressed ' + Math.round(saved / originalSize * 100) + '% Smaller',
+                fmt(originalSize) + ' → ' + fmt(newSize) + ' · ' + src.numPages + ' pages.');
+            } else {
+              showResult(res, 'File Processed',
+                fmt(originalSize) + ' → ' + fmt(newSize) + '. This PDF was already highly optimized.');
+            }
+          } catch(err){
+            console.error(err);
+            progressDone(prog);
+            alert('Could not compress PDF: ' + (err.message || err));
+          }
+          go.disabled = false;
+        });
+
+        refresh();
+      })();
+
+    })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <!-- PaddleOCR via module -->
+  <script type="module">
+    import { PaddleOcrService } from "https://esm.sh/ppu-paddle-ocr@6.4.3/web";
+    window.PaddleOcrService = PaddleOcrService;
+  </script>
+
+<script>
+
+    // ==========================================
+    // TAB 4: AI OCR LOGIC
+    // ==========================================
+    const dropO = document.getElementById('dropO');
+    const fileO = document.getElementById('fileO');
+    const dropOH3 = document.getElementById('dropOH3');
+    const btnOcr = document.getElementById('btnOcr');
+    const ocrEngine = document.getElementById('ocrEngine');
+    const ocrEnhance = document.getElementById('ocrEnhance');
+    const progO = document.getElementById('progO');
+    const progTxtO = document.getElementById('progTxtO');
+    const progBarO = document.getElementById('progBarO');
+    const resO = document.getElementById('resO');
+    const ocrOut = document.getElementById('ocrOut');
+    const ocrPreviewContainer = document.getElementById('ocrPreviewContainer');
+    const ocrPreviewImg = document.getElementById('ocrPreviewImg');
+    const ocrPreviewCanvas = document.getElementById('ocrPreviewCanvas');
+    const btnDownloadTxt = document.getElementById('btnDownloadTxt');
+    const btnCopyText = document.getElementById('btnCopyText');
+    const ocrDownloadContainer = document.getElementById('ocrDownloadContainer');
+
+    let ocrFiles = [];
+
+    if (dropO) {
+        dropO.addEventListener('click', () => fileO.click());
+        dropO.addEventListener('dragover', e => { e.preventDefault(); dropO.style.borderColor = 'var(--primary)'; });
+        dropO.addEventListener('dragleave', () => dropO.style.borderColor = 'rgba(255,255,255,0.2)');
+        dropO.addEventListener('drop', e => {
+          e.preventDefault();
+          dropO.style.borderColor = 'rgba(255,255,255,0.2)';
+          if (e.dataTransfer.files.length) handleOcrFiles(e.dataTransfer.files);
+        });
+        fileO.addEventListener('change', e => {
+          if (e.target.files.length) handleOcrFiles(e.target.files);
+        });
+    }
+
+    async function handleOcrFiles(files) {
+      ocrFiles = Array.from(files);
+      if (ocrFiles.length > 0) {
+        dropOH3.textContent = ocrFiles.length + ' file(s) selected';
+        btnOcr.style.display = 'flex';
+        ocrPreviewContainer.style.display = 'block';
+        resO.style.display = 'none';
+        progO.style.display = 'none';
+        
+        const file = ocrFiles[0];
+        if (file.type === 'application/pdf') {
+          ocrPreviewImg.style.display = 'none';
+          ocrPreviewCanvas.style.display = 'block';
+          try {
+            const arr = new Uint8Array(await file.arrayBuffer());
+            const pdfDoc = await pdfjsLib.getDocument({ data: arr }).promise;
+            const page = await pdfDoc.getPage(1);
+            const viewport = page.getViewport({ scale: 1.0 });
+            ocrPreviewCanvas.width = viewport.width;
+            ocrPreviewCanvas.height = viewport.height;
+            await page.render({ canvasContext: ocrPreviewCanvas.getContext('2d'), viewport }).promise;
+          } catch(e) { console.error("PDF preview error:", e); }
+        } else {
+          ocrPreviewCanvas.style.display = 'none';
+          ocrPreviewImg.style.display = 'block';
+          ocrPreviewImg.src = URL.createObjectURL(file);
+        }
+      }
+    }
+
+    function preprocessCanvas(sourceCanvas) {
+      if (ocrEnhance.value === 'none') return sourceCanvas;
+      const out = document.createElement('canvas');
+      const scale = 2; // upscale
+      out.width = sourceCanvas.width * scale;
+      out.height = sourceCanvas.height * scale;
+      const ctx = out.getContext('2d');
+      // Fill white background
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, out.width, out.height);
+      ctx.drawImage(sourceCanvas, 0, 0, out.width, out.height);
+      
+      const imgData = ctx.getImageData(0, 0, out.width, out.height);
+      const d = imgData.data;
+      for (let i = 0; i < d.length; i += 4) {
+        const r = d[i], g = d[i+1], b = d[i+2];
+        const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+        const val = gray < 130 ? 0 : 255; 
+        d[i] = d[i+1] = d[i+2] = val;
+      }
+      ctx.putImageData(imgData, 0, 0);
+      return out;
+    }
+
+    async function fileToCanvas(file) {
+      return new Promise((resolve, reject) => {
+        const url = URL.createObjectURL(file);
+        const img = new Image();
+        img.onload = () => {
+          const cvs = document.createElement('canvas');
+          cvs.width = img.width; cvs.height = img.height;
+          const ctx = cvs.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+          URL.revokeObjectURL(url);
+          resolve(cvs);
+        };
+        img.onerror = reject;
+        img.src = url;
+      });
+    }
+
+    if (btnOcr) {
+        btnOcr.addEventListener('click', async () => {
+          if (!ocrFiles.length) return;
+          btnOcr.disabled = true;
+          resO.style.display = 'none';
+          ocrOut.value = '';
+          progO.style.display = 'block';
+          progTxtO.textContent = 'Initializing AI Engine...';
+          progBarO.style.width = '5%';
+          progBarO.style.backgroundColor = '#4caf50';
+          
+          try {
+            let fullText = '';
+            
+            if (!window.Tesseract) {
+               throw new Error("Tesseract AI Engine failed to load. Please check your internet connection or disable adblockers.");
+            }
+
+            for (let i = 0; i < ocrFiles.length; i++) {
+              const file = ocrFiles[i];
+              progTxtO.textContent = 'Processing file ' + (i+1) + '/' + ocrFiles.length + '...';
+              
+              let canvases = [];
+              if (file.type === 'application/pdf') {
+                const arr = new Uint8Array(await file.arrayBuffer());
+                const pdfDoc = await pdfjsLib.getDocument({ data: arr }).promise;
+                for (let p = 1; p <= pdfDoc.numPages; p++) {
+                  progTxtO.textContent = 'Extracting PDF page ' + p + '/' + pdfDoc.numPages + '...';
+                  const page = await pdfDoc.getPage(p);
+                  const viewport = page.getViewport({ scale: 2.0 });
+                  const cvs = document.createElement('canvas');
+                  cvs.width = viewport.width; cvs.height = viewport.height;
+                  await page.render({ canvasContext: cvs.getContext('2d'), viewport }).promise;
+                  canvases.push(cvs);
+                }
+              } else {
+                 canvases.push(await fileToCanvas(file));
+              }
+
+              for (let c = 0; c < canvases.length; c++) {
+                progTxtO.textContent = 'Analyzing Page ' + (c+1) + '...';
+                const processedCanvas = preprocessCanvas(canvases[c]);
+
+                const result = await window.Tesseract.recognize(processedCanvas, 'eng', { 
+                  logger: m => {
+                     if (m.status === 'recognizing text') {
+                        const progress = Math.max(10, m.progress * 100);
+                        progBarO.style.width = progress + '%';
+                        progTxtO.textContent = 'Extracting Text: ' + Math.round(progress) + '%';
+                     }
+                  }
+                });
+                
+                fullText += result.data.text + '\n\n';
+              }
+            }
+
+            progO.style.display = 'none';
+            resO.style.display = 'block';
+            ocrOut.value = fullText.trim() || "No text could be detected from this file.";
+            progBarO.style.width = '0%';
+            
+            // Scroll down to the result so the user sees it immediately
+            resO.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+          } catch (err) {
+            console.error(err);
+            progTxtO.textContent = 'Error: ' + err.message;
+            progBarO.style.width = '100%';
+            progBarO.style.backgroundColor = '#f44336';
+          } finally {
+            btnOcr.disabled = false;
+          }
+        });
+    }
+
+    if (btnDownloadTxt) {
+        btnDownloadTxt.addEventListener('click', () => {
+           const text = ocrOut.value;
+           if (!text) return;
+           const blob = new Blob([text], { type: 'text/plain' });
+           const url = URL.createObjectURL(blob);
+           const a = document.createElement('a');
+           a.href = url;
+           a.download = 'PIXNIVO_Extraction.txt';
+           a.click();
+           URL.revokeObjectURL(url);
+        });
+    }
+
+    if (btnCopyText) {
+        btnCopyText.addEventListener('click', () => {
+           const text = ocrOut.value;
+           if (!text) return;
+           navigator.clipboard.writeText(text).then(() => {
+              const original = btnCopyText.innerHTML;
+              btnCopyText.innerHTML = "Copied!";
+              setTimeout(() => { btnCopyText.innerHTML = original; }, 2000);
+           });
+        });
+    }
+
+</script>
+</body>
+</html>

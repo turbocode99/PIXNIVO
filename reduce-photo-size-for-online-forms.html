@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Reduce Photo Size for Online Forms — PIXNIVO</title>
+  <meta name="description" content="Meet strict 20 KB, 50 KB, or 100 KB limits for government, bank and university portals without your photo getting rejected for blurriness." />
+  <meta name="theme-color" content="#08070b" />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9RDW8F1H9D"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9RDW8F1H9D');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8972850134795669" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="/assets/css/main.css" />
+
+  <!-- Instant Theme Detection Script -->
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('pixnivo_theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Dynamic Colorful Aurora Background -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+    <div class="ambient-orb orb-4"></div>
+    <div class="ambient-orb orb-5"></div>
+  </div>
+
+  <!-- Floating Glass Navigation -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a class="brand" href="/">
+        <div class="brand-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </div>
+        PIX<span>NIVO</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a class="nav-link" href="/">Image Tools</a>
+        <a class="nav-link" href="/pdf-tools">PDF Tools</a>
+        <a class="nav-link" href="/image-upscaler">AI Upscaler</a>
+        <a class="nav-link active" href="/blog">Guides</a>
+        <a class="nav-link" href="/about">About</a>
+        <a class="nav-link" href="/contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme" title="Toggle Theme">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="article-wrap">
+    <a class="back-link" href="/blog">← All Guides</a>
+
+    <header class="article-header">
+      <div class="article-eyebrow">Practical Optimization</div>
+      <h1>How to Reduce Photo Size for Online Forms (20 KB, 50 KB, 100 KB Limits)</h1>
+      <p class="article-meta"><span>28 June 2026</span><span>•</span><span>8 min read</span></p>
+    </header>
+
+    <article class="article-content">
+      <p>You are applying for a passport, visa, university admission, or job portal, and the form states: <b>"File size must not exceed 50 KB."</b> Your phone camera generated a crisp 4.8 MB file.</p>
+      <p>If you simply drag the compression slider down to 10%, the face turns into a blocky smudge and the automated verification system rejects the photo. Here is how to hit strict limits while keeping the image crisp.</p>
+
+      <h2>The Two Levers: Dimensions vs Quality</h2>
+      <p>File size is governed by two factors:</p>
+      <ol>
+        <li><b>Pixel Dimensions:</b> The total number of pixels in the grid (e.g. 4000 × 3000 = 12,000,000 pixels).</li>
+        <li><b>Compression Quality:</b> How much data is discarded when encoding those pixels.</li>
+      </ol>
+
+      <div class="callout-box">
+        <p><b>The Golden Rule of Portal Photos:</b> Reduce pixel dimensions first, and lower quality second. A 600 × 600 px photo at 80% quality is vastly sharper than a 4000 × 4000 px photo crushed to 15% quality.</p>
+      </div>
+
+      <h2>Target Dimension Benchmarks</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Portal Constraint</th><th>Optimal Dimensions</th><th>Target Quality</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Under 20 KB</td><td>350 × 350 px</td><td>70–75%</td></tr>
+            <tr><td>Under 50 KB</td><td>500 × 500 px</td><td>80%</td></tr>
+            <tr><td>Under 100 KB</td><td>800 × 800 px</td><td>82%</td></tr>
+            <tr><td>Under 200 KB</td><td>1200 × 1200 px</td><td>85%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Step-by-Step Optimization Workflow</h2>
+      <ol>
+        <li><b>Crop tightly to the subject:</b> Remove excess background to dedicate pixel budget strictly to the face.</li>
+        <li><b>Set exact width:</b> Scale down the longest dimension to the recommended bracket above.</li>
+        <li><b>Export as JPG:</b> Always choose JPG for portal photos unless PNG is explicitly mandated.</li>
+      </ol>
+
+      <div style="text-align:center; margin-top:36px;">
+        <a class="article-cta" href="/">Optimize Photo for Online Form Now →</a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-nav">
+      <a href="/">Home</a><span class="dot">·</span>
+      <a href="/pdf-tools">PDF Tools</a><span class="dot">·</span>
+      <a href="/image-upscaler">AI Upscaler</a><span class="dot">·</span>
+      <a href="/blog">Guides</a><span class="dot">·</span>
+      <a href="/about">About</a><span class="dot">·</span>
+      <a href="/privacy">Privacy</a><span class="dot">·</span>
+      <a href="/terms">Terms</a><span class="dot">·</span>
+      <a href="/contact">Contact</a>
+    </div>
+    <div class="footer-bottom">
+      <span>PIXNIVO</span><span class="dot">●</span><span>© 2026 PIXNIVO</span>
+    </div>
+  </footer>
+
+  <script>
+    /* Theme Toggle */
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'dark';
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('pixnivo_theme', next); } catch(e) {}
+      });
+    }
+
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (mobileToggle && navLinks) mobileToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  </script>
+</body>
+</html>

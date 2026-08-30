@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Compress Images for WhatsApp Without Losing Quality — PIXNIVO</title>
+  <meta name="description" content="WhatsApp crushes your photos before sending. Learn what happens and discover 3 ways to send razor-sharp images." />
+  <meta name="theme-color" content="#08070b" />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9RDW8F1H9D"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9RDW8F1H9D');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8972850134795669" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="/assets/css/main.css" />
+
+  <!-- Instant Theme Detection Script -->
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('pixnivo_theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Dynamic Colorful Aurora Background -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+    <div class="ambient-orb orb-4"></div>
+    <div class="ambient-orb orb-5"></div>
+  </div>
+
+  <!-- Floating Glass Navigation -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a class="brand" href="/">
+        <div class="brand-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </div>
+        PIX<span>NIVO</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a class="nav-link" href="/">Image Tools</a>
+        <a class="nav-link" href="/pdf-tools">PDF Tools</a>
+        <a class="nav-link" href="/image-upscaler">AI Upscaler</a>
+        <a class="nav-link active" href="/blog">Guides</a>
+        <a class="nav-link" href="/about">About</a>
+        <a class="nav-link" href="/contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme" title="Toggle Theme">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="article-wrap">
+    <a class="back-link" href="/blog">← All Guides</a>
+
+    <header class="article-header">
+      <div class="article-eyebrow">Messaging &amp; Sharing</div>
+      <h1>How to Compress Images for WhatsApp Without Losing Quality</h1>
+      <p class="article-meta"><span>12 July 2026</span><span>•</span><span>6 min read</span></p>
+    </header>
+
+    <article class="article-content">
+      <p>You take a sharp picture, send it on WhatsApp, and the recipient says it looks blurry. The original is razor sharp in your phone gallery. So what happened in between?</p>
+      <p>WhatsApp compressed it aggressively to conserve its server bandwidth. Once you understand the algorithm, you can preserve quality easily.</p>
+
+      <h2>What WhatsApp does to your photos</h2>
+      <ul>
+        <li><b>Resizes dimensions:</b> Downscales the longest side to ~1,600 pixels (throwing away 60% of sensor detail).</li>
+        <li><b>Re-encodes with heavy lossy JPEG quantization:</b> Introduces visible artifact ringing around text and sharp edges.</li>
+        <li><b>Strips EXIF metadata:</b> Discards camera parameters and orientation tags.</li>
+      </ul>
+
+      <div class="callout-box">
+        <p><b>Generational loss:</b> When someone forwards a received WhatsApp photo, the compression pass repeats. After 3 forwards, text becomes unreadable.</p>
+      </div>
+
+      <h2>Strategy 1: Send as an Uncompressed Document</h2>
+      <ol>
+        <li>In the chat window, tap the <b>+</b> or paperclip icon.</li>
+        <li>Choose <b>Document</b> instead of Gallery/Photos.</li>
+        <li>Browse and attach the original image file.</li>
+      </ol>
+      <p>WhatsApp delivers documents byte-for-byte with zero compression.</p>
+
+      <h2>Strategy 2: Pre-Compress with PIXNIVO</h2>
+      <p>When you feed WhatsApp a file that is already optimized (1,800px width at 80% quality), WhatsApp's pipeline detects the compact footprint and skips harsh re-encoding.</p>
+
+      <a class="article-cta" href="/">Launch PIXNIVO Image Compressor →</a>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Use Case</th><th>Recommended Transfer Method</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Everyday chats with friends</td><td>Standard Send with HD toggle enabled</td></tr>
+            <tr><td>Printing or framing</td><td>Send as Document (lossless)</td></tr>
+            <tr><td>Contracts, text scans, receipts</td><td>Send as Document (lossless)</td></tr>
+            <tr><td>Product catalogs for customers</td><td>Pre-compress to 1,800px at 80%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-nav">
+      <a href="/">Home</a><span class="dot">·</span>
+      <a href="/pdf-tools">PDF Tools</a><span class="dot">·</span>
+      <a href="/image-upscaler">AI Upscaler</a><span class="dot">·</span>
+      <a href="/blog">Guides</a><span class="dot">·</span>
+      <a href="/about">About</a><span class="dot">·</span>
+      <a href="/privacy">Privacy</a><span class="dot">·</span>
+      <a href="/terms">Terms</a><span class="dot">·</span>
+      <a href="/contact">Contact</a>
+    </div>
+    <div class="footer-bottom">
+      <span>PIXNIVO</span><span class="dot">●</span><span>© 2026 PIXNIVO</span>
+    </div>
+  </footer>
+
+  <script>
+    /* Theme Toggle */
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'dark';
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('pixnivo_theme', next); } catch(e) {}
+      });
+    }
+
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (mobileToggle && navLinks) mobileToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  </script>
+</body>
+</html>
