@@ -19,7 +19,7 @@ app.add_middleware(
 )
 
 print('Initializing PaddleOCR...')
-ocr_engine = PaddleOCR(use_angle_cls=True, lang='en', use_gpu=False)
+ocr_engine = PaddleOCR(use_textline_orientation=True, lang='en')
 print('PaddleOCR ready!')
 
 @app.get('/api/health')
@@ -67,3 +67,4 @@ async def process_ocr(file: UploadFile = File(...), enhance: str = Form('none'))
         full_text = 'No text could be detected.'
         
     return {'text': full_text}
+
