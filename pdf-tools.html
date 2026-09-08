@@ -40,6 +40,7 @@
     
     })();
   </script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
 <body>
 
@@ -346,7 +347,8 @@
              }
           </style>
           <select id="ocrEngine" class="glass-select">
-            <option value="paddle">PaddleOCR Neural Net (High Accuracy)</option>
+            <option value="paddle">PaddleOCR Neural Net (Server-Side, High Accuracy)</option>
+            <option value="tesseract">Tesseract AI Core (Client-Side, Fast)</option>
           </select>
         </div>
         <div class="field">
@@ -879,7 +881,7 @@
 <script>
 
     // ==========================================
-// TAB 4: AI OCR LOGIC (SERVER-SIDE)
+// TAB 4: AI OCR LOGIC (DUAL ENGINE)
 // ==========================================
 const dropO = document.getElementById('dropO');
 const fileO = document.getElementById('fileO');
@@ -897,7 +899,6 @@ const ocrPreviewImg = document.getElementById('ocrPreviewImg');
 const ocrPreviewCanvas = document.getElementById('ocrPreviewCanvas');
 const btnDownloadTxt = document.getElementById('btnDownloadTxt');
 const btnCopyText = document.getElementById('btnCopyText');
-const ocrDownloadContainer = document.getElementById('ocrDownloadContainer');
 
 let ocrFiles = [];
 
@@ -945,6 +946,46 @@ async function handleOcrFiles(files) {
   }
 }
 
+function preprocessCanvas(sourceCanvas) {
+  if (ocrEnhance.value === 'none') return sourceCanvas;
+  const out = document.createElement('canvas');
+  const scale = 2;
+  out.width = sourceCanvas.width * scale;
+  out.height = sourceCanvas.height * scale;
+  const ctx = out.getContext('2d');
+  ctx.fillStyle = 'white';
+  ctx.fillRect(0, 0, out.width, out.height);
+  ctx.drawImage(sourceCanvas, 0, 0, out.width, out.height);
+  
+  const imgData = ctx.getImageData(0, 0, out.width, out.height);
+  const d = imgData.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const r = d[i], g = d[i+1], b = d[i+2];
+    const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+    const val = gray < 130 ? 0 : 255; 
+    d[i] = d[i+1] = d[i+2] = val;
+  }
+  ctx.putImageData(imgData, 0, 0);
+  return out;
+}
+
+async function fileToCanvas(file) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      const cvs = document.createElement('canvas');
+      cvs.width = img.width; cvs.height = img.height;
+      const ctx = cvs.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      URL.revokeObjectURL(url);
+      resolve(cvs);
+    };
+    img.onerror = reject;
+    img.src = url;
+  });
+}
+
 if (btnOcr) {
     btnOcr.addEventListener('click', async () => {
       if (!ocrFiles.length) return;
@@ -952,35 +993,75 @@ if (btnOcr) {
       resO.style.display = 'none';
       ocrOut.value = '';
       progO.style.display = 'block';
-      progTxtO.textContent = 'Uploading to Server & Running AI... (This may take 10-30 seconds)';
-      progBarO.style.width = '50%';
       progBarO.style.backgroundColor = '#4caf50';
-      progBarO.style.transition = 'width 10s ease-out';
-      progBarO.style.width = '90%';
+      progBarO.style.width = '0%';
+      
+      const file = ocrFiles[0];
       
       try {
-        const file = ocrFiles[0];
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('enhance', ocrEnhance.value);
+        if (ocrEngine.value === 'paddle') {
+            progTxtO.textContent = 'Uploading to Azure Server & Running PaddleOCR...';
+            progBarO.style.transition = 'width 10s ease-out';
+            progBarO.style.width = '90%';
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('enhance', ocrEnhance.value);
 
-        const response = await fetch('/api/ocr', {
-            method: 'POST',
-            body: formData
-        });
+            const response = await fetch('/api/ocr', { method: 'POST', body: formData });
+            if (!response.ok) {
+                const errData = await response.json();
+                throw new Error(errData.detail || 'Server error during OCR processing');
+            }
+            const data = await response.json();
+            ocrOut.value = data.text || 'No text could be detected from this file.';
+            
+        } else {
+            progTxtO.textContent = 'Initializing Tesseract AI in browser...';
+            progBarO.style.transition = 'width 0.2s';
+            progBarO.style.width = '5%';
+            
+            if (!window.Tesseract) throw new Error("Tesseract failed to load.");
+            let fullText = '';
+            let canvases = [];
+            
+            if (file.type === 'application/pdf') {
+              const arr = new Uint8Array(await file.arrayBuffer());
+              const pdfDoc = await pdfjsLib.getDocument({ data: arr }).promise;
+              for (let p = 1; p <= pdfDoc.numPages; p++) {
+                progTxtO.textContent = 'Extracting PDF page ' + p + '...';
+                const page = await pdfDoc.getPage(p);
+                const viewport = page.getViewport({ scale: 2.0 });
+                const cvs = document.createElement('canvas');
+                cvs.width = viewport.width; cvs.height = viewport.height;
+                await page.render({ canvasContext: cvs.getContext('2d'), viewport }).promise;
+                canvases.push(cvs);
+              }
+            } else {
+               canvases.push(await fileToCanvas(file));
+            }
 
-        if (!response.ok) {
-            const errData = await response.json();
-            throw new Error(errData.detail || 'Server error during OCR processing');
+            for (let c = 0; c < canvases.length; c++) {
+              progTxtO.textContent = 'Analyzing Page ' + (c+1) + '...';
+              const processedCanvas = preprocessCanvas(canvases[c]);
+
+              const result = await window.Tesseract.recognize(processedCanvas, 'eng', { 
+                logger: m => {
+                   if (m.status === 'recognizing text') {
+                      const progress = Math.max(10, m.progress * 100);
+                      progBarO.style.width = progress + '%';
+                      progTxtO.textContent = 'Extracting Text: ' + Math.round(progress) + '%';
+                   }
+                }
+              });
+              fullText += result.data.text + '\n\n';
+            }
+            ocrOut.value = fullText.trim() || "No text could be detected from this file.";
         }
 
-        const data = await response.json();
-        
         progO.style.display = 'none';
         resO.style.display = 'block';
-        ocrOut.value = data.text || 'No text could be detected from this file.';
         progBarO.style.width = '0%';
-        
         resO.scrollIntoView({ behavior: 'smooth', block: 'center' });
         
       } catch (err) {
@@ -1023,5 +1104,6 @@ if (btnCopyText) {
 </script>
 </body>
 </html>
+
 
 
