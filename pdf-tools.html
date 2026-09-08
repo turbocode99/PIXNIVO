@@ -279,7 +279,7 @@
     <section class="studio-card" id="stage-ocr">
       <div class="studio-header">
         <h2>AI Document OCR</h2>
-        <p>Extract multi-lingual text from PDFs, receipts, and images completely offline.</p>
+        <p>Securely extract multi-lingual text from PDFs, receipts, and images using deep neural networks.</p>
       </div>
 
       <div class="dropzone" id="dropO">
@@ -288,7 +288,7 @@
         </div>
         <h3 id="dropOH3">Drop a PDF or Image here to extract text</h3>
         <p>Supports handwriting and degraded scans</p>
-        <span class="formats-badge">Powered by Tesseract Neural Nets</span>
+        <span class="formats-badge">Powered by Server-Side PaddleOCR</span>
         <input type="file" id="fileO" accept="application/pdf,image/*" />
       </div>
 
@@ -346,7 +346,7 @@
              }
           </style>
           <select id="ocrEngine" class="glass-select">
-            <option value="tesseract">Tesseract AI Core (Fast, Reliable)</option>
+            <option value="paddle">PaddleOCR Neural Net (High Accuracy)</option>
           </select>
         </div>
         <div class="field">
@@ -1023,4 +1023,5 @@ if (btnCopyText) {
 </script>
 </body>
 </html>
+
 
