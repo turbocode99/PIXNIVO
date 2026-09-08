@@ -19,7 +19,7 @@ app.add_middleware(
 )
 
 print('Initializing PaddleOCR...')
-ocr_engine = PaddleOCR(use_textline_orientation=True, lang='en')
+ocr_engine = PaddleOCR(use_angle_cls=True, use_gpu=False, lang='en')
 print('PaddleOCR ready!')
 
 @app.get('/api/health')
@@ -47,14 +47,14 @@ async def process_ocr(file: UploadFile = File(...), enhance: str = Form('none'))
                     img_path = os.path.join(temp_dir, f'page_{i}.jpg')
                     img.save(img_path, 'JPEG')
                     
-                    result = ocr_engine.ocr(img_path, cls=True)
+                    result = ocr_engine.ocr(img_path, )
                     for res in result:
                         if res:
                             for line in res:
                                 full_text += line[1][0] + '\n'
                     full_text += '\n--- Page Break ---\n\n'
             else:
-                result = ocr_engine.ocr(file_path, cls=True)
+                result = ocr_engine.ocr(file_path, )
                 for res in result:
                     if res:
                         for line in res:
@@ -67,4 +67,6 @@ async def process_ocr(file: UploadFile = File(...), enhance: str = Form('none'))
         full_text = 'No text could be detected.'
         
     return {'text': full_text}
+
+
 
