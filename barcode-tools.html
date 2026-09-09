@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PIXNIVO â€” Smart Image Tool | 100% Private, In-Browser Image Studio</title>
+  <title>Bulk Barcode Generator | PIXNIVO</title>
   <meta name="description" content="Compress, edit, and remove backgrounds with AI directly in your browser. 100% private, instant results, no uploads to servers." />
   <meta name="theme-color" content="#08070b" />
 
@@ -40,6 +40,7 @@
       } catch(e) {}
     })();
   </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bwip-js/3.4.0/bwip-js-min.js"></script>
 </head>
 <body>
 
@@ -104,320 +105,212 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="hero">
-    <div class="badge-privacy">
-      <span class="pulse-dot"></span>
-      100% Client-Side â€¢ Zero Data Leaves Your Device
-    </div>
-    <h1>The Smart <em>Image Studio</em> in Your Browser</h1>
-    <p class="hero-subtitle">Compress without quality loss, perform precision edits, and cut out backgrounds with neural AI â€” fully processed on your device with complete privacy.</p>
-  </section>
+  <section class="hero-tools" style="padding-top: 4rem; padding-bottom: 4rem;">
+  <div class="container" style="max-width: 900px; margin: 0 auto; padding: 0 1rem;">
+    <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 2rem;">
+      <h2 style="margin-bottom: 0.5rem; font-size: 2rem; font-weight: 700;">Bulk Barcode Generator</h2>
+      <p style="color: var(--text-muted); margin-bottom: 2rem;">Generate high-quality 1D, 2D, GS1, and QR codes instantly. Download embedded inside Word, Excel, or PDF.</p>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+          <div>
+              <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Barcode Type</label>
+              <select id="bcType" style="width: 100%; padding: 0.8rem; background: var(--bg-dark); border: 1px solid var(--border); color: var(--text); border-radius: 6px; font-family: inherit;">
+                  <optgroup label="Popular 2D">
+                      <option value="qrcode">QR Code</option>
+                      <option value="datamatrix">Data Matrix</option>
+                      <option value="pdf417">PDF417</option>
+                      <option value="azteccode">Aztec Code</option>
+                  </optgroup>
+                  <optgroup label="Standard 1D">
+                      <option value="code128">Code 128 (Most Common)</option>
+                      <option value="code39">Code 39</option>
+                      <option value="ean13">EAN-13 (Retail)</option>
+                      <option value="upca">UPC-A (Retail US)</option>
+                      <option value="itf14">ITF-14</option>
+                      <option value="code93">Code 93</option>
+                  </optgroup>
+                  <optgroup label="GS1 Industry Standards">
+                      <option value="gs1-128">GS1-128</option>
+                      <option value="gs1datamatrix">GS1 DataMatrix</option>
+                  </optgroup>
+              </select>
+          </div>
+          <div>
+              <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Options</label>
+              <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.8rem; background: var(--bg-dark); border: 1px solid var(--border); border-radius: 6px; cursor: pointer;">
+                  <input type="checkbox" id="bcShowText" checked> Show Human Readable Text
+              </label>
+          </div>
+      </div>
 
-  <!-- Feature Highlights Grid -->
-  <div class="features-grid">
-    <div class="feature-pill">
-      <div class="f-icon">ðŸ”’</div>
-      <div>
-        <h4>100% Private by Design</h4>
-        <p>Photos never touch a server or database.</p>
-      </div>
-    </div>
-    <div class="feature-pill">
-      <div class="f-icon">âš¡</div>
-      <div>
-        <h4>Instant Real-Time Render</h4>
-        <p>Live hardware-accelerated previews as you adjust.</p>
-      </div>
-    </div>
-    <div class="feature-pill">
-      <div class="f-icon">âœ¨</div>
-      <div>
-        <h4>No Limits or Watermarks</h4>
-        <p>Completely free without registration or fees.</p>
+      <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Bulk Data (One item per line)</label>
+      <textarea id="bcData" rows="8" placeholder="Enter data to encode here...
+1234567890
+PIXNIVO-PRO
+https://pixnivo.app" style="width: 100%; padding: 1rem; background: var(--bg-dark); border: 1px solid var(--border); color: var(--text); border-radius: 6px; font-family: monospace; resize: vertical; margin-bottom: 1.5rem;"></textarea>
+
+      <button id="btnGenerate" style="width: 100%; padding: 1rem; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.2s;">Generate Barcodes</button>
+
+      <!-- Results Area -->
+      <div id="bcResults" style="display: none; margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 2rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+              <h3 style="margin: 0; font-size: 1.25rem;">Live Preview (<span id="bcCount">0</span>)</h3>
+              <div style="display: flex; gap: 0.5rem;">
+                  <button id="btnExportPdf" style="padding: 0.5rem 1rem; background: #e53935; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">Download PDF</button>
+                  <button id="btnExportWord" style="padding: 0.5rem 1rem; background: #1e88e5; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">Download Word</button>
+                  <button id="btnExportExcel" style="padding: 0.5rem 1rem; background: #43a047; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">Download Excel</button>
+              </div>
+          </div>
+          
+          <div id="progBarContainer" style="display: none; width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; margin-bottom: 1rem;">
+             <div id="progBar" style="height: 100%; width: 0%; background: var(--primary); transition: width 0.3s;"></div>
+          </div>
+          <p id="progText" style="display: none; font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-bottom: 1rem;">Exporting...</p>
+
+          <div id="bcGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; max-height: 500px; overflow-y: auto; padding-right: 0.5rem; align-items: end;">
+              <!-- Canvases will be generated here -->
+          </div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- Tool Studio Tabs -->
-  <div class="tab-nav-wrapper">
-    <div class="tab-nav">
-      <button class="tab-btn active" data-tab="compress">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-        Compressor
-      </button>
-      <button class="tab-btn" data-tab="edit">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
-        Image Editor
-      </button>
-      <button class="tab-btn" data-tab="bg">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v12"/><path d="M18 9a6 6 0 0 0-6-6H6"/><path d="M6 15a6 6 0 0 0 6 6h6"/></svg>
-        AI BG Remover
-      </button>
-      <a class="tab-btn" href="/pdf-tools">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        PDF Tools
-      </a>
-      <a class="tab-btn" href="/image-upscaler">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-        AI Upscaler
-      </a>
-    </div>
-  </div>
+<script>
+const bcType = document.getElementById('bcType');
+const bcShowText = document.getElementById('bcShowText');
+const bcData = document.getElementById('bcData');
+const btnGenerate = document.getElementById('btnGenerate');
+const bcResults = document.getElementById('bcResults');
+const bcCount = document.getElementById('bcCount');
+const bcGrid = document.getElementById('bcGrid');
 
-  <!-- Interactive Studio Workspace Card -->
-  <main class="studio-container">
+const btnExportPdf = document.getElementById('btnExportPdf');
+const btnExportWord = document.getElementById('btnExportWord');
+const btnExportExcel = document.getElementById('btnExportExcel');
+const progBarContainer = document.getElementById('progBarContainer');
+const progBar = document.getElementById('progBar');
+const progText = document.getElementById('progText');
 
-    <!-- ==================== STAGE 1: COMPRESSOR ==================== -->
-    <div class="studio-card active" id="stage-compress">
-      <div class="studio-header">
-        <h2>Smart Image Compressor</h2>
-        <p>Dramatically shrink image file size with real-time compression estimation.</p>
-      </div>
+let generatedBarcodes = [];
 
-      <div class="dropzone" id="dropC">
-        <div class="dropzone-icon">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        </div>
-        <h3>Drop your image here or browse files</h3>
-        <p>Supports JPG, PNG, WebP, AVIF, HEIC/iPhone Photos &amp; BMP</p>
-        <span class="formats-badge">Max 50MB â€¢ High-fidelity Client-side Encoding</span>
-        <input type="file" id="fileC" accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp,.avif,.heic,.heif" />
-      </div>
+btnGenerate.addEventListener('click', () => {
+    const lines = bcData.value.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+    if (lines.length === 0) return alert('Please enter some data to generate barcodes.');
+    
+    bcGrid.innerHTML = '';
+    generatedBarcodes = [];
+    bcResults.style.display = 'block';
+    bcCount.textContent = lines.length;
+    
+    lines.forEach((line, i) => {
+        const container = document.createElement('div');
+        container.style.background = 'white';
+        container.style.padding = '15px';
+        container.style.borderRadius = '8px';
+        container.style.display = 'flex';
+        container.style.flexDirection = 'column';
+        container.style.alignItems = 'center';
+        container.style.justifyContent = 'center';
+        
+        const canvas = document.createElement('canvas');
+        canvas.id = 'bc_' + i;
+        
+        const title = document.createElement('div');
+        title.style.color = '#333';
+        title.style.fontSize = '0.75rem';
+        title.style.marginTop = '8px';
+        title.style.textAlign = 'center';
+        title.style.wordBreak = 'break-all';
+        title.textContent = line;
+        
+        container.appendChild(canvas);
+        if (!bcShowText.checked) container.appendChild(title);
+        bcGrid.appendChild(container);
+        
+        try {
+            bwipjs.toCanvas(canvas, {
+                bcid: bcType.value,
+                text: line,
+                scale: 2,
+                height: 12,
+                includetext: bcShowText.checked,
+                textxalign: 'center',
+            });
+            generatedBarcodes.push({ text: line, canvas: canvas });
+        } catch (e) {
+            console.error(e);
+            canvas.style.display = 'none';
+            const err = document.createElement('div');
+            err.style.color = 'red';
+            err.style.fontSize = '0.75rem';
+            err.textContent = 'Invalid data for ' + bcType.options[bcType.selectedIndex].text;
+            container.appendChild(err);
+        }
+    });
+});
 
-      <div class="workspace-grid" id="workC">
-        <div class="canvas-viewport">
-          <canvas id="canvasC"></canvas>
-        </div>
-        <div class="control-panel">
-          <div class="stat-box">
-            <div class="stat-item orig">Original File<b id="origC">â€”</b></div>
-            <div class="stat-arrow">â†’</div>
-            <div class="stat-item comp">Estimated Size<b id="compC">â€”</b></div>
-          </div>
+async function exportBarcodes(format) {
+    if (generatedBarcodes.length === 0) return;
+    
+    progBarContainer.style.display = 'block';
+    progText.style.display = 'block';
+    progBar.style.width = '10%';
+    progText.textContent = 'Preparing images...';
+    
+    const payload = {
+        format: format,
+        images: generatedBarcodes.map(item => ({
+            text: item.text,
+            base64_data: item.canvas.toDataURL('image/png')
+        }))
+    };
+    
+    progBar.style.width = '40%';
+    progText.textContent = 'Generating document on server...';
+    
+    try {
+        const res = await fetch('/api/export-barcodes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        
+        if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.detail || 'Server error');
+        }
+        
+        progBar.style.width = '90%';
+        progText.textContent = 'Downloading...';
+        
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        const ext = format === 'pdf' ? 'pdf' : (format === 'docx' ? 'docx' : 'xlsx');
+        a.download = PIXNIVO_Barcodes. + ext;
+        a.click();
+        URL.revokeObjectURL(url);
+        
+        progBar.style.width = '100%';
+        progText.textContent = 'Success!';
+        setTimeout(() => {
+            progBarContainer.style.display = 'none';
+            progText.style.display = 'none';
+            progBar.style.width = '0%';
+        }, 3000);
+        
+    } catch(e) {
+        alert('Export failed: ' + e.message);
+        progBarContainer.style.display = 'none';
+        progText.style.display = 'none';
+    }
+}
 
-          <div class="panel-section-title">Compression Quality</div>
-          <div class="field">
-            <label>Quality Level <span class="val" id="qualityValC">80%</span></label>
-            <input type="range" id="qualityC" min="10" max="100" value="80" />
-          </div>
-
-          <div class="field">
-            <label>Target Format</label>
-            <select id="formatC">
-              <option value="image/jpeg">JPG â€” Smallest footprint, standard web format</option>
-              <option value="image/webp">WebP â€” Modern, compact &amp; preserves transparency</option>
-              <option value="image/png">PNG â€” Lossless fidelity, larger size</option>
-            </select>
-          </div>
-
-          <div class="panel-section-title">Resolution Scaling</div>
-          <div class="field">
-            <label>Max Width <span class="val" id="resizeValC">Original</span></label>
-            <input type="range" id="resizeC" min="200" max="4000" value="4000" />
-          </div>
-
-          <button class="btn btn-primary" id="downloadC">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Download Compressed Image
-          </button>
-          <button class="btn btn-ghost" id="resetC">Reset Settings</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== STAGE 2: EDITOR ==================== -->
-    <div class="studio-card" id="stage-edit">
-      <div class="studio-header">
-        <h2>Studio Image Editor</h2>
-        <p>Adjust lighting, color balances, crop ratios, rotations, and custom visual filters.</p>
-      </div>
-
-      <div class="dropzone" id="dropE">
-        <div class="dropzone-icon">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        </div>
-        <h3>Drop your image here or browse files</h3>
-        <p>Instant pixel-precise edits in your browser</p>
-        <span class="formats-badge">Zero lossy re-encoding until export</span>
-        <input type="file" id="fileE" accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp,.avif,.heic,.heif" />
-      </div>
-
-      <div class="workspace-grid" id="workE">
-        <div class="canvas-viewport">
-          <canvas id="canvasE"></canvas>
-        </div>
-        <div class="control-panel">
-          <div class="panel-section-title">Color Adjustments</div>
-          <div class="field"><label>Brightness <span class="val" id="brightValE">100%</span></label><input type="range" id="brightnessE" min="40" max="180" value="100" /></div>
-          <div class="field"><label>Contrast <span class="val" id="contrastValE">100%</span></label><input type="range" id="contrastE" min="40" max="180" value="100" /></div>
-          <div class="field"><label>Saturation <span class="val" id="satValE">100%</span></label><input type="range" id="saturationE" min="0" max="220" value="100" /></div>
-          <div class="field"><label>Blur <span class="val" id="blurValE">0px</span></label><input type="range" id="blurE" min="0" max="10" value="0" /></div>
-
-          <div class="panel-section-title">Filter Presets</div>
-          <div class="chip-row">
-            <div class="chip active" data-filter="none">None</div>
-            <div class="chip" data-filter="gray">Mono</div>
-            <div class="chip" data-filter="sepia">Sepia</div>
-            <div class="chip" data-filter="invert">Invert</div>
-          </div>
-
-          <div class="panel-section-title">Transform &amp; Crop</div>
-          <div class="chip-row">
-            <div class="chip" id="rotateLeftE">âŸ² 90Â°</div>
-            <div class="chip" id="rotateRightE">âŸ³ 90Â°</div>
-            <div class="chip" id="flipHE">â‡‹ Flip H</div>
-            <div class="chip" id="flipVE">â‡… Flip V</div>
-          </div>
-          <div class="chip-row">
-            <div class="chip active" data-crop="original">Original</div>
-            <div class="chip" data-crop="1:1">1:1 Square</div>
-            <div class="chip" data-crop="4:3">4:3 Standard</div>
-            <div class="chip" data-crop="16:9">16:9 Cinema</div>
-          </div>
-
-          <button class="btn btn-primary" id="downloadE">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Download Edited Image (PNG)
-          </button>
-          <button class="btn btn-ghost" id="resetE">Reset All Adjustments</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== STAGE 3: BACKGROUND REMOVER ==================== -->
-    <div class="studio-card" id="stage-bg">
-      <div class="studio-header">
-        <h2>Neural AI Background Remover</h2>
-        <p>State-of-the-art AI model (RMBG-2.0) detects foreground subjects and cleanly isolates them on-device.</p>
-      </div>
-
-      <div class="dropzone" id="dropB">
-        <div class="dropzone-icon">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v12"/><path d="M18 9a6 6 0 0 0-6-6H6"/><path d="M6 15a6 6 0 0 0 6 6h6"/></svg>
-        </div>
-        <h3>Drop a photo here or browse files</h3>
-        <p>Optimized for portraits, products, pets, and foreground objects</p>
-        <span class="formats-badge">AI executes 100% offline in your browser</span>
-        <input type="file" id="fileB" accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp,.avif,.heic,.heif" />
-      </div>
-
-      <div class="workspace-grid" id="workB">
-        <div class="canvas-viewport">
-          <canvas id="canvasB"></canvas>
-          <div class="busy-overlay" id="bgOverlay">
-            <div class="spinner-ring"></div>
-            <span id="bgOverlayText">Isolating subject.</span>
-          </div>
-        </div>
-        <div class="control-panel">
-          <button class="btn btn-primary" id="removeBgBtn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v12"/><path d="M18 9a6 6 0 0 0-6-6H6"/><path d="M6 15a6 6 0 0 0 6 6h6"/></svg>
-            Remove Background Now
-          </button>
-          <p class="hint" id="bgHint">First run downloads the AI weights into memory. Subsequent photos process rapidly on your device.</p>
-
-          <div class="panel-section-title">Edge Precision &amp; Clean-Up</div>
-          <div class="field">
-            <label>Edge De-Halor <span class="val" id="edgeCleanVal">45</span></label>
-            <input type="range" id="edgeClean" min="0" max="100" value="45" />
-          </div>
-          <p class="hint">Smooths the outer boundary and removes background halos without eroding clothing or fine details.</p>
-
-          <div class="panel-section-title">Manual Touch-Up Eraser</div>
-          <div class="chip-row">
-            <div class="chip" id="eraserToggle">âœï¸ Eraser: OFF</div>
-            <div class="chip" id="undoStroke">â†©ï¸ Undo Stroke</div>
-          </div>
-          <div class="field">
-            <label>Brush Diameter <span class="val" id="brushVal">40</span></label>
-            <input type="range" id="brushSize" min="10" max="100" value="40" />
-          </div>
-
-          <div class="panel-section-title">Backdrop Replacement</div>
-          <div class="swatches">
-            <div class="swatch none active" id="bgNoneB" title="Transparent"></div>
-            <div class="swatch" style="background:#ffffff" data-color="#ffffff" title="White"></div>
-            <div class="swatch" style="background:#09080e" data-color="#09080e" title="Obsidian"></div>
-            <div class="swatch" style="background:#ff7a1a" data-color="#ff7a1a" title="Amber"></div>
-            <div class="swatch" style="background:#10b981" data-color="#10b981" title="Emerald"></div>
-            <div class="swatch" style="background:#06b6d4" data-color="#06b6d4" title="Cyan"></div>
-            <label class="swatch custom" title="Custom Color">ðŸŽ¨<input type="color" id="customColorB" /></label>
-          </div>
-          <div class="chip-row" style="margin-top:8px;">
-            <div class="chip" id="blurBgBtn">ðŸŒ«ï¸ Blur Original Background</div>
-          </div>
-
-          <button class="btn btn-primary" id="downloadB">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Download Cut-Out (PNG)
-          </button>
-          <button class="btn btn-ghost" id="resetB">Start Over</button>
-        </div>
-      </div>
-    </div>
-
-  </main>
-
-  <!-- Editorial & Guides Section -->
-  <section class="guides-section">
-    <div class="guides-head">
-      <div class="article-eyebrow">Knowledge Base</div>
-      <h3>Guides &amp; Best Practices</h3>
-      <p>Practical insights on image compression, file formats, resolution mathematics, and privacy-preserving tools.</p>
-    </div>
-
-    <div class="guides-grid">
-      <a class="guide-card" href="/compress-images-for-whatsapp">
-        <span class="card-tag">Optimization</span>
-        <h4>How to Compress Images for WhatsApp Without Losing Quality</h4>
-        <p>WhatsApp re-encodes photos heavily. Learn how to work around compression algorithms to keep images razor sharp.</p>
-        <div class="meta"><span>Read Guide â†’</span><span>6 min read</span></div>
-      </a>
-
-      <a class="guide-card" href="/jpg-vs-png-vs-webp">
-        <span class="card-tag">File Formats</span>
-        <h4>JPG vs PNG vs WebP: Which Format Should You Actually Use?</h4>
-        <p>Three formats engineered for distinct tasks. Make the right choice to optimize loading speed and image fidelity.</p>
-        <div class="meta"><span>Read Guide â†’</span><span>8 min read</span></div>
-      </a>
-
-      <a class="guide-card" href="/reduce-photo-size-for-online-forms">
-        <span class="card-tag">Compliance</span>
-        <h4>How to Reduce Photo Size for Online Forms &amp; Job Applications</h4>
-        <p>Hit strict 100 KB or 200 KB submission limits on portals without creating unreadable, pixelated artifacts.</p>
-        <div class="meta"><span>Read Guide â†’</span><span>7 min read</span></div>
-      </a>
-
-      <a class="guide-card" href="/how-ai-background-removal-works">
-        <span class="card-tag">Neural AI</span>
-        <h4>How AI Background Removal Actually Works</h4>
-        <p>An under-the-hood breakdown of semantic segmentation networks, alpha matting, and local inference models.</p>
-        <div class="meta"><span>Read Guide â†’</span><span>8 min read</span></div>
-      </a>
-
-      <a class="guide-card" href="/white-background-product-photos">
-        <span class="card-tag">E-Commerce</span>
-        <h4>How to Make White Background Product Photos for Online Selling</h4>
-        <p>Transform casual smartphone product shots into marketplace-compliant hero images with pure white backdrops.</p>
-        <div class="meta"><span>Read Guide â†’</span><span>9 min read</span></div>
-      </a>
-
-      <a class="guide-card" href="/passport-size-photo-at-home">
-        <span class="card-tag">Document Prep</span>
-        <h4>How to Make a Passport-Size Photo at Home</h4>
-        <p>Meet government biometric checklist criteria for framing, plain backgrounds, and exact physical dimensions.</p>
-        <div class="meta"><span>Read Guide â†’</span><span>8 min read</span></div>
-      </a>
-    </div>
-
-    <div style="text-align:center; margin-top:32px;">
-      <a class="article-cta" href="/blog">Explore All 13 Guides â†’</a>
-    </div>
-  </section>
-
-
-  <!-- Modern Site Footer -->
-  <footer class="site-footer">
+btnExportPdf.addEventListener('click', () => exportBarcodes('pdf'));
+btnExportWord.addEventListener('click', () => exportBarcodes('docx'));
+btnExportExcel.addEventListener('click', () => exportBarcodes('xlsx'));
+</script><footer class="site-footer">
     <div class="footer-nav">
       <a href="/">Home</a>
       <span class="dot">Â·</span>
@@ -1719,6 +1612,7 @@
   </script>
 </body>
 </html>
+
 
 
 

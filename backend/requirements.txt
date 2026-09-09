@@ -5,3 +5,7 @@ paddlepaddle
 paddleocr
 pdf2image
 pillow
+
+python-docx
+openpyxl
+reportlab
