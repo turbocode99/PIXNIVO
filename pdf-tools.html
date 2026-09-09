@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Free PDF Tools â€” Image to PDF, Merge &amp; Compress | PIXNIVO</title>
+  <title>Free PDF Tools — Image to PDF, Merge &amp; Compress | PIXNIVO</title>
   <meta name="description" content="Convert images to PDF, merge multiple PDF files, and compress PDFs in your browser. 100% private, client-side execution." />
   <meta name="theme-color" content="#08070b" />
 
   <!-- Open Graph / Social Meta -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://pixnivo.app/pdf-tools" />
-  <meta property="og:title" content="Free PDF Tools â€” Image to PDF, Merge &amp; Compress | PIXNIVO" />
+  <meta property="og:title" content="Free PDF Tools — Image to PDF, Merge &amp; Compress | PIXNIVO" />
   <meta property="og:description" content="Convert images to PDF, merge PDF files, and compress PDFs free in your browser." />
 
   <!-- Google tag (gtag.js) -->
@@ -108,10 +108,10 @@
   <section class="hero">
     <div class="badge-privacy">
       <span class="pulse-dot"></span>
-      100% Client-Side â€¢ Secure Document Processing
+      100% Client-Side • Secure Document Processing
     </div>
     <h1>Professional <em>PDF Studio</em> in Your Browser</h1>
-    <p class="hero-subtitle">Convert multi-page image sets into formatted PDFs, merge documents into a single file, or shrink bulky PDFs for email and portals â€” completely offline.</p>
+    <p class="hero-subtitle">Convert multi-page image sets into formatted PDFs, merge documents into a single file, or shrink bulky PDFs for email and portals — completely offline.</p>
   </section>
 
   <!-- PDF Tool Tabs -->
@@ -151,7 +151,7 @@
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
         </div>
         <h3>Drop photos or document scans here</h3>
-        <p>Supports JPG, PNG, WebP &amp; iPhone HEIC â€¢ Add as many files as needed</p>
+        <p>Supports JPG, PNG, WebP &amp; iPhone HEIC • Add as many files as needed</p>
         <span class="formats-badge">Drag &amp; drop or click to browse</span>
         <input type="file" id="fileI" accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp,.avif,.heic,.heif" multiple />
       </div>
@@ -214,8 +214,8 @@
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
         </div>
         <h3>Drop PDF files here to merge</h3>
-        <p>Select two or more PDF files â€¢ Reorder pages with arrows below</p>
-        <span class="formats-badge">Lossless combination â€¢ Vector crispness preserved</span>
+        <p>Select two or more PDF files • Reorder pages with arrows below</p>
+        <span class="formats-badge">Lossless combination • Vector crispness preserved</span>
         <input type="file" id="fileM" accept="application/pdf" multiple />
       </div>
 
@@ -247,7 +247,7 @@
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
         </div>
         <h3>Drop a PDF file here to compress</h3>
-        <p>One document at a time â€¢ Live raster re-sampling</p>
+        <p>One document at a time • Live raster re-sampling</p>
         <span class="formats-badge">Optimized for scanned documents &amp; large attachments</span>
         <input type="file" id="fileC" accept="application/pdf" />
       </div>
@@ -481,7 +481,7 @@
             'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);max-width:88vw;' +
             'background:rgba(21,19,29,0.95);color:#f5f3ef;border:1px solid rgba(255,255,255,0.12);padding:13px 24px;' +
             'border-radius:9999px;font-size:14px;font-weight:600;z-index:9999;box-shadow:0 10px 30px rgba(0,0,0,.5);backdrop-filter:blur(16px);';
-          heicNoteEl.textContent = 'Converting iPhone photoâ€¦';
+          heicNoteEl.textContent = 'Converting iPhone photo…';
           document.body.appendChild(heicNoteEl);
         }
         heicNoteEl.style.display = show ? 'block' : 'none';
@@ -684,7 +684,7 @@
             const orient   = $('orientation').value;
 
             for (let i = 0; i < files.length; i++){
-              progress(prog, Math.round(i / files.length * 100), 'Adding page ' + (i+1) + ' of ' + files.length + 'â€¦');
+              progress(prog, Math.round(i / files.length * 100), 'Adding page ' + (i+1) + ' of ' + files.length + '…');
               await new Promise(r => setTimeout(r, 0));
 
               const { bytes, w, h } = await toJpeg(files[i], quality);
@@ -709,7 +709,7 @@
               });
             }
 
-            progress(prog, 100, 'Finalizing PDFâ€¦');
+            progress(prog, 100, 'Finalizing PDF…');
             const out = await pdf.save();
             const size = save(out, 'pixnivo-document.pdf');
             progressDone(prog);
@@ -756,7 +756,7 @@
             let pageCount = 0;
 
             for (let i = 0; i < files.length; i++){
-              progress(prog, Math.round(i / files.length * 100), 'Merging ' + files[i].name + 'â€¦');
+              progress(prog, Math.round(i / files.length * 100), 'Merging ' + files[i].name + '…');
               await new Promise(r => setTimeout(r, 0));
               const buf = await files[i].arrayBuffer();
               let src;
@@ -769,7 +769,7 @@
               pages.forEach(p => { merged.addPage(p); pageCount++; });
             }
 
-            progress(prog, 100, 'Saving merged fileâ€¦');
+            progress(prog, 100, 'Saving merged file…');
             const out = await merged.save();
             const size = save(out, 'pixnivo-merged.pdf');
             progressDone(prog);
@@ -825,7 +825,7 @@
             const out = await PDFDocument.create();
 
             for (let n = 1; n <= src.numPages; n++){
-              progress(prog, Math.round((n-1) / src.numPages * 100), 'Compressing page ' + n + ' of ' + src.numPages + 'â€¦');
+              progress(prog, Math.round((n-1) / src.numPages * 100), 'Compressing page ' + n + ' of ' + src.numPages + '…');
               await new Promise(r => setTimeout(r, 0));
 
               const page = await src.getPage(n);
@@ -848,7 +848,7 @@
               p.drawImage(img, { x:0, y:0, width: orig.width, height: orig.height });
             }
 
-            progress(prog, 100, 'Saving compressed fileâ€¦');
+            progress(prog, 100, 'Saving compressed file…');
             const bytes = await out.save();
             const newSize = save(bytes, file.name.replace(/\.pdf$/i,'') + '-compressed.pdf');
             progressDone(prog);

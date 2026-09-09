@@ -10,7 +10,7 @@
   <!-- Open Graph / Social Meta -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://pixnivo.app/" />
-  <meta property="og:title" content="PIXNIVO â€” Smart Image Tool" />
+  <meta property="og:title" content="PIXNIVO — Smart Image Tool" />
   <meta property="og:description" content="Compress, edit, and remove backgrounds with AI directly in your browser. 100% private, zero uploads." />
   <meta property="og:image" content="https://pixnivo.app/assets/og-image.png" />
 
@@ -543,7 +543,7 @@ btnExportExcel.addEventListener('click', () => exportBarcodes('xlsx'));
     }
 
     async function convertHeic(file){
-      showToast('Converting iPhone photoâ€¦');
+      showToast('Converting iPhone photo…');
       try{
         if (!window.HeicTo){
           await loadScriptOnce('https://cdn.jsdelivr.net/npm/heic-to@1.5.2/dist/iife/heic-to.js');
@@ -1167,7 +1167,7 @@ btnExportExcel.addEventListener('click', () => exportBarcodes('xlsx'));
 
       async function ensureModel(){
         if (segmenter || net) return;
-        overlayText.textContent = 'Loading AI modelâ€¦';
+        overlayText.textContent = 'Loading AI model…';
         overlay.classList.add('show');
         await loadScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0/dist/tf.min.js');
         try{
@@ -1180,7 +1180,7 @@ btnExportExcel.addEventListener('click', () => exportBarcodes('xlsx'));
           await loadScript('https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix@2.2.0/dist/body-pix.min.js');
           net = await bodyPix.load({ architecture: 'MobileNetV1', outputStride: 16, multiplier: 0.75, quantBytes: 2 });
         }
-        bgHint.textContent = 'AI model loaded â€” future photos process rapidly.';
+        bgHint.textContent = 'AI model loaded — future photos process rapidly.';
       }
 
       async function getMask(small){
@@ -1407,7 +1407,7 @@ btnExportExcel.addEventListener('click', () => exportBarcodes('xlsx'));
 
       removeBgBtn.addEventListener('click', async () => {
         if (!img) return;
-        overlayText.textContent = 'Removing backgroundâ€¦';
+        overlayText.textContent = 'Removing background…';
         overlay.classList.add('active');
         let done = false;
         const started = Date.now();
@@ -1424,9 +1424,9 @@ btnExportExcel.addEventListener('click', () => exportBarcodes('xlsx'));
         }
 
         try{
-          overlayText.textContent = 'Loading AI modelâ€¦';
+          overlayText.textContent = 'Loading AI model…';
           await ensureRmbg();
-          overlayText.textContent = 'Removing backgroundâ€¦';
+          overlayText.textContent = 'Removing background…';
           
           const cut = await removeWithRmbg(img);
 
@@ -1444,7 +1444,7 @@ btnExportExcel.addEventListener('click', () => exportBarcodes('xlsx'));
 
         if (!done){
           try{
-            overlayText.textContent = 'Removing backgroundâ€¦';
+            overlayText.textContent = 'Removing background…';
             const mod = await ensureImgly();
             
             // ISNet fallback: use full resolution canvas if possible, otherwise cap at 2000 to prevent out of memory
@@ -1454,9 +1454,9 @@ btnExportExcel.addEventListener('click', () => exportBarcodes('xlsx'));
             const resultBlob = await mod.removeBackground(srcBlob, Object.assign({}, imglyConfig, {
               progress: (key, cur, total) => {
                 if (total && key && key.indexOf('fetch') === 0){
-                  overlayText.textContent = 'Downloading AI modelâ€¦ ' + Math.round(cur/total*100) + '%';
+                  overlayText.textContent = 'Downloading AI model… ' + Math.round(cur/total*100) + '%';
                 } else {
-                  overlayText.textContent = 'Removing backgroundâ€¦';
+                  overlayText.textContent = 'Removing background…';
                 }
               }
             }));
@@ -1474,7 +1474,7 @@ btnExportExcel.addEventListener('click', () => exportBarcodes('xlsx'));
         if (!done){
           try{
             await ensureModel();
-            overlayText.textContent = 'Removing backgroundâ€¦';
+            overlayText.textContent = 'Removing background…';
             const small = makeScaledCanvas(img, 900);
             const mask = await getMask(small);
             buildCutout(mask, small.width, small.height);

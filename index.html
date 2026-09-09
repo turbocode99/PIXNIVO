@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PIXNIVO â€” Smart Image Tool | 100% Private, In-Browser Image Studio</title>
+  <title>PIXNIVO — Smart Image Tool | 100% Private, In-Browser Image Studio</title>
   <meta name="description" content="Compress, edit, and remove backgrounds with AI directly in your browser. 100% private, instant results, no uploads to servers." />
   <meta name="theme-color" content="#08070b" />
 
   <!-- Open Graph / Social Meta -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://pixnivo.app/" />
-  <meta property="og:title" content="PIXNIVO â€” Smart Image Tool" />
+  <meta property="og:title" content="PIXNIVO — Smart Image Tool" />
   <meta property="og:description" content="Compress, edit, and remove backgrounds with AI directly in your browser. 100% private, zero uploads." />
   <meta property="og:image" content="https://pixnivo.app/assets/og-image.png" />
 
@@ -107,10 +107,10 @@
   <section class="hero">
     <div class="badge-privacy">
       <span class="pulse-dot"></span>
-      100% Client-Side â€¢ Zero Data Leaves Your Device
+      100% Client-Side • Zero Data Leaves Your Device
     </div>
     <h1>The Smart <em>Image Studio</em> in Your Browser</h1>
-    <p class="hero-subtitle">Compress without quality loss, perform precision edits, and cut out backgrounds with neural AI â€” fully processed on your device with complete privacy.</p>
+    <p class="hero-subtitle">Compress without quality loss, perform precision edits, and cut out backgrounds with neural AI — fully processed on your device with complete privacy.</p>
   </section>
 
   <!-- Feature Highlights Grid -->
@@ -180,7 +180,7 @@
         </div>
         <h3>Drop your image here or browse files</h3>
         <p>Supports JPG, PNG, WebP, AVIF, HEIC/iPhone Photos &amp; BMP</p>
-        <span class="formats-badge">Max 50MB â€¢ High-fidelity Client-side Encoding</span>
+        <span class="formats-badge">Max 50MB • High-fidelity Client-side Encoding</span>
         <input type="file" id="fileC" accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp,.avif,.heic,.heif" />
       </div>
 
@@ -190,9 +190,9 @@
         </div>
         <div class="control-panel">
           <div class="stat-box">
-            <div class="stat-item orig">Original File<b id="origC">â€”</b></div>
+            <div class="stat-item orig">Original File<b id="origC">—</b></div>
             <div class="stat-arrow">â†’</div>
-            <div class="stat-item comp">Estimated Size<b id="compC">â€”</b></div>
+            <div class="stat-item comp">Estimated Size<b id="compC">—</b></div>
           </div>
 
           <div class="panel-section-title">Compression Quality</div>
@@ -204,9 +204,9 @@
           <div class="field">
             <label>Target Format</label>
             <select id="formatC">
-              <option value="image/jpeg">JPG â€” Smallest footprint, standard web format</option>
-              <option value="image/webp">WebP â€” Modern, compact &amp; preserves transparency</option>
-              <option value="image/png">PNG â€” Lossless fidelity, larger size</option>
+              <option value="image/jpeg">JPG — Smallest footprint, standard web format</option>
+              <option value="image/webp">WebP — Modern, compact &amp; preserves transparency</option>
+              <option value="image/png">PNG — Lossless fidelity, larger size</option>
             </select>
           </div>
 
@@ -524,7 +524,7 @@
     }
 
     async function convertHeic(file){
-      showToast('Converting iPhone photoâ€¦');
+      showToast('Converting iPhone photo…');
       try{
         if (!window.HeicTo){
           await loadScriptOnce('https://cdn.jsdelivr.net/npm/heic-to@1.5.2/dist/iife/heic-to.js');
@@ -1148,7 +1148,7 @@
 
       async function ensureModel(){
         if (segmenter || net) return;
-        overlayText.textContent = 'Loading AI modelâ€¦';
+        overlayText.textContent = 'Loading AI model…';
         overlay.classList.add('show');
         await loadScript('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0/dist/tf.min.js');
         try{
@@ -1161,7 +1161,7 @@
           await loadScript('https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix@2.2.0/dist/body-pix.min.js');
           net = await bodyPix.load({ architecture: 'MobileNetV1', outputStride: 16, multiplier: 0.75, quantBytes: 2 });
         }
-        bgHint.textContent = 'AI model loaded â€” future photos process rapidly.';
+        bgHint.textContent = 'AI model loaded — future photos process rapidly.';
       }
 
       async function getMask(small){
@@ -1388,7 +1388,7 @@
 
       removeBgBtn.addEventListener('click', async () => {
         if (!img) return;
-        overlayText.textContent = 'Removing backgroundâ€¦';
+        overlayText.textContent = 'Removing background…';
         overlay.classList.add('active');
         let done = false;
         const started = Date.now();
@@ -1405,9 +1405,9 @@
         }
 
         try{
-          overlayText.textContent = 'Loading AI modelâ€¦';
+          overlayText.textContent = 'Loading AI model…';
           await ensureRmbg();
-          overlayText.textContent = 'Removing backgroundâ€¦';
+          overlayText.textContent = 'Removing background…';
           
           const cut = await removeWithRmbg(img);
 
@@ -1425,7 +1425,7 @@
 
         if (!done){
           try{
-            overlayText.textContent = 'Removing backgroundâ€¦';
+            overlayText.textContent = 'Removing background…';
             const mod = await ensureImgly();
             
             // ISNet fallback: use full resolution canvas if possible, otherwise cap at 2000 to prevent out of memory
@@ -1435,9 +1435,9 @@
             const resultBlob = await mod.removeBackground(srcBlob, Object.assign({}, imglyConfig, {
               progress: (key, cur, total) => {
                 if (total && key && key.indexOf('fetch') === 0){
-                  overlayText.textContent = 'Downloading AI modelâ€¦ ' + Math.round(cur/total*100) + '%';
+                  overlayText.textContent = 'Downloading AI model… ' + Math.round(cur/total*100) + '%';
                 } else {
-                  overlayText.textContent = 'Removing backgroundâ€¦';
+                  overlayText.textContent = 'Removing background…';
                 }
               }
             }));
@@ -1455,7 +1455,7 @@
         if (!done){
           try{
             await ensureModel();
-            overlayText.textContent = 'Removing backgroundâ€¦';
+            overlayText.textContent = 'Removing background…';
             const small = makeScaledCanvas(img, 900);
             const mask = await getMask(small);
             buildCutout(mask, small.width, small.height);
