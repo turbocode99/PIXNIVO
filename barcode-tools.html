@@ -105,11 +105,35 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="hero-tools" style="padding-top: 4rem; padding-bottom: 4rem;">
+  <style>
+  #bcType {
+    color-scheme: dark;
+  }
+  #bcType option {
+    background-color: #1a1a2e;
+    color: #ffffff;
+  }
+  .upload-area {
+    border: 2px dashed rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s;
+    background: rgba(0,0,0,0.2);
+    margin-bottom: 1rem;
+  }
+  .upload-area:hover, .upload-area.dragover {
+    border-color: var(--primary);
+    background: rgba(255,90,30,0.1);
+  }
+</style>
+
+<section class="hero-tools" style="padding-top: 4rem; padding-bottom: 4rem;">
   <div class="container" style="max-width: 900px; margin: 0 auto; padding: 0 1rem;">
-    <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 2rem;">
+    <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
       <h2 style="margin-bottom: 0.5rem; font-size: 2rem; font-weight: 700;">Bulk Barcode Generator</h2>
-      <p style="color: var(--text-muted); margin-bottom: 2rem;">Generate high-quality 1D, 2D, GS1, and QR codes instantly. Download embedded inside Word, Excel, or PDF.</p>
+      <p style="color: var(--text-muted); margin-bottom: 2rem;">Generate high-quality 1D, 2D, GS1, and QR codes instantly. Upload a CSV to bulk-generate thousands of barcodes, then download them perfectly embedded into Word, Excel, or PDF.</p>
       
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
           <div>
@@ -143,29 +167,40 @@
           </div>
       </div>
 
-      <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Bulk Data (One item per line)</label>
-      <textarea id="bcData" rows="8" placeholder="Enter data to encode here...
-1234567890
+      <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Data Input</label>
+      
+      <div class="upload-area" id="dropZone" onclick="document.getElementById('csvFile').click()">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: 8px; color: var(--primary);"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+        <p style="margin: 0; font-size: 0.95rem; font-weight: 500;">Click or Drag to Upload CSV / TXT</p>
+        <p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">First column will be used for barcode data</p>
+        <input type="file" id="csvFile" accept=".csv,.txt" style="display: none;">
+      </div>
+
+      <div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">OR PASTE DATA MANUALLY</div>
+
+      <textarea id="bcData" rows="6" placeholder="1234567890
 PIXNIVO-PRO
 https://pixnivo.app" style="width: 100%; padding: 1rem; background: var(--bg-dark); border: 1px solid var(--border); color: var(--text); border-radius: 6px; font-family: monospace; resize: vertical; margin-bottom: 1.5rem;"></textarea>
 
-      <button id="btnGenerate" style="width: 100%; padding: 1rem; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.2s;">Generate Barcodes</button>
+      <button id="btnGenerate" style="width: 100%; padding: 1rem; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: 0.2s;">Process & Generate Barcodes</button>
 
       <!-- Results Area -->
       <div id="bcResults" style="display: none; margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 2rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
               <h3 style="margin: 0; font-size: 1.25rem;">Live Preview (<span id="bcCount">0</span>)</h3>
-              <div style="display: flex; gap: 0.5rem;">
+              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                   <button id="btnExportPdf" style="padding: 0.5rem 1rem; background: #e53935; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">Download PDF</button>
                   <button id="btnExportWord" style="padding: 0.5rem 1rem; background: #1e88e5; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">Download Word</button>
                   <button id="btnExportExcel" style="padding: 0.5rem 1rem; background: #43a047; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">Download Excel</button>
               </div>
           </div>
           
-          <div id="progBarContainer" style="display: none; width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; margin-bottom: 1rem;">
+          <div id="progBarContainer" style="display: none; width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 6px; overflow: hidden; margin-bottom: 1rem;">
              <div id="progBar" style="height: 100%; width: 0%; background: var(--primary); transition: width 0.3s;"></div>
           </div>
           <p id="progText" style="display: none; font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-bottom: 1rem;">Exporting...</p>
+
+          <p id="previewLimitWarning" style="display: none; color: #ffb74d; font-size: 0.85rem; margin-bottom: 1rem; padding: 0.5rem; background: rgba(255,183,77,0.1); border-radius: 4px; text-align: center;">Showing preview for the first 100 items only. All items will be included in the downloaded file.</p>
 
           <div id="bcGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; max-height: 500px; overflow-y: auto; padding-right: 0.5rem; align-items: end;">
               <!-- Canvases will be generated here -->
@@ -184,6 +219,10 @@ const bcResults = document.getElementById('bcResults');
 const bcCount = document.getElementById('bcCount');
 const bcGrid = document.getElementById('bcGrid');
 
+const dropZone = document.getElementById('dropZone');
+const csvFile = document.getElementById('csvFile');
+const previewLimitWarning = document.getElementById('previewLimitWarning');
+
 const btnExportPdf = document.getElementById('btnExportPdf');
 const btnExportWord = document.getElementById('btnExportWord');
 const btnExportExcel = document.getElementById('btnExportExcel');
@@ -191,18 +230,64 @@ const progBarContainer = document.getElementById('progBarContainer');
 const progBar = document.getElementById('progBar');
 const progText = document.getElementById('progText');
 
-let generatedBarcodes = [];
+let activeDataLines = [];
+
+// Drag and drop logic
+dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+});
+dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('dragover');
+});
+dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    if (e.dataTransfer.files.length) {
+        handleFile(e.dataTransfer.files[0]);
+    }
+});
+csvFile.addEventListener('change', (e) => {
+    if (e.target.files.length) {
+        handleFile(e.target.files[0]);
+    }
+});
+
+function handleFile(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const text = e.target.result;
+        // Parse basic CSV (take first column of each row)
+        const lines = text.split(/\r?\n/).map(line => {
+            let cols = line.split(',');
+            return cols[0].replace(/^["']|["']$/g, '').trim(); // Remove quotes
+        }).filter(l => l.length > 0);
+        
+        bcData.value = lines.join('\n');
+    };
+    reader.readAsText(file);
+}
 
 btnGenerate.addEventListener('click', () => {
     const lines = bcData.value.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-    if (lines.length === 0) return alert('Please enter some data to generate barcodes.');
+    if (lines.length === 0) return alert('Please enter or upload some data to generate barcodes.');
     
+    activeDataLines = lines;
     bcGrid.innerHTML = '';
-    generatedBarcodes = [];
     bcResults.style.display = 'block';
     bcCount.textContent = lines.length;
     
-    lines.forEach((line, i) => {
+    const previewLimit = 100;
+    if (lines.length > previewLimit) {
+        previewLimitWarning.style.display = 'block';
+    } else {
+        previewLimitWarning.style.display = 'none';
+    }
+    
+    // Render only up to previewLimit
+    const renderLines = lines.slice(0, previewLimit);
+    
+    renderLines.forEach((line, i) => {
         const container = document.createElement('div');
         container.style.background = 'white';
         container.style.padding = '15px';
@@ -211,6 +296,7 @@ btnGenerate.addEventListener('click', () => {
         container.style.flexDirection = 'column';
         container.style.alignItems = 'center';
         container.style.justifyContent = 'center';
+        container.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
         
         const canvas = document.createElement('canvas');
         canvas.id = 'bc_' + i;
@@ -221,6 +307,7 @@ btnGenerate.addEventListener('click', () => {
         title.style.marginTop = '8px';
         title.style.textAlign = 'center';
         title.style.wordBreak = 'break-all';
+        title.style.fontWeight = '600';
         title.textContent = line;
         
         container.appendChild(canvas);
@@ -236,37 +323,73 @@ btnGenerate.addEventListener('click', () => {
                 includetext: bcShowText.checked,
                 textxalign: 'center',
             });
-            generatedBarcodes.push({ text: line, canvas: canvas });
         } catch (e) {
             console.error(e);
             canvas.style.display = 'none';
             const err = document.createElement('div');
-            err.style.color = 'red';
+            err.style.color = '#e53935';
             err.style.fontSize = '0.75rem';
-            err.textContent = 'Invalid data for ' + bcType.options[bcType.selectedIndex].text;
+            err.textContent = 'Invalid data for this type';
             container.appendChild(err);
         }
     });
 });
 
 async function exportBarcodes(format) {
-    if (generatedBarcodes.length === 0) return;
+    if (activeDataLines.length === 0) return;
     
     progBarContainer.style.display = 'block';
     progText.style.display = 'block';
-    progBar.style.width = '10%';
-    progText.textContent = 'Preparing images...';
+    progBar.style.width = '5%';
+    progText.textContent = 'Rendering all images in memory...';
     
+    // Generate base64 for ALL lines, not just preview
+    let payloadImages = [];
+    
+    // Off-DOM canvas for rendering
+    const offCanvas = document.createElement('canvas');
+    
+    // Render them in chunks to not freeze the UI completely
+    const chunkSize = 50;
+    for (let i = 0; i < activeDataLines.length; i += chunkSize) {
+        const chunk = activeDataLines.slice(i, i + chunkSize);
+        for(let line of chunk) {
+            try {
+                bwipjs.toCanvas(offCanvas, {
+                    bcid: bcType.value,
+                    text: line,
+                    scale: 2,
+                    height: 12,
+                    includetext: bcShowText.checked,
+                    textxalign: 'center',
+                });
+                payloadImages.push({
+                    text: line,
+                    base64_data: offCanvas.toDataURL('image/png')
+                });
+            } catch(e) {
+                // skip invalid
+            }
+        }
+        progBar.style.width = (5 + (i / activeDataLines.length) * 35) + '%';
+        // Give UI a moment to breathe
+        await new Promise(r => setTimeout(r, 0));
+    }
+    
+    if (payloadImages.length === 0) {
+        alert("None of the data provided is valid for the selected barcode type.");
+        progBarContainer.style.display = 'none';
+        progText.style.display = 'none';
+        return;
+    }
+
     const payload = {
         format: format,
-        images: generatedBarcodes.map(item => ({
-            text: item.text,
-            base64_data: item.canvas.toDataURL('image/png')
-        }))
+        images: payloadImages
     };
     
     progBar.style.width = '40%';
-    progText.textContent = 'Generating document on server...';
+    progText.textContent = 'Uploading to server for document generation...';
     
     try {
         const res = await fetch('/api/export-barcodes', {
@@ -275,13 +398,16 @@ async function exportBarcodes(format) {
             body: JSON.stringify(payload)
         });
         
+        if (res.status === 413) {
+            throw new Error("File too large. Nginx limits bulk exports to ~10,000 items. Try a smaller batch.");
+        }
         if (!res.ok) {
-            const err = await res.json();
+            const err = await res.json().catch(()=>({detail: 'Server error'}));
             throw new Error(err.detail || 'Server error');
         }
         
         progBar.style.width = '90%';
-        progText.textContent = 'Downloading...';
+        progText.textContent = 'Downloading ' + format.toUpperCase() + '...';
         
         const blob = await res.blob();
         const url = URL.createObjectURL(blob);
@@ -1612,6 +1738,7 @@ btnExportExcel.addEventListener('click', () => exportBarcodes('xlsx'));
   </script>
 </body>
 </html>
+
 
 
 
