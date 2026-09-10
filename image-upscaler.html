@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -64,10 +64,6 @@
         </div>
         PIX<span>NIVO</span>
       </a>
-          <a class="nav-link" href="/barcode-tools.html">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"></path><path d="M8 5v14"></path><path d="M12 5v14"></path><path d="M16 5v14"></path></svg>
-            Barcode Tools
-          </a>
 
       <nav class="nav-links" id="navLinks">
         <a class="nav-link" href="/">
@@ -109,7 +105,7 @@
       100% In-Browser • Stepwise Super-Sampling
     </div>
     <h1>Image <em>Super-Resolution</em> &amp; Sharpening Studio</h1>
-    <p class="hero-subtitle">Enlarge photos 2Ã— or 4Ã— without harsh pixelation, recover crisp contours with unsharp masking, and inspect live results with the split comparison slider.</p>
+    <p class="hero-subtitle">Enlarge photos 2× or 4× without harsh pixelation, recover crisp contours with unsharp masking, and inspect live results with the split comparison slider.</p>
   </section>
 
   <!-- Studio Workspace Card -->
@@ -150,15 +146,15 @@
         <div class="control-panel">
           <div class="stat-box">
             <div class="stat-item">Original<b id="dimFrom">—</b></div>
-            <div class="stat-arrow">â†’</div>
+            <div class="stat-arrow">→</div>
             <div class="stat-item to">Upscaled<b id="dimTo">—</b></div>
           </div>
 
           <div class="panel-section-title">Magnification Scale</div>
           <div class="chips">
-            <div class="chip" data-scale="1">1Ã— Baseline</div>
-            <div class="chip on" data-scale="2">2Ã— Double</div>
-            <div class="chip" data-scale="4">4Ã— Quad</div>
+            <div class="chip" data-scale="1">1× Baseline</div>
+            <div class="chip on" data-scale="2">2× Double</div>
+            <div class="chip" data-scale="4">4× Quad</div>
           </div>
 
           <div class="panel-section-title">Unsharp Edge Masking</div>
@@ -208,27 +204,29 @@
   <footer class="site-footer">
     <div class="footer-nav">
       <a href="/">Home</a>
-      <span class="dot">Â·</span>
+      <span class="dot">·</span>
       <a href="/pdf-tools">PDF Tools</a>
-      <span class="dot">Â·</span>
+      <span class="dot">·</span>
       <a href="/image-upscaler">AI Upscaler</a>
-      <span class="dot">Â·</span>
+        <span class="dot">•</span>
+        <a href="/barcode-tools.html">Barcode Tools</a>
+      <span class="dot">·</span>
       <a href="/blog">Guides &amp; Blog</a>
-      <span class="dot">Â·</span>
+      <span class="dot">·</span>
       <a href="/about">About</a>
-      <span class="dot">Â·</span>
+      <span class="dot">·</span>
       <a href="/privacy">Privacy Policy</a>
-      <span class="dot">Â·</span>
+      <span class="dot">·</span>
       <a href="/terms">Terms &amp; Conditions</a>
-      <span class="dot">Â·</span>
+      <span class="dot">·</span>
       <a href="/contact">Contact</a>
     </div>
     <div class="footer-bottom">
       <span>PIXNIVO</span>
-      <span class="dot">â—</span>
+      <span class="dot">●</span>
       <span>AI Super-Resolution &amp; Image Enhancer</span>
-      <span class="dot">â—</span>
-      <span>Â© 2026 PIXNIVO</span>
+      <span class="dot">●</span>
+      <span>© 2026 PIXNIVO</span>
     </div>
   </footer>
 
@@ -471,8 +469,8 @@
 
         baseUp = upscaleStepwise(source, tw, th);
 
-        $('dimFrom').textContent = source.width + ' Ã— ' + source.height;
-        $('dimTo').textContent   = baseUp.width + ' Ã— ' + baseUp.height;
+        $('dimFrom').textContent = source.width + ' × ' + source.height;
+        $('dimTo').textContent   = baseUp.width + ' × ' + baseUp.height;
 
         cvBefore.width = baseUp.width; cvBefore.height = baseUp.height;
         const bx = cvBefore.getContext('2d');
@@ -586,4 +584,3 @@
   </script>
 </body>
 </html>
-
