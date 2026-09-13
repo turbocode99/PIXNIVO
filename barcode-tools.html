@@ -293,22 +293,26 @@ btnGenerate.addEventListener('click', () => {
     
     renderLines.forEach((line, i) => {
         const container = document.createElement('div');
-        container.style.background = 'white';
-        container.style.padding = '15px';
-        container.style.borderRadius = '8px';
+        container.style.background = 'var(--bg-light)';
+        container.style.border = '1px solid var(--border)';
+        container.style.padding = '1.5rem';
+        container.style.borderRadius = '12px';
         container.style.display = 'flex';
         container.style.flexDirection = 'column';
         container.style.alignItems = 'center';
         container.style.justifyContent = 'center';
-        container.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+        container.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
         
         const canvas = document.createElement('canvas');
+        canvas.style.maxWidth = '100%';
+        canvas.style.height = 'auto';
+        canvas.style.borderRadius = '6px';
         canvas.id = 'bc_' + i;
         
         const title = document.createElement('div');
-        title.style.color = '#333';
+        title.style.color = 'var(--text)';
         title.style.fontSize = '0.75rem';
-        title.style.marginTop = '8px';
+        title.style.marginTop = '12px';
         title.style.textAlign = 'center';
         title.style.wordBreak = 'break-all';
         title.style.fontWeight = '600';
@@ -319,14 +323,18 @@ btnGenerate.addEventListener('click', () => {
         bcGrid.appendChild(container);
         
         try {
-            bwipjs.toCanvas(canvas, {
+                        const is2D = ['qrcode', 'datamatrix', 'pdf417', 'azteccode', 'gs1datamatrix'].includes(bcType.value);
+            const options = {
                 bcid: bcType.value,
                 text: line,
-                scale: 2,
-                height: 12,
+                scale: 5,
                 includetext: bcShowText.checked,
                 textxalign: 'center',
-            });
+                backgroundcolor: 'FFFFFF',
+                padding: 10
+            };
+            if (!is2D) options.height = 15;
+            bwipjs.toCanvas(canvas, options);
         } catch (e) {
             console.error(e);
             canvas.style.display = 'none';
@@ -359,14 +367,18 @@ async function exportBarcodes(format) {
         const chunk = activeDataLines.slice(i, i + chunkSize);
         for(let line of chunk) {
             try {
-                bwipjs.toCanvas(offCanvas, {
-                    bcid: bcType.value,
-                    text: line,
-                    scale: 2,
-                    height: 12,
-                    includetext: bcShowText.checked,
-                    textxalign: 'center',
-                });
+                            const is2D = ['qrcode', 'datamatrix', 'pdf417', 'azteccode', 'gs1datamatrix'].includes(bcType.value);
+            const options = {
+                bcid: bcType.value,
+                text: line,
+                scale: 5,
+                includetext: bcShowText.checked,
+                textxalign: 'center',
+                backgroundcolor: 'FFFFFF',
+                padding: 10
+            };
+            if (!is2D) options.height = 15;
+            bwipjs.toCanvas(offCanvas, options);
                 payloadImages.push({
                     text: line,
                     base64_data: offCanvas.toDataURL('image/png')
