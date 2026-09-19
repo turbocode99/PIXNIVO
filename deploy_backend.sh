@@ -1,12 +1,17 @@
-﻿cd /var/www/html
+cd /var/www/html
 sudo git pull origin main
 
 sudo apt-get update
 sudo apt-get install -y python3-pip python3-venv poppler-utils libgl1-mesa-glx libglib2.0-0
 
-sudo mkdir -p /opt/pixnivo-backend
+sudo mkdir -p /opt/pixnivo-backend/data
+sudo mkdir -p /var/www/html/assets/uploads
+sudo chmod -R 777 /var/www/html/assets/uploads
 sudo cp /var/www/html/backend/main.py /opt/pixnivo-backend/
 sudo cp /var/www/html/backend/requirements.txt /opt/pixnivo-backend/
+if [ ! -f /opt/pixnivo-backend/data/blogs.json ]; then
+    sudo cp -r /var/www/html/backend/data/* /opt/pixnivo-backend/data/ || true
+fi
 
 cd /opt/pixnivo-backend
 sudo python3 -m venv venv

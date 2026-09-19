@@ -3,6 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Admin Subdomain Immediate Router -->
+  <script>
+    if (window.location.hostname === 'admin.pixnivo.app') {
+      window.location.replace('/admin.html' + window.location.search + window.location.hash);
+    }
+  </script>
   <title>PIXNIVO &mdash; Smart Image Tool | 100% Private, In-Browser Image Studio</title>
   <meta name="description" content="Compress, edit, and remove backgrounds with AI directly in your browser. 100% private, instant results, no uploads to servers." />
   <meta name="theme-color" content="#08070b" />

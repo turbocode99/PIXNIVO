@@ -1,2 +1,6 @@
 .netlify
 node_modules/
+__pycache__/
+*.pyc
+*.bak
+*.tmp

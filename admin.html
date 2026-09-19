@@ -1,0 +1,2561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PIXNIVO Admin Portal — Blog &amp; Content Management</title>
+  <meta name="description" content="Official administrative management portal for PIXNIVO articles, guides, and knowledge base." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0a0814" />
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Main PIXNIVO Stylesheet -->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+
+  <!-- Instant Theme Detection -->
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('pixnivo_theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+
+  <style>
+    /* ==========================================================================
+       PIXNIVO ADMIN PORTAL SPECIFIC STYLING
+       ========================================================================== */
+    :root {
+      --admin-sidebar-width: 260px;
+      --admin-header-height: 70px;
+      --admin-accent: #ff7a1a;
+      --admin-success: #10b981;
+      --admin-warning: #f59e0b;
+      --admin-danger: #ef4444;
+      --admin-info: #3b82f6;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Background Glow */
+    .ambient-bg {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    /* --- AUTH SCREEN --- */
+    #authScreen {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+      background: radial-gradient(circle at 50% 30%, rgba(30, 20, 50, 0.4), transparent 70%);
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--bg-glass-card);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border-glass-highlight);
+      border-radius: 20px;
+      padding: 40px 36px;
+      box-shadow: var(--shadow-glass);
+      position: relative;
+      animation: fadeInScale 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.96) translateY(12px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .auth-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .auth-logo-badge {
+      width: 56px;
+      height: 56px;
+      background: var(--primary-gradient);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .auth-title {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin: 0 0 6px 0;
+    }
+
+    .auth-title span {
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .auth-sub {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .auth-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: rgba(255, 122, 26, 0.12);
+      border: 1px solid rgba(255, 122, 26, 0.25);
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--primary-light);
+      margin-top: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .form-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-wrapper svg.field-icon {
+      position: absolute;
+      left: 14px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .auth-input, .admin-input, .admin-textarea, .admin-select {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border-medium);
+      border-radius: 12px;
+      padding: 12px 14px 12px 42px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text-primary);
+      transition: all 0.2s ease;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .admin-input.no-icon, .admin-textarea.no-icon, .admin-select.no-icon {
+      padding-left: 14px;
+    }
+
+    .auth-input:focus, .admin-input:focus, .admin-textarea:focus, .admin-select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-subtle);
+      background: var(--bg-subtle);
+    }
+
+    .toggle-pwd-btn {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+    }
+    .toggle-pwd-btn:hover { color: var(--text-primary); }
+
+    /* Strength Meter */
+    .strength-meter {
+      height: 4px;
+      width: 100%;
+      background: var(--border-subtle);
+      border-radius: 2px;
+      margin-top: 8px;
+      overflow: hidden;
+      display: none;
+    }
+    .strength-meter-bar {
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease, background-color 0.3s ease;
+    }
+    .strength-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .caps-alert {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      color: var(--admin-warning);
+      margin-top: 6px;
+    }
+
+    .auth-error {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 12.5px;
+      margin-bottom: 18px;
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .auth-submit-btn, .btn-primary {
+      width: 100%;
+      background: var(--primary-gradient);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 13px 20px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: var(--shadow-glow);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .auth-submit-btn:hover, .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 30px rgba(255, 107, 0, 0.45);
+    }
+    .auth-submit-btn:active, .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: var(--bg-glass);
+      border: 1px solid var(--border-medium);
+      color: var(--text-primary);
+      border-radius: 12px;
+      padding: 10px 18px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .btn-secondary:hover {
+      background: var(--bg-glass-hover);
+      border-color: var(--border-glass-highlight);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #fca5a5;
+      border-radius: 12px;
+      padding: 10px 18px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.25);
+      border-color: #ef4444;
+      color: #fff;
+    }
+
+    .auth-footer {
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 11.5px;
+      color: var(--text-muted);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* --- ADMIN PORTAL APP CONTAINER --- */
+    #adminApp {
+      display: none;
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+    }
+
+    /* Top Bar Header */
+    .admin-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--admin-header-height);
+      background: var(--bg-glass);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-bottom: 1px solid var(--border-glass);
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .admin-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 800;
+      font-size: 18px;
+    }
+    .admin-logo .logo-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      background: var(--primary-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+    .admin-logo span { color: var(--primary); }
+
+    .domain-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: rgba(255, 122, 26, 0.1);
+      border: 1px solid rgba(255, 122, 26, 0.25);
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary-light);
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-tab {
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .nav-tab:hover {
+      color: var(--text-primary);
+      background: var(--bg-glass-hover);
+    }
+    .nav-tab.active {
+      color: #fff;
+      background: rgba(255, 122, 26, 0.18);
+      border: 1px solid rgba(255, 122, 26, 0.35);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .sync-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 11px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 600;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+    }
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.3); opacity: 1; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+
+    .admin-user-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 12px 5px 6px;
+      background: var(--bg-glass-card);
+      border: 1px solid var(--border-medium);
+      border-radius: 24px;
+      font-size: 13px;
+    }
+    .user-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #fff;
+      font-size: 12px;
+    }
+
+    /* Main Admin Workspace */
+    .admin-main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 30px 28px 80px 28px;
+    }
+
+    /* Section Headers */
+    .section-title-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .section-title {
+      font-size: 26px;
+      font-weight: 800;
+      margin: 0;
+      letter-spacing: -0.5px;
+    }
+    .section-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin: 4px 0 0 0;
+    }
+
+    /* Dashboard Metrics Grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 18px;
+      margin-bottom: 32px;
+    }
+
+    .metric-card {
+      background: var(--bg-glass-card);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border-glass);
+      border-radius: 16px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .metric-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-hover);
+    }
+    .metric-label {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .metric-val {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin: 8px 0 4px 0;
+      letter-spacing: -1px;
+    }
+    .metric-sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .metric-icon {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      color: var(--primary);
+      opacity: 0.8;
+    }
+
+    /* Search & Filter Bar */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .filter-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      max-width: 600px;
+    }
+    .search-box {
+      position: relative;
+      flex: 1;
+    }
+    .search-box svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+    .search-box input {
+      width: 100%;
+      background: var(--bg-glass-card);
+      border: 1px solid var(--border-medium);
+      border-radius: 12px;
+      padding: 10px 14px 10px 38px;
+      font-size: 13.5px;
+      color: var(--text-primary);
+      outline: none;
+      box-sizing: border-box;
+    }
+    .search-box input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-subtle);
+    }
+
+    /* Articles Table */
+    .articles-table-wrap {
+      background: var(--bg-glass-card);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border-glass);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow-glass);
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .admin-table th {
+      padding: 14px 20px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .admin-table td {
+      padding: 16px 20px;
+      font-size: 13.5px;
+      border-bottom: 1px solid var(--border-subtle);
+      vertical-align: middle;
+    }
+    .admin-table tr:last-child td {
+      border-bottom: none;
+    }
+    .admin-table tr:hover td {
+      background: var(--bg-glass-hover);
+    }
+
+    .post-cell-title {
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .post-cell-slug {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .tag-badge {
+      display: inline-block;
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+    .status-pill.published {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+    }
+    .status-pill.draft {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fbbf24;
+    }
+
+    .action-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .icon-btn {
+      background: var(--bg-glass);
+      border: 1px solid var(--border-medium);
+      color: var(--text-secondary);
+      border-radius: 8px;
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .icon-btn:hover {
+      color: var(--text-primary);
+      border-color: var(--border-glass-highlight);
+      background: var(--bg-glass-hover);
+    }
+    .icon-btn.danger:hover {
+      color: #f87171;
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.15);
+    }
+
+    /* --- RICH TEXT BLOG EDITOR VIEW --- */
+    .editor-container {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+      .editor-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .editor-card {
+      background: var(--bg-glass-card);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border-glass);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: var(--shadow-glass);
+    }
+
+    /* WYSIWYG Toolbar */
+    .wysiwyg-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border-medium);
+      border-radius: 12px;
+      margin-bottom: 16px;
+      user-select: none;
+    }
+
+    .tb-group {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      padding-right: 8px;
+      margin-right: 6px;
+      border-right: 1px solid var(--border-subtle);
+    }
+
+    .tb-btn {
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 13px;
+      transition: all 0.15s ease;
+    }
+    .tb-btn:hover {
+      background: var(--bg-glass-hover);
+      color: var(--text-primary);
+      border-color: var(--border-glass-highlight);
+    }
+    .tb-btn.active {
+      background: rgba(255, 122, 26, 0.2);
+      color: var(--primary-light);
+      border-color: rgba(255, 122, 26, 0.4);
+    }
+
+    .tb-select {
+      background: var(--bg-input);
+      border: 1px solid var(--border-medium);
+      border-radius: 6px;
+      color: var(--text-primary);
+      padding: 4px 8px;
+      font-size: 12px;
+      outline: none;
+      cursor: pointer;
+      height: 32px;
+    }
+
+    /* Editor Editable Surface */
+    .rich-editor-area {
+      min-height: 480px;
+      max-height: 750px;
+      overflow-y: auto;
+      background: var(--bg-input);
+      border: 1px solid var(--border-medium);
+      border-radius: 14px;
+      padding: 24px 28px;
+      color: var(--text-primary);
+      font-size: 15px;
+      line-height: 1.75;
+      outline: none;
+      box-sizing: border-box;
+      transition: border-color 0.2s ease;
+    }
+    .rich-editor-area:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-subtle);
+    }
+
+    /* Styling inside the editor */
+    .rich-editor-area h1 { font-size: 26px; margin: 20px 0 10px 0; color: #fff; font-weight: 800; }
+    .rich-editor-area h2 { font-size: 22px; margin: 18px 0 8px 0; color: #fff; font-weight: 700; border-bottom: 1px solid var(--border-subtle); padding-bottom: 6px; }
+    .rich-editor-area h3 { font-size: 18px; margin: 16px 0 6px 0; color: var(--primary-light); font-weight: 700; }
+    .rich-editor-area p { margin: 10px 0; }
+    .rich-editor-area blockquote {
+      border-left: 4px solid var(--primary);
+      background: rgba(255, 122, 26, 0.08);
+      padding: 12px 18px;
+      margin: 14px 0;
+      border-radius: 0 10px 10px 0;
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+    .rich-editor-area pre {
+      background: #090710;
+      border: 1px solid var(--border-medium);
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      color: #38bdf8;
+    }
+    .rich-editor-area code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--primary-light);
+    }
+    .rich-editor-area table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    .rich-editor-area th, .rich-editor-area td {
+      border: 1px solid var(--border-medium);
+      padding: 10px 14px;
+      text-align: left;
+    }
+    .rich-editor-area th {
+      background: rgba(255, 255, 255, 0.06);
+      font-weight: 700;
+    }
+    .rich-editor-area img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin: 14px 0;
+      box-shadow: var(--shadow-md);
+    }
+    .rich-editor-area .callout-box {
+      background: rgba(255, 122, 26, 0.1);
+      border: 1px solid rgba(255, 122, 26, 0.35);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 16px 0;
+    }
+
+    /* HTML Source Mode textarea */
+    #htmlSourceArea {
+      display: none;
+      width: 100%;
+      min-height: 480px;
+      background: #08060f;
+      color: #38bdf8;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      padding: 20px;
+      border: 1px solid var(--border-medium);
+      border-radius: 14px;
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    .editor-stats-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Side Config Cards */
+    .config-card {
+      background: var(--bg-glass-card);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border-glass);
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-glass);
+    }
+    .config-card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 14px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cover-drop-zone {
+      border: 2px dashed var(--border-medium);
+      border-radius: 12px;
+      padding: 24px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: var(--bg-glass);
+      position: relative;
+    }
+    .cover-drop-zone:hover {
+      border-color: var(--primary);
+      background: var(--bg-glass-hover);
+    }
+    .cover-preview {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+      display: none;
+      margin-top: 10px;
+    }
+
+    /* Modals */
+    .modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-box {
+      background: var(--bg-modal);
+      border: 1px solid var(--border-glass-highlight);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 520px;
+      padding: 30px;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      animation: fadeInScale 0.25s ease;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .modal-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin: 0;
+    }
+    .modal-close-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 20px;
+    }
+    .modal-close-btn:hover { color: var(--text-primary); }
+
+    /* Live Preview Modal (Responsive Device Views) */
+    .preview-modal-box {
+      max-width: 1100px;
+      width: 95vw;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+    .preview-frame-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #08060f;
+      border-radius: 14px;
+      overflow: hidden;
+      margin-top: 14px;
+      border: 1px solid var(--border-medium);
+    }
+    .preview-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      transition: width 0.3s ease;
+      background: var(--bg-base);
+    }
+    .device-btn {
+      padding: 6px 12px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-medium);
+      color: var(--text-secondary);
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .device-btn.active {
+      background: var(--primary-gradient);
+      color: #fff;
+      border-color: transparent;
+    }
+
+    /* Toast Notification */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 3000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .toast-msg {
+      background: var(--bg-glass-card);
+      backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border-glass-highlight);
+      border-radius: 12px;
+      padding: 14px 20px;
+      color: #fff;
+      font-size: 13.5px;
+      font-weight: 600;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .toast-msg.success { border-left: 4px solid var(--admin-success); }
+    .toast-msg.error { border-left: 4px solid var(--admin-danger); }
+    .toast-msg.info { border-left: 4px solid var(--admin-info); }
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Dynamic Glow -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+    <div class="ambient-orb orb-4"></div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ========================================================================
+       1. STRONG AUTHENTICATION LOGIN SCREEN
+       ======================================================================== -->
+  <div id="authScreen">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <div class="auth-logo-badge">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+        <h1 class="auth-title">PIX<span>NIVO</span> Admin</h1>
+        <p class="auth-sub">Administrative Access &amp; Blog Publishing Portal</p>
+        <div class="auth-badge">
+          <span class="pulse-dot"></span>
+          admin.pixnivo.app
+        </div>
+      </div>
+
+      <div class="auth-error" id="authErrorMsg">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span id="authErrorText">Invalid credentials</span>
+      </div>
+
+      <form id="loginForm" onsubmit="handleAdminLogin(event)">
+        <div class="form-group">
+          <label class="form-label" for="loginUser">Admin Username or Email</label>
+          <div class="input-wrapper">
+            <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <input class="auth-input" type="text" id="loginUser" required autocomplete="username" placeholder="admin@pixnivo.app" value="admin@pixnivo.app" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-label">
+            <label for="loginPwd">Master Admin Password</label>
+            <span id="lockoutTimerBadge" style="color:var(--admin-warning); font-size:11px; display:none;"></span>
+          </div>
+          <div class="input-wrapper">
+            <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input class="auth-input" type="password" id="loginPwd" required autocomplete="current-password" placeholder="Enter secure password" />
+            <button type="button" class="toggle-pwd-btn" onclick="togglePasswordVisibility('loginPwd', this)" aria-label="Toggle password visibility">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          
+          <div class="caps-alert" id="capsAlert">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            Caps Lock is ON
+          </div>
+
+          <div class="strength-meter" id="strengthMeter">
+            <div class="strength-meter-bar" id="strengthBar"></div>
+          </div>
+          <div class="strength-label" id="strengthLabel"></div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 22px; font-size: 12.5px; color: var(--text-secondary);">
+          <label style="display:flex; align-items:center; gap: 6px; cursor:pointer;">
+            <input type="checkbox" id="rememberSession" checked style="accent-color: var(--primary);" />
+            Remember session on this device
+          </label>
+        </div>
+
+        <button type="submit" class="auth-submit-btn" id="loginBtn">
+          <span>Authenticate &amp; Open Portal</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        PBKDF2-HMAC-SHA256 &bull; Rate-Limited &bull; 256-bit Session Security
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ========================================================================
+       2. ADMIN PORTAL WORKSPACE (DASHBOARD & BLOG MANAGER)
+       ======================================================================== -->
+  <div id="adminApp">
+    
+    <!-- Header Navigation -->
+    <header class="admin-header">
+      <div class="header-left">
+        <a class="admin-logo" href="#dashboard" onclick="showTab('dashboard')">
+          <div class="logo-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+          </div>
+          PIX<span>NIVO</span>
+        </a>
+        <div class="domain-tag" title="Connected Subdomain">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          admin.pixnivo.app
+        </div>
+
+        <nav class="header-nav">
+          <button class="nav-tab active" id="tabBtnDashboard" onclick="showTab('dashboard')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            Dashboard
+          </button>
+          <button class="nav-tab" id="tabBtnBlogs" onclick="showTab('blogs')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            All Articles (<span id="navBlogCount">13</span>)
+          </button>
+          <button class="nav-tab" id="tabBtnEditor" onclick="openBlogEditor()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Create New Article
+          </button>
+        </nav>
+      </div>
+
+      <div class="header-right">
+        <div class="sync-pill" id="backendStatusPill" title="API Status">
+          <span class="pulse-dot"></span>
+          <span>API Connected</span>
+        </div>
+
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+
+        <a href="/blog" target="_blank" class="btn-secondary" style="padding: 6px 12px; font-size: 12.5px;" title="View Live Public Blog">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          Live Site
+        </a>
+
+        <div class="admin-user-pill">
+          <div class="user-avatar" id="userAvatar">A</div>
+          <span id="userDisplayName" style="font-weight:600;">admin@pixnivo.app</span>
+          <button onclick="handleAdminLogout()" class="icon-btn danger" style="width:26px; height:26px;" title="Sign Out &amp; Lock Session">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="admin-main">
+
+      <!-- 2A. DASHBOARD TAB -->
+      <section id="sectionDashboard">
+        <div class="section-title-wrap">
+          <div>
+            <h2 class="section-title">Knowledge Base &amp; Blog Overview</h2>
+            <p class="section-desc">Manage, publish, and monitor articles across the PIXNIVO website</p>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn-secondary" onclick="exportBlogsJSON()" title="Download JSON Backup">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Backup JSON
+            </button>
+            <button class="btn-primary" onclick="openBlogEditor()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Write New Blog Post
+            </button>
+          </div>
+        </div>
+
+        <!-- Metrics Grid -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-label">Total Articles</div>
+            <div class="metric-val" id="metricTotal">13</div>
+            <div class="metric-sub">In database</div>
+            <div class="metric-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Published Live</div>
+            <div class="metric-val" id="metricPublished" style="color:var(--admin-success);">13</div>
+            <div class="metric-sub">Visible on pixnivo.app/blog</div>
+            <div class="metric-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Drafts &amp; In Progress</div>
+            <div class="metric-val" id="metricDrafts" style="color:var(--admin-warning);">0</div>
+            <div class="metric-sub">Unpublished</div>
+            <div class="metric-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Categories</div>
+            <div class="metric-val" id="metricCategories">9</div>
+            <div class="metric-sub">Unique tags</div>
+            <div class="metric-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter & Search Controls -->
+        <div class="filter-bar">
+          <div class="filter-left">
+            <div class="search-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="articleSearchInput" placeholder="Search articles by title, topic, or keyword..." oninput="renderArticlesTable()" />
+            </div>
+            <select class="admin-select no-icon" id="categoryFilter" onchange="renderArticlesTable()" style="max-width:180px;">
+              <option value="all">All Categories</option>
+            </select>
+            <select class="admin-select no-icon" id="statusFilter" onchange="renderArticlesTable()" style="max-width:140px;">
+              <option value="all">All Status</option>
+              <option value="published">Published</option>
+              <option value="draft">Drafts</option>
+            </select>
+          </div>
+          <div style="font-size: 13px; color: var(--text-muted);">
+            Showing <strong id="filteredCount" style="color:var(--text-primary);">13</strong> articles
+          </div>
+        </div>
+
+        <!-- Articles Table -->
+        <div class="articles-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th style="width: 44%;">Article Title &amp; Slug</th>
+                <th style="width: 18%;">Category</th>
+                <th style="width: 14%;">Date &amp; Read Time</th>
+                <th style="width: 12%;">Status</th>
+                <th style="width: 12%; text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="articlesTableBody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 2B. FULL-FEATURED RICH TEXT BLOG EDITOR SECTION -->
+      <section id="sectionEditor" style="display:none;">
+        <div class="section-title-wrap">
+          <div>
+            <h2 class="section-title" id="editorTitleHeading">Create New Blog Article</h2>
+            <p class="section-desc">Compose, edit, upload media, and manage rich text formatting</p>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn-secondary" onclick="cancelEditor()">Cancel</button>
+            <button class="btn-secondary" onclick="openLivePreviewModal()" title="Preview full article with PIXNIVO styling">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              Live Preview
+            </button>
+            <button class="btn-secondary" onclick="saveBlogPost('draft')">Save as Draft</button>
+            <button class="btn-primary" onclick="saveBlogPost('published')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Publish Article
+            </button>
+          </div>
+        </div>
+
+        <div class="editor-container">
+          <!-- Main Writing Area -->
+          <div class="editor-card">
+            
+            <!-- Post Title Input -->
+            <div class="form-group">
+              <label class="form-label" for="postTitleInput">Article Title *</label>
+              <input class="admin-input no-icon" type="text" id="postTitleInput" placeholder="e.g. How to Upscale Images Without Losing Quality" oninput="handleTitleChange(this.value)" style="font-size:18px; font-weight:700; padding: 14px 18px;" />
+            </div>
+
+            <!-- Auto-generated Slug & Permalinks -->
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom: 20px; font-size:12.5px; color:var(--text-muted);">
+              <span>URL Slug:</span>
+              <span style="font-family:'JetBrains Mono', monospace; color:var(--primary-light);">pixnivo.app/post/</span>
+              <input class="admin-input no-icon" type="text" id="postSlugInput" placeholder="article-slug" style="padding: 4px 8px; font-size: 12px; font-family:'JetBrains Mono', monospace; width: auto; max-width: 280px;" />
+              <button type="button" class="btn-secondary" style="padding: 4px 8px; font-size:11px;" onclick="regenerateSlug()">Re-generate</button>
+            </div>
+
+            <!-- SEO Excerpt -->
+            <div class="form-group">
+              <label class="form-label" for="postExcerptInput">
+                <span>Summary / Excerpt (SEO Meta Description) *</span>
+                <span id="excerptCharCount" style="font-size:11px; color:var(--text-muted);">0 / 160 chars</span>
+              </label>
+              <textarea class="admin-textarea no-icon" id="postExcerptInput" rows="2" placeholder="Brief 1-2 sentence preview shown on blog cards and search engines..." oninput="updateExcerptCount(this.value)"></textarea>
+            </div>
+
+            <!-- WYSIWYG Rich Text Toolbar -->
+            <div class="wysiwyg-toolbar" id="richToolbar">
+              <!-- History -->
+              <div class="tb-group">
+                <button type="button" class="tb-btn" onclick="execCmd('undo')" title="Undo (Ctrl+Z)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v6h6"></path><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"></path></svg></button>
+                <button type="button" class="tb-btn" onclick="execCmd('redo')" title="Redo (Ctrl+Y)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 7v6h-6"></path><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"></path></svg></button>
+              </div>
+
+              <!-- Format / Headings -->
+              <div class="tb-group">
+                <select class="tb-select" onchange="formatHeading(this.value)" id="headingSelect">
+                  <option value="p">Paragraph</option>
+                  <option value="h1">Heading 1 (H1)</option>
+                  <option value="h2">Heading 2 (H2)</option>
+                  <option value="h3">Heading 3 (H3)</option>
+                  <option value="h4">Heading 4 (H4)</option>
+                </select>
+              </div>
+
+              <!-- Inline Styles -->
+              <div class="tb-group">
+                <button type="button" class="tb-btn" onclick="execCmd('bold')" title="Bold (Ctrl+B)"><b>B</b></button>
+                <button type="button" class="tb-btn" onclick="execCmd('italic')" title="Italic (Ctrl+I)"><i>I</i></button>
+                <button type="button" class="tb-btn" onclick="execCmd('underline')" title="Underline (Ctrl+U)"><u>U</u></button>
+                <button type="button" class="tb-btn" onclick="execCmd('strikeThrough')" title="Strikethrough"><s>S</s></button>
+                <button type="button" class="tb-btn" onclick="insertInlineCode()" title="Inline Code"><code>&lt;/&gt;</code></button>
+              </div>
+
+              <!-- Colors -->
+              <div class="tb-group">
+                <label class="tb-btn" title="Text Color" style="cursor:pointer; position:relative;">
+                  <span style="border-bottom: 2px solid var(--primary); font-weight:700;">A</span>
+                  <input type="color" onchange="execCmd('foreColor', this.value)" style="opacity:0; position:absolute; width:100%; height:100%; left:0; top:0; cursor:pointer;" />
+                </label>
+                <label class="tb-btn" title="Highlight Color" style="cursor:pointer; position:relative;">
+                  <span style="background: rgba(255,255,0,0.4); padding: 0 4px; border-radius:2px;">H</span>
+                  <input type="color" value="#ffff00" onchange="execCmd('hiliteColor', this.value)" style="opacity:0; position:absolute; width:100%; height:100%; left:0; top:0; cursor:pointer;" />
+                </label>
+              </div>
+
+              <!-- Alignment -->
+              <div class="tb-group">
+                <button type="button" class="tb-btn" onclick="execCmd('justifyLeft')" title="Align Left"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="17" y1="18" x2="3" y2="18"></line></svg></button>
+                <button type="button" class="tb-btn" onclick="execCmd('justifyCenter')" title="Align Center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="10" x2="6" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="18" y1="18" x2="6" y2="18"></line></svg></button>
+                <button type="button" class="tb-btn" onclick="execCmd('justifyRight')" title="Align Right"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="21" y1="10" x2="7" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="7" y2="18"></line></svg></button>
+              </div>
+
+              <!-- Lists & Blocks -->
+              <div class="tb-group">
+                <button type="button" class="tb-btn" onclick="execCmd('insertUnorderedList')" title="Bulleted List"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+                <button type="button" class="tb-btn" onclick="execCmd('insertOrderedList')" title="Numbered List"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="10" y1="6" x2="21" y2="6"></line><line x1="10" y1="12" x2="21" y2="12"></line><line x1="10" y1="18" x2="21" y2="18"></line><path d="M4 6h1v4"></path><path d="M4 10h2"></path><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"></path></svg></button>
+                <button type="button" class="tb-btn" onclick="insertBlockquote()" title="Blockquote"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path></svg></button>
+                <button type="button" class="tb-btn" onclick="insertCalloutBox()" title="Insert PIXNIVO Callout Box"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg></button>
+                <button type="button" class="tb-btn" onclick="insertCodeBlock()" title="Code Block"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></button>
+                <button type="button" class="tb-btn" onclick="insertTableDialog()" title="Insert Table"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"></path></svg></button>
+                <button type="button" class="tb-btn" onclick="execCmd('insertHorizontalRule')" title="Horizontal Divider"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+              </div>
+
+              <!-- Media & Link Actions -->
+              <div class="tb-group">
+                <button type="button" class="tb-btn" onclick="openLinkModal()" title="Insert / Edit Link"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></button>
+                <label class="tb-btn" title="Upload Image to Article Body" style="cursor:pointer;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                  <input type="file" accept="image/*" onchange="handleBodyImageUpload(event)" style="display:none;" />
+                </label>
+                <label class="tb-btn" title="Upload Document / Text (.txt, .md, .html)" style="cursor:pointer;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                  <input type="file" accept=".txt,.md,.html" onchange="handleDocumentUpload(event)" style="display:none;" />
+                </label>
+              </div>
+
+              <!-- Source / Clear Controls -->
+              <div style="margin-left:auto; display:flex; align-items:center; gap:6px;">
+                <button type="button" class="btn-secondary" style="padding: 4px 10px; font-size: 11px;" id="toggleSourceBtn" onclick="toggleHtmlSourceMode()">HTML Source</button>
+                <button type="button" class="btn-secondary" style="padding: 4px 8px; font-size: 11px; color:#f87171;" onclick="clearEditorContent()" title="Clear Editor">Clear</button>
+              </div>
+            </div>
+
+            <!-- The Editable Content Area -->
+            <div class="rich-editor-area" id="richEditor" contenteditable="true" oninput="handleEditorInput()" placeholder="Start typing your article here... Paste images, drag files, or use the rich toolbar above!"></div>
+            <textarea id="htmlSourceArea" oninput="handleHtmlSourceInput()"></textarea>
+
+            <div class="editor-stats-bar">
+              <div>
+                <span id="statWordCount">0</span> words &bull; 
+                <span id="statCharCount">0</span> characters &bull; 
+                Estimated Read Time: <strong id="statReadTime" style="color:var(--text-primary);">1 min read</strong>
+              </div>
+              <div style="color:var(--admin-success); display:flex; align-items:center; gap:5px;" id="autoSaveIndicator">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                Draft saved locally
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Side Publishing & Meta Panel -->
+          <div class="editor-sidebar">
+            
+            <!-- Publish Status Card -->
+            <div class="config-card">
+              <div class="config-card-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                Publishing Settings
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Article Status</label>
+                <div style="display:flex; gap:12px;">
+                  <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:13px;">
+                    <input type="radio" name="postStatus" value="published" id="statusRadioPub" checked style="accent-color:var(--admin-success);" />
+                    Published
+                  </label>
+                  <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:13px;">
+                    <input type="radio" name="postStatus" value="draft" id="statusRadioDraft" style="accent-color:var(--admin-warning);" />
+                    Draft
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="postCategorySelect">Category / Knowledge Area</label>
+                <select class="admin-select no-icon" id="postCategorySelect">
+                  <option value="Super-Resolution">Super-Resolution</option>
+                  <option value="Workflow">Workflow</option>
+                  <option value="PDF Tools">PDF Tools</option>
+                  <option value="Privacy">Privacy</option>
+                  <option value="Compression">Compression</option>
+                  <option value="Messaging">Messaging</option>
+                  <option value="File Formats">File Formats</option>
+                  <option value="Applications">Applications</option>
+                  <option value="Neural AI">Neural AI</option>
+                  <option value="E-Commerce">E-Commerce</option>
+                  <option value="Email Limits">Email Limits</option>
+                  <option value="ID Compliance">ID Compliance</option>
+                  <option value="Resolution Math">Resolution Math</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="postAuthorInput">Author Name</label>
+                <input class="admin-input no-icon" type="text" id="postAuthorInput" value="PIXNIVO Team" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="postDateInput">Publication Date</label>
+                <input class="admin-input no-icon" type="date" id="postDateInput" />
+              </div>
+
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label" for="postCustomReadTime">Custom Read Time (optional)</label>
+                <input class="admin-input no-icon" type="text" id="postCustomReadTime" placeholder="e.g. 8 min read (auto-calculated)" />
+              </div>
+            </div>
+
+            <!-- Cover Image Card -->
+            <div class="config-card">
+              <div class="config-card-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                Featured Cover Image
+              </div>
+
+              <div class="cover-drop-zone" onclick="document.getElementById('coverFileInput').click()" ondragover="event.preventDefault()" ondrop="handleCoverDrop(event)">
+                <input type="file" id="coverFileInput" accept="image/*" onchange="handleCoverFileSelect(event)" style="display:none;" />
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--primary); margin-bottom:8px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                <div style="font-size:13px; font-weight:600;">Click to upload cover image</div>
+                <div style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">PNG, JPG, WebP up to 10MB</div>
+              </div>
+              <img id="coverImgPreview" class="cover-preview" alt="Cover Preview" />
+
+              <div style="margin-top:14px;">
+                <label class="form-label" for="coverUrlInput">Or Cover Image URL</label>
+                <input class="admin-input no-icon" type="text" id="coverUrlInput" placeholder="https://..." oninput="updateCoverPreviewFromUrl(this.value)" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+
+  <!-- ========================================================================
+       3. MODALS (Link Modal, Table Dialog, Delete Confirm, Live Preview)
+       ======================================================================== -->
+
+  <!-- Link Insertion Modal -->
+  <div class="modal-backdrop" id="linkModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">Insert Hyperlink</h3>
+        <button class="modal-close-btn" onclick="closeLinkModal()">&times;</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="linkUrlInput">Link Destination URL *</label>
+        <input class="admin-input no-icon" type="url" id="linkUrlInput" placeholder="https://..." />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="linkTextInput">Display Text (optional)</label>
+        <input class="admin-input no-icon" type="text" id="linkTextInput" placeholder="Text to show" />
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:24px;">
+        <button class="btn-secondary" onclick="closeLinkModal()">Cancel</button>
+        <button class="btn-primary" onclick="applyLinkInsert()">Insert Link</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Article Confirmation Modal -->
+  <div class="modal-backdrop" id="deleteModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" style="color:#f87171;">Confirm Article Deletion</h3>
+        <button class="modal-close-btn" onclick="closeDeleteModal()">&times;</button>
+      </div>
+      <p style="font-size:14px; color:var(--text-secondary); line-height:1.6;">
+        Are you sure you want to delete <strong id="deleteArticleTitle" style="color:var(--text-primary);"></strong>?
+        <br/><br/>
+        This article will be immediately removed from the live website at <code>pixnivo.app/blog</code>.
+      </p>
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:24px;">
+        <button class="btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+        <button class="btn-danger" id="confirmDeleteBtn" onclick="executeDeleteArticle()">Yes, Delete Article</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Public Site Preview Modal with Device Switcher -->
+  <div class="modal-backdrop" id="livePreviewModal">
+    <div class="modal-box preview-modal-box">
+      <div class="modal-header" style="margin-bottom:8px;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <h3 class="modal-title">Live Public Site Preview</h3>
+          <div style="display:flex; gap:6px;">
+            <button class="device-btn active" id="devBtnDesktop" onclick="setPreviewDevice('100%', this)">Desktop (Full)</button>
+            <button class="device-btn" id="devBtnTablet" onclick="setPreviewDevice('768px', this)">Tablet (768px)</button>
+            <button class="device-btn" id="devBtnMobile" onclick="setPreviewDevice('375px', this)">Mobile (375px)</button>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeLivePreviewModal()">&times;</button>
+      </div>
+      <div class="preview-frame-container">
+        <iframe id="previewIframe" class="preview-iframe" title="Public Article Preview"></iframe>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ========================================================================
+       4. CLIENT-SIDE LOGIC & INTEGRATION SCRIPT
+       ======================================================================== -->
+  <script>
+    /* Global State */
+    let CURRENT_TOKEN = null;
+    let ARTICLES = [];
+    let EDITING_SLUG = null;
+    let IS_HTML_SOURCE = false;
+    let PENDING_DELETE_SLUG = null;
+
+    const API_BASE = (window.location.port === '8000') ? '' : (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://127.0.0.1:8000' : '';
+
+    /* Theme Management */
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('pixnivo_theme', next); } catch(e) {}
+    }
+
+    /* Toast Helper */
+    function showToast(msg, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast-msg ${type}`;
+      toast.innerHTML = `
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          ${type === 'success' ? '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>' : 
+            type === 'error' ? '<circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line>' :
+            '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>'}
+        </svg>
+        <span>${msg}</span>
+      `;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    /* Password Helpers & Caps Lock */
+    function togglePasswordVisibility(id, btn) {
+      const input = document.getElementById(id);
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>`;
+      } else {
+        input.type = 'password';
+        btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+      }
+    }
+
+    const pwdInput = document.getElementById('loginPwd');
+    pwdInput.addEventListener('keyup', (e) => {
+      const caps = e.getModifierState && e.getModifierState('CapsLock');
+      document.getElementById('capsAlert').style.display = caps ? 'flex' : 'none';
+      evaluatePasswordStrength(pwdInput.value);
+    });
+
+    function evaluatePasswordStrength(val) {
+      const meter = document.getElementById('strengthMeter');
+      const bar = document.getElementById('strengthBar');
+      const label = document.getElementById('strengthLabel');
+      if (!val) {
+        meter.style.display = 'none';
+        label.innerHTML = '';
+        return;
+      }
+      meter.style.display = 'block';
+      let score = 0;
+      if (val.length >= 8) score += 25;
+      if (val.length >= 12) score += 25;
+      if (/[A-Z]/.test(val) && /[a-z]/.test(val)) score += 25;
+      if (/[0-9]/.test(val) && /[^A-Za-z0-9]/.test(val)) score += 25;
+
+      bar.style.width = score + '%';
+      if (score <= 25) {
+        bar.style.backgroundColor = 'var(--admin-danger)';
+        label.innerHTML = `<span>Strength: Weak</span><span>Add uppercase, numbers, &amp; symbols</span>`;
+      } else if (score <= 50) {
+        bar.style.backgroundColor = 'var(--admin-warning)';
+        label.innerHTML = `<span>Strength: Moderate</span><span>Good starting point</span>`;
+      } else if (score <= 75) {
+        bar.style.backgroundColor = '#38bdf8';
+        label.innerHTML = `<span>Strength: Strong</span><span>Enterprise recommended</span>`;
+      } else {
+        bar.style.backgroundColor = 'var(--admin-success)';
+        label.innerHTML = `<span>Strength: Exceptional</span><span>Maximum cryptographic resilience</span>`;
+      }
+    }
+
+    /* Authentication & Session Handler */
+    async function handleAdminLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById('loginUser').value.trim();
+      const pwd = document.getElementById('loginPwd').value;
+      const remember = document.getElementById('rememberSession').checked;
+      const errBox = document.getElementById('authErrorMsg');
+      const errText = document.getElementById('authErrorText');
+      const btn = document.getElementById('loginBtn');
+
+      errBox.style.display = 'none';
+      btn.disabled = true;
+      btn.innerHTML = `<span>Verifying credentials...</span>`;
+
+      try {
+        const res = await fetch(`${API_BASE}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: user, password: pwd })
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.detail || 'Authentication failed');
+        }
+
+        CURRENT_TOKEN = data.token;
+        if (remember) {
+          localStorage.setItem('pixnivo_admin_token', CURRENT_TOKEN);
+          localStorage.setItem('pixnivo_admin_user', data.user.username);
+        } else {
+          sessionStorage.setItem('pixnivo_admin_token', CURRENT_TOKEN);
+          sessionStorage.setItem('pixnivo_admin_user', data.user.username);
+        }
+
+        document.getElementById('userDisplayName').innerText = data.user.username;
+        document.getElementById('userAvatar').innerText = data.user.username.charAt(0).toUpperCase();
+
+        showToast('Authentication successful! Welcome, Super Admin.', 'success');
+        openAdminDashboard();
+
+      } catch (err) {
+        errBox.style.display = 'flex';
+        errText.innerText = err.message;
+        showToast(err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<span>Authenticate &amp; Open Portal</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>`;
+      }
+    }
+
+    async function checkAutoLogin() {
+      const savedToken = localStorage.getItem('pixnivo_admin_token') || sessionStorage.getItem('pixnivo_admin_token');
+      if (!savedToken) return;
+
+      try {
+        const res = await fetch(`${API_BASE}/api/auth/verify`, {
+          headers: { 'Authorization': `Bearer ${savedToken}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          CURRENT_TOKEN = savedToken;
+          document.getElementById('userDisplayName').innerText = data.user || 'admin@pixnivo.app';
+          document.getElementById('userAvatar').innerText = (data.user || 'A').charAt(0).toUpperCase();
+          openAdminDashboard();
+        } else {
+          localStorage.removeItem('pixnivo_admin_token');
+          sessionStorage.removeItem('pixnivo_admin_token');
+        }
+      } catch(e) {
+        // Offline or backend delayed
+      }
+    }
+
+    function handleAdminLogout() {
+      if (confirm('Lock session and sign out of PIXNIVO Admin?')) {
+        CURRENT_TOKEN = null;
+        localStorage.removeItem('pixnivo_admin_token');
+        sessionStorage.removeItem('pixnivo_admin_token');
+        document.getElementById('adminApp').style.display = 'none';
+        document.getElementById('authScreen').style.display = 'flex';
+        document.getElementById('loginPwd').value = '';
+        showToast('Admin session terminated.', 'info');
+      }
+    }
+
+    function openAdminDashboard() {
+      document.getElementById('authScreen').style.display = 'none';
+      document.getElementById('adminApp').style.display = 'block';
+      loadArticles();
+    }
+
+    /* Tabs Navigation */
+    function showTab(tab) {
+      document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+      document.getElementById('sectionDashboard').style.display = (tab === 'dashboard' || tab === 'blogs') ? 'block' : 'none';
+      document.getElementById('sectionEditor').style.display = (tab === 'editor') ? 'block' : 'none';
+
+      if (tab === 'dashboard') document.getElementById('tabBtnDashboard').classList.add('active');
+      if (tab === 'blogs') document.getElementById('tabBtnBlogs').classList.add('active');
+      if (tab === 'editor') document.getElementById('tabBtnEditor').classList.add('active');
+    }
+
+    /* Load & Manage Articles */
+    async function loadArticles() {
+      try {
+        const headers = CURRENT_TOKEN ? { 'Authorization': `Bearer ${CURRENT_TOKEN}` } : {};
+        // Try admin endpoint first, then public endpoint
+        let res = await fetch(`${API_BASE}/api/admin/blogs`, { headers });
+        if (!res.ok) {
+          res = await fetch(`${API_BASE}/api/blogs`);
+        }
+        if (res.ok) {
+          ARTICLES = await res.json();
+          document.getElementById('backendStatusPill').innerHTML = `<span class="pulse-dot"></span><span>API Connected</span>`;
+        } else {
+          throw new Error('Could not fetch blogs');
+        }
+      } catch (err) {
+        console.warn('Using local blog database fallback:', err);
+        document.getElementById('backendStatusPill').innerHTML = `<span class="pulse-dot" style="background:#38bdf8; box-shadow:0 0 8px #38bdf8;"></span><span>Local Storage Mode</span>`;
+        const local = localStorage.getItem('pixnivo_local_blogs');
+        if (local) {
+          try { ARTICLES = JSON.parse(local); } catch(e) {}
+        }
+      }
+
+      updateMetrics();
+      populateCategoryFilter();
+      renderArticlesTable();
+    }
+
+    function updateMetrics() {
+      const total = ARTICLES.length;
+      const published = ARTICLES.filter(a => a.status === 'published').length;
+      const drafts = ARTICLES.filter(a => a.status === 'draft').length;
+      const cats = new Set(ARTICLES.map(a => a.category).filter(Boolean));
+
+      document.getElementById('metricTotal').innerText = total;
+      document.getElementById('metricPublished').innerText = published;
+      document.getElementById('metricDrafts').innerText = drafts;
+      document.getElementById('metricCategories').innerText = cats.size;
+      document.getElementById('navBlogCount').innerText = total;
+    }
+
+    function populateCategoryFilter() {
+      const filter = document.getElementById('categoryFilter');
+      const cats = Array.from(new Set(ARTICLES.map(a => a.category).filter(Boolean)));
+      filter.innerHTML = `<option value="all">All Categories</option>`;
+      cats.forEach(c => {
+        filter.innerHTML += `<option value="${c}">${c}</option>`;
+      });
+    }
+
+    function renderArticlesTable() {
+      const tbody = document.getElementById('articlesTableBody');
+      const query = (document.getElementById('articleSearchInput').value || '').toLowerCase().trim();
+      const catFilter = document.getElementById('categoryFilter').value;
+      const statusFilter = document.getElementById('statusFilter').value;
+
+      let filtered = ARTICLES.filter(a => {
+        const matchesQuery = !query || a.title.toLowerCase().includes(query) || (a.slug || '').toLowerCase().includes(query) || (a.category || '').toLowerCase().includes(query);
+        const matchesCat = (catFilter === 'all') || (a.category && a.category.toLowerCase() === catFilter.toLowerCase());
+        const matchesStatus = (statusFilter === 'all') || (a.status === statusFilter);
+        return matchesQuery && matchesCat && matchesStatus;
+      });
+
+      document.getElementById('filteredCount').innerText = filtered.length;
+      tbody.innerHTML = '';
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding: 40px; color:var(--text-muted);">No articles found matching criteria.</td></tr>`;
+        return;
+      }
+
+      filtered.forEach(article => {
+        const isPub = (article.status === 'published');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>
+            <div class="post-cell-title">
+              <span>${escapeHtml(article.title)}</span>
+            </div>
+            <div class="post-cell-slug">/${article.slug}</div>
+          </td>
+          <td>
+            <span class="tag-badge">${escapeHtml(article.category || 'Guides')}</span>
+          </td>
+          <td>
+            <div style="font-weight:600; color:var(--text-primary); font-size:12.5px;">${article.displayDate || article.date || 'Recent'}</div>
+            <div style="font-size:11.5px; color:var(--text-muted);">${article.readTime || '5 min read'}</div>
+          </td>
+          <td>
+            <span class="status-pill ${isPub ? 'published' : 'draft'}">
+              <span style="width:6px; height:6px; border-radius:50%; background:currentColor;"></span>
+              ${isPub ? 'Published' : 'Draft'}
+            </span>
+          </td>
+          <td style="text-align:right;">
+            <div class="action-group" style="justify-content: flex-end;">
+              <button class="icon-btn" onclick="openBlogEditor('${article.slug}')" title="Edit Article">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+              </button>
+              <button class="icon-btn" onclick="togglePublishStatus('${article.slug}')" title="${isPub ? 'Unpublish to Draft' : 'Publish Live'}">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  ${isPub ? '<circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>' : '<polyline points="20 6 9 17 4 12"></polyline>'}
+                </svg>
+              </button>
+              <button class="icon-btn" onclick="previewArticleModal('${article.slug}')" title="Preview Article">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </button>
+              <button class="icon-btn danger" onclick="confirmDeleteArticle('${article.slug}', '${escapeHtml(article.title)}')" title="Delete Article">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              </button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    /* Editor View Functions */
+    function openBlogEditor(slug = null) {
+      EDITING_SLUG = slug;
+      showTab('editor');
+
+      const heading = document.getElementById('editorTitleHeading');
+      const titleInput = document.getElementById('postTitleInput');
+      const slugInput = document.getElementById('postSlugInput');
+      const excerptInput = document.getElementById('postExcerptInput');
+      const richEditor = document.getElementById('richEditor');
+      const authorInput = document.getElementById('postAuthorInput');
+      const dateInput = document.getElementById('postDateInput');
+      const catSelect = document.getElementById('postCategorySelect');
+      const coverUrlInput = document.getElementById('coverUrlInput');
+      const coverImgPreview = document.getElementById('coverImgPreview');
+      const customReadTime = document.getElementById('postCustomReadTime');
+
+      if (slug) {
+        const article = ARTICLES.find(a => a.slug === slug);
+        if (article) {
+          heading.innerText = `Edit: ${article.title}`;
+          titleInput.value = article.title || '';
+          slugInput.value = article.slug || '';
+          excerptInput.value = article.excerpt || '';
+          richEditor.innerHTML = article.content || `<p>${article.excerpt || ''}</p>`;
+          authorInput.value = article.author || 'PIXNIVO Team';
+          dateInput.value = article.date || new Date().toISOString().split('T')[0];
+          catSelect.value = article.category || 'Super-Resolution';
+          coverUrlInput.value = article.coverImage || '';
+          customReadTime.value = article.readTime || '';
+
+          if (article.status === 'draft') {
+            document.getElementById('statusRadioDraft').checked = true;
+          } else {
+            document.getElementById('statusRadioPub').checked = true;
+          }
+
+          if (article.coverImage) {
+            coverImgPreview.src = article.coverImage;
+            coverImgPreview.style.display = 'block';
+          } else {
+            coverImgPreview.style.display = 'none';
+          }
+        }
+      } else {
+        heading.innerText = 'Create New Blog Article';
+        titleInput.value = '';
+        slugInput.value = '';
+        excerptInput.value = '';
+        richEditor.innerHTML = '<h2>Introduction</h2><p>Write your practical, high-value guide here. Explain clear techniques and real-world results.</p>';
+        authorInput.value = 'PIXNIVO Team';
+        dateInput.value = new Date().toISOString().split('T')[0];
+        coverUrlInput.value = '';
+        coverImgPreview.style.display = 'none';
+        customReadTime.value = '';
+        document.getElementById('statusRadioPub').checked = true;
+      }
+
+      updateExcerptCount(excerptInput.value);
+      handleEditorInput();
+    }
+
+    function cancelEditor() {
+      if (confirm('Discard changes and return to dashboard?')) {
+        showTab('dashboard');
+      }
+    }
+
+    function handleTitleChange(val) {
+      if (!EDITING_SLUG) {
+        const slug = val.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        document.getElementById('postSlugInput').value = slug;
+      }
+    }
+
+    function regenerateSlug() {
+      const val = document.getElementById('postTitleInput').value;
+      const slug = val.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      document.getElementById('postSlugInput').value = slug;
+    }
+
+    function updateExcerptCount(val) {
+      document.getElementById('excerptCharCount').innerText = `${val.length} / 160 chars`;
+    }
+
+    /* Rich Text Formatting Commands */
+    function execCmd(command, value = null) {
+      document.getElementById('richEditor').focus();
+      document.execCommand(command, false, value);
+      handleEditorInput();
+    }
+
+    function formatHeading(tag) {
+      execCmd('formatBlock', `<${tag}>`);
+    }
+
+    function insertInlineCode() {
+      const sel = window.getSelection();
+      if (!sel.rangeCount) return;
+      const range = sel.getRangeAt(0);
+      const codeNode = document.createElement('code');
+      codeNode.textContent = range.toString() || 'code';
+      range.deleteContents();
+      range.insertNode(codeNode);
+      handleEditorInput();
+    }
+
+    function insertBlockquote() {
+      const quote = prompt('Enter blockquote quote text:');
+      if (quote) {
+        execCmd('insertHTML', `<blockquote><p>${quote}</p></blockquote><p></p>`);
+      }
+    }
+
+    function insertCalloutBox() {
+      const text = prompt('Enter text for PIXNIVO Callout Box:');
+      if (text) {
+        execCmd('insertHTML', `<div class="callout-box"><p><strong>Note:</strong> ${text}</p></div><p></p>`);
+      }
+    }
+
+    function insertCodeBlock() {
+      const code = prompt('Paste your code snippet:');
+      if (code) {
+        execCmd('insertHTML', `<pre><code>${escapeHtml(code)}</code></pre><p></p>`);
+      }
+    }
+
+    function insertTableDialog() {
+      const rows = parseInt(prompt('Number of rows (including header):', '3')) || 3;
+      const cols = parseInt(prompt('Number of columns:', '3')) || 3;
+      let html = '<div class="table-wrap"><table><thead><tr>';
+      for (let c = 1; c <= cols; c++) html += `<th>Header ${c}</th>`;
+      html += '</tr></thead><tbody>';
+      for (let r = 1; r < rows; r++) {
+        html += '<tr>';
+        for (let c = 1; c <= cols; c++) html += `<td>Cell ${r}-${c}</td>`;
+        html += '</tr>';
+      }
+      html += '</tbody></table></div><p></p>';
+      execCmd('insertHTML', html);
+    }
+
+    /* Link Modal */
+    function openLinkModal() {
+      const sel = window.getSelection();
+      const text = sel ? sel.toString() : '';
+      document.getElementById('linkTextInput').value = text;
+      document.getElementById('linkUrlInput').value = 'https://';
+      document.getElementById('linkModal').style.display = 'flex';
+      document.getElementById('linkUrlInput').focus();
+    }
+    function closeLinkModal() {
+      document.getElementById('linkModal').style.display = 'none';
+    }
+    function applyLinkInsert() {
+      const url = document.getElementById('linkUrlInput').value.trim();
+      const text = document.getElementById('linkTextInput').value.trim() || url;
+      closeLinkModal();
+      if (url) {
+        execCmd('insertHTML', `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`);
+      }
+    }
+
+    /* Image & Document Uploads in Rich Editor */
+    async function handleBodyImageUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      showToast('Uploading image...', 'info');
+      try {
+        let imageUrl = null;
+        if (CURRENT_TOKEN) {
+          const formData = new FormData();
+          formData.append('file', file);
+          const res = await fetch(`${API_BASE}/api/admin/upload`, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${CURRENT_TOKEN}` },
+            body: formData
+          });
+          if (res.ok) {
+            const data = await res.json();
+            imageUrl = data.url;
+          }
+        }
+
+        // Fallback to Base64 data URL
+        if (!imageUrl) {
+          imageUrl = await readFileAsDataURL(file);
+        }
+
+        execCmd('insertHTML', `<figure><img src="${imageUrl}" alt="${file.name}" style="max-width:100%; border-radius:10px;" /><figcaption style="font-size:12px; color:var(--text-muted); text-align:center; margin-top:4px;">${file.name}</figcaption></figure><p></p>`);
+        showToast('Image inserted successfully!', 'success');
+      } catch (err) {
+        showToast('Upload failed: ' + err.message, 'error');
+      }
+    }
+
+    /* Clipboard Paste Listener for Images */
+    document.getElementById('richEditor').addEventListener('paste', async (e) => {
+      const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+      for (const item of items) {
+        if (item.type.indexOf('image') === 0) {
+          e.preventDefault();
+          const file = item.getAsFile();
+          showToast('Uploading pasted image...', 'info');
+          const dataUrl = await readFileAsDataURL(file);
+          execCmd('insertHTML', `<img src="${dataUrl}" alt="Pasted Image" style="max-width:100%; border-radius:10px;" /><p></p>`);
+          showToast('Pasted image inserted!', 'success');
+          return;
+        }
+      }
+    });
+
+    /* Document Import (.txt, .md, .html) */
+    function handleDocumentUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const text = evt.target.result;
+        if (file.name.endsWith('.html')) {
+          document.getElementById('richEditor').innerHTML = text;
+        } else if (file.name.endsWith('.md')) {
+          // Simple markdown to HTML conversion
+          const converted = convertMarkdownToHtml(text);
+          document.getElementById('richEditor').innerHTML = converted;
+        } else {
+          // Plain text
+          document.getElementById('richEditor').innerText = text;
+        }
+        handleEditorInput();
+        showToast(`Document "${file.name}" imported into editor!`, 'success');
+      };
+      reader.readAsText(file);
+    }
+
+    function convertMarkdownToHtml(md) {
+      return md
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        .replace(/^\> (.*$)/gim, '<blockquote><p>$1</p></blockquote>')
+        .replace(/\*\*(.*)\*\*/gim, '<b>$1</b>')
+        .replace(/\*(.*)\*/gim, '<i>$1</i>')
+        .replace(/`([^`]+)`/gim, '<code>$1</code>')
+        .replace(/\n$/gim, '<br />')
+        .split('\n\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('');
+    }
+
+    function clearEditorContent() {
+      if (confirm('Clear all contents in the editor?')) {
+        document.getElementById('richEditor').innerHTML = '<p></p>';
+        handleEditorInput();
+      }
+    }
+
+    /* Word Count & Read Time Calculation */
+    function handleEditorInput() {
+      const text = document.getElementById('richEditor').innerText || '';
+      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+      const chars = text.length;
+      const readMins = Math.max(1, Math.round(words / 200));
+
+      document.getElementById('statWordCount').innerText = words;
+      document.getElementById('statCharCount').innerText = chars;
+      document.getElementById('statReadTime').innerText = `${readMins} min read`;
+
+      if (IS_HTML_SOURCE) {
+        document.getElementById('htmlSourceArea').value = document.getElementById('richEditor').innerHTML;
+      }
+    }
+
+    function toggleHtmlSourceMode() {
+      const editor = document.getElementById('richEditor');
+      const source = document.getElementById('htmlSourceArea');
+      const btn = document.getElementById('toggleSourceBtn');
+
+      if (!IS_HTML_SOURCE) {
+        source.value = editor.innerHTML;
+        editor.style.display = 'none';
+        source.style.display = 'block';
+        btn.innerText = 'Visual Editor';
+        btn.classList.add('active');
+        IS_HTML_SOURCE = true;
+      } else {
+        editor.innerHTML = source.value;
+        source.style.display = 'none';
+        editor.style.display = 'block';
+        btn.innerText = 'HTML Source';
+        btn.classList.remove('active');
+        IS_HTML_SOURCE = false;
+      }
+    }
+
+    function handleHtmlSourceInput() {
+      document.getElementById('richEditor').innerHTML = document.getElementById('htmlSourceArea').value;
+      handleEditorInput();
+    }
+
+    /* Cover Image Handlers */
+    async function handleCoverFileSelect(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      uploadCoverFile(file);
+    }
+    function handleCoverDrop(e) {
+      e.preventDefault();
+      const file = e.dataTransfer.files[0];
+      if (file) uploadCoverFile(file);
+    }
+    async function uploadCoverFile(file) {
+      showToast('Uploading cover image...', 'info');
+      try {
+        let url = null;
+        if (CURRENT_TOKEN) {
+          const formData = new FormData();
+          formData.append('file', file);
+          const res = await fetch(`${API_BASE}/api/admin/upload`, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${CURRENT_TOKEN}` },
+            body: formData
+          });
+          if (res.ok) {
+            const data = await res.json();
+            url = data.url;
+          }
+        }
+        if (!url) {
+          url = await readFileAsDataURL(file);
+        }
+        document.getElementById('coverUrlInput').value = url;
+        const preview = document.getElementById('coverImgPreview');
+        preview.src = url;
+        preview.style.display = 'block';
+        showToast('Cover image updated!', 'success');
+      } catch(err) {
+        showToast('Failed to upload cover: ' + err.message, 'error');
+      }
+    }
+    function updateCoverPreviewFromUrl(url) {
+      const preview = document.getElementById('coverImgPreview');
+      if (url.trim()) {
+        preview.src = url.trim();
+        preview.style.display = 'block';
+      } else {
+        preview.style.display = 'none';
+      }
+    }
+
+    function readFileAsDataURL(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    /* Save Blog Post (Create or Update) */
+    async function saveBlogPost(forcedStatus = null) {
+      const title = document.getElementById('postTitleInput').value.trim();
+      const slug = document.getElementById('postSlugInput').value.trim();
+      const excerpt = document.getElementById('postExcerptInput').value.trim();
+      const content = document.getElementById('richEditor').innerHTML;
+      const category = document.getElementById('postCategorySelect').value;
+      const author = document.getElementById('postAuthorInput').value.trim() || 'PIXNIVO Team';
+      const date = document.getElementById('postDateInput').value || new Date().toISOString().split('T')[0];
+      const coverImage = document.getElementById('coverUrlInput').value.trim();
+      const customReadTime = document.getElementById('postCustomReadTime').value.trim();
+
+      const status = forcedStatus || (document.getElementById('statusRadioPub').checked ? 'published' : 'draft');
+
+      if (!title) {
+        showToast('Article Title is required', 'error');
+        document.getElementById('postTitleInput').focus();
+        return;
+      }
+      if (!slug) {
+        showToast('URL Slug is required', 'error');
+        document.getElementById('postSlugInput').focus();
+        return;
+      }
+
+      const words = content.replace(/<[^>]*>/g, ' ').trim().split(/\s+/).length;
+      const readTime = customReadTime || `${Math.max(1, Math.round(words / 200))} min read`;
+
+      const postPayload = {
+        title,
+        slug,
+        category,
+        excerpt,
+        content,
+        author,
+        date,
+        displayDate: formatDateDisplay(date),
+        readTime,
+        coverImage,
+        status,
+        url: `/post/${slug}`
+      };
+
+      showToast('Saving article...', 'info');
+
+      try {
+        let success = false;
+        if (CURRENT_TOKEN) {
+          const url = EDITING_SLUG ? `${API_BASE}/api/admin/blogs/${EDITING_SLUG}` : `${API_BASE}/api/admin/blogs`;
+          const method = EDITING_SLUG ? 'PUT' : 'POST';
+
+          const res = await fetch(url, {
+            method,
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${CURRENT_TOKEN}`
+            },
+            body: JSON.stringify(postPayload)
+          });
+
+          if (res.ok) {
+            success = true;
+          } else {
+            const data = await res.json();
+            throw new Error(data.detail || 'Backend save failed');
+          }
+        }
+
+        // Local State Sync
+        if (EDITING_SLUG) {
+          const idx = ARTICLES.findIndex(a => a.slug === EDITING_SLUG);
+          if (idx !== -1) ARTICLES[idx] = { ...ARTICLES[idx], ...postPayload };
+        } else {
+          ARTICLES.unshift(postPayload);
+        }
+        localStorage.setItem('pixnivo_local_blogs', JSON.stringify(ARTICLES));
+
+        showToast(`Article successfully ${status === 'published' ? 'published live' : 'saved as draft'}!`, 'success');
+        showTab('dashboard');
+        loadArticles();
+
+      } catch(err) {
+        showToast('Error saving article: ' + err.message, 'error');
+      }
+    }
+
+    /* Quick Toggle Publish Status */
+    async function togglePublishStatus(slug) {
+      const article = ARTICLES.find(a => a.slug === slug);
+      if (!article) return;
+      const newStatus = article.status === 'published' ? 'draft' : 'published';
+
+      article.status = newStatus;
+      if (CURRENT_TOKEN) {
+        try {
+          await fetch(`${API_BASE}/api/admin/blogs/${slug}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${CURRENT_TOKEN}`
+            },
+            body: JSON.stringify(article)
+          });
+        } catch(e) {}
+      }
+      localStorage.setItem('pixnivo_local_blogs', JSON.stringify(ARTICLES));
+      updateMetrics();
+      renderArticlesTable();
+      showToast(`Article "${article.title}" is now ${newStatus.toUpperCase()}`, 'success');
+    }
+
+    /* Delete Article Handling */
+    function confirmDeleteArticle(slug, title) {
+      PENDING_DELETE_SLUG = slug;
+      document.getElementById('deleteArticleTitle').innerText = title;
+      document.getElementById('deleteModal').style.display = 'flex';
+    }
+    function closeDeleteModal() {
+      document.getElementById('deleteModal').style.display = 'none';
+      PENDING_DELETE_SLUG = null;
+    }
+    async function executeDeleteArticle() {
+      if (!PENDING_DELETE_SLUG) return;
+      const slug = PENDING_DELETE_SLUG;
+      closeDeleteModal();
+
+      showToast('Deleting article...', 'info');
+      try {
+        if (CURRENT_TOKEN) {
+          await fetch(`${API_BASE}/api/admin/blogs/${slug}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${CURRENT_TOKEN}` }
+          });
+        }
+        ARTICLES = ARTICLES.filter(a => a.slug !== slug);
+        localStorage.setItem('pixnivo_local_blogs', JSON.stringify(ARTICLES));
+
+        showToast('Article deleted successfully.', 'success');
+        updateMetrics();
+        renderArticlesTable();
+      } catch(err) {
+        showToast('Delete error: ' + err.message, 'error');
+      }
+    }
+
+    /* Live Preview Functionality */
+    function openLivePreviewModal() {
+      const title = document.getElementById('postTitleInput').value.trim() || 'Untitled Article';
+      const category = document.getElementById('postCategorySelect').value;
+      const author = document.getElementById('postAuthorInput').value.trim() || 'PIXNIVO Team';
+      const date = document.getElementById('postDateInput').value || new Date().toISOString().split('T')[0];
+      const content = document.getElementById('richEditor').innerHTML;
+      const cover = document.getElementById('coverUrlInput').value.trim();
+      const readTime = document.getElementById('statReadTime').innerText;
+
+      const previewHtml = generateArticlePreviewHtml({
+        title, category, author, date: formatDateDisplay(date), content, coverImage: cover, readTime
+      });
+
+      const frame = document.getElementById('previewIframe');
+      frame.srcdoc = previewHtml;
+      document.getElementById('livePreviewModal').style.display = 'flex';
+    }
+
+    function previewArticleModal(slug) {
+      const article = ARTICLES.find(a => a.slug === slug);
+      if (!article) return;
+      const previewHtml = generateArticlePreviewHtml(article);
+      const frame = document.getElementById('previewIframe');
+      frame.srcdoc = previewHtml;
+      document.getElementById('livePreviewModal').style.display = 'flex';
+    }
+
+    function closeLivePreviewModal() {
+      document.getElementById('livePreviewModal').style.display = 'none';
+    }
+
+    function setPreviewDevice(width, btn) {
+      document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('previewIframe').style.width = width;
+    }
+
+    function generateArticlePreviewHtml(article) {
+      const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+      return `<!DOCTYPE html>
+<html lang="en" data-theme="${theme}">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <style>
+    body { padding: 40px 20px; font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-base); color: var(--text-primary); }
+    .wrap { max-width: 760px; margin: 0 auto; }
+    .cover-img { width: 100%; max-height: 400px; object-fit: cover; border-radius: 16px; margin-bottom: 24px; box-shadow: var(--shadow-md); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div style="font-size:12px; font-weight:700; color:var(--primary); text-transform:uppercase; margin-bottom:8px;">${escapeHtml(article.category || 'Guides')}</div>
+    <h1 style="font-size: 32px; font-weight: 800; margin: 0 0 12px 0;">${escapeHtml(article.title)}</h1>
+    <p style="font-size: 13.5px; color: var(--text-secondary); margin-bottom: 24px;">
+      <span>${escapeHtml(article.author || 'PIXNIVO Team')}</span> &bull; 
+      <span>${escapeHtml(article.displayDate || article.date || '')}</span> &bull; 
+      <span>${escapeHtml(article.readTime || '5 min read')}</span>
+    </p>
+    ${article.coverImage ? `<img class="cover-img" src="${article.coverImage}" alt="${escapeHtml(article.title)}">` : ''}
+    <article class="article-content" style="line-height:1.8; font-size:16px;">
+      ${article.content || '<p>' + escapeHtml(article.excerpt || '') + '</p>'}
+    </article>
+  </div>
+</body>
+</html>`;
+    }
+
+    /* Backup Export */
+    function exportBlogsJSON() {
+      const blob = new Blob([JSON.stringify(ARTICLES, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `pixnivo_blogs_backup_${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Blog database exported to JSON!', 'success');
+    }
+
+    /* Utility Helpers */
+    function formatDateDisplay(dateStr) {
+      if (!dateStr) return '';
+      try {
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      } catch(e) {
+        return dateStr;
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>"']/g, m => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[m]);
+    }
+
+    /* Auto-save Draft Interval */
+    setInterval(() => {
+      if (document.getElementById('sectionEditor').style.display === 'block') {
+        const title = document.getElementById('postTitleInput').value;
+        const content = document.getElementById('richEditor').innerHTML;
+        if (title || content) {
+          sessionStorage.setItem('pixnivo_temp_draft', JSON.stringify({
+            title, content, slug: document.getElementById('postSlugInput').value
+          }));
+        }
+      }
+    }, 15000);
+
+    /* Initialize on load */
+    window.addEventListener('DOMContentLoaded', () => {
+      checkAutoLogin();
+    });
+  </script>
+</body>
+</html>
