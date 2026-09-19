@@ -12,6 +12,9 @@ http://admin.pixnivo.app               /admin.html                              
 
 # Netlify Clean URL Rewrites for PIXNIVO
 /pdf-tools                             /pdf-tools.html                          200
+/ai-ocr                                /ai-ocr.html                             200
+/ocr                                   /ai-ocr.html                             200
+/barcode-tools                         /barcode-tools.html                      200
 /image-upscaler                        /image-upscaler.html                     200
 /blog                                  /blog.html                               200
 /about                                 /about.html                              200

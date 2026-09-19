@@ -82,9 +82,9 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           PDF Tools
         </a>
-        <a class="nav-link" href="/image-upscaler">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-          AI Upscaler
+        <a class="nav-link" href="/ai-ocr">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          AI OCR
         </a>
           <a class="nav-link" href="/barcode-tools.html">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"></path><path d="M8 5v14"></path><path d="M12 5v14"></path><path d="M16 5v14"></path></svg>
@@ -160,13 +160,17 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v12"/><path d="M18 9a6 6 0 0 0-6-6H6"/><path d="M6 15a6 6 0 0 0 6 6h6"/></svg>
         AI BG Remover
       </button>
+      <button class="tab-btn" data-tab="upscale">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        AI Upscaler
+      </button>
       <a class="tab-btn" href="/pdf-tools">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
         PDF Tools
       </a>
-      <a class="tab-btn" href="/image-upscaler">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-        AI Upscaler
+      <a class="tab-btn" href="/ai-ocr">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        AI OCR
       </a>
     </div>
   </div>
@@ -363,6 +367,88 @@
       </div>
     </div>
 
+    <!-- ==================== STAGE 4: AI UPSCALER ==================== -->
+    <div class="studio-card" id="stage-upscale">
+      <div class="studio-header">
+        <h2>AI Image Super-Resolution &amp; Enhancer</h2>
+        <p>Enlarge photos 2&times; or 4&times; with smooth multi-step bicubic interpolation and unsharp edge recovery.</p>
+      </div>
+
+      <div class="dropzone" id="dropU">
+        <div class="dropzone-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+        <h3>Drop an image here to upscale</h3>
+        <p>Supports JPG, PNG, WebP, AVIF &amp; iPhone HEIC</p>
+        <span class="formats-badge">Instant local processing • Hardware-accelerated</span>
+        <input type="file" id="fileU" accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp,.avif,.heic,.heif" />
+      </div>
+
+      <div class="workspace-grid" id="workU">
+        <div class="canvas-viewport">
+          <div class="compare-container" id="compareU">
+            <canvas id="cvBeforeU"></canvas>
+            <div class="compare-after-wrap" id="afterWrapU">
+              <canvas id="cvAfterU"></canvas>
+            </div>
+            <div class="compare-handle" id="handleU"></div>
+            <span class="tag-label tag-left">Original</span>
+            <span class="tag-label tag-right">Upscaled</span>
+          </div>
+          <div class="busy-overlay" id="busyU">
+            <div class="spinner-ring"></div>
+            <span id="busyTxtU">Processing super-resolution…</span>
+          </div>
+        </div>
+
+        <div class="control-panel">
+          <div class="stat-box">
+            <div class="stat-item">Original<b id="dimFromU">—</b></div>
+            <div class="stat-arrow">→</div>
+            <div class="stat-item to">Upscaled<b id="dimToU">—</b></div>
+          </div>
+
+          <div class="panel-section-title">Magnification Scale</div>
+          <div class="chips">
+            <div class="chip" data-scale="1">1× Baseline</div>
+            <div class="chip on" data-scale="2">2× Double</div>
+            <div class="chip" data-scale="4">4× Quad</div>
+          </div>
+
+          <div class="panel-section-title">Unsharp Edge Masking</div>
+          <div class="field">
+            <label>Sharpening Strength <span class="val" id="shValU">55</span></label>
+            <input type="range" id="sharpenU" min="0" max="100" value="55" />
+          </div>
+          <p class="hint">Recovers edge sharpness softened during enlargement without creating halo artifacts.</p>
+
+          <div class="panel-section-title">Lighting &amp; Tone Balance</div>
+          <div class="field"><label>Brightness <span class="val" id="brValU">100%</span></label><input type="range" id="brightnessU" min="50" max="160" value="100" /></div>
+          <div class="field"><label>Contrast <span class="val" id="coValU">100%</span></label><input type="range" id="contrastU" min="50" max="170" value="100" /></div>
+          <div class="field"><label>Saturation <span class="val" id="saValU">100%</span></label><input type="range" id="saturationU" min="0" max="200" value="100" /></div>
+
+          <div class="panel-section-title">Export Settings</div>
+          <div class="field">
+            <label>Export Format</label>
+            <select id="formatU">
+              <option value="image/png">PNG — Lossless crisp fidelity</option>
+              <option value="image/jpeg">JPG — Compressed smaller file</option>
+            </select>
+          </div>
+          <div class="field" id="qWrapU" style="display:none; margin-top:8px;">
+            <label>JPG Quality <span class="val" id="qValU">92%</span></label>
+            <input type="range" id="qualityU" min="50" max="100" value="92" />
+          </div>
+
+          <button class="btn btn-primary" id="downloadU">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Enhanced Result
+          </button>
+          <button class="btn btn-ghost" id="resetU">Reset Adjustments</button>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- Editorial & Guides Section -->
@@ -430,9 +516,9 @@
       <span class="dot">&bull;</span>
       <a href="/pdf-tools">PDF Tools</a>
       <span class="dot">&bull;</span>
-      <a href="/image-upscaler">AI Upscaler</a>
-        <span class="dot">&bull;</span>
-        <a href="/barcode-tools.html">Barcode Tools</a>
+      <a href="/ai-ocr">AI OCR</a>
+      <span class="dot">&bull;</span>
+      <a href="/barcode-tools.html">Barcode Tools</a>
       <span class="dot">&bull;</span>
       <a href="/blog">Guides &amp; Blog</a>
       <span class="dot">&bull;</span>
@@ -1724,6 +1810,310 @@
           URL.revokeObjectURL(url);
         }, 'image/png');
       });
+    })();
+
+    /* ==================== TAB 4: AI UPSCALER ==================== */
+    (function(){
+      'use strict';
+      const $ = id => document.getElementById(id);
+      const clamp = v => v < 0 ? 0 : v > 255 ? 255 : v;
+
+      function looksHeic(file){
+        const n = (file.name || '').toLowerCase(), t = (file.type || '').toLowerCase();
+        return n.endsWith('.heic') || n.endsWith('.heif') || t.includes('heic') || t.includes('heif');
+      }
+
+      function loadImageFile(file){
+        return new Promise((resolve, reject) => {
+          if (!file){ reject(new Error('No file')); return; }
+          if (file.size === 0){ reject(new Error('Empty file')); return; }
+
+          const decode = blob => {
+            if (window.createImageBitmap){
+              return createImageBitmap(blob).then(resolve).catch(() => legacy(blob));
+            }
+            return legacy(blob);
+          };
+          const legacy = blob => new Promise(res => {
+            const url = URL.createObjectURL(blob);
+            const img = new Image();
+            img.onload = () => { URL.revokeObjectURL(url); resolve(img); res(); };
+            img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Could not open image file.')); res(); };
+            img.src = url;
+          });
+
+          if (looksHeic(file) && window.convertHeic){
+            window.convertHeic(file).then(decode).catch(() => legacy(file));
+            return;
+          }
+          if (window.createImageBitmap){
+            createImageBitmap(file).then(resolve).catch(() => legacy(file));
+            return;
+          }
+          legacy(file);
+        });
+      }
+
+      let source = null;
+      let baseUp = null;
+      let outCanvas = null;
+      let scale = 2;
+      let origName = 'image';
+      let renderTimer = null;
+
+      const cvBefore = $('cvBeforeU'), cvAfter = $('cvAfterU');
+
+      function wireDrop(zone, input, cb){
+        zone.addEventListener('click', () => input.click());
+        input.addEventListener('change', e => { if (e.target.files.length) cb(e.target.files[0]); });
+        ['dragover','dragenter'].forEach(ev => zone.addEventListener(ev, e => { e.preventDefault(); zone.classList.add('drag'); }));
+        ['dragleave','drop'].forEach(ev => zone.addEventListener(ev, e => { e.preventDefault(); zone.classList.remove('drag'); }));
+        zone.addEventListener('drop', e => { if (e.dataTransfer.files.length) cb(e.dataTransfer.files[0]); });
+      }
+
+      const dropU = $('dropU');
+      const fileU = $('fileU');
+      if (dropU && fileU) {
+        wireDrop(dropU, fileU, async file => {
+          origName = file.name.replace(/\.[^.]+$/, '');
+          try{
+            source = await loadImageFile(file);
+            $('workU').classList.add('active');
+            rebuild();
+          } catch(err){
+            alert(err.message || 'Could not open that image.');
+          }
+        });
+      }
+
+      function busy(on, txt){
+        $('busyU').classList.toggle('active', !!on);
+        if (txt) $('busyTxtU').textContent = txt;
+      }
+
+      function upscaleStepwise(img, targetW, targetH){
+        let cur = document.createElement('canvas');
+        cur.width = img.width; cur.height = img.height;
+        cur.getContext('2d').drawImage(img, 0, 0);
+
+        while (cur.width < targetW){
+          const nw = Math.min(targetW, Math.round(cur.width * 1.5));
+          const nh = Math.round(nw * (targetH / targetW));
+          const next = document.createElement('canvas');
+          next.width = nw; next.height = nh;
+          const cx = next.getContext('2d');
+          cx.imageSmoothingEnabled = true;
+          cx.imageSmoothingQuality = 'high';
+          cx.drawImage(cur, 0, 0, nw, nh);
+          cur = next;
+        }
+
+        if (cur.width !== targetW || cur.height !== targetH){
+          const fin = document.createElement('canvas');
+          fin.width = targetW; fin.height = targetH;
+          const cx = fin.getContext('2d');
+          cx.imageSmoothingEnabled = true;
+          cx.imageSmoothingQuality = 'high';
+          cx.drawImage(cur, 0, 0, targetW, targetH);
+          cur = fin;
+        }
+        return cur;
+      }
+
+      function unsharpMask(canvas, amount){
+        if (amount <= 0) return;
+        const w = canvas.width, h = canvas.height;
+        if (w * h > 12000000) return;
+        const ctx = canvas.getContext('2d');
+        const id = ctx.getImageData(0, 0, w, h);
+        const d = id.data;
+
+        const tmp = new Float32Array(w * h * 3);
+        for (let y = 0; y < h; y++){
+          for (let x = 0; x < w; x++){
+            const x0 = x > 0 ? x-1 : 0, x2 = x < w-1 ? x+1 : w-1;
+            const i = (y*w + x) * 3;
+            for (let c = 0; c < 3; c++){
+              tmp[i+c] = (d[((y*w+x0)<<2)+c] + d[((y*w+x)<<2)+c] + d[((y*w+x2)<<2)+c]) / 3;
+            }
+          }
+        }
+        const k = amount / 100 * 1.6;
+        for (let y = 0; y < h; y++){
+          const y0 = y > 0 ? y-1 : 0, y2 = y < h-1 ? y+1 : h-1;
+          for (let x = 0; x < w; x++){
+            const p = (y*w + x) << 2;
+            for (let c = 0; c < 3; c++){
+              const blur = (tmp[((y0*w+x)*3)+c] + tmp[((y*w+x)*3)+c] + tmp[((y2*w+x)*3)+c]) / 3;
+              d[p+c] = clamp(d[p+c] + (d[p+c] - blur) * k);
+            }
+          }
+        }
+        ctx.putImageData(id, 0, 0);
+      }
+
+      function adjust(canvas, bF, cF, sF){
+        if (bF === 1 && cF === 1 && sF === 1) return;
+        const w = canvas.width, h = canvas.height;
+        const ctx = canvas.getContext('2d');
+        const id = ctx.getImageData(0, 0, w, h);
+        const d = id.data;
+        for (let i = 0; i < d.length; i += 4){
+          let r = d[i] * bF, g = d[i+1] * bF, b = d[i+2] * bF;
+          r = (r-128)*cF + 128; g = (g-128)*cF + 128; b = (b-128)*cF + 128;
+          r = clamp(r); g = clamp(g); b = clamp(b);
+          if (sF !== 1){
+            const grey = 0.299*r + 0.587*g + 0.114*b;
+            r = clamp(grey + (r-grey)*sF);
+            g = clamp(grey + (g-grey)*sF);
+            b = clamp(grey + (g-grey)*sF);
+          }
+          d[i] = r; d[i+1] = g; d[i+2] = b;
+        }
+        ctx.putImageData(id, 0, 0);
+      }
+
+      async function rebuild(){
+        if (!source) return;
+        busy(true, 'Computing Super-Resolution…');
+        await new Promise(r => setTimeout(r, 30));
+
+        const MAX_PIXELS = 40000000;
+        let tw = Math.round(source.width * scale);
+        let th = Math.round(source.height * scale);
+        if (tw * th > MAX_PIXELS){
+          const f = Math.sqrt(MAX_PIXELS / (tw * th));
+          tw = Math.round(tw * f); th = Math.round(th * f);
+        }
+
+        baseUp = upscaleStepwise(source, tw, th);
+
+        $('dimFromU').textContent = source.width + ' × ' + source.height;
+        $('dimToU').textContent   = baseUp.width + ' × ' + baseUp.height;
+
+        cvBefore.width = baseUp.width; cvBefore.height = baseUp.height;
+        const bx = cvBefore.getContext('2d');
+        bx.imageSmoothingEnabled = true;
+        bx.imageSmoothingQuality = 'low';
+        bx.drawImage(source, 0, 0, baseUp.width, baseUp.height);
+
+        await applyAdjustments();
+        busy(false);
+      }
+
+      async function applyAdjustments(){
+        if (!baseUp) return;
+        const out = document.createElement('canvas');
+        out.width = baseUp.width; out.height = baseUp.height;
+        out.getContext('2d').drawImage(baseUp, 0, 0);
+
+        unsharpMask(out, parseInt($('sharpenU').value));
+        adjust(out,
+          parseInt($('brightnessU').value) / 100,
+          parseInt($('contrastU').value) / 100,
+          parseInt($('saturationU').value) / 100);
+
+        outCanvas = out;
+        cvAfter.width = out.width; cvAfter.height = out.height;
+        cvAfter.getContext('2d').drawImage(out, 0, 0);
+        syncAfterSize();
+      }
+
+      function syncAfterSize(){
+        const r = cvBefore.getBoundingClientRect();
+        cvAfter.style.width = r.width + 'px';
+        cvAfter.style.height = r.height + 'px';
+      }
+      window.addEventListener('resize', syncAfterSize);
+
+      function queueAdjust(){
+        clearTimeout(renderTimer);
+        renderTimer = setTimeout(() => {
+          busy(true, 'Rendering…');
+          setTimeout(async () => { await applyAdjustments(); busy(false); }, 20);
+        }, 220);
+      }
+
+      document.querySelectorAll('#stage-upscale .chip[data-scale]').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.querySelectorAll('#stage-upscale .chip[data-scale]').forEach(c => c.classList.remove('on'));
+          chip.classList.add('on');
+          scale = parseInt(chip.dataset.scale);
+          rebuild();
+        });
+      });
+
+      const pairs = [['sharpenU','shValU',''], ['brightnessU','brValU','%'], ['contrastU','coValU','%'], ['saturationU','saValU','%']];
+      pairs.forEach(([id, lab, suffix]) => {
+        $(id).addEventListener('input', () => { $(lab).textContent = $(id).value + suffix; queueAdjust(); });
+      });
+
+      $('formatU').addEventListener('change', e => {
+        $('qWrapU').style.display = e.target.value === 'image/jpeg' ? 'block' : 'none';
+      });
+      $('qualityU').addEventListener('input', e => $('qValU').textContent = e.target.value + '%');
+
+      $('resetU').addEventListener('click', () => {
+        $('sharpenU').value = 55;    $('shValU').textContent = '55';
+        $('brightnessU').value = 100; $('brValU').textContent = '100%';
+        $('contrastU').value = 100;   $('coValU').textContent = '100%';
+        $('saturationU').value = 100; $('saValU').textContent = '100%';
+        queueAdjust();
+      });
+
+      $('downloadU').addEventListener('click', () => {
+        if (!outCanvas) return;
+        const type = $('formatU').value;
+        const q = parseInt($('qualityU').value) / 100;
+        const ext = type === 'image/jpeg' ? 'jpg' : 'png';
+        outCanvas.toBlob(blob => {
+          if (!blob){ alert('Could not build file. Try a smaller scale.'); return; }
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url; a.download = origName + '-upscaled-' + scale + 'x.' + ext;
+          a.style.display = 'none';
+          document.body.appendChild(a); a.click(); document.body.removeChild(a);
+          setTimeout(() => URL.revokeObjectURL(url), 4000);
+        }, type, type === 'image/jpeg' ? q : undefined);
+      });
+
+      /* Comparison Slider */
+      (function(){
+        const wrap = $('compareU'), after = $('afterWrapU'), handle = $('handleU');
+        if (!wrap || !after || !handle) return;
+        let dragging = false;
+
+        function setPos(clientX){
+          const r = wrap.getBoundingClientRect();
+          let pct = ((clientX - r.left) / r.width) * 100;
+          pct = Math.max(0, Math.min(100, pct));
+          after.style.width = pct + '%';
+          handle.style.left = pct + '%';
+        }
+        const start = e => { dragging = true; setPos(e.clientX ?? e.touches[0].clientX); e.preventDefault(); };
+        const move  = e => { if (dragging) setPos(e.clientX ?? e.touches[0].clientX); };
+        const end   = () => { dragging = false; };
+
+        wrap.addEventListener('pointerdown', start);
+        window.addEventListener('pointermove', move);
+        window.addEventListener('pointerup', end);
+        window.addEventListener('pointercancel', end);
+      })();
+
+    })();
+
+    /* URL Tab Deep Linking */
+    (function(){
+      function checkTab() {
+        const params = new URLSearchParams(window.location.search);
+        const tab = params.get('tab') || (window.location.hash ? window.location.hash.replace('#', '') : null);
+        if (tab) {
+          const btn = document.querySelector(`.tab-btn[data-tab="${tab}"]`);
+          if (btn) btn.click();
+        }
+      }
+      checkTab();
+      window.addEventListener('hashchange', checkTab);
     })();
   </script>
 </body>

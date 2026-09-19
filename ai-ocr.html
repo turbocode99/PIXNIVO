@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free AI OCR — Extract Text from Images &amp; PDFs | PIXNIVO</title>
+  <meta name="description" content="Free online AI OCR tool. Extract editable text from scanned documents, invoices, receipts, photos, and multi-page PDFs with high accuracy." />
+  <meta name="theme-color" content="#08070b" />
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pixnivo.app/ai-ocr" />
+  <meta property="og:title" content="Free AI OCR — Extract Text from Images &amp; PDFs | PIXNIVO" />
+  <meta property="og:description" content="Accurate, secure AI optical character recognition. Extract text from images and PDF documents directly in your browser." />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9RDW8F1H9D"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9RDW8F1H9D');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8972850134795669" crossorigin="anonymous"></script>
+
+  <!-- External OCR & PDF Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+  <!-- Modern Design System Stylesheet -->
+  <link rel="stylesheet" href="/assets/css/main.css" />
+
+  <!-- Instant Theme Detection Script -->
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('pixnivo_theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+
+  <style>
+    .ocr-workspace-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      margin-top: 24px;
+    }
+    @media (max-width: 960px) {
+      .ocr-workspace-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .preview-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 380px;
+      position: relative;
+      overflow: hidden;
+    }
+    .preview-img-wrap {
+      max-width: 100%;
+      max-height: 480px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: auto;
+      border-radius: 8px;
+    }
+    .preview-img-wrap img, .preview-img-wrap canvas {
+      max-width: 100%;
+      max-height: 460px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .ocr-config-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .ocr-result-card {
+      margin-top: 28px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+    .ocr-output-area {
+      width: 100%;
+      min-height: 280px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border-glass);
+      background: rgba(0, 0, 0, 0.35);
+      color: var(--text-main);
+      font-family: 'JetBrains Mono', monospace, Consolas, monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      resize: vertical;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .ocr-output-area:focus {
+      border-color: var(--primary);
+    }
+    .ocr-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-glass);
+    }
+    .ocr-stats {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .ocr-stats b {
+      color: var(--primary-light);
+    }
+    .ocr-actions-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pdf-pager {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      margin-top: 14px;
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+    .engine-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(76, 175, 80, 0.15);
+      color: #81c784;
+      border: 1px solid rgba(76, 175, 80, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic Colorful Aurora Background -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+    <div class="ambient-orb orb-4"></div>
+    <div class="ambient-orb orb-5"></div>
+  </div>
+
+  <!-- Floating Glass Navigation -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a class="brand" href="/">
+        <div class="brand-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </div>
+        PIX<span>NIVO</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a class="nav-link" href="/">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Image Tools
+        </a>
+        <a class="nav-link" href="/pdf-tools">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          PDF Tools
+        </a>
+        <a class="nav-link active" href="/ai-ocr">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          AI OCR
+        </a>
+        <a class="nav-link" href="/barcode-tools.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"></path><path d="M8 5v14"></path><path d="M12 5v14"></path><path d="M16 5v14"></path></svg>
+          Barcode Tools
+        </a>
+        <a class="nav-link" href="/blog">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Guides
+        </a>
+        <a class="nav-link" href="/about">About</a>
+        <a class="nav-link" href="/contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme" title="Toggle Theme">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="badge-privacy">
+      <span class="pulse-dot"></span>
+      Secure AI OCR • Multi-Engine Text Recognition
+    </div>
+    <h1>Professional <em>AI OCR Studio</em> in Your Browser</h1>
+    <p class="hero-subtitle">Extract clean, editable text from scanned documents, PDF files, invoices, receipts, and photos with dual-engine AI and multi-language support.</p>
+  </section>
+
+  <!-- Interactive Studio Workspace Card -->
+  <main class="studio-container">
+    <section class="studio-card active">
+      <div class="studio-header">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div>
+            <h2>Document &amp; Image AI OCR</h2>
+            <p>Convert raster scans into clean text with neural classification and layout awareness.</p>
+          </div>
+          <span class="engine-badge">
+            <span class="pulse-dot"></span>
+            Dual Engine (Cloud &amp; Offline)
+          </span>
+        </div>
+      </div>
+
+      <!-- Dropzone -->
+      <div class="dropzone" id="dropO">
+        <div class="dropzone-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+        </div>
+        <h3 id="dropOH3">Drop PDF document or photo here for OCR</h3>
+        <p>Supports Multi-page PDF, JPG, PNG, WebP, TIFF &amp; iPhone HEIC Photos</p>
+        <span class="formats-badge">Drag &amp; drop or click to browse</span>
+        <input type="file" id="fileO" accept="image/*,.pdf,.jpg,.jpeg,.png,.webp,.tif,.tiff,.bmp,.heic,.heif" />
+      </div>
+
+      <!-- Workspace Grid (Appears on file selection) -->
+      <div class="ocr-workspace-grid" id="ocrWorkspace" style="display:none;">
+        
+        <!-- Left: Visual Inspection & Preview -->
+        <div class="preview-card">
+          <div class="preview-img-wrap">
+            <img id="ocrPreviewImg" alt="Document Preview" style="display:none;" />
+            <canvas id="ocrPreviewCanvas" style="display:none;"></canvas>
+          </div>
+          <div class="pdf-pager" id="pdfPager">
+            <button class="btn btn-ghost" id="pdfPrev" style="padding:6px 12px; font-size:12px;">&larr; Prev</button>
+            <span id="pdfPageNum">Page 1 of 1</span>
+            <button class="btn btn-ghost" id="pdfNext" style="padding:6px 12px; font-size:12px;">Next &rarr;</button>
+          </div>
+        </div>
+
+        <!-- Right: Engine & Extraction Controls -->
+        <div class="ocr-config-card">
+          <div class="field">
+            <label>OCR Engine</label>
+            <select id="ocrEngine" class="glass-select">
+              <option value="paddle" selected>PaddleOCR Neural Net (Server-Side, High Accuracy)</option>
+              <option value="tesseract">Tesseract.js Engine (Client-Side, 100% Private Offline)</option>
+            </select>
+            <p class="hint" style="margin-top:4px;">PaddleOCR delivers state-of-the-art layout and text accuracy. Tesseract runs completely in your browser.</p>
+          </div>
+
+          <div class="field">
+            <label>Document Language</label>
+            <select id="ocrLang" class="glass-select">
+              <option value="eng" selected>English</option>
+              <option value="spa">Spanish (Español)</option>
+              <option value="fra">French (Français)</option>
+              <option value="deu">German (Deutsch)</option>
+              <option value="chi_sim">Chinese Simplified (中文)</option>
+              <option value="jpn">Japanese (日本語)</option>
+              <option value="ara">Arabic (العربية)</option>
+              <option value="rus">Russian (Русский)</option>
+              <option value="hin">Hindi (हिन्दी)</option>
+              <option value="por">Portuguese (Português)</option>
+              <option value="ita">Italian (Italiano)</option>
+              <option value="kor">Korean (한국어)</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Image Pre-Processing Filter</label>
+            <select id="ocrEnhance" class="glass-select">
+              <option value="none" selected>Standard (Original Quality)</option>
+              <option value="auto">Auto Contrast &amp; Sharpen (Recommended for Scans)</option>
+              <option value="binarize">Binarize (High-Contrast Black &amp; White Threshold)</option>
+            </select>
+          </div>
+
+          <!-- Progress bar -->
+          <div id="progO" style="display:none; margin-top:10px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px; color:var(--text-muted);">
+              <span id="progTxtO">Processing document...</span>
+              <span id="progPctO">0%</span>
+            </div>
+            <div style="height:6px; background:rgba(255,255,255,0.1); border-radius:99px; overflow:hidden;">
+              <div id="progBarO" style="height:100%; width:0%; background:var(--primary); transition:width 0.3s ease;"></div>
+            </div>
+          </div>
+
+          <button id="btnOcr" class="btn btn-primary" style="margin-top:12px; font-size:15px; padding:14px 20px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            Run AI OCR Extraction
+          </button>
+        </div>
+      </div>
+
+      <!-- Result Card -->
+      <div class="ocr-result-card" id="resO" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+          <h3 style="font-size:18px; font-weight:700; color:var(--text-main);">Extracted Text</h3>
+          <div class="ocr-stats">
+            <span>Words: <b id="statWords">0</b></span>
+            <span>Characters: <b id="statChars">0</b></span>
+            <span>Lines: <b id="statLines">0</b></span>
+          </div>
+        </div>
+
+        <textarea id="ocrOut" class="ocr-output-area" placeholder="Extracted text will appear here..."></textarea>
+
+        <div class="ocr-toolbar">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <input type="text" id="searchInText" placeholder="Search within text..." class="admin-input" style="padding:7px 12px; font-size:13px; max-width:200px;" />
+            <button class="btn btn-ghost" id="btnFindNext" style="padding:6px 12px; font-size:12px;">Find</button>
+          </div>
+
+          <div class="ocr-actions-group">
+            <button class="btn btn-ghost" id="btnCopyText" style="padding:8px 14px; font-size:13px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              Copy Text
+            </button>
+            <button class="btn btn-ghost" id="btnDownloadTxt" style="padding:8px 14px; font-size:13px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Download .txt
+            </button>
+            <button class="btn btn-ghost" id="btnDownloadDoc" style="padding:8px 14px; font-size:13px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              Download Word (.doc)
+            </button>
+            <button class="btn btn-ghost danger" id="btnClearText" style="padding:8px 14px; font-size:13px;">
+              Clear
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical Guide Cards -->
+    <div style="margin-top:36px; display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
+      <div class="callout-box">
+        <h4 style="color:var(--primary-light); margin-bottom:8px; font-size:15px; font-weight:700;">Neural OCR Pipeline</h4>
+        <p style="font-size:13.5px; line-height:1.6; color:var(--text-muted);">Uses deep convolutional detection networks to identify text baselines, followed by an attentive recognizer that decodes characters across multilingual dictionaries.</p>
+      </div>
+      <div class="callout-box">
+        <h4 style="color:var(--primary-light); margin-bottom:8px; font-size:15px; font-weight:700;">Multi-Page PDF Support</h4>
+        <p style="font-size:13.5px; line-height:1.6; color:var(--text-muted);">Seamlessly render multi-page PDF documents and extract text page-by-page or batch process entire contracts, reports, and books in one click.</p>
+      </div>
+      <div class="callout-box">
+        <h4 style="color:var(--primary-light); margin-bottom:8px; font-size:15px; font-weight:700;">Zero Data Retention</h4>
+        <p style="font-size:13.5px; line-height:1.6; color:var(--text-muted);">With client-side mode, documents never leave your browser. With server-side mode, uploads are processed in volatile memory and purged immediately.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modern Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-nav">
+      <a href="/">Image Tools</a>
+      <span class="dot">&bull;</span>
+      <a href="/pdf-tools">PDF Tools</a>
+      <span class="dot">&bull;</span>
+      <a href="/ai-ocr">AI OCR</a>
+      <span class="dot">&bull;</span>
+      <a href="/barcode-tools.html">Barcode Tools</a>
+      <span class="dot">&bull;</span>
+      <a href="/blog">Guides &amp; Blog</a>
+      <span class="dot">&bull;</span>
+      <a href="/about">About</a>
+      <span class="dot">&bull;</span>
+      <a href="/privacy">Privacy Policy</a>
+      <span class="dot">&bull;</span>
+      <a href="/terms">Terms &amp; Conditions</a>
+      <span class="dot">&bull;</span>
+      <a href="/contact">Contact</a>
+    </div>
+    <div class="footer-bottom">
+      <span>PIXNIVO</span>
+      <span class="dot">&bull;</span>
+      <span>Neural AI Document &amp; Image OCR</span>
+      <span class="dot">&bull;</span>
+      <span>&copy; 2026 PIXNIVO</span>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    /* Theme Toggle */
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'dark';
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('pixnivo_theme', next); } catch(e) {}
+      });
+    }
+
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (mobileToggle && navLinks) {
+      mobileToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+    }
+
+    /* OCR Logic */
+    (function() {
+      if (window.pdfjsLib) {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+      }
+
+      const dropO = document.getElementById('dropO');
+      const fileO = document.getElementById('fileO');
+      const dropOH3 = document.getElementById('dropOH3');
+      const ocrWorkspace = document.getElementById('ocrWorkspace');
+      const ocrPreviewImg = document.getElementById('ocrPreviewImg');
+      const ocrPreviewCanvas = document.getElementById('ocrPreviewCanvas');
+      const pdfPager = document.getElementById('pdfPager');
+      const pdfPrev = document.getElementById('pdfPrev');
+      const pdfNext = document.getElementById('pdfNext');
+      const pdfPageNum = document.getElementById('pdfPageNum');
+      const ocrEngine = document.getElementById('ocrEngine');
+      const ocrLang = document.getElementById('ocrLang');
+      const ocrEnhance = document.getElementById('ocrEnhance');
+      const progO = document.getElementById('progO');
+      const progTxtO = document.getElementById('progTxtO');
+      const progPctO = document.getElementById('progPctO');
+      const progBarO = document.getElementById('progBarO');
+      const btnOcr = document.getElementById('btnOcr');
+      const resO = document.getElementById('resO');
+      const ocrOut = document.getElementById('ocrOut');
+      const statWords = document.getElementById('statWords');
+      const statChars = document.getElementById('statChars');
+      const statLines = document.getElementById('statLines');
+      const btnCopyText = document.getElementById('btnCopyText');
+      const btnDownloadTxt = document.getElementById('btnDownloadTxt');
+      const btnDownloadDoc = document.getElementById('btnDownloadDoc');
+      const btnClearText = document.getElementById('btnClearText');
+      const searchInText = document.getElementById('searchInText');
+      const btnFindNext = document.getElementById('btnFindNext');
+
+      let currentFile = null;
+      let pdfDoc = null;
+      let currentPdfPage = 1;
+      let totalPdfPages = 1;
+
+      // Dropzone
+      dropO.addEventListener('click', (e) => {
+        if (e.target !== fileO) fileO.click();
+      });
+      dropO.addEventListener('dragover', e => { e.preventDefault(); dropO.style.borderColor = 'var(--primary)'; });
+      dropO.addEventListener('dragleave', () => dropO.style.borderColor = 'rgba(255,255,255,0.2)');
+      dropO.addEventListener('drop', e => {
+        e.preventDefault();
+        dropO.style.borderColor = 'rgba(255,255,255,0.2)';
+        if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+      });
+      fileO.addEventListener('change', e => {
+        if (e.target.files.length) handleFile(e.target.files[0]);
+      });
+
+      async function handleFile(file) {
+        currentFile = file;
+        dropOH3.textContent = file.name + ' (' + (file.size / 1024 / 1024).toFixed(2) + ' MB)';
+        ocrWorkspace.style.display = 'grid';
+        resO.style.display = 'none';
+        progO.style.display = 'none';
+
+        const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+
+        if (isPdf) {
+          pdfPager.style.display = 'flex';
+          ocrPreviewImg.style.display = 'none';
+          ocrPreviewCanvas.style.display = 'block';
+          try {
+            const arr = new Uint8Array(await file.arrayBuffer());
+            pdfDoc = await pdfjsLib.getDocument({ data: arr }).promise;
+            totalPdfPages = pdfDoc.numPages;
+            currentPdfPage = 1;
+            renderPdfPage(currentPdfPage);
+          } catch(err) {
+            console.error('PDF load error:', err);
+          }
+        } else {
+          pdfPager.style.display = 'none';
+          ocrPreviewCanvas.style.display = 'none';
+          ocrPreviewImg.style.display = 'block';
+          ocrPreviewImg.src = URL.createObjectURL(file);
+        }
+
+        ocrWorkspace.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      async function renderPdfPage(pageNum) {
+        if (!pdfDoc) return;
+        const page = await pdfDoc.getPage(pageNum);
+        const viewport = page.getViewport({ scale: 1.2 });
+        ocrPreviewCanvas.width = viewport.width;
+        ocrPreviewCanvas.height = viewport.height;
+        await page.render({ canvasContext: ocrPreviewCanvas.getContext('2d'), viewport }).promise;
+        pdfPageNum.textContent = `Page ${pageNum} of ${totalPdfPages}`;
+      }
+
+      pdfPrev.addEventListener('click', () => {
+        if (currentPdfPage > 1) {
+          currentPdfPage--;
+          renderPdfPage(currentPdfPage);
+        }
+      });
+      pdfNext.addEventListener('click', () => {
+        if (currentPdfPage < totalPdfPages) {
+          currentPdfPage++;
+          renderPdfPage(currentPdfPage);
+        }
+      });
+
+      // Run OCR
+      btnOcr.addEventListener('click', async () => {
+        if (!currentFile) return;
+        btnOcr.disabled = true;
+        progO.style.display = 'block';
+        progBarO.style.width = '10%';
+        progPctO.textContent = '10%';
+        progTxtO.textContent = 'Initializing OCR engine...';
+        resO.style.display = 'none';
+        ocrOut.value = '';
+
+        try {
+          if (ocrEngine.value === 'paddle') {
+            progTxtO.textContent = 'Connecting to Neural PaddleOCR engine...';
+            progBarO.style.width = '40%';
+            progPctO.textContent = '40%';
+
+            const formData = new FormData();
+            formData.append('file', currentFile);
+            formData.append('enhance', ocrEnhance.value);
+
+            let res = null;
+            try {
+              res = await fetch('/api/ocr', { method: 'POST', body: formData });
+            } catch(fetchErr) {
+              console.warn('Local proxy failed, trying https://admin.pixnivo.app/api/ocr', fetchErr);
+              res = await fetch('https://admin.pixnivo.app/api/ocr', { method: 'POST', body: formData });
+            }
+
+            if (!res || !res.ok) {
+              const err = await res.json().catch(() => ({}));
+              throw new Error(err.detail || 'PaddleOCR service error. Falling back to in-browser engine.');
+            }
+
+            progBarO.style.width = '90%';
+            progPctO.textContent = '90%';
+            progTxtO.textContent = 'Parsing extracted characters...';
+
+            const data = await res.json();
+            displayResult(data.text || 'No text detected.');
+
+          } else {
+            // Tesseract Client-side
+            progTxtO.textContent = 'Loading Tesseract.js language models...';
+            progBarO.style.width = '25%';
+
+            let imgSource = currentFile;
+            if (currentFile.type === 'application/pdf' || currentFile.name.toLowerCase().endsWith('.pdf')) {
+              // Use rendered canvas
+              imgSource = ocrPreviewCanvas;
+            }
+
+            const worker = await Tesseract.createWorker(ocrLang.value, 1, {
+              logger: m => {
+                if (m.status === 'recognizing text') {
+                  const pct = Math.round(m.progress * 100);
+                  progBarO.style.width = (25 + Math.round(pct * 0.7)) + '%';
+                  progPctO.textContent = pct + '%';
+                  progTxtO.textContent = `Recognizing text (${pct}%)...`;
+                }
+              }
+            });
+
+            const ret = await worker.recognize(imgSource);
+            await worker.terminate();
+            displayResult(ret.data.text || 'No text detected.');
+          }
+
+          progBarO.style.width = '100%';
+          progPctO.textContent = '100%';
+          progTxtO.textContent = 'Extraction complete!';
+        } catch(err) {
+          console.error(err);
+          // Fallback to Tesseract if Paddle failed
+          if (ocrEngine.value === 'paddle') {
+            progTxtO.textContent = 'Switching to in-browser engine fallback...';
+            try {
+              const worker = await Tesseract.createWorker(ocrLang.value, 1, {
+                logger: m => {
+                  if (m.status === 'recognizing text') {
+                    const pct = Math.round(m.progress * 100);
+                    progBarO.style.width = pct + '%';
+                    progPctO.textContent = pct + '%';
+                  }
+                }
+              });
+              let source = (currentFile.type === 'application/pdf' || currentFile.name.toLowerCase().endsWith('.pdf')) ? ocrPreviewCanvas : currentFile;
+              const ret = await worker.recognize(source);
+              await worker.terminate();
+              displayResult(ret.data.text || 'No text detected.');
+              progTxtO.textContent = 'Complete (via in-browser engine)!';
+            } catch(fbErr) {
+              alert('OCR Failed: ' + (err.message || 'Unknown error'));
+            }
+          } else {
+            alert('OCR Failed: ' + (err.message || 'Unknown error'));
+          }
+        } finally {
+          btnOcr.disabled = false;
+        }
+      });
+
+      function displayResult(text) {
+        ocrOut.value = text;
+        resO.style.display = 'block';
+        updateStats();
+        resO.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      function updateStats() {
+        const text = ocrOut.value.trim();
+        statChars.textContent = text.length;
+        statWords.textContent = text ? text.split(/\s+/).length : 0;
+        statLines.textContent = text ? text.split('\n').length : 0;
+      }
+      ocrOut.addEventListener('input', updateStats);
+
+      // Copy Text
+      btnCopyText.addEventListener('click', async () => {
+        if (!ocrOut.value) return;
+        await navigator.clipboard.writeText(ocrOut.value);
+        const orig = btnCopyText.innerHTML;
+        btnCopyText.innerHTML = '✓ Copied!';
+        setTimeout(() => btnCopyText.innerHTML = orig, 2000);
+      });
+
+      // Download .txt
+      btnDownloadTxt.addEventListener('click', () => {
+        if (!ocrOut.value) return;
+        const blob = new Blob([ocrOut.value], { type: 'text/plain;charset=utf-8' });
+        downloadBlob(blob, (currentFile ? currentFile.name.replace(/\.[^.]+$/, '') : 'extracted-text') + '-ocr.txt');
+      });
+
+      // Download Word .doc
+      btnDownloadDoc.addEventListener('click', () => {
+        if (!ocrOut.value) return;
+        const html = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body>${ocrOut.value.split('\n').map(p => `<p>${p}</p>`).join('')}</body></html>`;
+        const blob = new Blob([html], { type: 'application/msword;charset=utf-8' });
+        downloadBlob(blob, (currentFile ? currentFile.name.replace(/\.[^.]+$/, '') : 'extracted-document') + '-ocr.doc');
+      });
+
+      // Clear
+      btnClearText.addEventListener('click', () => {
+        if (confirm('Clear extracted text?')) {
+          ocrOut.value = '';
+          updateStats();
+        }
+      });
+
+      // Search in text
+      btnFindNext.addEventListener('click', () => {
+        const query = searchInText.value.trim();
+        if (!query) return;
+        const text = ocrOut.value;
+        const idx = text.toLowerCase().indexOf(query.toLowerCase(), ocrOut.selectionEnd);
+        if (idx !== -1) {
+          ocrOut.focus();
+          ocrOut.setSelectionRange(idx, idx + query.length);
+        } else {
+          const wrapIdx = text.toLowerCase().indexOf(query.toLowerCase(), 0);
+          if (wrapIdx !== -1) {
+            ocrOut.focus();
+            ocrOut.setSelectionRange(wrapIdx, wrapIdx + query.length);
+          } else {
+            alert('Search phrase not found in extracted text.');
+          }
+        }
+      });
+
+      function downloadBlob(blob, filename) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 3000);
+      }
+    })();
+  </script>
+</body>
+</html>

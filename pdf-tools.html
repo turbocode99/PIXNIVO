@@ -76,9 +76,9 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           PDF Tools
         </a>
-        <a class="nav-link" href="/image-upscaler">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-          AI Upscaler
+        <a class="nav-link" href="/ai-ocr">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          AI OCR
         </a>
           <a class="nav-link" href="/barcode-tools.html">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"></path><path d="M8 5v14"></path><path d="M12 5v14"></path><path d="M16 5v14"></path></svg>
@@ -124,10 +124,6 @@
       <button class="tab-btn" data-tab="merge">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
         Merge PDFs
-      </button>
-      <button class="tab-btn" data-tab="ocr">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        AI OCR
       </button>
       <button class="tab-btn" data-tab="compress">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
@@ -280,121 +276,17 @@
     </section>
 
 
-    <!-- ==================== TAB 4: AI OCR ==================== -->
-    <section class="studio-card" id="stage-ocr">
-      <div class="studio-header">
-        <h2>AI Document OCR</h2>
-        <p>Securely extract multi-lingual text from PDFs, receipts, and images using deep neural networks.</p>
-      </div>
-
-      <div class="dropzone" id="dropO">
-        <div class="dropzone-icon">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M10 13l-1.5 5"/><path d="M14 13l1.5 5"/><path d="M9.5 16.5h5"/></svg>
+    <div style="margin-top:24px;">
+      <div class="callout-box" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+        <div>
+          <h3 style="color:var(--primary-light); margin-bottom:6px; font-size:16px; font-weight:700;">Looking for AI Document &amp; Image OCR?</h3>
+          <p style="margin:0; font-size:13.5px; color:var(--text-muted);">Extract editable text from scanned PDFs, invoices, and photos using our neural OCR engine.</p>
         </div>
-        <h3 id="dropOH3">Drop a PDF or Image here to extract text</h3>
-        <p>Supports handwriting and degraded scans</p>
-        <span class="formats-badge">Powered by Server-Side PaddleOCR</span>
-        <input type="file" id="fileO" accept="application/pdf,image/*,.heic,.heif,.jpg,.jpeg,.png,.webp,.bmp" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 5; display: block;" />
+        <a class="btn btn-primary" href="/ai-ocr" style="padding:10px 18px; font-size:13.5px; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
+          Open AI OCR Studio &rarr;
+        </a>
       </div>
-
-      <!-- Preview Pane -->
-      <div id="ocrPreviewContainer" style="display:none; margin-top: 20px; text-align: center;">
-        <h4 style="margin-bottom: 10px; opacity: 0.8;">Document Preview</h4>
-        <div style="max-height: 400px; overflow-y: auto; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 10px; background: rgba(0,0,0,0.2);">
-           <img id="ocrPreviewImg" style="max-width: 100%; height: auto; border-radius: 4px; display:none;" />
-           <canvas id="ocrPreviewCanvas" style="max-width: 100%; height: auto; border-radius: 4px; display:none; margin: 0 auto;"></canvas>
-        </div>
-      </div>
-
-      <div class="workspace-grid" style="display:grid; grid-template-columns:1fr 1fr; margin-top:20px; gap: 15px;">
-        <div class="field">
-          <label>OCR Engine</label>
-          <style>
-             @media (max-width: 640px) {
-                #stage-ocr .workspace-grid {
-                   grid-template-columns: 1fr !important;
-                }
-             }
-             .glass-select {
-                width: 100%; padding: 12px; border-radius: 12px; 
-                border: 1px solid rgba(255,255,255,0.2); 
-                background: rgba(255,255,255,0.05); 
-                color: #ffffff; 
-                font-family: inherit;
-                backdrop-filter: blur(10px);
-                outline: none;
-                cursor: pointer;
-             }
-             .glass-select option {
-                background: #1e1e24;
-                color: #ffffff;
-             }
-             .glass-btn {
-                background: rgba(255, 255, 255, 0.1);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                backdrop-filter: blur(10px);
-                color: white;
-                padding: 14px 28px;
-                border-radius: 12px;
-                cursor: pointer;
-                transition: all 0.2s ease;
-                font-size: 16px;
-                font-weight: 500;
-                width: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 8px;
-             }
-             .glass-btn:hover {
-                background: rgba(255, 255, 255, 0.2);
-                transform: translateY(-1px);
-             }
-             .glass-btn:disabled {
-                opacity: 0.5;
-                cursor: not-allowed;
-             }
-          </style>
-          <select id="ocrEngine" class="glass-select">
-            <option value="paddle">PaddleOCR Neural Net (Server-Side, High Accuracy)</option>
-            <option value="tesseract">Tesseract AI Core (Client-Side, Fast)</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Pre-processing</label>
-          <select id="ocrEnhance" class="glass-select">
-            <option value="auto">Auto-Enhance (High Contrast for Smudges)</option>
-            <option value="none">None (Raw Image)</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- MOVED ABOVE THE BUTTON -->
-      <div class="prog" id="progO" style="display:none; margin-top:25px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
-        <div class="txt" style="font-size: 14px; font-weight: bold; color: #fff; text-align: center; margin-bottom: 10px;" id="progTxtO">Initializing...</div>
-        <div class="bar" style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
-           <i id="progBarO" style="display: block; height: 100%; width: 0%; background: #4caf50; transition: width 0.3s;"></i>
-        </div>
-      </div>
-
-      <!-- MOVED ABOVE THE BUTTON -->
-      <div class="result" id="resO" style="display:none; margin-top: 25px;">
-        <label style="display:block; margin-bottom: 8px; font-weight: bold;">Extracted Text:</label>
-        <textarea id="ocrOut" style="width:100%; height:250px; padding:15px; border-radius:12px; border:1px solid rgba(255,255,255,0.2); background:rgba(0,0,0,0.3); color:#fff; font-family:monospace; resize:vertical; line-height:1.5;" placeholder="Extracted text will appear here..."></textarea>
-        <div id="ocrDownloadContainer" style="margin-top: 15px; display: flex; gap: 15px; justify-content: center;">
-           <button id="btnDownloadTxt" class="glass-btn" style="max-width:200px;">Download .TXT</button>
-           <button id="btnCopyText" class="glass-btn" style="max-width:200px;">Copy to Clipboard</button>
-        </div>
-      </div>
-
-      <div style="margin-top:25px; text-align:center;">
-          <button id="btnOcr" class="glass-btn" style="display:none; max-width:300px; margin: 0 auto; background: rgba(76, 175, 80, 0.2); border-color: rgba(76, 175, 80, 0.4);">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Run OCR Extraction
-          </button>
-      </div>
-
-    </section>
+    </div>
   </main>
 
   <!-- Modern Site Footer -->
@@ -404,9 +296,9 @@
       <span class="dot">&bull;</span>
       <a href="/pdf-tools">PDF Tools</a>
       <span class="dot">&bull;</span>
-      <a href="/image-upscaler">AI Upscaler</a>
-        <span class="dot">&bull;</span>
-        <a href="/barcode-tools.html">Barcode Tools</a>
+      <a href="/ai-ocr">AI OCR</a>
+      <span class="dot">&bull;</span>
+      <a href="/barcode-tools.html">Barcode Tools</a>
       <span class="dot">&bull;</span>
       <a href="/blog">Guides &amp; Blog</a>
       <span class="dot">&bull;</span>
@@ -888,259 +780,6 @@
 
 <script>
 
-    // ==========================================
-// TAB 4: AI OCR LOGIC (DUAL ENGINE)
-// ==========================================
-const dropO = document.getElementById('dropO');
-const fileO = document.getElementById('fileO');
-const dropOH3 = document.getElementById('dropOH3');
-const btnOcr = document.getElementById('btnOcr');
-const ocrEngine = document.getElementById('ocrEngine');
-const ocrEnhance = document.getElementById('ocrEnhance');
-const progO = document.getElementById('progO');
-const progTxtO = document.getElementById('progTxtO');
-const progBarO = document.getElementById('progBarO');
-const resO = document.getElementById('resO');
-const ocrOut = document.getElementById('ocrOut');
-const ocrPreviewContainer = document.getElementById('ocrPreviewContainer');
-const ocrPreviewImg = document.getElementById('ocrPreviewImg');
-const ocrPreviewCanvas = document.getElementById('ocrPreviewCanvas');
-const btnDownloadTxt = document.getElementById('btnDownloadTxt');
-const btnCopyText = document.getElementById('btnCopyText');
-
-let ocrFiles = [];
-
-if (dropO) {
-    dropO.addEventListener('click', (e) => {
-      if (e.target !== fileO) fileO.click();
-    });
-    dropO.addEventListener('dragover', e => { e.preventDefault(); dropO.style.borderColor = 'var(--primary)'; });
-    dropO.addEventListener('dragleave', () => dropO.style.borderColor = 'rgba(255,255,255,0.2)');
-    dropO.addEventListener('drop', e => {
-      e.preventDefault();
-      dropO.style.borderColor = 'rgba(255,255,255,0.2)';
-      if (e.dataTransfer.files.length) handleOcrFiles(e.dataTransfer.files);
-    });
-    fileO.addEventListener('change', e => {
-      if (e.target.files.length) handleOcrFiles(e.target.files);
-    });
-}
-
-async function handleOcrFiles(files) {
-  ocrFiles = Array.from(files);
-  if (ocrFiles.length > 0) {
-    dropOH3.textContent = ocrFiles.length + ' file(s) selected';
-    btnOcr.style.display = 'flex';
-    ocrPreviewContainer.style.display = 'block';
-    resO.style.display = 'none';
-    progO.style.display = 'none';
-    
-    // Smooth scroll into view on mobile so user sees the action button immediately
-    setTimeout(() => {
-      btnOcr.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 100);
-    
-    const file = ocrFiles[0];
-    const isPdf = file.type === 'application/pdf' || (file.name && file.name.toLowerCase().endsWith('.pdf'));
-    const isHeic = window.looksHeic ? window.looksHeic(file) : (file.name && (file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif')));
-
-    if (isPdf) {
-      ocrPreviewImg.style.display = 'none';
-      ocrPreviewCanvas.style.display = 'block';
-      try {
-        const arr = new Uint8Array(await file.arrayBuffer());
-        const pdfDoc = await pdfjsLib.getDocument({ data: arr }).promise;
-        const page = await pdfDoc.getPage(1);
-        const viewport = page.getViewport({ scale: 1.0 });
-        ocrPreviewCanvas.width = viewport.width;
-        ocrPreviewCanvas.height = viewport.height;
-        await page.render({ canvasContext: ocrPreviewCanvas.getContext('2d'), viewport }).promise;
-      } catch(e) { console.error('PDF preview error:', e); }
-    } else if (isHeic) {
-      ocrPreviewCanvas.style.display = 'none';
-      ocrPreviewImg.style.display = 'block';
-      dropOH3.textContent = 'Processing iPhone photo...';
-      if (window.convertHeic) {
-        try {
-          const converted = await window.convertHeic(file);
-          const baseName = (file.name || 'photo').replace(/\.[^/.]+$/, "");
-          const jpegFile = new File([converted], baseName + '.jpg', { type: 'image/jpeg' });
-          ocrFiles[0] = jpegFile;
-          dropOH3.textContent = '1 file selected (iPhone photo ready)';
-          ocrPreviewImg.src = URL.createObjectURL(jpegFile);
-        } catch(e) {
-          console.warn('Client HEIC conversion fallback to server:', e);
-          dropOH3.textContent = '1 file selected';
-        }
-      }
-    } else {
-      ocrPreviewCanvas.style.display = 'none';
-      ocrPreviewImg.style.display = 'block';
-      ocrPreviewImg.src = URL.createObjectURL(file);
-    }
-  }
-}
-
-function preprocessCanvas(sourceCanvas) {
-  if (ocrEnhance.value === 'none') return sourceCanvas;
-  const out = document.createElement('canvas');
-  const scale = 2;
-  out.width = sourceCanvas.width * scale;
-  out.height = sourceCanvas.height * scale;
-  const ctx = out.getContext('2d');
-  ctx.fillStyle = 'white';
-  ctx.fillRect(0, 0, out.width, out.height);
-  ctx.drawImage(sourceCanvas, 0, 0, out.width, out.height);
-  
-  const imgData = ctx.getImageData(0, 0, out.width, out.height);
-  const d = imgData.data;
-  for (let i = 0; i < d.length; i += 4) {
-    const r = d[i], g = d[i+1], b = d[i+2];
-    const gray = 0.299 * r + 0.587 * g + 0.114 * b;
-    const val = gray < 130 ? 0 : 255; 
-    d[i] = d[i+1] = d[i+2] = val;
-  }
-  ctx.putImageData(imgData, 0, 0);
-  return out;
-}
-
-async function fileToCanvas(file) {
-  if (window.looksHeic && window.looksHeic(file) && window.convertHeic) {
-    try {
-      file = await window.convertHeic(file);
-    } catch(e) {}
-  }
-  return new Promise((resolve, reject) => {
-    const url = URL.createObjectURL(file);
-    const img = new Image();
-    img.onload = () => {
-      const cvs = document.createElement('canvas');
-      cvs.width = img.width; cvs.height = img.height;
-      const ctx = cvs.getContext('2d');
-      ctx.drawImage(img, 0, 0);
-      URL.revokeObjectURL(url);
-      resolve(cvs);
-    };
-    img.onerror = reject;
-    img.src = url;
-  });
-}
-
-if (btnOcr) {
-    btnOcr.addEventListener('click', async () => {
-      if (!ocrFiles.length) return;
-      btnOcr.disabled = true;
-      resO.style.display = 'none';
-      ocrOut.value = '';
-      progO.style.display = 'block';
-      progBarO.style.backgroundColor = '#4caf50';
-      progBarO.style.width = '0%';
-      
-      const file = ocrFiles[0];
-      
-      try {
-        if (ocrEngine.value === 'paddle') {
-            progTxtO.textContent = 'Uploading to Azure Server & Running PaddleOCR...';
-            progBarO.style.transition = 'width 10s ease-out';
-            progBarO.style.width = '90%';
-            
-            const formData = new FormData();
-            formData.append('file', file);
-            formData.append('enhance', ocrEnhance.value);
-
-            const response = await fetch('/api/ocr', { method: 'POST', body: formData });
-            if (!response.ok) {
-                const errData = await response.json();
-                throw new Error(errData.detail || 'Server error during OCR processing');
-            }
-            const data = await response.json();
-            ocrOut.value = data.text || 'No text could be detected from this file.';
-            
-        } else {
-            progTxtO.textContent = 'Initializing Tesseract AI in browser...';
-            progBarO.style.transition = 'width 0.2s';
-            progBarO.style.width = '5%';
-            
-            if (!window.Tesseract) throw new Error("Tesseract failed to load.");
-            let fullText = '';
-            let canvases = [];
-            
-            if (file.type === 'application/pdf') {
-              const arr = new Uint8Array(await file.arrayBuffer());
-              const pdfDoc = await pdfjsLib.getDocument({ data: arr }).promise;
-              for (let p = 1; p <= pdfDoc.numPages; p++) {
-                progTxtO.textContent = 'Extracting PDF page ' + p + '...';
-                const page = await pdfDoc.getPage(p);
-                const viewport = page.getViewport({ scale: 2.0 });
-                const cvs = document.createElement('canvas');
-                cvs.width = viewport.width; cvs.height = viewport.height;
-                await page.render({ canvasContext: cvs.getContext('2d'), viewport }).promise;
-                canvases.push(cvs);
-              }
-            } else {
-               canvases.push(await fileToCanvas(file));
-            }
-
-            for (let c = 0; c < canvases.length; c++) {
-              progTxtO.textContent = 'Analyzing Page ' + (c+1) + '...';
-              const processedCanvas = preprocessCanvas(canvases[c]);
-
-              const result = await window.Tesseract.recognize(processedCanvas, 'eng', { 
-                logger: m => {
-                   if (m.status === 'recognizing text') {
-                      const progress = Math.max(10, m.progress * 100);
-                      progBarO.style.width = progress + '%';
-                      progTxtO.textContent = 'Extracting Text: ' + Math.round(progress) + '%';
-                   }
-                }
-              });
-              fullText += result.data.text + '\n\n';
-            }
-            ocrOut.value = fullText.trim() || "No text could be detected from this file.";
-        }
-
-        progO.style.display = 'none';
-        resO.style.display = 'block';
-        progBarO.style.width = '0%';
-        resO.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        
-      } catch (err) {
-        console.error(err);
-        progTxtO.textContent = 'Error: ' + err.message;
-        progBarO.style.transition = 'none';
-        progBarO.style.width = '100%';
-        progBarO.style.backgroundColor = '#f44336';
-      } finally {
-        btnOcr.disabled = false;
-      }
-    });
-}
-
-if (btnDownloadTxt) {
-    btnDownloadTxt.addEventListener('click', () => {
-       const text = ocrOut.value;
-       if (!text) return;
-       const blob = new Blob([text], { type: 'text/plain' });
-       const url = URL.createObjectURL(blob);
-       const a = document.createElement('a');
-       a.href = url;
-       a.download = 'PIXNIVO_Extraction.txt';
-       a.click();
-       URL.revokeObjectURL(url);
-    });
-}
-
-if (btnCopyText) {
-    btnCopyText.addEventListener('click', () => {
-       const text = ocrOut.value;
-       if (!text) return;
-       navigator.clipboard.writeText(text).then(() => {
-          const original = btnCopyText.innerHTML;
-          btnCopyText.innerHTML = 'Copied!';
-          setTimeout(() => { btnCopyText.innerHTML = original; }, 2000);
-       });
-    });
-}
 </script>
 </body>
 </html>
