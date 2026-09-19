@@ -1,4 +1,4 @@
-﻿import os
+import os
 os.environ['FLAGS_enable_pir_api'] = '0'
 os.environ['FLAGS_enable_pir_in_executor'] = '0'
 import os
@@ -27,7 +27,9 @@ class ExportRequest(BaseModel):
     images: List[BarcodeImage]
 from paddleocr import PaddleOCR
 from pdf2image import convert_from_path
-from PIL import Image
+from PIL import Image, ImageOps, ImageEnhance
+import pillow_heif
+pillow_heif.register_heif_opener()
 
 app = FastAPI()
 
@@ -40,7 +42,7 @@ app.add_middleware(
 )
 
 print('Initializing PaddleOCR...')
-ocr_engine = PaddleOCR(use_textline_orientation=True, use_gpu=False, lang='en')
+ocr_engine = PaddleOCR(use_angle_cls=True, use_gpu=False, lang='en')
 print('PaddleOCR ready!')
 
 @app.get('/api/health')
@@ -52,35 +54,73 @@ async def process_ocr(file: UploadFile = File(...), enhance: str = Form('none'))
     if not file:
         raise HTTPException(status_code=400, detail='No file provided')
         
-    ext = file.filename.split('.')[-1].lower()
+    filename = file.filename or 'upload'
+    ext = filename.split('.')[-1].lower() if '.' in filename else ''
     
     with tempfile.TemporaryDirectory() as temp_dir:
-        file_path = os.path.join(temp_dir, file.filename)
+        file_path = os.path.join(temp_dir, filename)
         with open(file_path, 'wb') as buffer:
             shutil.copyfileobj(file.file, buffer)
             
         full_text = ''
         
         try:
-            if ext == 'pdf':
+            # Detect if file is PDF
+            is_pdf = (ext == 'pdf')
+            if not is_pdf:
+                try:
+                    with open(file_path, 'rb') as f_chk:
+                        if f_chk.read(5).startswith(b'%PDF-'):
+                            is_pdf = True
+                except:
+                    pass
+
+            if is_pdf:
                 images = convert_from_path(file_path)
                 for i, img in enumerate(images):
+                    img = ImageOps.exif_transpose(img)
+                    if max(img.size) > 2400:
+                        img.thumbnail((2400, 2400), Image.Resampling.LANCZOS)
+                    if enhance == 'auto':
+                        img = ImageEnhance.Contrast(img).enhance(1.4)
+                        
                     img_path = os.path.join(temp_dir, f'page_{i}.jpg')
-                    img.save(img_path, 'JPEG')
+                    img.convert('RGB').save(img_path, 'JPEG', quality=95)
                     
-                    result = ocr_engine.ocr(img_path, )
+                    result = ocr_engine.ocr(img_path, cls=True)
                     for res in result:
                         if res:
                             for line in res:
                                 full_text += line[1][0] + '\n'
                     full_text += '\n--- Page Break ---\n\n'
             else:
-                result = ocr_engine.ocr(file_path, )
+                # Universal image processing: HEIC, HEIF, JPG, PNG, WEBP, BMP, AVIF, TIFF
+                try:
+                    img = Image.open(file_path)
+                except Exception as img_err:
+                    raise HTTPException(status_code=400, detail=f'Unable to decode image file: {str(img_err)}')
+
+                # Crucial for phone photos: automatically rotate image based on EXIF tag (portrait/landscape)
+                img = ImageOps.exif_transpose(img)
+
+                # Downscale giant phone photos (e.g. 12MP - 48MP) to max 2400px edge for fast, reliable OCR
+                if max(img.size) > 2400:
+                    img.thumbnail((2400, 2400), Image.Resampling.LANCZOS)
+
+                if enhance == 'auto':
+                    img = ImageEnhance.Contrast(img).enhance(1.4)
+
+                norm_path = os.path.join(temp_dir, 'normalized_input.jpg')
+                img.convert('RGB').save(norm_path, 'JPEG', quality=95)
+
+                result = ocr_engine.ocr(norm_path, cls=True)
                 for res in result:
                     if res:
                         for line in res:
                             full_text += line[1][0] + '\n'
                             
+        except HTTPException:
+            raise
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
             

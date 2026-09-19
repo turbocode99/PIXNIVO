@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -294,7 +294,7 @@
         <h3 id="dropOH3">Drop a PDF or Image here to extract text</h3>
         <p>Supports handwriting and degraded scans</p>
         <span class="formats-badge">Powered by Server-Side PaddleOCR</span>
-        <input type="file" id="fileO" accept="application/pdf,image/*" />
+        <input type="file" id="fileO" accept="application/pdf,image/*,.heic,.heif,.jpg,.jpeg,.png,.webp,.bmp" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 5; display: block;" />
       </div>
 
       <!-- Preview Pane -->
@@ -310,6 +310,11 @@
         <div class="field">
           <label>OCR Engine</label>
           <style>
+             @media (max-width: 640px) {
+                #stage-ocr .workspace-grid {
+                   grid-template-columns: 1fr !important;
+                }
+             }
              .glass-select {
                 width: 100%; padding: 12px; border-radius: 12px; 
                 border: 1px solid rgba(255,255,255,0.2); 
@@ -483,7 +488,7 @@
             'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);max-width:88vw;' +
             'background:rgba(21,19,29,0.95);color:#f5f3ef;border:1px solid rgba(255,255,255,0.12);padding:13px 24px;' +
             'border-radius:9999px;font-size:14px;font-weight:600;z-index:9999;box-shadow:0 10px 30px rgba(0,0,0,.5);backdrop-filter:blur(16px);';
-          heicNoteEl.textContent = 'Converting iPhone photoâ€¦';
+          heicNoteEl.textContent = 'Converting iPhone photo...';
           document.body.appendChild(heicNoteEl);
         }
         heicNoteEl.style.display = show ? 'block' : 'none';
@@ -501,6 +506,9 @@
           return Array.isArray(out) ? out[0] : out;
         } finally { heicNote(false); }
       }
+      window.looksHeic = looksHeic;
+      window.convertHeic = convertHeic;
+      window.loadScriptOnce = loadScriptOnce;
 
       function whyFailed(file){
         const name = (file && file.name) ? file.name : 'This file';
@@ -877,12 +885,6 @@
     })();
   </script>
 
-  
-  <!-- PaddleOCR via module -->
-  <script type="module">
-    import { PaddleOcrService } from "https://esm.sh/ppu-paddle-ocr@6.4.3/web";
-    window.PaddleOcrService = PaddleOcrService;
-  </script>
 
 <script>
 
@@ -909,7 +911,9 @@ const btnCopyText = document.getElementById('btnCopyText');
 let ocrFiles = [];
 
 if (dropO) {
-    dropO.addEventListener('click', () => fileO.click());
+    dropO.addEventListener('click', (e) => {
+      if (e.target !== fileO) fileO.click();
+    });
     dropO.addEventListener('dragover', e => { e.preventDefault(); dropO.style.borderColor = 'var(--primary)'; });
     dropO.addEventListener('dragleave', () => dropO.style.borderColor = 'rgba(255,255,255,0.2)');
     dropO.addEventListener('drop', e => {
@@ -931,8 +935,16 @@ async function handleOcrFiles(files) {
     resO.style.display = 'none';
     progO.style.display = 'none';
     
+    // Smooth scroll into view on mobile so user sees the action button immediately
+    setTimeout(() => {
+      btnOcr.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+    
     const file = ocrFiles[0];
-    if (file.type === 'application/pdf') {
+    const isPdf = file.type === 'application/pdf' || (file.name && file.name.toLowerCase().endsWith('.pdf'));
+    const isHeic = window.looksHeic ? window.looksHeic(file) : (file.name && (file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif')));
+
+    if (isPdf) {
       ocrPreviewImg.style.display = 'none';
       ocrPreviewCanvas.style.display = 'block';
       try {
@@ -944,6 +956,23 @@ async function handleOcrFiles(files) {
         ocrPreviewCanvas.height = viewport.height;
         await page.render({ canvasContext: ocrPreviewCanvas.getContext('2d'), viewport }).promise;
       } catch(e) { console.error('PDF preview error:', e); }
+    } else if (isHeic) {
+      ocrPreviewCanvas.style.display = 'none';
+      ocrPreviewImg.style.display = 'block';
+      dropOH3.textContent = 'Processing iPhone photo...';
+      if (window.convertHeic) {
+        try {
+          const converted = await window.convertHeic(file);
+          const baseName = (file.name || 'photo').replace(/\.[^/.]+$/, "");
+          const jpegFile = new File([converted], baseName + '.jpg', { type: 'image/jpeg' });
+          ocrFiles[0] = jpegFile;
+          dropOH3.textContent = '1 file selected (iPhone photo ready)';
+          ocrPreviewImg.src = URL.createObjectURL(jpegFile);
+        } catch(e) {
+          console.warn('Client HEIC conversion fallback to server:', e);
+          dropOH3.textContent = '1 file selected';
+        }
+      }
     } else {
       ocrPreviewCanvas.style.display = 'none';
       ocrPreviewImg.style.display = 'block';
@@ -976,6 +1005,11 @@ function preprocessCanvas(sourceCanvas) {
 }
 
 async function fileToCanvas(file) {
+  if (window.looksHeic && window.looksHeic(file) && window.convertHeic) {
+    try {
+      file = await window.convertHeic(file);
+    } catch(e) {}
+  }
   return new Promise((resolve, reject) => {
     const url = URL.createObjectURL(file);
     const img = new Image();

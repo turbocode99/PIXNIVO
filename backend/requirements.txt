@@ -1,10 +1,11 @@
-﻿fastapi
+fastapi
 uvicorn
 python-multipart
 paddlepaddle
 paddleocr
 pdf2image
 pillow
+pillow-heif
 
 python-docx
 openpyxl
