@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pixnivo · AI Logo Designer & Canvas Studio (Phase 3)</title>
+  <title>Pixnivo · AI Logo Designer & Canvas Studio</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="ThemeSelector.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Orbitron:wght@600;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- React & Babel Standalone for live client-side JSX rendering -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
@@ -114,16 +114,16 @@
     .demo-container {
       position: relative;
       z-index: 5;
-      max-width: 1400px;
+      max-width: 1440px;
       margin: 0 auto;
       padding: 2rem 1.5rem 4rem 1.5rem;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
       gap: 2rem;
       align-items: flex-start;
     }
 
-    @media (max-width: 1040px) {
+    @media (max-width: 1080px) {
       .demo-container {
         grid-template-columns: 1fr;
       }
@@ -137,7 +137,7 @@
     }
 
     .demo-card {
-      background: var(--bg-glass-card, rgba(18, 14, 28, 0.7));
+      background: var(--bg-glass-card, rgba(18, 14, 28, 0.72));
       backdrop-filter: blur(20px);
       border: 1px solid var(--border-glass, rgba(255, 255, 255, 0.12));
       border-radius: 1.25rem;
@@ -305,32 +305,124 @@
       box-shadow: 0 0 10px rgba(255, 122, 26, 0.5);
     }
 
-    .demo-btn-download {
+    .demo-export-actions {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .demo-btn-export {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.5rem 1rem;
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      border: none;
+      gap: 0.35rem;
+      padding: 0.45rem 0.85rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 0.6rem;
       color: #ffffff;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.2s ease;
-      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
     }
 
-    .demo-btn-download:hover {
+    .demo-btn-export:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.16);
       transform: translateY(-1px);
-      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.5);
     }
 
-    .demo-btn-download:disabled {
+    .demo-btn-export.primary {
+      background: linear-gradient(135deg, #ff5e3a 0%, #ff9500 100%);
+      border: none;
+      box-shadow: 0 4px 14px rgba(255, 94, 58, 0.35);
+    }
+
+    .demo-btn-export.primary:hover:not(:disabled) {
+      box-shadow: 0 6px 18px rgba(255, 94, 58, 0.5);
+    }
+
+    .demo-btn-export.svg-btn {
+      background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+      border: none;
+      box-shadow: 0 4px 14px rgba(6, 182, 212, 0.35);
+    }
+
+    .demo-btn-export:disabled {
       opacity: 0.4;
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
+    }
+
+    /* Brand Typography Studio Controls */
+    .demo-studio-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 0.5rem 0;
+    }
+
+    .demo-form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .demo-form-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .demo-form-input, .demo-form-select {
+      width: 100%;
+      padding: 0.6rem 0.85rem;
+      background: rgba(14, 11, 24, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 0.6rem;
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    .demo-form-input:focus, .demo-form-select:focus {
+      border-color: #ff7a1a;
+      box-shadow: 0 0 0 2px rgba(255, 122, 26, 0.2);
+    }
+
+    .demo-pill-grid {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .demo-pill-opt {
+      padding: 0.4rem 0.75rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 0.5rem;
+      color: #cbd5e1;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .demo-pill-opt:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+    }
+
+    .demo-pill-opt.active {
+      background: rgba(255, 122, 26, 0.25);
+      border-color: #ff7a1a;
+      color: #ffa65e;
     }
 
     /* Side-by-Side Comparison */
@@ -453,10 +545,10 @@
     <a href="index.html" class="demo-logo">
       <span style="font-size: 1.5rem;">⚡</span>
       <span>PIXNIVO</span>
-      <span class="demo-logo-badge">Phase 3 Live Studio</span>
+      <span class="demo-logo-badge">Advanced Canvas Studio</span>
     </a>
     <div style="font-size: 0.85rem; color: #94a3b8;">
-      Theme-Driven AI Logo Generator · <span style="color: #22d3ee;">AgentRouter & RMBG Pipeline</span>
+      Theme-Driven AI Logo Generator · <span style="color: #22d3ee;">Typography, Badges & Vector SVG</span>
     </div>
   </header>
 
@@ -469,6 +561,8 @@
     import { removeBackground } from './backgroundRemover.js';
     import { injectOntoCanvas, drawCheckerboard } from './canvasInjector.js';
     import { generateAndProcessLogo, generateSyntheticFallbackLogo } from './logoPipeline.js';
+    import { AVAILABLE_FONTS, DEFAULT_COMPOSITION_STATE, renderComposition } from './canvasStudioEngine.js';
+    import { generateCompositionSVG, downloadSVG, exportHighResPNG, exportIconSize } from './vectorSvgExporter.js';
 
     window.PixnivoThemes = { LOGO_THEMES, THEME_LIST, buildAIPrompt, sanitizeConceptInput };
     window.PixnivoPipeline = {
@@ -477,6 +571,15 @@
       drawCheckerboard,
       generateAndProcessLogo,
       generateSyntheticFallbackLogo
+    };
+    window.PixnivoStudio = {
+      AVAILABLE_FONTS,
+      DEFAULT_COMPOSITION_STATE,
+      renderComposition,
+      generateCompositionSVG,
+      downloadSVG,
+      exportHighResPNG,
+      exportIconSize
     };
 
     if (window.startPixnivoDemo) {
@@ -487,11 +590,12 @@
   <!-- React Application -->
   <script type="text/babel">
     function runDemo() {
-      if (!window.PixnivoThemes || !window.PixnivoPipeline) return;
+      if (!window.PixnivoThemes || !window.PixnivoPipeline || !window.PixnivoStudio) return;
 
       const { useState, useMemo, useCallback, useRef, useEffect } = React;
       const { LOGO_THEMES, THEME_LIST, buildAIPrompt, sanitizeConceptInput } = window.PixnivoThemes;
       const { generateAndProcessLogo } = window.PixnivoPipeline;
+      const { AVAILABLE_FONTS, renderComposition, generateCompositionSVG, downloadSVG, exportHighResPNG, exportIconSize } = window.PixnivoStudio;
 
       // Quick chips definition
       const DEFAULT_QUICK_CHIPS = [
@@ -514,7 +618,7 @@
       }
 
       // ------------------------------------------------------------------------
-      // ThemeSelector Component (Phase 2)
+      // ThemeSelector Component
       // ------------------------------------------------------------------------
       function ThemeSelectorComponent({
         onGenerate,
@@ -848,11 +952,33 @@
         const [pipelineResult, setPipelineResult] = useState(null);
         const [isLoading, setIsLoading] = useState(false);
         const [compactMode, setCompactMode] = useState(false);
-        const [activeTab, setActiveTab] = useState('canvas'); // 'canvas' | 'compare' | 'json'
+        const [activeTab, setActiveTab] = useState('studio'); // 'studio' | 'canvas' | 'compare' | 'json'
         const [canvasBg, setCanvasBg] = useState('checkers'); // 'checkers' | 'dark' | 'white' | 'gradient'
         const [progressInfo, setProgressInfo] = useState(null);
 
+        // Advanced Brand Composition State
+        const [compositionState, setCompositionState] = useState({
+          brandName: 'FOXGUARD',
+          slogan: 'CYBER SECURITY',
+          fontFamily: 'Orbitron',
+          brandFontSize: 46,
+          sloganFontSize: 16,
+          letterSpacing: 6,
+          textColor: '#ffffff',
+          sloganColor: '#94a3b8',
+          accentColor: '#06b6d4',
+          layout: 'stacked', // 'stacked' | 'horizontal' | 'badge-arc'
+          badgeFrame: 'circle-ring', // 'none' | 'circle-ring' | 'squircle' | 'shield' | 'hexagon'
+          frameStroke: 6,
+          shadow: true
+        });
+
         const canvasRef = useRef(null);
+
+        // Update composition state helper
+        const updateComposition = (key, val) => {
+          setCompositionState(prev => ({ ...prev, [key]: val }));
+        };
 
         const handleGenerate = async (payload) => {
           setIsLoading(true);
@@ -875,8 +1001,17 @@
               }
             });
 
+            // Sync composition brand name with generated concept
+            if (payload.raw_concept) {
+              setCompositionState(prev => ({
+                ...prev,
+                brandName: payload.raw_concept.toUpperCase(),
+                accentColor: LOGO_THEMES[payload.theme_id]?.accentColor || '#ff7a1a'
+              }));
+            }
+
             setPipelineResult(result);
-            setActiveTab('canvas');
+            setActiveTab('studio');
           } catch (err) {
             console.error('Pipeline error:', err);
             alert('Pipeline execution failed: ' + err.message);
@@ -886,36 +1021,34 @@
           }
         };
 
-        // Redraw canvas when background changes
+        // Re-render multi-layer canvas composition whenever settings change
         useEffect(() => {
           if (!pipelineResult || !canvasRef.current) return;
-          const canvas = canvasRef.current;
-          const img = new Image();
-          img.onload = () => {
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            const pad = 0.12;
-            const drawW = canvas.width * (1 - pad * 2);
-            const drawH = canvas.height * (1 - pad * 2);
-            const drawX = (canvas.width - drawW) / 2;
-            const drawY = (canvas.height - drawH) / 2;
+          renderComposition(canvasRef.current, pipelineResult.transparentDataUrl, compositionState, { background: canvasBg });
+        }, [canvasBg, pipelineResult, compositionState]);
 
-            ctx.shadowColor = 'rgba(0,0,0,0.35)';
-            ctx.shadowBlur = 24;
-            ctx.shadowOffsetY = 8;
-            ctx.drawImage(img, drawX, drawY, drawW, drawH);
-          };
-          img.src = pipelineResult.transparentDataUrl;
-        }, [canvasBg, pipelineResult]);
-
-        // Download PNG
-        const handleDownload = () => {
+        // Download Scalable Vector SVG
+        const handleDownloadSVG = () => {
           if (!pipelineResult || !pipelineResult.transparentDataUrl) return;
-          const a = document.createElement('a');
-          const cleanConcept = (pipelineResult.concept || 'logo').toLowerCase().replace(/[^a-z0-9]/g, '-');
-          a.download = `pixnivo-logo-${cleanConcept}-${pipelineResult.themeId}.png`;
-          a.href = pipelineResult.transparentDataUrl;
-          a.click();
+          const svgContent = generateCompositionSVG(compositionState, pipelineResult.transparentDataUrl, {
+            transparentBackground: canvasBg === 'checkers'
+          });
+          const cleanName = (compositionState.brandName || 'logo').toLowerCase().replace(/[^a-z0-9]/g, '-');
+          downloadSVG(svgContent, `pixnivo-vector-${cleanName}.svg`);
+        };
+
+        // Download High-Res PNG (2x: 2048x2048)
+        const handleDownloadHighResPNG = () => {
+          if (!canvasRef.current) return;
+          const cleanName = (compositionState.brandName || 'logo').toLowerCase().replace(/[^a-z0-9]/g, '-');
+          exportHighResPNG(canvasRef.current, 2, `pixnivo-${cleanName}-hd-2048.png`);
+        };
+
+        // Download Favicon / App Icon (192px)
+        const handleDownloadIcon = () => {
+          if (!canvasRef.current) return;
+          const cleanName = (compositionState.brandName || 'logo').toLowerCase().replace(/[^a-z0-9]/g, '-');
+          exportIconSize(canvasRef.current, 192, `pixnivo-icon-192-${cleanName}.png`);
         };
 
         return (
@@ -972,13 +1105,20 @@
                     <span>🎨</span> Logo Designer Canvas Studio
                   </h4>
 
-                  <div style={{ display: 'flex', gap: '0.35rem' }}>
+                  <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
+                    <button
+                      type="button"
+                      className={`demo-tab-btn ${activeTab === 'studio' ? 'active' : ''}`}
+                      onClick={() => setActiveTab('studio')}
+                    >
+                      ✏️ Brand Studio
+                    </button>
                     <button
                       type="button"
                       className={`demo-tab-btn ${activeTab === 'canvas' ? 'active' : ''}`}
                       onClick={() => setActiveTab('canvas')}
                     >
-                      Canvas Artboard
+                      🎯 Artboard
                     </button>
                     <button
                       type="button"
@@ -986,7 +1126,7 @@
                       onClick={() => setActiveTab('compare')}
                       disabled={!pipelineResult}
                     >
-                      Raw vs Transparent
+                      ⚖️ Isolator
                     </button>
                     <button
                       type="button"
@@ -994,87 +1134,198 @@
                       onClick={() => setActiveTab('json')}
                       disabled={!pipelineResult}
                     >
-                      Payload JSON
+                      📡 JSON
                     </button>
                   </div>
                 </div>
 
-                {/* Tab 1: Interactive Canvas Artboard */}
-                {activeTab === 'canvas' && (
-                  <div>
-                    <div className={`demo-canvas-viewport bg-${canvasBg}`}>
-                      <canvas
-                        id="designer-canvas"
-                        ref={canvasRef}
-                        width={600}
-                        height={600}
-                        style={{ display: pipelineResult ? 'block' : 'none' }}
-                      />
+                {/* Always-Visible Canvas Viewport */}
+                <div className={`demo-canvas-viewport bg-${canvasBg}`}>
+                  <canvas
+                    id="designer-canvas"
+                    ref={canvasRef}
+                    width={600}
+                    height={600}
+                    style={{ display: pipelineResult ? 'block' : 'none' }}
+                  />
 
-                      {!pipelineResult && !isLoading && (
-                        <div className="demo-canvas-placeholder">
-                          <span style={{ fontSize: '2.5rem' }}>🎯</span>
-                          <h4 style={{ margin: 0, color: '#ffffff' }}>Designer Canvas Ready</h4>
-                          <p style={{ margin: 0, fontSize: '0.85rem' }}>
-                            Choose a theme, enter your concept, and click <strong>"Generate AI Logo"</strong>.<br />
-                            The asset will automatically generate, isolate transparency, and inject here.
-                          </p>
-                        </div>
-                      )}
-
-                      {isLoading && (
-                        <div className="demo-canvas-placeholder">
-                          <div className="px-ts-spinner" style={{ width: 32, height: 32 }} />
-                          <p style={{ margin: 0, fontSize: '0.9rem', color: '#ffa65e' }}>
-                            Generating & isolating transparent canvas asset...
-                          </p>
-                        </div>
-                      )}
+                  {!pipelineResult && !isLoading && (
+                    <div className="demo-canvas-placeholder">
+                      <span style={{ fontSize: '2.5rem' }}>🎯</span>
+                      <h4 style={{ margin: 0, color: '#ffffff' }}>Designer Canvas Ready</h4>
+                      <p style={{ margin: 0, fontSize: '0.85rem' }}>
+                        Choose a theme, enter your concept, and click <strong>"Generate AI Logo"</strong>.<br />
+                        Your logo mark, brand typography, and vector badge frame will render here.
+                      </p>
                     </div>
+                  )}
 
-                    <div className="demo-canvas-controls">
-                      <div className="demo-bg-pills">
-                        <span style={{ fontSize: '0.75rem', color: '#94a3b8', marginRight: '0.3rem' }}>Artboard:</span>
-                        <div
-                          className={`demo-bg-pill ${canvasBg === 'checkers' ? 'active' : ''}`}
-                          style={{ background: '#161224' }}
-                          title="Transparency Checkers"
-                          onClick={() => setCanvasBg('checkers')}
-                        />
-                        <div
-                          className={`demo-bg-pill ${canvasBg === 'dark' ? 'active' : ''}`}
-                          style={{ background: '#08060f' }}
-                          title="Dark Solid"
-                          onClick={() => setCanvasBg('dark')}
-                        />
-                        <div
-                          className={`demo-bg-pill ${canvasBg === 'white' ? 'active' : ''}`}
-                          style={{ background: '#ffffff' }}
-                          title="Light Solid"
-                          onClick={() => setCanvasBg('white')}
-                        />
-                        <div
-                          className={`demo-bg-pill ${canvasBg === 'gradient' ? 'active' : ''}`}
-                          style={{ background: 'linear-gradient(135deg, #1e1b4b, #311042)' }}
-                          title="Deep Aurora Gradient"
-                          onClick={() => setCanvasBg('gradient')}
+                  {isLoading && (
+                    <div className="demo-canvas-placeholder">
+                      <div className="px-ts-spinner" style={{ width: 32, height: 32 }} />
+                      <p style={{ margin: 0, fontSize: '0.9rem', color: '#ffa65e' }}>
+                        Generating & isolating transparent canvas asset...
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Canvas Background and Export Toolbar */}
+                <div className="demo-canvas-controls">
+                  <div className="demo-bg-pills">
+                    <span style={{ fontSize: '0.75rem', color: '#94a3b8', marginRight: '0.3rem' }}>Artboard:</span>
+                    <div
+                      className={`demo-bg-pill ${canvasBg === 'checkers' ? 'active' : ''}`}
+                      style={{ background: '#161224' }}
+                      title="Transparency Checkers"
+                      onClick={() => setCanvasBg('checkers')}
+                    />
+                    <div
+                      className={`demo-bg-pill ${canvasBg === 'dark' ? 'active' : ''}`}
+                      style={{ background: '#08060f' }}
+                      title="Dark Solid"
+                      onClick={() => setCanvasBg('dark')}
+                    />
+                    <div
+                      className={`demo-bg-pill ${canvasBg === 'white' ? 'active' : ''}`}
+                      style={{ background: '#ffffff' }}
+                      title="Light Solid"
+                      onClick={() => setCanvasBg('white')}
+                    />
+                    <div
+                      className={`demo-bg-pill ${canvasBg === 'gradient' ? 'active' : ''}`}
+                      style={{ background: 'linear-gradient(135deg, #1e1b4b, #311042)' }}
+                      title="Deep Aurora Gradient"
+                      onClick={() => setCanvasBg('gradient')}
+                    />
+                  </div>
+
+                  <div className="demo-export-actions">
+                    <button
+                      type="button"
+                      className="demo-btn-export svg-btn"
+                      disabled={!pipelineResult}
+                      onClick={handleDownloadSVG}
+                    >
+                      <span>📥</span> Vector SVG
+                    </button>
+                    <button
+                      type="button"
+                      className="demo-btn-export primary"
+                      disabled={!pipelineResult}
+                      onClick={handleDownloadHighResPNG}
+                    >
+                      <span>🖼️</span> 2x HD PNG
+                    </button>
+                    <button
+                      type="button"
+                      className="demo-btn-export"
+                      disabled={!pipelineResult}
+                      onClick={handleDownloadIcon}
+                    >
+                      <span>📱</span> App Icon
+                    </button>
+                  </div>
+                </div>
+
+                {/* Tab 1: Brand & Typography Studio Panel */}
+                {activeTab === 'studio' && (
+                  <div className="demo-studio-panel" style={{ marginTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '1rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                      <div className="demo-form-group">
+                        <label className="demo-form-label">Brand / Company Name</label>
+                        <input
+                          type="text"
+                          className="demo-form-input"
+                          value={compositionState.brandName}
+                          onChange={(e) => updateComposition('brandName', e.target.value)}
+                          placeholder="e.g. FOXGUARD"
                         />
                       </div>
 
-                      <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                        {pipelineResult && (
-                          <span className="demo-telemetry-badge">
-                            ✓ {pipelineResult.timings?.totalMs}ms
-                          </span>
-                        )}
-                        <button
-                          type="button"
-                          className="demo-btn-download"
-                          disabled={!pipelineResult}
-                          onClick={handleDownload}
+                      <div className="demo-form-group">
+                        <label className="demo-form-label">Tagline / Slogan</label>
+                        <input
+                          type="text"
+                          className="demo-form-input"
+                          value={compositionState.slogan}
+                          onChange={(e) => updateComposition('slogan', e.target.value)}
+                          placeholder="e.g. CYBER SECURITY"
+                        />
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                      <div className="demo-form-group">
+                        <label className="demo-form-label">Typography Font</label>
+                        <select
+                          className="demo-form-select"
+                          value={compositionState.fontFamily}
+                          onChange={(e) => updateComposition('fontFamily', e.target.value)}
                         >
-                          <span>💾</span> Download Transparent PNG
-                        </button>
+                          {AVAILABLE_FONTS.map(f => (
+                            <option key={f.id} value={f.id}>{f.label}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="demo-form-group">
+                        <label className="demo-form-label">Layout Mode</label>
+                        <div className="demo-pill-grid">
+                          {[
+                            { id: 'stacked', label: 'Stacked' },
+                            { id: 'horizontal', label: 'Horizontal' },
+                            { id: 'badge-arc', label: 'Circular Arc' }
+                          ].map(opt => (
+                            <button
+                              key={opt.id}
+                              type="button"
+                              className={`demo-pill-opt ${compositionState.layout === opt.id ? 'active' : ''}`}
+                              onClick={() => updateComposition('layout', opt.id)}
+                            >
+                              {opt.label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                      <div className="demo-form-group">
+                        <label className="demo-form-label">Emblem Badge Frame</label>
+                        <div className="demo-pill-grid">
+                          {[
+                            { id: 'none', label: 'None' },
+                            { id: 'circle-ring', label: 'Circle Ring' },
+                            { id: 'squircle', label: 'Squircle' },
+                            { id: 'shield', label: 'Shield' },
+                            { id: 'hexagon', label: 'Hexagon' }
+                          ].map(f => (
+                            <button
+                              key={f.id}
+                              type="button"
+                              className={`demo-pill-opt ${compositionState.badgeFrame === f.id ? 'active' : ''}`}
+                              onClick={() => updateComposition('badgeFrame', f.id)}
+                            >
+                              {f.label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="demo-form-group">
+                        <label className="demo-form-label">
+                          <span>Letter Spacing (Tracking):</span>
+                          <span>{compositionState.letterSpacing}px</span>
+                        </label>
+                        <input
+                          type="range"
+                          min="0"
+                          max="16"
+                          value={compositionState.letterSpacing}
+                          onChange={(e) => updateComposition('letterSpacing', parseInt(e.target.value))}
+                          style={{ accentColor: '#ff7a1a', cursor: 'pointer' }}
+                        />
                       </div>
                     </div>
                   </div>
@@ -1082,7 +1333,7 @@
 
                 {/* Tab 2: Raw vs Transparent Comparison */}
                 {activeTab === 'compare' && pipelineResult && (
-                  <div className="demo-compare-grid">
+                  <div className="demo-compare-grid" style={{ marginTop: '1rem' }}>
                     <div className="demo-compare-card">
                       <div className="demo-compare-label">
                         <span>1. Raw AI Render</span>
@@ -1107,8 +1358,8 @@
 
                 {/* Tab 3: JSON Telemetry & Payload */}
                 {activeTab === 'json' && pipelineResult && (
-                  <pre className="demo-payload-code">
-                    {JSON.stringify(pipelineResult, null, 2)}
+                  <pre className="demo-payload-code" style={{ marginTop: '1rem' }}>
+                    {JSON.stringify({ pipelineResult, compositionState }, null, 2)}
                   </pre>
                 )}
               </div>
@@ -1117,14 +1368,14 @@
               <div className="demo-card">
                 <div className="demo-card-header">
                   <h4 className="demo-card-title">
-                    <span>⚡</span> Phase 3 Pipeline Specifications
+                    <span>⚡</span> Advanced Studio Architecture
                   </h4>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.8rem', color: '#cbd5e1' }}>
-                  <div>📡 <strong>AgentRouter Integration:</strong> Model <code>agentrouter/sdxl-turbo</code> @ 1024×1024 (1:1)</div>
-                  <div>✂️ <strong>Dual BG Removal:</strong> On-device RMBG-2.0 / BiRefNet + Hermite feathered canvas fallback</div>
-                  <div>🎯 <strong>Canvas Injector:</strong> High-DPI placement, centered layout, and <code>pixnivo:logo-injected</code> events</div>
-                  <div>🛡️ <strong>Robust Error Handling:</strong> Fallback synthesis if offline or credentials unconfigured</div>
+                  <div>📥 <strong>Scalable Vector SVG:</strong> W3C vector markup with embedded Google Fonts and curved <code>&lt;textPath&gt;</code></div>
+                  <div>✏️ <strong>Brand Typography:</strong> Plus Jakarta Sans, Orbitron, Playfair Display, Inter with tracking</div>
+                  <div>🛡️ <strong>Geometric Badges:</strong> Circle Ring, Shield, Squircle, Hexagon with mood glow</div>
+                  <div>🖼️ <strong>Multi-Resolution Export:</strong> 1x, 2x (2048px), 4x (4096px), and App Favicons (192px)</div>
                 </div>
               </div>
             </div>
@@ -1137,7 +1388,7 @@
     }
 
     window.startPixnivoDemo = runDemo;
-    if (window.PixnivoThemes && window.PixnivoPipeline) {
+    if (window.PixnivoThemes && window.PixnivoPipeline && window.PixnivoStudio) {
       runDemo();
     }
   </script>
