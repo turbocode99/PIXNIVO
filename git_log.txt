@@ -1,0 +1,10 @@
+79a93f4 Fix UI confusion by pre-filling textarea instead of using placeholder
+967a2e1 Fix UTF-8 corrupted characters in HTML files
+4bfb7d5 Fix barcode UI styling and add CSV upload support
+bb7d7a5 Add Bulk Barcode Generator tool with Excel, Word, PDF export
+b4d0e00 fix: revert to PaddleOCR 2.7.3 syntax
+4704dbe feat: restore dual engine OCR (Paddle + Tesseract)
+4a76b1c UI: update OCR labels to PaddleOCR
+be8aedb fix: update PaddleOCR 3.7.0 kwargs
+c7a237d feat: Python OCR Backend setup
+40f90fd Initial commit
