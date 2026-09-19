@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -68,7 +68,7 @@
       </a>
 
       <nav class="nav-links" id="navLinks">
-        <a class="nav-link active" href="/">
+        <a class="nav-link" href="/">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
           Image Tools
         </a>
@@ -80,7 +80,7 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
           AI OCR
         </a>
-          <a class="nav-link" href="/barcode-tools.html">
+          <a class="nav-link active" href="/barcode-tools.html">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"></path><path d="M8 5v14"></path><path d="M12 5v14"></path><path d="M16 5v14"></path></svg>
             Barcode Tools
           </a>
@@ -104,115 +104,471 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
   <style>
-  #bcType {
-    color-scheme: dark;
-  }
-  #bcType option, #bcType optgroup {
-    background-color: #1a1a2e;
-    color: #ffffff;
-  }
-  #bcType optgroup {
-    font-weight: 600;
-    color: #a0a0b8;
-  }
-  .upload-area {
-    border: 2px dashed rgba(255,255,255,0.2);
-    border-radius: 8px;
-    padding: 1.5rem;
-    text-align: center;
-    cursor: pointer;
-    transition: 0.2s;
-    background: rgba(0,0,0,0.2);
-    margin-bottom: 1rem;
-  }
-  .upload-area:hover, .upload-area.dragover {
-    border-color: var(--primary);
-    background: rgba(255,90,30,0.1);
-  }
-</style>
+    /* Barcode Studio Bright Glassmorphism Styles */
+    .barcode-studio-card {
+      background: rgba(18, 14, 28, 0.85);
+      backdrop-filter: blur(24px) saturate(190%);
+      -webkit-backdrop-filter: blur(24px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 24px 60px -10px rgba(0, 0, 0, 0.6), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
+      border-radius: 24px;
+      padding: 36px 40px;
+      position: relative;
+    }
+    html[data-theme="light"] .barcode-studio-card {
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 20px 50px -10px rgba(100, 116, 139, 0.2), inset 0 1px 2px 0 rgba(255, 255, 255, 1);
+    }
 
-<section class="hero-tools" style="padding-top: 4rem; padding-bottom: 4rem;">
-  <div class="container" style="max-width: 900px; margin: 0 auto; padding: 0 1rem;">
-    <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-      <h2 style="margin-bottom: 0.5rem; font-size: 2rem; font-weight: 700;">Bulk Barcode Generator</h2>
-      <p style="color: var(--text-muted); margin-bottom: 2rem;">Generate high-quality 1D, 2D, GS1, and QR codes instantly. Upload a CSV to bulk-generate thousands of barcodes, then download them perfectly embedded into Word, Excel, or PDF.</p>
+    .bc-card-title {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    html[data-theme="light"] .bc-card-title {
+      color: #0f172a;
+    }
+
+    .bc-card-desc {
+      font-size: 15px;
+      color: #cbd5e1;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+    html[data-theme="light"] .bc-card-desc {
+      color: #475569;
+    }
+
+    .bc-field-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.02em;
+      margin-bottom: 8px;
+    }
+    html[data-theme="light"] .bc-field-label {
+      color: #0f172a;
+    }
+
+    .bc-label-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ff7a1a;
+      box-shadow: 0 0 8px #ff7a1a;
+    }
+
+    .bc-select {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 14.5px;
+      font-weight: 600;
+      font-family: inherit;
+      color: #ffffff;
+      background: rgba(14, 11, 24, 0.92);
+      border: 1.5px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      outline: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    html[data-theme="light"] .bc-select {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      color: #0f172a;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .bc-select:focus {
+      border-color: #ff7a1a;
+      box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.3);
+    }
+    .bc-select optgroup {
+      background: #120e20;
+      color: #ffa65e;
+      font-weight: 700;
+    }
+    .bc-select option {
+      background: #1a152d;
+      color: #ffffff;
+    }
+    html[data-theme="light"] .bc-select optgroup {
+      background: #f1f5f9;
+      color: #ea580c;
+    }
+    html[data-theme="light"] .bc-select option {
+      background: #ffffff;
+      color: #0f172a;
+    }
+
+    .bc-option-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 18px;
+      border-radius: 12px;
+      background: rgba(14, 11, 24, 0.92);
+      border: 1.5px solid rgba(255, 255, 255, 0.22);
+      color: #ffffff;
+      font-size: 14.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+    html[data-theme="light"] .bc-option-box {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      color: #0f172a;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .bc-option-box:hover {
+      border-color: rgba(255, 122, 26, 0.6);
+      background: rgba(28, 22, 44, 0.92);
+    }
+    html[data-theme="light"] .bc-option-box:hover {
+      background: #f8fafc;
+      border-color: #ea580c;
+    }
+    .bc-checkbox {
+      width: 19px;
+      height: 19px;
+      accent-color: #ff7a1a;
+      cursor: pointer;
+    }
+
+    .bc-dropzone {
+      border: 2px dashed rgba(255, 122, 26, 0.65);
+      background: linear-gradient(135deg, rgba(255, 122, 26, 0.09) 0%, rgba(255, 94, 58, 0.04) 100%);
+      border-radius: 16px;
+      padding: 30px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      margin-bottom: 20px;
+      box-shadow: inset 0 0 24px rgba(255, 122, 26, 0.06);
+    }
+    .bc-dropzone:hover, .bc-dropzone.dragover {
+      border-color: #ff9500;
+      background: linear-gradient(135deg, rgba(255, 122, 26, 0.16) 0%, rgba(255, 94, 58, 0.09) 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(255, 107, 0, 0.22);
+    }
+    .bc-dropzone-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #ff5e3a 0%, #ff9500 100%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      margin-bottom: 12px;
+      box-shadow: 0 6px 18px rgba(255, 94, 58, 0.4);
+    }
+    .bc-dropzone-title {
+      font-size: 16.5px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+    html[data-theme="light"] .bc-dropzone-title {
+      color: #0f172a;
+    }
+    .bc-dropzone-sub {
+      font-size: 13.5px;
+      color: #fed7aa;
+      font-weight: 500;
+    }
+    html[data-theme="light"] .bc-dropzone-sub {
+      color: #ea580c;
+    }
+
+    .bc-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 22px 0;
+    }
+    .bc-divider-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.15);
+    }
+    html[data-theme="light"] .bc-divider-line {
+      background: #e2e8f0;
+    }
+    .bc-divider-badge {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #f1f5f9;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 5px 14px;
+      border-radius: 999px;
+    }
+    html[data-theme="light"] .bc-divider-badge {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #475569;
+    }
+
+    .bc-textarea {
+      width: 100%;
+      min-height: 135px;
+      padding: 16px 20px;
+      border-radius: 14px;
+      background: rgba(12, 9, 22, 0.92);
+      border: 1.5px solid rgba(255, 255, 255, 0.22);
+      color: #38bdf8;
+      font-family: 'JetBrains Mono', Consolas, monospace;
+      font-size: 14.5px;
+      font-weight: 600;
+      line-height: 1.6;
+      resize: vertical;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+      outline: none;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+      margin-bottom: 22px;
+    }
+    html[data-theme="light"] .bc-textarea {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      color: #0369a1;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    .bc-textarea:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+    }
+
+    .bc-btn-generate {
+      width: 100%;
+      padding: 16px 28px;
+      background: linear-gradient(135deg, #ff5e3a 0%, #ff9500 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 999px;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 10px 28px -4px rgba(255, 94, 58, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .bc-btn-generate:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px -4px rgba(255, 94, 58, 0.7);
+      filter: brightness(1.08);
+    }
+    .bc-btn-generate:active {
+      transform: translateY(0);
+    }
+
+    .bc-export-btn {
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .bc-export-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.1);
+    }
+    .bc-export-pdf {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+    }
+    .bc-export-word {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    }
+    .bc-export-excel {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+    }
+
+    .bc-results-area {
+      display: none;
+      margin-top: 2.2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 2rem;
+    }
+    html[data-theme="light"] .bc-results-area {
+      border-top: 1px solid #e2e8f0;
+    }
+    .bc-results-title {
+      margin: 0;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+    html[data-theme="light"] .bc-results-title {
+      color: #0f172a;
+    }
+    .bc-prog-text {
+      display: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    html[data-theme="light"] .bc-prog-text {
+      color: #475569;
+    }
+  </style>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="badge-privacy">
+      <span class="pulse-dot"></span>
+      Enterprise Barcode &amp; QR Studio • Fast Bulk Processing
+    </div>
+    <h1>Bulk <em>Barcode &amp; QR Code</em> Studio</h1>
+    <p class="hero-subtitle">Generate high-density 1D, 2D, GS1, and QR codes with instant client-side rendering. Bulk-import CSV data, customize labels, and export directly into formatted PDF, Word, or Excel documents.</p>
+  </section>
+
+  <!-- Interactive Barcode Workspace -->
+  <main class="studio-container" style="max-width: 960px;">
+    <div class="barcode-studio-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
+        <div>
+          <h2 class="bc-card-title">Bulk Barcode Generator</h2>
+          <p class="bc-card-desc" style="margin-bottom: 0;">Generate high-quality 1D, 2D, GS1, and QR codes instantly. Upload a CSV to bulk-generate thousands of barcodes, then download them perfectly embedded into Word, Excel, or PDF.</p>
+        </div>
+      </div>
       
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
-          <div>
-              <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Barcode Type</label>
-              <select id="bcType" style="width: 100%; padding: 0.8rem; background: var(--bg-dark); border: 1px solid var(--border); color: var(--text); border-radius: 6px; font-family: inherit;">
-                  <optgroup label="Popular 2D">
-                      <option value="qrcode">QR Code</option>
-                      <option value="datamatrix">Data Matrix</option>
-                      <option value="pdf417">PDF417</option>
-                      <option value="azteccode">Aztec Code</option>
-                  </optgroup>
-                  <optgroup label="Standard 1D">
-                      <option value="code128">Code 128 (Most Common)</option>
-                      <option value="code39">Code 39</option>
-                      <option value="ean13">EAN-13 (Retail)</option>
-                      <option value="upca">UPC-A (Retail US)</option>
-                      <option value="itf14">ITF-14</option>
-                      <option value="code93">Code 93</option>
-                  </optgroup>
-                  <optgroup label="GS1 Industry Standards">
-                      <option value="gs1-128">GS1-128</option>
-                      <option value="gs1datamatrix">GS1 DataMatrix</option>
-                  </optgroup>
-              </select>
-          </div>
-          <div>
-              <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Options</label>
-              <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.8rem; background: var(--bg-dark); border: 1px solid var(--border); border-radius: 6px; cursor: pointer;">
-                  <input type="checkbox" id="bcShowText" checked> Show Human Readable Text
-              </label>
-          </div>
+        <div>
+          <label class="bc-field-label" for="bcType">
+            <span class="bc-label-dot"></span>
+            Barcode Type
+          </label>
+          <select id="bcType" class="bc-select">
+            <optgroup label="Popular 2D Formats">
+              <option value="qrcode">QR Code</option>
+              <option value="datamatrix">Data Matrix</option>
+              <option value="pdf417">PDF417</option>
+              <option value="azteccode">Aztec Code</option>
+            </optgroup>
+            <optgroup label="Standard 1D Retail &amp; Logistics">
+              <option value="code128">Code 128 (Most Common)</option>
+              <option value="code39">Code 39</option>
+              <option value="ean13">EAN-13 (Retail)</option>
+              <option value="upca">UPC-A (Retail US)</option>
+              <option value="itf14">ITF-14</option>
+              <option value="code93">Code 93</option>
+            </optgroup>
+            <optgroup label="GS1 Industry Standards">
+              <option value="gs1-128">GS1-128</option>
+              <option value="gs1datamatrix">GS1 DataMatrix</option>
+            </optgroup>
+          </select>
+        </div>
+        <div>
+          <label class="bc-field-label">
+            <span class="bc-label-dot"></span>
+            Text Options
+          </label>
+          <label class="bc-option-box" for="bcShowText">
+            <input type="checkbox" id="bcShowText" class="bc-checkbox" checked>
+            <span>Show Human Readable Text</span>
+          </label>
+        </div>
       </div>
 
-      <label style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Data Input</label>
+      <label class="bc-field-label">
+        <span class="bc-label-dot"></span>
+        Data Input (Upload Dataset)
+      </label>
       
-      <div class="upload-area" id="dropZone" onclick="document.getElementById('csvFile').click()">
-        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-bottom: 8px; color: var(--primary);"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-        <p style="margin: 0; font-size: 0.95rem; font-weight: 500;">Click or Drag to Upload CSV / TXT</p>
-        <p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">First column will be used for barcode data</p>
+      <div class="bc-dropzone" id="dropZone" onclick="document.getElementById('csvFile').click()">
+        <div class="bc-dropzone-icon">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+          </svg>
+        </div>
+        <p class="bc-dropzone-title">Click or Drag to Upload CSV / TXT</p>
+        <p class="bc-dropzone-sub">First column will be used automatically for barcode data</p>
         <input type="file" id="csvFile" accept=".csv,.txt" style="display: none;">
       </div>
 
-      <div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">OR PASTE DATA MANUALLY</div>
+      <div class="bc-divider">
+        <span class="bc-divider-line"></span>
+        <span class="bc-divider-badge">OR PASTE DATA MANUALLY</span>
+        <span class="bc-divider-line"></span>
+      </div>
 
-      <textarea id="bcData" rows="6" style="width: 100%; padding: 1rem; background: var(--bg-dark); border: 1px solid var(--border); color: var(--text); border-radius: 6px; font-family: monospace; resize: vertical; margin-bottom: 1.5rem;">1234567890
+      <label class="bc-field-label" for="bcData">
+        <span class="bc-label-dot"></span>
+        Raw Input Lines (One per code)
+      </label>
+      <textarea id="bcData" class="bc-textarea" rows="5">1234567890
 PIXNIVO-PRO
 https://pixnivo.app</textarea>
 
-      <button id="btnGenerate" style="width: 100%; padding: 1rem; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: 0.2s;">Process & Generate Barcodes</button>
+      <button id="btnGenerate" class="bc-btn-generate">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+        </svg>
+        Process &amp; Generate Barcodes
+      </button>
 
       <!-- Results Area -->
-      <div id="bcResults" style="display: none; margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 2rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
-              <h3 style="margin: 0; font-size: 1.25rem;">Live Preview (<span id="bcCount">0</span>)</h3>
-              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                  <button id="btnExportPdf" style="padding: 0.5rem 1rem; background: #e53935; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">Download PDF</button>
-                  <button id="btnExportWord" style="padding: 0.5rem 1rem; background: #1e88e5; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">Download Word</button>
-                  <button id="btnExportExcel" style="padding: 0.5rem 1rem; background: #43a047; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">Download Excel</button>
-              </div>
+      <div id="bcResults" class="bc-results-area">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <h3 class="bc-results-title">Live Barcodes Preview (<span id="bcCount" style="color: #ff9500;">0</span>)</h3>
+          <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+            <button id="btnExportPdf" class="bc-export-btn bc-export-pdf">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download PDF
+            </button>
+            <button id="btnExportWord" class="bc-export-btn bc-export-word">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Word
+            </button>
+            <button id="btnExportExcel" class="bc-export-btn bc-export-excel">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Excel
+            </button>
           </div>
-          
-          <div id="progBarContainer" style="display: none; width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 6px; overflow: hidden; margin-bottom: 1rem;">
-             <div id="progBar" style="height: 100%; width: 0%; background: var(--primary); transition: width 0.3s;"></div>
-          </div>
-          <p id="progText" style="display: none; font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-bottom: 1rem;">Exporting...</p>
+        </div>
+        
+        <div id="progBarContainer" style="display: none; width: 100%; height: 8px; background: rgba(255,255,255,0.15); border-radius: 999px; overflow: hidden; margin-bottom: 1rem;">
+          <div id="progBar" style="height: 100%; width: 0%; background: linear-gradient(90deg, #ff5e3a, #ff9500); transition: width 0.3s; border-radius: 999px;"></div>
+        </div>
+        <p id="progText" class="bc-prog-text">Exporting...</p>
 
-          <p id="previewLimitWarning" style="display: none; color: #ffb74d; font-size: 0.85rem; margin-bottom: 1rem; padding: 0.5rem; background: rgba(255,183,77,0.1); border-radius: 4px; text-align: center;">Showing preview for the first 100 items only. All items will be included in the downloaded file.</p>
+        <p id="previewLimitWarning" style="display: none; color: #ffb74d; font-size: 0.9rem; font-weight: 600; margin-bottom: 1.2rem; padding: 0.8rem 1rem; background: rgba(255,183,77,0.15); border: 1px solid rgba(255,183,77,0.3); border-radius: 8px; text-align: center;">Showing preview for the first 100 items only. All items will be included in the downloaded file.</p>
 
-          <div id="bcGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; max-height: 500px; overflow-y: auto; padding-right: 0.5rem; align-items: end;">
-              <!-- Canvases will be generated here -->
-          </div>
+        <div id="bcGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1.5rem; max-height: 520px; overflow-y: auto; padding: 0.5rem; align-items: stretch;">
+          <!-- Canvases will be generated here -->
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </main>
 
 <script>
 const bcType = document.getElementById('bcType');
@@ -293,15 +649,18 @@ btnGenerate.addEventListener('click', () => {
     
     renderLines.forEach((line, i) => {
         const container = document.createElement('div');
-        container.style.background = 'var(--bg-light)';
-        container.style.border = '1px solid var(--border)';
-        container.style.padding = '1.5rem';
-        container.style.borderRadius = '12px';
+        container.style.background = '#ffffff';
+        container.style.border = '2px solid rgba(255, 255, 255, 0.95)';
+        container.style.padding = '18px 16px';
+        container.style.borderRadius = '16px';
         container.style.display = 'flex';
         container.style.flexDirection = 'column';
         container.style.alignItems = 'center';
         container.style.justifyContent = 'center';
-        container.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+        container.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.28), 0 2px 6px rgba(0, 0, 0, 0.15)';
+        container.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
+        container.onmouseenter = () => { container.style.transform = 'translateY(-3px)'; container.style.boxShadow = '0 14px 30px rgba(0, 0, 0, 0.38)'; };
+        container.onmouseleave = () => { container.style.transform = 'none'; container.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.28), 0 2px 6px rgba(0, 0, 0, 0.15)'; };
         
         const canvas = document.createElement('canvas');
         canvas.style.maxWidth = '100%';
@@ -310,12 +669,13 @@ btnGenerate.addEventListener('click', () => {
         canvas.id = 'bc_' + i;
         
         const title = document.createElement('div');
-        title.style.color = 'var(--text)';
-        title.style.fontSize = '0.75rem';
-        title.style.marginTop = '12px';
+        title.style.color = '#0f172a';
+        title.style.fontSize = '0.82rem';
+        title.style.marginTop = '10px';
         title.style.textAlign = 'center';
         title.style.wordBreak = 'break-all';
-        title.style.fontWeight = '600';
+        title.style.fontWeight = '700';
+        title.style.fontFamily = 'var(--font-mono, monospace)';
         title.textContent = line;
         
         container.appendChild(canvas);
