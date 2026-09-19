@@ -714,3 +714,143 @@ async def admin_upload_media(file: UploadFile = File(...), admin: Dict[str, Any]
         "mimeType": file.content_type
     }
 
+# ==============================================================================
+# AGENTROUTER AI LOGO GENERATION ENDPOINTS
+# ==============================================================================
+
+class LogoGenerateRequest(BaseModel):
+    prompt: str
+    negative_prompt: Optional[str] = None
+    theme_id: Optional[str] = "3d-glass-bubble"
+    aspect_ratio: Optional[str] = "1:1"
+    width: Optional[int] = 1024
+    height: Optional[int] = 1024
+    guidance_scale: Optional[float] = 7.5
+    steps: Optional[int] = 30
+    model: Optional[str] = "agentrouter/sdxl-turbo"
+    api_key: Optional[str] = None
+
+@app.post("/api/agentrouter/generate-logo")
+async def generate_agentrouter_logo(req: LogoGenerateRequest):
+    """
+    Secure backend proxy for AgentRouter image generation.
+    Supports live API dispatch or sandbox/testing synthesis with 1024x1024 1:1 format.
+    """
+    if not req.prompt or not req.prompt.strip():
+        raise HTTPException(status_code=400, detail="Prompt is required.")
+
+    api_key = req.api_key or os.environ.get("AGENTROUTER_API_KEY", "")
+    agentrouter_endpoint = os.environ.get("AGENTROUTER_ENDPOINT", "https://api.agentrouter.ai/v1/images/generations")
+
+    # If API key is present, attempt live dispatch
+    if api_key:
+        try:
+            import requests
+            payload = {
+                "model": req.model,
+                "prompt": req.prompt,
+                "negative_prompt": req.negative_prompt,
+                "aspect_ratio": req.aspect_ratio or "1:1",
+                "width": req.width or 1024,
+                "height": req.height or 1024,
+                "guidance_scale": req.guidance_scale or 7.5,
+                "steps": req.steps or 30,
+                "n": 1,
+                "response_format": "b64_json"
+            }
+            resp = requests.post(
+                agentrouter_endpoint,
+                headers={
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": "application/json",
+                    "X-Client": "Pixnivo-Backend/1.0"
+                },
+                json=payload,
+                timeout=45
+            )
+            if resp.status_code == 200:
+                data = resp.json()
+                if "data" in data and len(data["data"]) > 0:
+                    item = data["data"][0]
+                    b64 = item.get("b64_json")
+                    img_url = item.get("url")
+                    return {
+                        "status": "success",
+                        "engine": "agentrouter",
+                        "b64_json": b64,
+                        "url": img_url or (f"data:image/png;base64,{b64}" if b64 else None),
+                        "width": req.width or 1024,
+                        "height": req.height or 1024,
+                        "theme_id": req.theme_id
+                    }
+        except Exception as e:
+            print(f"[AgentRouter Backend Proxy Error]: {e}. Falling back to sandbox synthesis.")
+
+    # High-quality sandbox/fallback synthesis if no API key or external dispatch failed
+    try:
+        from PIL import Image, ImageDraw, ImageFont
+        w = req.width or 1024
+        h = req.height or 1024
+        img = Image.new("RGB", (w, h), color=(255, 255, 255))
+        draw = ImageDraw.Draw(img)
+
+        # Palette accents by theme
+        accent = (255, 122, 26) # default Pixnivo orange
+        if req.theme_id == "3d-glass-bubble":
+            accent = (6, 182, 212)
+        elif req.theme_id == "architectural-brutalist":
+            accent = (249, 115, 22)
+        elif req.theme_id == "3d-claymorphism":
+            accent = (236, 72, 153)
+        elif req.theme_id == "minimalist-flat-vector":
+            accent = (16, 185, 129)
+        elif req.theme_id == "cyberpunk-neon-glyph":
+            accent = (168, 85, 247)
+            # dark background for cyberpunk
+            draw.rectangle([0, 0, w, h], fill=(10, 8, 20))
+
+        center_x = w // 2
+        center_y = h // 2
+        radius = 240
+
+        # Draw smooth concentric emblem
+        for r_offset in range(40, 0, -8):
+            alpha_val = int(255 * (1 - r_offset / 45))
+            draw.ellipse(
+                [center_x - radius - r_offset, center_y - radius - r_offset,
+                 center_x + radius + r_offset, center_y + radius + r_offset],
+                outline=accent,
+                width=4
+            )
+
+        draw.ellipse(
+            [center_x - radius, center_y - radius, center_x + radius, center_y + radius],
+            fill=accent
+        )
+
+        # Inner highlight
+        draw.ellipse(
+            [center_x - radius // 2, center_y - radius // 2,
+             center_x + radius // 2, center_y + radius // 2],
+            fill=(255, 255, 255)
+        )
+
+        # Output to base64
+        buf = BytesIO()
+        img.save(buf, format="PNG")
+        b64_str = base64.b64encode(buf.getvalue()).decode("utf-8")
+
+        return {
+            "status": "success",
+            "engine": "sandbox_synthesis",
+            "b64_json": b64_str,
+            "url": f"data:image/png;base64,{b64_str}",
+            "width": w,
+            "height": h,
+            "theme_id": req.theme_id,
+            "note": "Synthesized sandbox asset ready for background removal pipeline."
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Image generation failed: {str(e)}")
+
+

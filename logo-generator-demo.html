@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixnivo · AI Logo Designer & Canvas Studio (Phase 3)</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="ThemeSelector.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- React & Babel Standalone for live client-side JSX rendering -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      min-height: 100vh;
+      background: var(--bg-base, #0a0814);
+      color: var(--text-primary, #f8fafc);
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Aurora Glow */
+    .demo-aurora-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .demo-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.35;
+      animation: float-orb 18s ease-in-out infinite alternate;
+    }
+
+    .demo-orb-1 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, #ff7a1a 0%, transparent 70%);
+      top: -100px;
+      left: 10%;
+    }
+
+    .demo-orb-2 {
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+      bottom: -80px;
+      right: 15%;
+      animation-duration: 22s;
+    }
+
+    .demo-orb-3 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+      top: 40%;
+      left: 65%;
+      animation-duration: 15s;
+    }
+
+    @keyframes float-orb {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(40px, 30px) scale(1.1); }
+    }
+
+    /* Demo Header Nav */
+    .demo-nav {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+      backdrop-filter: blur(16px);
+      background: rgba(10, 8, 20, 0.7);
+    }
+
+    .demo-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: #ffffff;
+    }
+
+    .demo-logo-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, rgba(255, 122, 26, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
+      border: 1px solid rgba(255, 122, 26, 0.35);
+      color: #ffa65e;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .demo-container {
+      position: relative;
+      z-index: 5;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem 1.5rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 1040px) {
+      .demo-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Right Side Canvas Artboard & Pipeline Studio */
+    .demo-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .demo-card {
+      background: var(--bg-glass-card, rgba(18, 14, 28, 0.7));
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-glass, rgba(255, 255, 255, 0.12));
+      border-radius: 1.25rem;
+      padding: 1.25rem;
+      box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.4);
+    }
+
+    .demo-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .demo-card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin: 0;
+      color: #ffffff;
+    }
+
+    .demo-tab-btn {
+      padding: 0.35rem 0.75rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+      border-radius: 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .demo-tab-btn.active {
+      background: rgba(255, 122, 26, 0.25);
+      border-color: #ff7a1a;
+      color: #ffa65e;
+    }
+
+    /* Pipeline Progress Tracker */
+    .demo-progress-box {
+      background: rgba(14, 11, 24, 0.85);
+      border: 1px solid rgba(255, 122, 26, 0.3);
+      border-radius: 0.75rem;
+      padding: 0.85rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      animation: px-fade-in 0.25s ease;
+    }
+
+    .demo-progress-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #ffa65e;
+    }
+
+    .demo-progress-bar-wrap {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+
+    .demo-progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff5e3a 0%, #ff9500 50%, #22d3ee 100%);
+      transition: width 0.3s ease;
+      border-radius: 9999px;
+    }
+
+    /* Canvas Stage Container */
+    .demo-canvas-viewport {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      max-height: 520px;
+      border-radius: 1rem;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+      background-size: 20px 20px;
+    }
+
+    .demo-canvas-viewport.bg-checkers {
+      background-color: #0d0a17;
+      background-image:
+        linear-gradient(45deg, #161224 25%, transparent 25%),
+        linear-gradient(-45deg, #161224 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #161224 75%),
+        linear-gradient(-45deg, transparent 75%, #161224 75%);
+    }
+
+    .demo-canvas-viewport.bg-dark {
+      background: #08060f;
+    }
+
+    .demo-canvas-viewport.bg-white {
+      background: #ffffff;
+    }
+
+    .demo-canvas-viewport.bg-gradient {
+      background: linear-gradient(135deg, #1e1b4b 0%, #311042 50%, #0a0814 100%);
+    }
+
+    #designer-canvas {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .demo-canvas-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      color: #94a3b8;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .demo-canvas-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .demo-bg-pills {
+      display: flex;
+      gap: 0.35rem;
+      align-items: center;
+    }
+
+    .demo-bg-pill {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .demo-bg-pill.active {
+      border-color: #ff7a1a;
+      transform: scale(1.15);
+      box-shadow: 0 0 10px rgba(255, 122, 26, 0.5);
+    }
+
+    .demo-btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border: none;
+      border-radius: 0.6rem;
+      color: #ffffff;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+    }
+
+    .demo-btn-download:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.5);
+    }
+
+    .demo-btn-download:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Side-by-Side Comparison */
+    .demo-compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .demo-compare-card {
+      background: rgba(14, 11, 24, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 0.75rem;
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .demo-compare-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: #cbd5e1;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .demo-compare-img-wrap {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      background: #0d0a17;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .demo-compare-img-wrap.checkered {
+      background-color: #0d0a17;
+      background-image:
+        linear-gradient(45deg, #161224 25%, transparent 25%),
+        linear-gradient(-45deg, #161224 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #161224 75%),
+        linear-gradient(-45deg, transparent 75%, #161224 75%);
+      background-size: 16px 16px;
+    }
+
+    .demo-compare-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .demo-payload-code {
+      background: rgba(8, 6, 14, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: #38bdf8;
+      max-height: 480px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      line-height: 1.5;
+    }
+
+    .demo-controls-row {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .demo-toggle-btn {
+      padding: 0.4rem 0.85rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #e2e8f0;
+      border-radius: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .demo-toggle-btn.active {
+      background: rgba(255, 122, 26, 0.2);
+      border-color: #ff7a1a;
+      color: #ffa65e;
+    }
+
+    .demo-telemetry-badge {
+      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Glow Background -->
+  <div class="demo-aurora-bg">
+    <div class="demo-orb demo-orb-1"></div>
+    <div class="demo-orb demo-orb-2"></div>
+    <div class="demo-orb demo-orb-3"></div>
+  </div>
+
+  <!-- Header Nav -->
+  <header class="demo-nav">
+    <a href="index.html" class="demo-logo">
+      <span style="font-size: 1.5rem;">⚡</span>
+      <span>PIXNIVO</span>
+      <span class="demo-logo-badge">Phase 3 Live Studio</span>
+    </a>
+    <div style="font-size: 0.85rem; color: #94a3b8;">
+      Theme-Driven AI Logo Generator · <span style="color: #22d3ee;">AgentRouter & RMBG Pipeline</span>
+    </div>
+  </header>
+
+  <!-- React Mount Root -->
+  <div id="root"></div>
+
+  <!-- Load Modules as ES Modules -->
+  <script type="module">
+    import { LOGO_THEMES, THEME_LIST, buildAIPrompt, sanitizeConceptInput } from './themeDictionary.js';
+    import { removeBackground } from './backgroundRemover.js';
+    import { injectOntoCanvas, drawCheckerboard } from './canvasInjector.js';
+    import { generateAndProcessLogo, generateSyntheticFallbackLogo } from './logoPipeline.js';
+
+    window.PixnivoThemes = { LOGO_THEMES, THEME_LIST, buildAIPrompt, sanitizeConceptInput };
+    window.PixnivoPipeline = {
+      removeBackground,
+      injectOntoCanvas,
+      drawCheckerboard,
+      generateAndProcessLogo,
+      generateSyntheticFallbackLogo
+    };
+
+    if (window.startPixnivoDemo) {
+      window.startPixnivoDemo();
+    }
+  </script>
+
+  <!-- React Application -->
+  <script type="text/babel">
+    function runDemo() {
+      if (!window.PixnivoThemes || !window.PixnivoPipeline) return;
+
+      const { useState, useMemo, useCallback, useRef, useEffect } = React;
+      const { LOGO_THEMES, THEME_LIST, buildAIPrompt, sanitizeConceptInput } = window.PixnivoThemes;
+      const { generateAndProcessLogo } = window.PixnivoPipeline;
+
+      // Quick chips definition
+      const DEFAULT_QUICK_CHIPS = [
+        { label: 'Mountain Peak', icon: '🏔️' },
+        { label: 'Cyber Falcon', icon: '🦅' },
+        { label: 'Coffee Bean', icon: '☕' },
+        { label: 'Fox Head', icon: '🦊' },
+        { label: 'Origami Crane', icon: '🦢' },
+        { label: 'Geometric Shield', icon: '🛡️' }
+      ];
+
+      function hexToRgba(hex, alpha = 0.4) {
+        if (!hex || typeof hex !== 'string' || !hex.startsWith('#')) return `rgba(255, 122, 26, ${alpha})`;
+        const clean = hex.replace('#', '');
+        const bigint = parseInt(clean.length === 3 ? clean.split('').map(c => c + c).join('') : clean, 16);
+        const r = (bigint >> 16) & 255;
+        const g = (bigint >> 8) & 255;
+        const b = bigint & 255;
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+      }
+
+      // ------------------------------------------------------------------------
+      // ThemeSelector Component (Phase 2)
+      // ------------------------------------------------------------------------
+      function ThemeSelectorComponent({
+        onGenerate,
+        isLoading = false,
+        initialConcept = '',
+        initialThemeId = '3d-glass-bubble',
+        compact = false
+      }) {
+        const [concept, setConcept] = useState(initialConcept);
+        const [selectedThemeId, setSelectedThemeId] = useState(initialThemeId);
+        const [showPromptPreview, setShowPromptPreview] = useState(false);
+        const [showNegative, setShowNegative] = useState(false);
+        const [copied, setCopied] = useState(false);
+        const [inputError, setInputError] = useState('');
+
+        const currentTheme = useMemo(() => {
+          return LOGO_THEMES[selectedThemeId] || LOGO_THEMES['3d-glass-bubble'];
+        }, [selectedThemeId]);
+
+        const dynamicChips = useMemo(() => {
+          const themeSamples = (currentTheme.sampleConcepts || []).map(sample => ({
+            label: sample.charAt(0).toUpperCase() + sample.slice(1),
+            icon: '✨'
+          }));
+          const map = new Map();
+          [...themeSamples, ...DEFAULT_QUICK_CHIPS].forEach(item => {
+            const key = item.label.toLowerCase();
+            if (!map.has(key)) map.set(key, item);
+          });
+          return Array.from(map.values()).slice(0, 6);
+        }, [currentTheme]);
+
+        const promptPayload = useMemo(() => {
+          const rawConcept = concept.trim() || 'your concept';
+          try {
+            return buildAIPrompt(rawConcept, selectedThemeId);
+          } catch (e) {
+            return null;
+          }
+        }, [concept, selectedThemeId]);
+
+        const handleConceptChange = useCallback((e) => {
+          const val = e.target.value;
+          setConcept(val);
+          if (inputError && val.trim()) setInputError('');
+        }, [inputError]);
+
+        const handleChipClick = useCallback((chipLabel) => {
+          setConcept(chipLabel);
+          setInputError('');
+        }, []);
+
+        const handleClear = useCallback(() => {
+          setConcept('');
+          setInputError('');
+        }, []);
+
+        const handleCopyPrompt = useCallback(() => {
+          if (!promptPayload) return;
+          navigator.clipboard.writeText(promptPayload.prompt).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+          });
+        }, [promptPayload]);
+
+        const handleSubmit = useCallback((e) => {
+          if (e) e.preventDefault();
+          const sanitized = sanitizeConceptInput(concept);
+          if (!sanitized) {
+            setInputError('Please enter a concept for your logo (e.g., "mountain peak" or "fox head")');
+            return;
+          }
+          try {
+            const payload = buildAIPrompt(sanitized, selectedThemeId);
+            if (typeof onGenerate === 'function') {
+              onGenerate(payload);
+            }
+          } catch (err) {
+            setInputError(err.message || 'Failed to assemble prompt payload.');
+          }
+        }, [concept, selectedThemeId, onGenerate]);
+
+        return (
+          <div className={`px-theme-selector ${compact ? 'compact' : ''}`}>
+            {/* Header */}
+            <div className="px-ts-header">
+              <div className="px-ts-header-badge">
+                <span>⚡</span>
+                <span>Theme-Driven AI Engine</span>
+              </div>
+              <h3 className="px-ts-header-title">Logo Designer</h3>
+              <p className="px-ts-header-sub">
+                Choose an engineered aesthetic and type your core subject to generate a studio-grade asset.
+              </p>
+            </div>
+
+            {/* Concept Input */}
+            <div className="px-ts-concept-group">
+              <div className="px-ts-label-row">
+                <label htmlFor="px-ts-concept-input" className="px-ts-label">
+                  <span>✨</span> Core Concept / Subject
+                </label>
+                <span className={`px-ts-char-count ${concept.length > 140 ? 'warning' : ''}`}>
+                  {concept.length} / 160
+                </span>
+              </div>
+
+              <div className="px-ts-input-wrapper">
+                <span className="px-ts-input-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                </span>
+                <input
+                  id="px-ts-concept-input"
+                  type="text"
+                  className="px-ts-input"
+                  placeholder="e.g. mountain peak, fox head, espresso cup, solar crest..."
+                  value={concept}
+                  maxLength={160}
+                  disabled={isLoading}
+                  onChange={handleConceptChange}
+                  onKeyDown={(e) => e.key === 'Enter' && !isLoading && handleSubmit(e)}
+                />
+                {concept.length > 0 && !isLoading && (
+                  <button
+                    type="button"
+                    className="px-ts-clear-btn"
+                    onClick={handleClear}
+                    aria-label="Clear input"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+
+              {inputError && (
+                <div className="px-ts-input-error">
+                  <span>⚠️</span> {inputError}
+                </div>
+              )}
+            </div>
+
+            {/* Quick Chips */}
+            <div className="px-ts-chips-section">
+              <div className="px-ts-chips-label">Quick Ideas</div>
+              <div className="px-ts-chips-wrap">
+                {dynamicChips.map((chip) => {
+                  const isActive = concept.trim().toLowerCase() === chip.label.toLowerCase();
+                  return (
+                    <button
+                      key={chip.label}
+                      type="button"
+                      className={`px-ts-chip ${isActive ? 'active' : ''}`}
+                      disabled={isLoading}
+                      onClick={() => handleChipClick(chip.label)}
+                    >
+                      <span>{chip.icon}</span>
+                      <span>{chip.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Visual Themes Grid */}
+            <div className="px-ts-theme-section">
+              <div className="px-ts-theme-label-row">
+                <span className="px-ts-theme-label">Visual Themes</span>
+                <span className="px-ts-theme-counter">{THEME_LIST.length} Styles Available</span>
+              </div>
+
+              <div className="px-ts-grid" role="radiogroup" aria-label="Logo Visual Themes">
+                {THEME_LIST.map((theme) => {
+                  const isSelected = selectedThemeId === theme.id;
+                  const accentColor = theme.accentColor || '#ff7a1a';
+
+                  return (
+                    <div
+                      key={theme.id}
+                      role="radio"
+                      aria-checked={isSelected}
+                      tabIndex={isLoading ? -1 : 0}
+                      className={`px-ts-card ${isSelected ? 'active' : ''}`}
+                      style={{
+                        '--theme-accent': accentColor,
+                        '--theme-glow': hexToRgba(accentColor, 0.45),
+                        '--theme-glow-subtle': hexToRgba(accentColor, 0.15),
+                        '--card-gradient': theme.thumbnailGradient || 'transparent'
+                      }}
+                      onClick={() => !isLoading && setSelectedThemeId(theme.id)}
+                    >
+                      <div className="px-ts-card-top">
+                        <div className="px-ts-card-icon-wrap">
+                          {theme.icon?.svgPath ? (
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                              <path d={theme.icon.svgPath} />
+                            </svg>
+                          ) : (
+                            <span>🎨</span>
+                          )}
+                        </div>
+
+                        <div className="px-ts-card-badge-wrap">
+                          {theme.badge && (
+                            <span className="px-ts-card-badge">{theme.badge}</span>
+                          )}
+                          {isSelected && (
+                            <span className="px-ts-card-check">✓</span>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="px-ts-card-body">
+                        <h4 className="px-ts-card-name">{theme.name}</h4>
+                        <span className="px-ts-card-category">{theme.category}</span>
+                        <p className="px-ts-card-desc">{theme.description}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Collapsible Prompt Preview */}
+            <div className="px-ts-preview-accordion">
+              <button
+                type="button"
+                className="px-ts-accordion-toggle"
+                onClick={() => setShowPromptPreview(prev => !prev)}
+                aria-expanded={showPromptPreview}
+              >
+                <div className="px-ts-accordion-toggle-left">
+                  <span>⚙️</span>
+                  <span>Engineered Prompt Preview</span>
+                  <span className="px-ts-preview-tag">Auto-Injected</span>
+                </div>
+                <span className={`px-ts-accordion-chevron ${showPromptPreview ? 'open' : ''}`}>
+                  ▼
+                </span>
+              </button>
+
+              {showPromptPreview && (
+                <div className="px-ts-accordion-body">
+                  <div className="px-ts-prompt-box">
+                    <span className="px-ts-prompt-prefix">
+                      {currentTheme.promptInjectors.prefix}{' '}
+                    </span>
+                    <span className="px-ts-prompt-concept">
+                      {concept.trim() ? sanitizeConceptInput(concept) : '[your concept]'}
+                    </span>
+                    <span className="px-ts-prompt-suffix">
+                      {currentTheme.promptInjectors.suffix}
+                    </span>
+                  </div>
+
+                  <div className="px-ts-prompt-actions">
+                    <div className="px-ts-model-params">
+                      <span className="px-ts-param-pill">
+                        Scale: {currentTheme.modelParams.guidanceScale}
+                      </span>
+                      <span className="px-ts-param-pill">
+                        Steps: {currentTheme.modelParams.steps}
+                      </span>
+                      <span className="px-ts-param-pill">
+                        Size: 1024×1024 (1:1)
+                      </span>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '0.4rem' }}>
+                      <button
+                        type="button"
+                        className="px-ts-copy-btn"
+                        onClick={() => setShowNegative(prev => !prev)}
+                      >
+                        {showNegative ? 'Hide Exclusions' : 'View Exclusions'}
+                      </button>
+                      <button
+                        type="button"
+                        className={`px-ts-copy-btn ${copied ? 'copied' : ''}`}
+                        onClick={handleCopyPrompt}
+                      >
+                        {copied ? '✓ Copied' : '📋 Copy Prompt'}
+                      </button>
+                    </div>
+                  </div>
+
+                  {showNegative && promptPayload && (
+                    <div className="px-ts-negative-box">
+                      <div className="px-ts-negative-title">Negative Exclusions:</div>
+                      <div>{promptPayload.negative_prompt}</div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Action CTA */}
+            <div className="px-ts-action-area">
+              <button
+                type="button"
+                className={`px-ts-btn-generate ${isLoading ? 'loading' : ''}`}
+                disabled={isLoading || !concept.trim()}
+                onClick={handleSubmit}
+              >
+                {isLoading ? (
+                  <>
+                    <div className="px-ts-spinner" />
+                    <span>Synthesizing Canvas Asset...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>✨</span>
+                    <span>Generate AI Logo</span>
+                  </>
+                )}
+              </button>
+              <p className="px-ts-disclaimer">
+                Synthesizes a 1:1 high-resolution asset with transparent canvas background via Pixnivo AI.
+              </p>
+            </div>
+          </div>
+        );
+      }
+
+      // ------------------------------------------------------------------------
+      // Main Demo & Interactive Studio Canvas Application
+      // ------------------------------------------------------------------------
+      function DemoApp() {
+        const [pipelineResult, setPipelineResult] = useState(null);
+        const [isLoading, setIsLoading] = useState(false);
+        const [compactMode, setCompactMode] = useState(false);
+        const [activeTab, setActiveTab] = useState('canvas'); // 'canvas' | 'compare' | 'json'
+        const [canvasBg, setCanvasBg] = useState('checkers'); // 'checkers' | 'dark' | 'white' | 'gradient'
+        const [progressInfo, setProgressInfo] = useState(null);
+
+        const canvasRef = useRef(null);
+
+        const handleGenerate = async (payload) => {
+          setIsLoading(true);
+          setProgressInfo({ stage: 'dispatching', percent: 20, text: 'Connecting to AgentRouter image pipeline...' });
+
+          try {
+            const canvasEl = canvasRef.current;
+            const result = await generateAndProcessLogo({
+              payload,
+              targetCanvas: canvasEl,
+              removeBackground: true,
+              bgRemovalEngine: 'auto',
+              onProgress: (p) => {
+                const pct = Math.round(p.progress * 100);
+                setProgressInfo({
+                  stage: p.stage,
+                  percent: pct,
+                  text: p.message || `Processing pipeline (${pct}%)...`
+                });
+              }
+            });
+
+            setPipelineResult(result);
+            setActiveTab('canvas');
+          } catch (err) {
+            console.error('Pipeline error:', err);
+            alert('Pipeline execution failed: ' + err.message);
+          } finally {
+            setIsLoading(false);
+            setProgressInfo(null);
+          }
+        };
+
+        // Redraw canvas when background changes
+        useEffect(() => {
+          if (!pipelineResult || !canvasRef.current) return;
+          const canvas = canvasRef.current;
+          const img = new Image();
+          img.onload = () => {
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const pad = 0.12;
+            const drawW = canvas.width * (1 - pad * 2);
+            const drawH = canvas.height * (1 - pad * 2);
+            const drawX = (canvas.width - drawW) / 2;
+            const drawY = (canvas.height - drawH) / 2;
+
+            ctx.shadowColor = 'rgba(0,0,0,0.35)';
+            ctx.shadowBlur = 24;
+            ctx.shadowOffsetY = 8;
+            ctx.drawImage(img, drawX, drawY, drawW, drawH);
+          };
+          img.src = pipelineResult.transparentDataUrl;
+        }, [canvasBg, pipelineResult]);
+
+        // Download PNG
+        const handleDownload = () => {
+          if (!pipelineResult || !pipelineResult.transparentDataUrl) return;
+          const a = document.createElement('a');
+          const cleanConcept = (pipelineResult.concept || 'logo').toLowerCase().replace(/[^a-z0-9]/g, '-');
+          a.download = `pixnivo-logo-${cleanConcept}-${pipelineResult.themeId}.png`;
+          a.href = pipelineResult.transparentDataUrl;
+          a.click();
+        };
+
+        return (
+          <div className="demo-container">
+            {/* Left Column: ThemeSelector Component */}
+            <div>
+              <div className="demo-controls-row">
+                <button
+                  type="button"
+                  className={`demo-toggle-btn ${!compactMode ? 'active' : ''}`}
+                  onClick={() => setCompactMode(false)}
+                >
+                  Modal / Full Width
+                </button>
+                <button
+                  type="button"
+                  className={`demo-toggle-btn ${compactMode ? 'active' : ''}`}
+                  onClick={() => setCompactMode(true)}
+                >
+                  Sidebar Compact Mode
+                </button>
+              </div>
+
+              <ThemeSelectorComponent
+                initialConcept="Fox Head"
+                initialThemeId="3d-glass-bubble"
+                compact={compactMode}
+                isLoading={isLoading}
+                onGenerate={handleGenerate}
+              />
+            </div>
+
+            {/* Right Column: Live Designer Canvas Studio */}
+            <div className="demo-sidebar">
+              {/* Live Pipeline Progress Banner */}
+              {progressInfo && (
+                <div className="demo-progress-box">
+                  <div className="demo-progress-row">
+                    <span>⚡ {progressInfo.text}</span>
+                    <span>{progressInfo.percent}%</span>
+                  </div>
+                  <div className="demo-progress-bar-wrap">
+                    <div
+                      className="demo-progress-bar-fill"
+                      style={{ width: `${progressInfo.percent}%` }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div className="demo-card">
+                <div className="demo-card-header">
+                  <h4 className="demo-card-title">
+                    <span>🎨</span> Logo Designer Canvas Studio
+                  </h4>
+
+                  <div style={{ display: 'flex', gap: '0.35rem' }}>
+                    <button
+                      type="button"
+                      className={`demo-tab-btn ${activeTab === 'canvas' ? 'active' : ''}`}
+                      onClick={() => setActiveTab('canvas')}
+                    >
+                      Canvas Artboard
+                    </button>
+                    <button
+                      type="button"
+                      className={`demo-tab-btn ${activeTab === 'compare' ? 'active' : ''}`}
+                      onClick={() => setActiveTab('compare')}
+                      disabled={!pipelineResult}
+                    >
+                      Raw vs Transparent
+                    </button>
+                    <button
+                      type="button"
+                      className={`demo-tab-btn ${activeTab === 'json' ? 'active' : ''}`}
+                      onClick={() => setActiveTab('json')}
+                      disabled={!pipelineResult}
+                    >
+                      Payload JSON
+                    </button>
+                  </div>
+                </div>
+
+                {/* Tab 1: Interactive Canvas Artboard */}
+                {activeTab === 'canvas' && (
+                  <div>
+                    <div className={`demo-canvas-viewport bg-${canvasBg}`}>
+                      <canvas
+                        id="designer-canvas"
+                        ref={canvasRef}
+                        width={600}
+                        height={600}
+                        style={{ display: pipelineResult ? 'block' : 'none' }}
+                      />
+
+                      {!pipelineResult && !isLoading && (
+                        <div className="demo-canvas-placeholder">
+                          <span style={{ fontSize: '2.5rem' }}>🎯</span>
+                          <h4 style={{ margin: 0, color: '#ffffff' }}>Designer Canvas Ready</h4>
+                          <p style={{ margin: 0, fontSize: '0.85rem' }}>
+                            Choose a theme, enter your concept, and click <strong>"Generate AI Logo"</strong>.<br />
+                            The asset will automatically generate, isolate transparency, and inject here.
+                          </p>
+                        </div>
+                      )}
+
+                      {isLoading && (
+                        <div className="demo-canvas-placeholder">
+                          <div className="px-ts-spinner" style={{ width: 32, height: 32 }} />
+                          <p style={{ margin: 0, fontSize: '0.9rem', color: '#ffa65e' }}>
+                            Generating & isolating transparent canvas asset...
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="demo-canvas-controls">
+                      <div className="demo-bg-pills">
+                        <span style={{ fontSize: '0.75rem', color: '#94a3b8', marginRight: '0.3rem' }}>Artboard:</span>
+                        <div
+                          className={`demo-bg-pill ${canvasBg === 'checkers' ? 'active' : ''}`}
+                          style={{ background: '#161224' }}
+                          title="Transparency Checkers"
+                          onClick={() => setCanvasBg('checkers')}
+                        />
+                        <div
+                          className={`demo-bg-pill ${canvasBg === 'dark' ? 'active' : ''}`}
+                          style={{ background: '#08060f' }}
+                          title="Dark Solid"
+                          onClick={() => setCanvasBg('dark')}
+                        />
+                        <div
+                          className={`demo-bg-pill ${canvasBg === 'white' ? 'active' : ''}`}
+                          style={{ background: '#ffffff' }}
+                          title="Light Solid"
+                          onClick={() => setCanvasBg('white')}
+                        />
+                        <div
+                          className={`demo-bg-pill ${canvasBg === 'gradient' ? 'active' : ''}`}
+                          style={{ background: 'linear-gradient(135deg, #1e1b4b, #311042)' }}
+                          title="Deep Aurora Gradient"
+                          onClick={() => setCanvasBg('gradient')}
+                        />
+                      </div>
+
+                      <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                        {pipelineResult && (
+                          <span className="demo-telemetry-badge">
+                            ✓ {pipelineResult.timings?.totalMs}ms
+                          </span>
+                        )}
+                        <button
+                          type="button"
+                          className="demo-btn-download"
+                          disabled={!pipelineResult}
+                          onClick={handleDownload}
+                        >
+                          <span>💾</span> Download Transparent PNG
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Tab 2: Raw vs Transparent Comparison */}
+                {activeTab === 'compare' && pipelineResult && (
+                  <div className="demo-compare-grid">
+                    <div className="demo-compare-card">
+                      <div className="demo-compare-label">
+                        <span>1. Raw AI Render</span>
+                        <span style={{ color: '#94a3b8' }}>Solid Background</span>
+                      </div>
+                      <div className="demo-compare-img-wrap">
+                        <img src={pipelineResult.rawImageUrl} alt="Raw AI Output" />
+                      </div>
+                    </div>
+
+                    <div className="demo-compare-card">
+                      <div className="demo-compare-label">
+                        <span>2. Isolated PNG</span>
+                        <span style={{ color: '#34d399' }}>RMBG Alpha Mask</span>
+                      </div>
+                      <div className="demo-compare-img-wrap checkered">
+                        <img src={pipelineResult.transparentDataUrl} alt="Transparent Output" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Tab 3: JSON Telemetry & Payload */}
+                {activeTab === 'json' && pipelineResult && (
+                  <pre className="demo-payload-code">
+                    {JSON.stringify(pipelineResult, null, 2)}
+                  </pre>
+                )}
+              </div>
+
+              {/* Architecture Spec Card */}
+              <div className="demo-card">
+                <div className="demo-card-header">
+                  <h4 className="demo-card-title">
+                    <span>⚡</span> Phase 3 Pipeline Specifications
+                  </h4>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.8rem', color: '#cbd5e1' }}>
+                  <div>📡 <strong>AgentRouter Integration:</strong> Model <code>agentrouter/sdxl-turbo</code> @ 1024×1024 (1:1)</div>
+                  <div>✂️ <strong>Dual BG Removal:</strong> On-device RMBG-2.0 / BiRefNet + Hermite feathered canvas fallback</div>
+                  <div>🎯 <strong>Canvas Injector:</strong> High-DPI placement, centered layout, and <code>pixnivo:logo-injected</code> events</div>
+                  <div>🛡️ <strong>Robust Error Handling:</strong> Fallback synthesis if offline or credentials unconfigured</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<DemoApp />);
+    }
+
+    window.startPixnivoDemo = runDemo;
+    if (window.PixnivoThemes && window.PixnivoPipeline) {
+      runDemo();
+    }
+  </script>
+</body>
+</html>

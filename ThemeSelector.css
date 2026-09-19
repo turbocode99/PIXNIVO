@@ -1,0 +1,724 @@
+/* ==============================================================================
+   PIXNIVO THEME SELECTOR COMPONENT STYLES
+   Modern Glassmorphism · Glowing Themes · Mobile Responsive
+   ============================================================================== */
+
+.px-theme-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 680px;
+  background: var(--bg-glass-card, rgba(18, 14, 28, 0.72));
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border-glass, rgba(255, 255, 255, 0.12));
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.5),
+              inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
+  color: var(--text-primary, #f8fafc);
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  box-sizing: border-box;
+}
+
+.px-theme-selector * {
+  box-sizing: border-box;
+}
+
+/* Compact sidebar mode modifier */
+.px-theme-selector.compact {
+  max-width: 100%;
+  padding: 1rem;
+  gap: 1rem;
+  border-radius: 0.875rem;
+}
+
+/* ------------------------------------------------------------------------------
+   1. Header Section
+   ------------------------------------------------------------------------------ */
+.px-ts-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.px-ts-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  align-self: flex-start;
+  padding: 0.25rem 0.65rem;
+  background: rgba(255, 122, 26, 0.12);
+  border: 1px solid rgba(255, 122, 26, 0.3);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffa65e;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.px-ts-header-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.px-theme-selector.compact .px-ts-header-title {
+  font-size: 1.15rem;
+}
+
+.px-ts-header-sub {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #94a3b8);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ------------------------------------------------------------------------------
+   2. Concept Input Section
+   ------------------------------------------------------------------------------ */
+.px-ts-concept-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.px-ts-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.px-ts-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary, #f8fafc);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.px-ts-char-count {
+  font-size: 0.75rem;
+  color: var(--text-muted, #64748b);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.px-ts-char-count.warning {
+  color: #f59e0b;
+}
+
+.px-ts-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.px-ts-input-icon {
+  position: absolute;
+  left: 0.95rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+.px-ts-input {
+  width: 100%;
+  padding: 0.75rem 2.5rem 0.75rem 2.6rem;
+  background: var(--bg-input, rgba(14, 11, 24, 0.85));
+  border: 1px solid var(--border-medium, rgba(255, 255, 255, 0.15));
+  border-radius: 0.75rem;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.px-ts-input::placeholder {
+  color: rgba(148, 163, 184, 0.6);
+  font-weight: 400;
+}
+
+.px-ts-input:focus {
+  outline: none;
+  border-color: #ff7a1a;
+  box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  background: rgba(22, 17, 36, 0.95);
+}
+
+.px-ts-input-wrapper:focus-within .px-ts-input-icon {
+  color: #ff7a1a;
+}
+
+.px-ts-clear-btn {
+  position: absolute;
+  right: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #cbd5e1;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.px-ts-clear-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.px-ts-input-error {
+  font-size: 0.8rem;
+  color: #f87171;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.15rem;
+}
+
+/* ------------------------------------------------------------------------------
+   3. Quick-Pick Concept Chips
+   ------------------------------------------------------------------------------ */
+.px-ts-chips-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.px-ts-chips-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted, #64748b);
+}
+
+.px-ts-chips-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.px-ts-chip {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  user-select: none;
+}
+
+.px-ts-chip:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.px-ts-chip.active {
+  background: rgba(255, 122, 26, 0.2);
+  border-color: #ff7a1a;
+  color: #ffa65e;
+}
+
+/* ------------------------------------------------------------------------------
+   4. Visual Theme Cards Grid
+   ------------------------------------------------------------------------------ */
+.px-ts-theme-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.px-ts-theme-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.px-ts-theme-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary, #f8fafc);
+}
+
+.px-ts-theme-counter {
+  font-size: 0.75rem;
+  color: var(--text-muted, #64748b);
+}
+
+.px-ts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.85rem;
+}
+
+.px-theme-selector.compact .px-ts-grid {
+  grid-template-columns: 1fr;
+}
+
+.px-ts-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 0.875rem;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  text-align: left;
+}
+
+.px-ts-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--card-gradient, transparent);
+  opacity: 0.18;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.px-ts-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.px-ts-card:hover::before {
+  opacity: 0.35;
+}
+
+/* Active Selected State with Theme Mood Glow */
+.px-ts-card.active {
+  border-color: var(--theme-accent, #ff7a1a);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 20px -3px var(--theme-glow, rgba(255, 122, 26, 0.4)),
+              inset 0 0 12px 0 var(--theme-glow-subtle, rgba(255, 122, 26, 0.15));
+}
+
+.px-ts-card.active::before {
+  opacity: 0.45;
+}
+
+.px-ts-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.65rem;
+  position: relative;
+  z-index: 1;
+}
+
+.px-ts-card-icon-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--theme-accent, #ffffff);
+  transition: transform 0.2s ease;
+}
+
+.px-ts-card:hover .px-ts-card-icon-wrap {
+  transform: scale(1.06);
+}
+
+.px-ts-card-icon-wrap svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.px-ts-card-badge-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.px-ts-card-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.18rem 0.5rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--theme-accent, #cbd5e1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.px-ts-card-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--theme-accent, #ff7a1a);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  animation: px-pop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes px-pop {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.px-ts-card-body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.px-ts-card-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.px-ts-card-category {
+  font-size: 0.75rem;
+  color: var(--text-muted, #64748b);
+  font-weight: 500;
+}
+
+.px-ts-card-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary, #94a3b8);
+  line-height: 1.4;
+  margin: 0.2rem 0 0 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------------------------
+   5. Collapsible Prompt Preview Accordion
+   ------------------------------------------------------------------------------ */
+.px-ts-preview-accordion {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  background: rgba(14, 11, 24, 0.6);
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.px-ts-preview-accordion:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.px-ts-accordion-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+.px-ts-accordion-toggle:hover {
+  color: #ffffff;
+}
+
+.px-ts-accordion-toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.px-ts-preview-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: rgba(6, 182, 212, 0.15);
+  color: #22d3ee;
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+}
+
+.px-ts-accordion-chevron {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.px-ts-accordion-chevron.open {
+  transform: rotate(180deg);
+}
+
+.px-ts-accordion-body {
+  padding: 0.75rem 1rem 1rem 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  animation: px-fade-in 0.2s ease;
+}
+
+@keyframes px-fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.px-ts-prompt-box {
+  background: rgba(9, 7, 15, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.5rem;
+  padding: 0.85rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: #94a3b8;
+  position: relative;
+  word-break: break-word;
+}
+
+.px-ts-prompt-prefix {
+  color: #64748b;
+}
+
+.px-ts-prompt-concept {
+  color: #38bdf8;
+  font-weight: 700;
+  background: rgba(56, 189, 248, 0.1);
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+.px-ts-prompt-suffix {
+  color: #94a3b8;
+}
+
+.px-ts-prompt-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.px-ts-model-params {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.px-ts-param-pill {
+  font-size: 0.7rem;
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  color: #cbd5e1;
+}
+
+.px-ts-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.3rem 0.65rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.px-ts-copy-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+.px-ts-copy-btn.copied {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: #10b981;
+  color: #34d399;
+}
+
+.px-ts-negative-box {
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px dashed rgba(239, 68, 68, 0.25);
+  border-radius: 0.5rem;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.75rem;
+  color: #fca5a5;
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1.4;
+}
+
+.px-ts-negative-title {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.25rem;
+  color: #f87171;
+  font-size: 0.7rem;
+}
+
+/* ------------------------------------------------------------------------------
+   6. Generate Action CTA Button
+   ------------------------------------------------------------------------------ */
+.px-ts-action-area {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.px-ts-btn-generate {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  width: 100%;
+  padding: 0.95rem 1.75rem;
+  background: linear-gradient(135deg, #ff5e3a 0%, #ff9500 100%);
+  border: none;
+  border-radius: 0.875rem;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 8px 24px -4px rgba(255, 94, 58, 0.45),
+              inset 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  user-select: none;
+}
+
+.px-ts-btn-generate::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.px-ts-btn-generate:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -4px rgba(255, 94, 58, 0.6),
+              inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.px-ts-btn-generate:hover:not(:disabled)::after {
+  opacity: 1;
+}
+
+.px-ts-btn-generate:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 4px 14px -2px rgba(255, 94, 58, 0.4);
+}
+
+.px-ts-btn-generate:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.px-ts-btn-generate.loading {
+  background: linear-gradient(135deg, #ea580c 0%, #d97706 100%);
+  cursor: wait;
+}
+
+.px-ts-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: px-spin 0.8s linear infinite;
+}
+
+@keyframes px-spin {
+  to { transform: rotate(360deg); }
+}
+
+.px-ts-disclaimer {
+  font-size: 0.72rem;
+  color: var(--text-muted, #64748b);
+  text-align: center;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* ------------------------------------------------------------------------------
+   Responsive Adjustments
+   ------------------------------------------------------------------------------ */
+@media (max-width: 640px) {
+  .px-theme-selector {
+    padding: 1rem;
+    border-radius: 1rem;
+    gap: 1rem;
+  }
+  
+  .px-ts-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .px-ts-prompt-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
