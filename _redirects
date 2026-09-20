@@ -11,6 +11,9 @@ http://admin.pixnivo.app               /admin.html                              
 /post/*                                /post.html                               200
 
 # Netlify Clean URL Rewrites for PIXNIVO
+/icon-generator                        /icon-generator.html                     200
+/logo-generator                        /icon-generator.html                     200
+/icon-studio                           /icon-generator.html                     200
 /pdf-tools                             /pdf-tools.html                          200
 /ai-ocr                                /ai-ocr.html                             200
 /ocr                                   /ai-ocr.html                             200
