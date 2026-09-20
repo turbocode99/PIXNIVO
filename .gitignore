@@ -4,3 +4,8 @@ __pycache__/
 *.pyc
 *.bak
 *.tmp
+*.log
+scratch_test/
+live_*.png
+test_*.png
+test_*.txt

@@ -68,12 +68,24 @@ except Exception as e:
 
 app = FastAPI(title="PIXNIVO API & Admin Backend")
 
+ALLOWED_ORIGINS = [
+    "https://pixnivo.app",
+    "https://www.pixnivo.app",
+    "https://admin.pixnivo.app",
+    "http://localhost:3000",
+    "http://localhost:8000",
+    "http://localhost:8089",
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:8089"
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['*'],
+    allow_origins=ALLOWED_ORIGINS,
+    allow_origin_regex=r"^https:\/\/([a-zA-Z0-9-]+\.)?pixnivo\.app$",
     allow_credentials=True,
-    allow_methods=['*'],
-    allow_headers=['*'],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 @app.get('/api/health')
@@ -479,7 +491,8 @@ def write_blogs(blogs: List[Dict[str, Any]]) -> bool:
 
 @app.post("/api/auth/login")
 async def admin_login(req: AdminLoginRequest, request: Request):
-    client_ip = request.client.host if request.client else "unknown"
+    forwarded = request.headers.get("X-Forwarded-For")
+    client_ip = forwarded.split(",")[0].strip() if forwarded else (request.headers.get("X-Real-IP") or (request.client.host if request.client else "unknown"))
     lockout_key = f"{client_ip}:{req.username.strip().lower()}"
     
     remaining_lockout = check_rate_limit(lockout_key)
