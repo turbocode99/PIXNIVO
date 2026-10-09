@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bulk Barcode Generator | PIXNIVO</title>
-  <meta name="description" content="Compress, edit, and remove backgrounds with AI directly in your browser. 100% private, instant results, no uploads to servers." />
-  <meta name="theme-color" content="#08070b" />
+  <title>Free Bulk Barcode &amp; QR Code Generator — PDF, Word, Excel | PIXNIVO</title>
+  <meta name="description" content="Generate QR codes, Code 128, EAN-13, UPC-A, Data Matrix and GS1 barcodes in bulk. Import a CSV and export to PDF, PNG, Word or Excel — free, no sign-up." />
+  <meta name="theme-color" content="#fafafa" />
 
   <!-- Open Graph / Social Meta -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://pixnivo.app/" />
-  <meta property="og:title" content="PIXNIVO &mdash; Smart Image Tool" />
-  <meta property="og:description" content="Compress, edit, and remove backgrounds with AI directly in your browser. 100% private, zero uploads." />
+  <meta property="og:url" content="https://pixnivo.app/barcode-tools.html" />
+  <meta property="og:title" content="Free Bulk Barcode &amp; QR Code Generator | PIXNIVO" />
+  <meta property="og:description" content="Create QR codes and barcodes in bulk, then export to PDF, PNG, Word or Excel." />
   <meta property="og:image" content="https://pixnivo.app/assets/og-image.png" />
 
   <!-- Google tag (gtag.js) -->
@@ -26,8 +26,13 @@
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8972850134795669" crossorigin="anonymous"></script>
 
-  <!-- Modern Design System Stylesheet -->
-  <link rel="stylesheet" href="/assets/css/main.css" />
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="/assets/css/main.css?v=20261010" />
+  <script src="/assets/js/site.js?v=20261010"></script>
 
   <!-- Instant Theme Detection Script -->
   <script>
@@ -40,993 +45,688 @@
       } catch(e) {}
     })();
   </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bwip-js/3.4.0/bwip-js-min.js"></script>
 </head>
 <body>
 
-  <!-- Dynamic Colorful Aurora Background -->
-  <div class="ambient-bg" aria-hidden="true">
-    <div class="ambient-orb orb-1"></div>
-    <div class="ambient-orb orb-2"></div>
-    <div class="ambient-orb orb-3"></div>
-    <div class="ambient-orb orb-4"></div>
-    <div class="ambient-orb orb-5"></div>
-  </div>
 
-  <!-- Floating Glass Navigation -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
   <header class="site-header">
     <div class="nav-container">
-      <a class="brand" href="/">
-        <div class="brand-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-            <polyline points="2 17 12 22 22 17"></polyline>
-            <polyline points="2 12 12 17 22 12"></polyline>
-          </svg>
-        </div>
-        PIX<span>NIVO</span>
+      <a class="brand" href="/" aria-label="PIXNIVO home">
+        <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+        <span class="brand-name">PIX<span>NIVO</span></span>
       </a>
 
-      <nav class="nav-links" id="navLinks">
-        <a class="nav-link" href="/">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          Image Tools
-        </a>
-        <a class="nav-link" href="/logo-generator">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
-          Logo Generator
-        </a>
-        <a class="nav-link" href="/pdf-tools">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          PDF Tools
-        </a>
-                <a class="nav-link" href="/ai-ocr">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          AI OCR
-        </a>
-          <a class="nav-link active" href="/barcode-tools.html">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"></path><path d="M8 5v14"></path><path d="M12 5v14"></path><path d="M16 5v14"></path></svg>
-            Barcode Tools
-          </a>
-        <a class="nav-link" href="/blog">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          Guides
-        </a>
-        <a class="nav-link" href="/about">About</a>
-        <a class="nav-link" href="/contact">Contact</a>
+      <nav class="nav-links" id="navLinks" aria-label="Main">
+        <a class="nav-link" href="/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg><span>Image Tools</span></a>
+        <a class="nav-link" href="/logo-generator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg><span>Logo Generator</span></a>
+        <a class="nav-link" href="/pdf-tools"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>PDF Tools</span></a>
+        <a class="nav-link" href="/ai-ocr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 8h8"/><path d="M7 12h10"/><path d="M7 16h6"/></svg><span>AI OCR</span></a>
+        <a class="nav-link" href="/barcode-tools.html" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5v14"/><path d="M8 5v14"/><path d="M12 5v14"/><path d="M17 5v14"/><path d="M21 5v14"/></svg><span>Barcode Tools</span></a>
+        <a class="nav-link" href="/blog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>Guides</span></a>
+        <div class="nav-divider" role="separator"></div>
+        <a class="nav-link nav-secondary" href="/about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span>About</span></a>
+        <a class="nav-link nav-secondary" href="/contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><span>Contact</span></a>
       </nav>
 
       <div class="nav-actions">
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme" title="Toggle Theme">
-          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
         </button>
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <button class="mobile-toggle" id="mobileToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+          <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
     </div>
   </header>
 
-  <style>
-    /* Barcode Studio Bright Glassmorphism Styles */
-    .barcode-studio-card {
-      background: rgba(18, 14, 28, 0.85);
-      backdrop-filter: blur(24px) saturate(190%);
-      -webkit-backdrop-filter: blur(24px) saturate(190%);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      box-shadow: 0 24px 60px -10px rgba(0, 0, 0, 0.6), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
-      border-radius: 24px;
-      padding: 36px 40px;
-      position: relative;
-    }
-    html[data-theme="light"] .barcode-studio-card {
-      background: rgba(255, 255, 255, 0.88);
-      border: 1px solid rgba(255, 255, 255, 0.95);
-      box-shadow: 0 20px 50px -10px rgba(100, 116, 139, 0.2), inset 0 1px 2px 0 rgba(255, 255, 255, 1);
-    }
-
-    .bc-card-title {
-      font-size: 26px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: #ffffff;
-      margin-bottom: 8px;
-    }
-    html[data-theme="light"] .bc-card-title {
-      color: #0f172a;
-    }
-
-    .bc-card-desc {
-      font-size: 15px;
-      color: #cbd5e1;
-      line-height: 1.6;
-      margin-bottom: 28px;
-    }
-    html[data-theme="light"] .bc-card-desc {
-      color: #475569;
-    }
-
-    .bc-field-label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: 0.02em;
-      margin-bottom: 8px;
-    }
-    html[data-theme="light"] .bc-field-label {
-      color: #0f172a;
-    }
-
-    .bc-label-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #ff7a1a;
-      box-shadow: 0 0 8px #ff7a1a;
-    }
-
-    .bc-select {
-      width: 100%;
-      padding: 14px 18px;
-      border-radius: 12px;
-      font-size: 14.5px;
-      font-weight: 600;
-      font-family: inherit;
-      color: #ffffff;
-      background: rgba(14, 11, 24, 0.92);
-      border: 1.5px solid rgba(255, 255, 255, 0.22);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-      outline: none;
-      transition: all 0.2s ease;
-      cursor: pointer;
-    }
-    html[data-theme="light"] .bc-select {
-      background: #ffffff;
-      border: 1.5px solid #cbd5e1;
-      color: #0f172a;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-    .bc-select:focus {
-      border-color: #ff7a1a;
-      box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.3);
-    }
-    .bc-select optgroup {
-      background: #120e20;
-      color: #ffa65e;
-      font-weight: 700;
-    }
-    .bc-select option {
-      background: #1a152d;
-      color: #ffffff;
-    }
-    html[data-theme="light"] .bc-select optgroup {
-      background: #f1f5f9;
-      color: #ea580c;
-    }
-    html[data-theme="light"] .bc-select option {
-      background: #ffffff;
-      color: #0f172a;
-    }
-
-    .bc-option-box {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 13px 18px;
-      border-radius: 12px;
-      background: rgba(14, 11, 24, 0.92);
-      border: 1.5px solid rgba(255, 255, 255, 0.22);
-      color: #ffffff;
-      font-size: 14.5px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      user-select: none;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    }
-    html[data-theme="light"] .bc-option-box {
-      background: #ffffff;
-      border: 1.5px solid #cbd5e1;
-      color: #0f172a;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    }
-    .bc-option-box:hover {
-      border-color: rgba(255, 122, 26, 0.6);
-      background: rgba(28, 22, 44, 0.92);
-    }
-    html[data-theme="light"] .bc-option-box:hover {
-      background: #f8fafc;
-      border-color: #ea580c;
-    }
-    .bc-checkbox {
-      width: 19px;
-      height: 19px;
-      accent-color: #ff7a1a;
-      cursor: pointer;
-    }
-
-    .bc-dropzone {
-      border: 2px dashed rgba(255, 122, 26, 0.65);
-      background: linear-gradient(135deg, rgba(255, 122, 26, 0.09) 0%, rgba(255, 94, 58, 0.04) 100%);
-      border-radius: 16px;
-      padding: 30px 24px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      margin-bottom: 20px;
-      box-shadow: inset 0 0 24px rgba(255, 122, 26, 0.06);
-    }
-    .bc-dropzone:hover, .bc-dropzone.dragover {
-      border-color: #ff9500;
-      background: linear-gradient(135deg, rgba(255, 122, 26, 0.16) 0%, rgba(255, 94, 58, 0.09) 100%);
-      transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(255, 107, 0, 0.22);
-    }
-    .bc-dropzone-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #ff5e3a 0%, #ff9500 100%);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
-      margin-bottom: 12px;
-      box-shadow: 0 6px 18px rgba(255, 94, 58, 0.4);
-    }
-    .bc-dropzone-title {
-      font-size: 16.5px;
-      font-weight: 700;
-      color: #ffffff;
-      margin-bottom: 4px;
-    }
-    html[data-theme="light"] .bc-dropzone-title {
-      color: #0f172a;
-    }
-    .bc-dropzone-sub {
-      font-size: 13.5px;
-      color: #fed7aa;
-      font-weight: 500;
-    }
-    html[data-theme="light"] .bc-dropzone-sub {
-      color: #ea580c;
-    }
-
-    .bc-divider {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin: 22px 0;
-    }
-    .bc-divider-line {
-      flex: 1;
-      height: 1px;
-      background: rgba(255, 255, 255, 0.15);
-    }
-    html[data-theme="light"] .bc-divider-line {
-      background: #e2e8f0;
-    }
-    .bc-divider-badge {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      color: #f1f5f9;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      padding: 5px 14px;
-      border-radius: 999px;
-    }
-    html[data-theme="light"] .bc-divider-badge {
-      background: #f1f5f9;
-      border: 1px solid #cbd5e1;
-      color: #475569;
-    }
-
-    .bc-textarea {
-      width: 100%;
-      min-height: 135px;
-      padding: 16px 20px;
-      border-radius: 14px;
-      background: rgba(12, 9, 22, 0.92);
-      border: 1.5px solid rgba(255, 255, 255, 0.22);
-      color: #38bdf8;
-      font-family: 'JetBrains Mono', Consolas, monospace;
-      font-size: 14.5px;
-      font-weight: 600;
-      line-height: 1.6;
-      resize: vertical;
-      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
-      outline: none;
-      transition: all 0.2s ease;
-      box-sizing: border-box;
-      margin-bottom: 22px;
-    }
-    html[data-theme="light"] .bc-textarea {
-      background: #ffffff;
-      border: 1.5px solid #cbd5e1;
-      color: #0369a1;
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-    }
-    .bc-textarea:focus {
-      border-color: #38bdf8;
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
-    }
-
-    .bc-btn-generate {
-      width: 100%;
-      padding: 16px 28px;
-      background: linear-gradient(135deg, #ff5e3a 0%, #ff9500 100%);
-      color: #ffffff;
-      border: none;
-      border-radius: 999px;
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      box-shadow: 0 10px 28px -4px rgba(255, 94, 58, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.4);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .bc-btn-generate:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 36px -4px rgba(255, 94, 58, 0.7);
-      filter: brightness(1.08);
-    }
-    .bc-btn-generate:active {
-      transform: translateY(0);
-    }
-
-    .bc-export-btn {
-      padding: 10px 20px;
-      border-radius: 999px;
-      font-size: 13.5px;
-      font-weight: 700;
-      color: #ffffff;
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s ease;
-    }
-    .bc-export-btn:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.1);
-    }
-    .bc-export-pdf {
-      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
-    }
-    .bc-export-word {
-      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
-    }
-    .bc-export-excel {
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
-    }
-
-    .bc-results-area {
-      display: none;
-      margin-top: 2.2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
-      padding-top: 2rem;
-    }
-    html[data-theme="light"] .bc-results-area {
-      border-top: 1px solid #e2e8f0;
-    }
-    .bc-results-title {
-      margin: 0;
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: #ffffff;
-    }
-    html[data-theme="light"] .bc-results-title {
-      color: #0f172a;
-    }
-    .bc-prog-text {
-      display: none;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: #cbd5e1;
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-    html[data-theme="light"] .bc-prog-text {
-      color: #475569;
-    }
-  </style>
-
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="badge-privacy">
-      <span class="pulse-dot"></span>
-      Enterprise Barcode &amp; QR Studio • Fast Bulk Processing
-    </div>
-    <h1>Bulk <em>Barcode &amp; QR Code</em> Studio</h1>
-    <p class="hero-subtitle">Generate high-density 1D, 2D, GS1, and QR codes with instant client-side rendering. Bulk-import CSV data, customize labels, and export directly into formatted PDF, Word, or Excel documents.</p>
-  </section>
-
-  <!-- Interactive Barcode Workspace -->
-  <main class="studio-container" style="max-width: 960px;">
-    <div class="barcode-studio-card">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
-        <div>
-          <h2 class="bc-card-title">Bulk Barcode Generator</h2>
-          <p class="bc-card-desc" style="margin-bottom: 0;">Generate high-quality 1D, 2D, GS1, and QR codes instantly. Upload a CSV to bulk-generate thousands of barcodes, then download them perfectly embedded into Word, Excel, or PDF.</p>
-        </div>
+  <main id="main">
+    <section class="hero">
+      <div class="badge-privacy">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        Barcodes are generated in your browser
       </div>
-      
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
-        <div>
-          <label class="bc-field-label" for="bcType">
-            <span class="bc-label-dot"></span>
-            Barcode Type
-          </label>
-          <select id="bcType" class="bc-select">
-            <optgroup label="Popular 2D Formats">
-              <option value="qrcode">QR Code</option>
-              <option value="datamatrix">Data Matrix</option>
-              <option value="pdf417">PDF417</option>
-              <option value="azteccode">Aztec Code</option>
-            </optgroup>
-            <optgroup label="Standard 1D Retail &amp; Logistics">
-              <option value="code128">Code 128 (Most Common)</option>
-              <option value="code39">Code 39</option>
-              <option value="ean13">EAN-13 (Retail)</option>
-              <option value="upca">UPC-A (Retail US)</option>
-              <option value="itf14">ITF-14</option>
-              <option value="code93">Code 93</option>
-            </optgroup>
-            <optgroup label="GS1 Industry Standards">
-              <option value="gs1-128">GS1-128</option>
-              <option value="gs1datamatrix">GS1 DataMatrix</option>
-            </optgroup>
-          </select>
-        </div>
-        <div>
-          <label class="bc-field-label">
-            <span class="bc-label-dot"></span>
-            Text Options
-          </label>
-          <label class="bc-option-box" for="bcShowText">
-            <input type="checkbox" id="bcShowText" class="bc-checkbox" checked>
-            <span>Show Human Readable Text</span>
-          </label>
-        </div>
-      </div>
+      <h1>Bulk <em>barcode &amp; QR code</em> generator</h1>
+      <p class="hero-subtitle">Create QR codes, Code 128, EAN-13, UPC-A, Data Matrix and GS1 barcodes by the thousand. Import a CSV, check every code, and export to PDF, PNG, Word or Excel.</p>
+    </section>
 
-      <label class="bc-field-label">
-        <span class="bc-label-dot"></span>
-        Data Input (Upload Dataset)
-      </label>
-      
-      <div class="bc-dropzone" id="dropZone" onclick="document.getElementById('csvFile').click()">
-        <div class="bc-dropzone-icon">
-          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-          </svg>
-        </div>
-        <p class="bc-dropzone-title">Click or Drag to Upload CSV / TXT</p>
-        <p class="bc-dropzone-sub">First column will be used automatically for barcode data</p>
-        <input type="file" id="csvFile" accept=".csv,.txt" style="display: none;">
-      </div>
-
-      <div class="bc-divider">
-        <span class="bc-divider-line"></span>
-        <span class="bc-divider-badge">OR PASTE DATA MANUALLY</span>
-        <span class="bc-divider-line"></span>
-      </div>
-
-      <label class="bc-field-label" for="bcData">
-        <span class="bc-label-dot"></span>
-        Raw Input Lines (One per code)
-      </label>
-      <textarea id="bcData" class="bc-textarea" rows="5">1234567890
-PIXNIVO-PRO
-https://pixnivo.app</textarea>
-
-      <button id="btnGenerate" class="bc-btn-generate">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-        </svg>
-        Process &amp; Generate Barcodes
-      </button>
-
-      <!-- Results Area -->
-      <div id="bcResults" class="bc-results-area">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
-          <h3 class="bc-results-title">Live Barcodes Preview (<span id="bcCount" style="color: #ff9500;">0</span>)</h3>
-          <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
-            <button id="btnExportPdf" class="bc-export-btn bc-export-pdf">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Download PDF
-            </button>
-            <button id="btnExportWord" class="bc-export-btn bc-export-word">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Download Word
-            </button>
-            <button id="btnExportExcel" class="bc-export-btn bc-export-excel">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Download Excel
-            </button>
+    <div class="studio-container">
+      <section class="studio-card active" aria-labelledby="bcTitle">
+        <div class="studio-header">
+          <div>
+            <h2 id="bcTitle">Barcode Generator</h2>
+            <p>Enter one value per line or import a CSV, pick a symbology, then generate.</p>
           </div>
+          <span class="badge badge-brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5v14"/><path d="M8 5v14"/><path d="M12 5v14"/><path d="M17 5v14"/><path d="M21 5v14"/></svg>12 formats</span>
         </div>
-        
-        <div id="progBarContainer" style="display: none; width: 100%; height: 8px; background: rgba(255,255,255,0.15); border-radius: 999px; overflow: hidden; margin-bottom: 1rem;">
-          <div id="progBar" style="height: 100%; width: 0%; background: linear-gradient(90deg, #ff5e3a, #ff9500); transition: width 0.3s; border-radius: 999px;"></div>
+
+        <div class="workspace-grid active bc-layout">
+          <div class="workspace-main">
+            <div class="field">
+              <div class="field-label">
+                <label for="bcData">Data <span class="hint" id="lineCount">— 3 values</span></label>
+                <button class="btn btn-sm btn-text" type="button" id="btnSample">Insert sample data</button>
+              </div>
+              <textarea id="bcData" class="bc-input" rows="9" spellcheck="false" placeholder="One value per line, e.g.&#10;PIX-0001&#10;PIX-0002">https://pixnivo.app
+PIXNIVO-PRO
+1234567890</textarea>
+            </div>
+
+            <div class="dropzone dropzone-sm" id="dropZone" aria-label="Import values from a CSV or TXT file">
+              <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h2"/><path d="M14 13h2"/><path d="M8 17h2"/><path d="M14 17h2"/></svg></div>
+              <h3>Import a CSV or TXT file</h3>
+              <p>The first column of each row becomes one barcode</p>
+              <input type="file" id="csvFile" accept=".csv,.txt,text/csv,text/plain" />
+            </div>
+          </div>
+
+          <aside class="control-panel" aria-label="Barcode settings">
+            <div class="panel-section">
+              <div class="field">
+                <label for="bcType">Barcode type</label>
+                <select id="bcType">
+                  <optgroup label="2D codes">
+                    <option value="qrcode">QR Code</option>
+                    <option value="datamatrix">Data Matrix</option>
+                    <option value="pdf417">PDF417</option>
+                    <option value="azteccode">Aztec Code</option>
+                  </optgroup>
+                  <optgroup label="1D retail &amp; logistics">
+                    <option value="code128">Code 128 (most common)</option>
+                    <option value="code39">Code 39</option>
+                    <option value="code93">Code 93</option>
+                    <option value="ean13">EAN-13 (retail)</option>
+                    <option value="upca">UPC-A (US retail)</option>
+                    <option value="itf14">ITF-14 (cartons)</option>
+                  </optgroup>
+                  <optgroup label="GS1 standards">
+                    <option value="gs1-128">GS1-128</option>
+                    <option value="gs1datamatrix">GS1 DataMatrix</option>
+                  </optgroup>
+                </select>
+                <p class="hint" id="typeHint"></p>
+              </div>
+            </div>
+
+            <div class="panel-section">
+              <div class="panel-section-title">Appearance</div>
+              <label class="switch" for="bcShowText">
+                <input type="checkbox" id="bcShowText" checked />
+                <span class="track" aria-hidden="true"></span>
+                Human-readable text
+              </label>
+              <div class="field">
+                <label for="bcScale">Resolution <span class="val" id="bcScaleVal">4×</span></label>
+                <input type="range" id="bcScale" min="2" max="8" value="4" />
+              </div>
+              <div class="field" id="heightField">
+                <label for="bcHeight">Bar height <span class="val" id="bcHeightVal">15 mm</span></label>
+                <input type="range" id="bcHeight" min="6" max="30" value="15" />
+              </div>
+            </div>
+
+            <div class="panel-actions">
+              <button id="btnGenerate" class="btn btn-primary btn-lg btn-block" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><span>Generate barcodes</span></button>
+            </div>
+          </aside>
         </div>
-        <p id="progText" class="bc-prog-text">Exporting...</p>
 
-        <p id="previewLimitWarning" style="display: none; color: #ffb74d; font-size: 0.9rem; font-weight: 600; margin-bottom: 1.2rem; padding: 0.8rem 1rem; background: rgba(255,183,77,0.15); border: 1px solid rgba(255,183,77,0.3); border-radius: 8px; text-align: center;">Showing preview for the first 100 items only. All items will be included in the downloaded file.</p>
+        <!-- Results -->
+        <div id="bcResults" class="bc-results" hidden>
+          <div class="bc-results-head">
+            <div>
+              <h3>Preview</h3>
+              <p class="hint" id="bcSummary" aria-live="polite"></p>
+            </div>
+            <div class="btn-row">
+              <button id="btnExportPdf" class="btn btn-primary" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>PDF</span></button>
+              <button id="btnExportZip" class="btn btn-ghost" type="button"><span>PNG (.zip)</span></button>
+              <button id="btnExportWord" class="btn btn-ghost" type="button"><span>Word</span></button>
+              <button id="btnExportExcel" class="btn btn-ghost" type="button"><span>Excel</span></button>
+            </div>
+          </div>
 
-        <div id="bcGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1.5rem; max-height: 520px; overflow-y: auto; padding: 0.5rem; align-items: stretch;">
-          <!-- Canvases will be generated here -->
+          <div class="prog" id="bcProg" role="status"><div class="bar"><i id="progBar"></i></div><div class="txt"><span id="progText">Exporting…</span><span id="progPct"></span></div></div>
+
+          <div class="alert alert-warning" id="invalidAlert" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <p id="invalidText"></p>
+          </div>
+
+          <p class="hint" id="previewLimitWarning" hidden>Showing the first 100 barcodes. Every valid barcode is included in your exports.</p>
+
+          <div id="bcGrid" class="bc-grid"></div>
+
+          <p class="hint bc-export-note">PDF and PNG files are created on your device. Word and Excel files are generated on our server and not stored.</p>
+        </div>
+      </section>
+    </div>
+
+    <section class="page-section" aria-labelledby="bcFaq">
+      <div class="section-header">
+        <span class="section-eyebrow">Which barcode should I use?</span>
+        <h2 id="bcFaq">Pick the right symbology</h2>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <h3>QR Code</h3>
+          <p>Links, Wi-Fi details, contact cards and any text. Scannable by every phone camera.</p>
+        </div>
+        <div class="feature-item">
+          <h3>Code 128</h3>
+          <p>Internal labels, shipping and asset tags. Compact and supports letters, numbers and symbols.</p>
+        </div>
+        <div class="feature-item">
+          <h3>EAN-13 / UPC-A</h3>
+          <p>Retail products sold in stores. Requires a registered GS1 company prefix for real products.</p>
+        </div>
+        <div class="feature-item">
+          <h3>GS1-128 / DataMatrix</h3>
+          <p>Supply chain and healthcare data such as GTIN, batch and expiry, written as (01)…(17)…(10)….</p>
         </div>
       </div>
-    </div>
+    </section>
   </main>
 
-<script>
-const bcType = document.getElementById('bcType');
-const bcShowText = document.getElementById('bcShowText');
-const bcData = document.getElementById('bcData');
-const btnGenerate = document.getElementById('btnGenerate');
-const bcResults = document.getElementById('bcResults');
-const bcCount = document.getElementById('bcCount');
-const bcGrid = document.getElementById('bcGrid');
-
-const dropZone = document.getElementById('dropZone');
-const csvFile = document.getElementById('csvFile');
-const previewLimitWarning = document.getElementById('previewLimitWarning');
-
-const btnExportPdf = document.getElementById('btnExportPdf');
-const btnExportWord = document.getElementById('btnExportWord');
-const btnExportExcel = document.getElementById('btnExportExcel');
-const progBarContainer = document.getElementById('progBarContainer');
-const progBar = document.getElementById('progBar');
-const progText = document.getElementById('progText');
-
-let activeDataLines = [];
-
-// Drag and drop logic
-dropZone.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dropZone.classList.add('dragover');
-});
-dropZone.addEventListener('dragleave', () => {
-    dropZone.classList.remove('dragover');
-});
-dropZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropZone.classList.remove('dragover');
-    if (e.dataTransfer.files.length) {
-        handleFile(e.dataTransfer.files[0]);
-    }
-});
-csvFile.addEventListener('change', (e) => {
-    if (e.target.files.length) {
-        handleFile(e.target.files[0]);
-    }
-});
-
-function handleFile(file) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        const text = e.target.result;
-        // Parse basic CSV (take first column of each row)
-        const lines = text.split(/\r?\n/).map(line => {
-            let cols = line.split(',');
-            return cols[0].replace(/^["']|["']$/g, '').trim(); // Remove quotes
-        }).filter(l => l.length > 0);
-        
-        bcData.value = lines.join('\n');
-    };
-    reader.readAsText(file);
-}
-
-btnGenerate.addEventListener('click', () => {
-    const lines = bcData.value.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-    if (lines.length === 0) return alert('Please enter or upload some data to generate barcodes.');
-    
-    activeDataLines = lines;
-    bcGrid.innerHTML = '';
-    bcResults.style.display = 'block';
-    bcCount.textContent = lines.length;
-    
-    const previewLimit = 100;
-    if (lines.length > previewLimit) {
-        previewLimitWarning.style.display = 'block';
-    } else {
-        previewLimitWarning.style.display = 'none';
-    }
-    
-    // Render only up to previewLimit
-    const renderLines = lines.slice(0, previewLimit);
-    
-    renderLines.forEach((line, i) => {
-        const container = document.createElement('div');
-        container.style.background = '#ffffff';
-        container.style.border = '2px solid rgba(255, 255, 255, 0.95)';
-        container.style.padding = '18px 16px';
-        container.style.borderRadius = '16px';
-        container.style.display = 'flex';
-        container.style.flexDirection = 'column';
-        container.style.alignItems = 'center';
-        container.style.justifyContent = 'center';
-        container.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.28), 0 2px 6px rgba(0, 0, 0, 0.15)';
-        container.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
-        container.onmouseenter = () => { container.style.transform = 'translateY(-3px)'; container.style.boxShadow = '0 14px 30px rgba(0, 0, 0, 0.38)'; };
-        container.onmouseleave = () => { container.style.transform = 'none'; container.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.28), 0 2px 6px rgba(0, 0, 0, 0.15)'; };
-        
-        const canvas = document.createElement('canvas');
-        canvas.style.maxWidth = '100%';
-        canvas.style.height = 'auto';
-        canvas.style.borderRadius = '6px';
-        canvas.id = 'bc_' + i;
-        
-        const title = document.createElement('div');
-        title.style.color = '#0f172a';
-        title.style.fontSize = '0.82rem';
-        title.style.marginTop = '10px';
-        title.style.textAlign = 'center';
-        title.style.wordBreak = 'break-all';
-        title.style.fontWeight = '700';
-        title.style.fontFamily = 'var(--font-mono, monospace)';
-        title.textContent = line;
-        
-        container.appendChild(canvas);
-        if (!bcShowText.checked) container.appendChild(title);
-        bcGrid.appendChild(container);
-        
-        try {
-                        const is2D = ['qrcode', 'datamatrix', 'pdf417', 'azteccode', 'gs1datamatrix'].includes(bcType.value);
-            const options = {
-                bcid: bcType.value,
-                text: line,
-                scale: 5,
-                includetext: bcShowText.checked,
-                textxalign: 'center',
-                backgroundcolor: 'FFFFFF',
-                padding: 10
-            };
-            if (!is2D) options.height = 15;
-            bwipjs.toCanvas(canvas, options);
-        } catch (e) {
-            console.error(e);
-            canvas.style.display = 'none';
-            const err = document.createElement('div');
-            err.style.color = '#e53935';
-            err.style.fontSize = '0.75rem';
-            err.textContent = 'Invalid data for this type';
-            container.appendChild(err);
-        }
-    });
-});
-
-async function exportBarcodes(format) {
-    if (activeDataLines.length === 0) return;
-    
-    progBarContainer.style.display = 'block';
-    progText.style.display = 'block';
-    progBar.style.width = '5%';
-    progText.textContent = 'Rendering all images in memory...';
-    
-    // Generate base64 for ALL lines, not just preview
-    let payloadImages = [];
-    
-    // Off-DOM canvas for rendering
-    const offCanvas = document.createElement('canvas');
-    
-    // Render them in chunks to not freeze the UI completely
-    const chunkSize = 50;
-    for (let i = 0; i < activeDataLines.length; i += chunkSize) {
-        const chunk = activeDataLines.slice(i, i + chunkSize);
-        for(let line of chunk) {
-            try {
-                            const is2D = ['qrcode', 'datamatrix', 'pdf417', 'azteccode', 'gs1datamatrix'].includes(bcType.value);
-            const options = {
-                bcid: bcType.value,
-                text: line,
-                scale: 5,
-                includetext: bcShowText.checked,
-                textxalign: 'center',
-                backgroundcolor: 'FFFFFF',
-                padding: 10
-            };
-            if (!is2D) options.height = 15;
-            bwipjs.toCanvas(offCanvas, options);
-                payloadImages.push({
-                    text: line,
-                    base64_data: offCanvas.toDataURL('image/png')
-                });
-            } catch(e) {
-                // skip invalid
-            }
-        }
-        progBar.style.width = (5 + (i / activeDataLines.length) * 35) + '%';
-        // Give UI a moment to breathe
-        await new Promise(r => setTimeout(r, 0));
-    }
-    
-    if (payloadImages.length === 0) {
-        alert("None of the data provided is valid for the selected barcode type.");
-        progBarContainer.style.display = 'none';
-        progText.style.display = 'none';
-        return;
-    }
-
-    const payload = {
-        format: format,
-        images: payloadImages
-    };
-    
-    progBar.style.width = '40%';
-    progText.textContent = 'Uploading to server for document generation...';
-    
-    try {
-        const res = await fetch('/api/export-barcodes', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-        
-        if (res.status === 413) {
-            throw new Error("File too large. Nginx limits bulk exports to ~10,000 items. Try a smaller batch.");
-        }
-        if (!res.ok) {
-            const err = await res.json().catch(()=>({detail: 'Server error'}));
-            throw new Error(err.detail || 'Server error');
-        }
-        
-        progBar.style.width = '90%';
-        progText.textContent = 'Downloading ' + format.toUpperCase() + '...';
-        
-        const blob = await res.blob();
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        const ext = format === 'pdf' ? 'pdf' : (format === 'docx' ? 'docx' : 'xlsx');
-        a.download = 'PIXNIVO_Barcodes.' + ext;
-        a.click();
-        URL.revokeObjectURL(url);
-        
-        progBar.style.width = '100%';
-        progText.textContent = 'Success!';
-        setTimeout(() => {
-            progBarContainer.style.display = 'none';
-            progText.style.display = 'none';
-            progBar.style.width = '0%';
-        }, 3000);
-        
-    } catch(e) {
-        alert('Export failed: ' + e.message);
-        progBarContainer.style.display = 'none';
-        progText.style.display = 'none';
-    }
-}
-
-btnExportPdf.addEventListener('click', () => exportBarcodes('pdf'));
-btnExportWord.addEventListener('click', () => exportBarcodes('docx'));
-btnExportExcel.addEventListener('click', () => exportBarcodes('xlsx'));
-</script><footer class="site-footer">
-    <div class="footer-nav">
-      <a href="/">Home</a>
-      <span class="dot">&bull;</span>
-      <a href="/pdf-tools">PDF Tools</a>
-      <span class="dot">&bull;</span>
-      <a href="/ai-ocr">AI OCR</a>
-      <span class="dot">&bull;</span>
-      <a href="/blog">Guides &amp; Blog</a>
-      <span class="dot">&bull;</span>
-      <a href="/about">About</a>
-      <span class="dot">&bull;</span>
-      <a href="/privacy">Privacy Policy</a>
-      <span class="dot">&bull;</span>
-      <a href="/terms">Terms &amp; Conditions</a>
-      <span class="dot">&bull;</span>
-      <a href="/contact">Contact</a>
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="/" aria-label="PIXNIVO home">
+          <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+          <span class="brand-name">PIX<span>NIVO</span></span>
+        </a>
+        <p>Fast, privacy-first image, PDF and document tools that run right in your browser. No sign-up, no watermarks.</p>
+      </div>
+      <div class="footer-col">
+        <h2>Image tools</h2>
+        <ul>
+          <li><a href="/?tab=compress">Image Compressor</a></li>
+          <li><a href="/?tab=edit">Photo Editor</a></li>
+          <li><a href="/?tab=bg">Background Remover</a></li>
+          <li><a href="/?tab=upscale">Image Upscaler</a></li>
+          <li><a href="/logo-generator">Logo Generator</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Document tools</h2>
+        <ul>
+          <li><a href="/pdf-tools?tab=img2pdf">Images to PDF</a></li>
+          <li><a href="/pdf-tools?tab=merge">Merge PDF</a></li>
+          <li><a href="/pdf-tools?tab=compress">Compress PDF</a></li>
+          <li><a href="/ai-ocr">AI OCR</a></li>
+          <li><a href="/barcode-tools.html">Barcode Generator</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Resources</h2>
+        <ul>
+          <li><a href="/blog">All guides</a></li>
+          <li><a href="/compress-images-for-whatsapp">Compress for WhatsApp</a></li>
+          <li><a href="/jpg-vs-png-vs-webp">JPG vs PNG vs WebP</a></li>
+          <li><a href="/passport-size-photo-at-home">Passport photos at home</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Company</h2>
+        <ul>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
     </div>
     <div class="footer-bottom">
-      <span>PIXNIVO</span>
-      <span class="dot">&bull;</span>
-      <span>Private In-Browser Image Studio</span>
-      <span class="dot">&bull;</span>
-      <span>&copy; 2026 PIXNIVO. All rights reserved.</span>
+      <span>&copy; <span data-year>2026</span> PIXNIVO. All rights reserved.</span>
+      <span>Privacy-first tools &middot; Most processing happens on your device.</span>
     </div>
   </footer>
 
-  <!-- ==================== JAVASCRIPT ENGINE ==================== -->
   <script>
-    /* Theme Toggle */
-    const themeToggle = document.getElementById('themeToggle');
-    if (themeToggle) {
-      themeToggle.addEventListener('click', () => {
-        const current = document.documentElement.getAttribute('data-theme') || 'dark';
-        const next = current === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        try { localStorage.setItem('pixnivo_theme', next); } catch(e) {}
-      });
+  (function () {
+    'use strict';
+
+    const P = window.Pixnivo;
+    const $ = id => document.getElementById(id);
+    const BWIP_URL = 'https://cdnjs.cloudflare.com/ajax/libs/bwip-js/3.4.0/bwip-js-min.js';
+    const PDFLIB_URL = 'https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js';
+    const JSZIP_URL = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+    const TWO_D = new Set(['qrcode', 'datamatrix', 'pdf417', 'azteccode', 'gs1datamatrix']);
+    const PREVIEW_LIMIT = 100;
+    const MAX_ITEMS = 10000;
+
+    const TYPES = {
+      qrcode: { hint: 'Any text or URL — links, Wi-Fi details, contact cards.', sample: ['https://pixnivo.app', 'WIFI:T:WPA;S:Office-Guest;P:welcome2026;;', 'MECARD:N:Cooper,Jane;TEL:+15551234567;EMAIL:jane@example.com;;'] },
+      datamatrix: { hint: 'Compact 2D code for small labels and parts marking.', sample: ['SN-000123', 'LOT-2026-10-A', 'PIXNIVO'] },
+      pdf417: { hint: 'Stacked 2D code used on IDs, boarding passes and shipping labels.', sample: ['PIXNIVO PDF417 SAMPLE 001', 'Order 48213 / Box 2 of 4'] },
+      azteccode: { hint: '2D code common on transport tickets.', sample: ['TICKET-2026-0042', 'PIXNIVO'] },
+      code128: { hint: 'Letters, numbers and symbols. Ideal for internal and shipping labels.', sample: ['PIX-0001', 'PIX-0002', 'PIX-0003', 'ASSET-7781-B'] },
+      code39: { hint: 'Uppercase letters, digits, space and - . $ / + %', sample: ['CODE39-ABC', 'PART 4471', 'SKU-0099'] },
+      code93: { hint: 'Denser than Code 39. Uppercase letters and digits.', sample: ['CODE93TEST', 'PIX-93-001'] },
+      ean13: { hint: '12 digits (the check digit is added for you) or 13 digits with a valid check digit.', sample: ['590123412345', '4006381333931', '978020137962'] },
+      upca: { hint: '11 digits (the check digit is added for you) or 12 digits with a valid check digit.', sample: ['03600029145', '012345678905'] },
+      itf14: { hint: '13 digits (the check digit is added for you) or 14 digits. Used on outer cartons.', sample: ['1540014128876', '0001234560001'] },
+      'gs1-128': { hint: 'GS1 Application Identifiers in brackets, e.g. (01)GTIN(17)YYMMDD(10)LOT.', sample: ['(01)09501101530008(17)261231(10)LOT42', '(01)09501101530008(21)SN0001'] },
+      gs1datamatrix: { hint: 'GS1 Application Identifiers in brackets, e.g. (01)GTIN(21)SERIAL.', sample: ['(01)09501101530008(21)SERIAL123', '(01)09501101530008(17)270630(10)B77'] }
+    };
+
+    const bcData = $('bcData'), bcType = $('bcType'), showText = $('bcShowText');
+    const bcScale = $('bcScale'), bcHeight = $('bcHeight');
+    const grid = $('bcGrid'), results = $('bcResults'), btnGenerate = $('btnGenerate');
+    const prog = $('bcProg');
+
+    let items = [];
+    let exporting = false;
+
+    const ensureBwip = () => window.bwipjs ? Promise.resolve() : P.loadScript(BWIP_URL);
+    ensureBwip().catch(() => {});
+
+    /* ---------- Input ---------- */
+    const getLines = () => bcData.value.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+
+    function updateCount() {
+      const n = getLines().length;
+      $('lineCount').textContent = `— ${n.toLocaleString()} value${n === 1 ? '' : 's'}`;
     }
 
-    /* Mobile Menu Toggle */
-    const mobileToggle = document.getElementById('mobileToggle');
-    const navLinks = document.getElementById('navLinks');
-    if (mobileToggle && navLinks) {
-      mobileToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('open');
-      });
+    function syncTypeUi() {
+      const t = bcType.value;
+      $('typeHint').textContent = TYPES[t].hint;
+      $('heightField').hidden = TWO_D.has(t);
     }
 
-    function fmt(bytes){
-      if (bytes < 1024) return bytes + ' B';
-      if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
-      return (bytes/1024/1024).toFixed(2) + ' MB';
-    }
-
-    function setupDropzone(dropEl, inputEl, onFile){
-      dropEl.addEventListener('click', () => inputEl.click());
-      inputEl.addEventListener('change', e => { if (e.target.files.length) onFile(e.target.files[0]); });
-      ['dragover','dragenter'].forEach(evt => dropEl.addEventListener(evt, e => { e.preventDefault(); dropEl.classList.add('drag'); }));
-      ['dragleave','drop'].forEach(evt => dropEl.addEventListener(evt, e => { e.preventDefault(); dropEl.classList.remove('drag'); }));
-      dropEl.addEventListener('drop', e => { if (e.dataTransfer.files.length) onFile(e.dataTransfer.files[0]); });
-    }
-
-    const MAX_SOURCE_DIM = 5000;
-    function capSize(source){
-      const w = source.width, h = source.height;
-      const longest = Math.max(w, h);
-      if (longest <= MAX_SOURCE_DIM) return source;
-      const scale = MAX_SOURCE_DIM / longest;
-      const c = document.createElement('canvas');
-      c.width = Math.round(w * scale);
-      c.height = Math.round(h * scale);
-      c.getContext('2d').drawImage(source, 0, 0, c.width, c.height);
-      return c;
-    }
-
-    let toastEl = null;
-    function showToast(msg){
-      if (!toastEl){
-        toastEl = document.createElement('div');
-        toastEl.style.cssText = 'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);' +
-          'background:rgba(21,19,29,0.95);color:#f5f3ef;border:1px solid rgba(255,255,255,0.12);padding:12px 24px;' +
-          'border-radius:9999px;font-size:14px;font-weight:600;z-index:9999;box-shadow:0 10px 30px rgba(0,0,0,0.6);backdrop-filter:blur(16px);';
-        document.body.appendChild(toastEl);
-      }
-      toastEl.textContent = msg;
-      toastEl.style.display = 'block';
-    }
-    function hideToast(){ if (toastEl) toastEl.style.display = 'none'; }
-
-    function loadScriptOnce(src){
-      return new Promise((resolve, reject) => {
-        const s = document.createElement('script');
-        s.src = src;
-        s.onload = resolve;
-        s.onerror = () => reject(new Error('Failed to load ' + src));
-        document.body.appendChild(s);
-      });
-    }
-
-    function looksHeic(file){
-      const name = (file.name || '').toLowerCase();
-      const type = (file.type || '').toLowerCase();
-      return name.endsWith('.heic') || name.endsWith('.heif') || type.includes('heic') || type.includes('heif');
-    }
-
-    async function convertHeic(file){
-      showToast('Converting iPhone photo…');
-      try{
-        if (!window.HeicTo){
-          await loadScriptOnce('https://cdn.jsdelivr.net/npm/heic-to@1.5.2/dist/iife/heic-to.js');
-        }
-        if (window.HeicTo){
-          return await window.HeicTo({ blob: file, type: 'image/jpeg', quality: 0.92 });
-        }
-        throw new Error('HeicTo unavailable');
-      } catch(e){
-        if (!window.heic2any){
-          await loadScriptOnce('https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js');
-        }
-        const out = await window.heic2any({ blob: file, toType: 'image/jpeg', quality: 0.92 });
-        return Array.isArray(out) ? out[0] : out;
-      } finally {
-        hideToast();
-      }
-    }
-
-    function uploadFailed(file){
-      const name = (file && file.name) ? file.name : 'This file';
-      const ext = name.includes('.') ? name.split('.').pop().toUpperCase() : '';
-      let extra;
-      if (['HEIC','HEIF'].includes(ext)){
-        extra = 'This iPhone photo could not be converted. Please save it as JPG and upload again.';
-      } else if (['TIF','TIFF','PSD','SVG','CR2','NEF','DNG','RAW','ARW'].includes(ext)){
-        extra = 'This file format is not supported by web browsers. Please use a JPG or PNG image.';
-      } else {
-        extra = 'The file may be damaged or too large. Please try a JPG or PNG version.';
-      }
-      alert('Could not open "' + name + '".\n\n' + extra);
-    }
-
-    function readImage(file, cb){
-      if (!file) return;
-      if (file.size === 0){ uploadFailed(file); return; }
-
-      const decode = blob => {
-        if (window.createImageBitmap){
-          return createImageBitmap(blob)
-            .then(bmp => cb(capSize(bmp)))
-            .catch(() => legacyRead(blob, file, cb));
-        }
-        legacyRead(blob, file, cb);
-      };
-
-      if (looksHeic(file)){
-        convertHeic(file).then(decode).catch(() => uploadFailed(file));
-        return;
-      }
-
-      if (window.createImageBitmap){
-        createImageBitmap(file)
-          .then(bmp => cb(capSize(bmp)))
-          .catch(() => {
-            convertHeic(file).then(decode).catch(() => legacyRead(file, file, cb));
-          });
-        return;
-      }
-      legacyRead(file, file, cb);
-    }
-
-    function legacyRead(blob, originalFile, cb){
-      const reader = new FileReader();
-      reader.onerror = () => uploadFailed(originalFile);
-      reader.onload = e => {
-        const img = new Image();
-        img.onload = () => {
-          if (!img.width || !img.height){ uploadFailed(originalFile); return; }
-          cb(capSize(img));
-        };
-        img.onerror = () => uploadFailed(originalFile);
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(blob);
-    }
-
-    /* Tab Switcher */
-    document.querySelectorAll('.tab-btn[data-tab]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn[data-tab]').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.studio-card').forEach(s => s.classList.remove('active'));
-        btn.classList.add('active');
-        const target = document.getElementById('stage-' + btn.dataset.tab);
-        if (target) target.classList.add('active');
-      });
+    bcData.addEventListener('input', updateCount);
+    $('btnSample').addEventListener('click', () => {
+      bcData.value = TYPES[bcType.value].sample.join('\n');
+      updateCount();
+      bcData.focus();
     });
 
-    function makeScaledCanvas(image, maxDim){
-      const scale = Math.min(1, maxDim / Math.max(image.width, image.height));
-      const c = document.createElement('canvas');
-      c.width = Math.max(1, Math.round(image.width * scale));
-      c.height = Math.max(1, Math.round(image.height * scale));
-      c.getContext('2d').drawImage(image, 0, 0, c.width, c.height);
-      return c;
+    function parseCsv(text) {
+      const rows = [];
+      let row = [], field = '', quoted = false;
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i];
+        if (quoted) {
+          if (c === '"' && text[i + 1] === '"') { field += '"'; i++; }
+          else if (c === '"') quoted = false;
+          else field += c;
+        } else if (c === '"') quoted = true;
+        else if (c === ',' || c === ';' || c === '\t') { row.push(field); field = ''; }
+        else if (c === '\n' || c === '\r') {
+          if (c === '\r' && text[i + 1] === '\n') i++;
+          row.push(field); rows.push(row); row = []; field = '';
+        } else field += c;
+      }
+      if (field || row.length) { row.push(field); rows.push(row); }
+      return rows;
     }
 
-    </script>
+    P.wireDropzone($('dropZone'), $('csvFile'), files => {
+      const f = files[0];
+      if (!/\.(csv|txt)$/i.test(f.name) && !/^text\//.test(f.type)) {
+        P.toast(`"${f.name}" isn't a CSV or TXT file.`, { type: 'error' });
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        let values = parseCsv(String(reader.result).replace(/^﻿/, '')).map(r => (r[0] || '').trim()).filter(Boolean);
+        let skipped = false;
+        if (values.length > 1 && /^(data|value|values|code|codes|barcode|barcodes|sku|text|id|gtin|ean|upc|serial)$/i.test(values[0])) {
+          values = values.slice(1);
+          skipped = true;
+        }
+        if (!values.length) { P.toast(`No values were found in "${f.name}".`, { type: 'warning' }); return; }
+        bcData.value = values.join('\n');
+        updateCount();
+        P.toast(`Imported ${values.length.toLocaleString()} values from ${f.name}${skipped ? ' (header row skipped)' : ''}.`, { type: 'success' });
+      };
+      reader.onerror = () => P.toast(`Couldn't read "${f.name}".`, { type: 'error' });
+      reader.readAsText(f);
+    });
+
+    /* ---------- Rendering ---------- */
+    function bwipOptions(text, scale) {
+      const type = bcType.value;
+      const o = {
+        bcid: type,
+        text,
+        scale: scale || parseInt(bcScale.value, 10),
+        includetext: showText.checked && !TWO_D.has(type),
+        textxalign: 'center',
+        backgroundcolor: 'FFFFFF',
+        padding: 10
+      };
+      if (!TWO_D.has(type)) o.height = parseInt(bcHeight.value, 10);
+      return o;
+    }
+
+    function cleanError(e) {
+      const msg = String((e && e.message) || e || 'Invalid value');
+      return msg.replace(/^bwipp?\.[\w-]+(#\d+)?:\s*/i, '').replace(/^Error:\s*/, '');
+    }
+
+    /* Draws a barcode; for 2D codes the value is printed underneath when requested */
+    function renderToCanvas(text, scale) {
+      const c = document.createElement('canvas');
+      window.bwipjs.toCanvas(c, bwipOptions(text, scale));
+      if (!(TWO_D.has(bcType.value) && showText.checked)) return c;
+      const fontPx = Math.max(12, Math.round(c.width * 0.065));
+      const out = document.createElement('canvas');
+      out.width = c.width;
+      out.height = c.height + Math.round(fontPx * 1.7);
+      const ox = out.getContext('2d');
+      ox.fillStyle = '#ffffff';
+      ox.fillRect(0, 0, out.width, out.height);
+      ox.drawImage(c, 0, 0);
+      ox.fillStyle = '#111111';
+      ox.font = `${fontPx}px "JetBrains Mono", Consolas, monospace`;
+      ox.textAlign = 'center';
+      ox.textBaseline = 'middle';
+      let label = text;
+      while (label.length > 4 && ox.measureText(label).width > out.width - 16) label = label.slice(0, -2);
+      if (label !== text) label = label.slice(0, -1) + '…';
+      ox.fillText(label, out.width / 2, c.height + fontPx * 0.75);
+      return out;
+    }
+
+    const safeName = t => t.replace(/[^a-z0-9._-]+/gi, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'barcode';
+
+    function downloadOne(text, index) {
+      try {
+        const c = renderToCanvas(text);
+        c.toBlob(b => b && P.downloadBlob(b, `${String(index + 1).padStart(3, '0')}-${safeName(text)}.png`), 'image/png');
+      } catch (e) {
+        P.toast(cleanError(e), { type: 'error' });
+      }
+    }
+
+    function downloadSvg(text, index) {
+      try {
+        const svg = window.bwipjs.toSVG(bwipOptions(text));
+        P.downloadBlob(new Blob([svg], { type: 'image/svg+xml' }), `${String(index + 1).padStart(3, '0')}-${safeName(text)}.svg`);
+      } catch (e) {
+        P.toast(cleanError(e), { type: 'error' });
+      }
+    }
+
+    function buildTile(item, i) {
+      const tile = document.createElement('div');
+      tile.className = 'bc-tile' + (item.ok ? '' : ' invalid');
+      const idx = document.createElement('span');
+      idx.className = 'bc-index';
+      idx.textContent = '#' + (i + 1);
+      tile.appendChild(idx);
+
+      if (item.ok) {
+        let c;
+        try { c = renderToCanvas(item.text); } catch (e) { item.ok = false; item.error = cleanError(e); }
+        if (c) {
+          c.setAttribute('role', 'img');
+          c.setAttribute('aria-label', `${bcType.options[bcType.selectedIndex].text}: ${item.text}`);
+          tile.appendChild(c);
+          const needsCaption = !(showText.checked);
+          if (needsCaption) {
+            const cap = document.createElement('div');
+            cap.className = 'bc-caption';
+            cap.textContent = item.text;
+            tile.appendChild(cap);
+          }
+          const actions = document.createElement('div');
+          actions.className = 'bc-actions';
+          const png = document.createElement('button');
+          png.type = 'button';
+          png.textContent = 'PNG';
+          png.setAttribute('aria-label', `Download ${item.text} as PNG`);
+          png.addEventListener('click', () => downloadOne(item.text, i));
+          actions.appendChild(png);
+          if (typeof window.bwipjs.toSVG === 'function') {
+            const svg = document.createElement('button');
+            svg.type = 'button';
+            svg.textContent = 'SVG';
+            svg.setAttribute('aria-label', `Download ${item.text} as SVG`);
+            svg.addEventListener('click', () => downloadSvg(item.text, i));
+            actions.appendChild(svg);
+          }
+          tile.appendChild(actions);
+          return tile;
+        }
+      }
+      tile.className = 'bc-tile invalid';
+      const cap = document.createElement('div');
+      cap.className = 'bc-caption';
+      cap.textContent = item.text;
+      const err = document.createElement('div');
+      err.className = 'bc-err';
+      err.textContent = item.error;
+      tile.append(cap, err);
+      return tile;
+    }
+
+    async function generate(opts) {
+      const silent = opts && opts.silent;
+      let ls = getLines();
+      if (!ls.length) {
+        if (!silent) { P.toast('Enter at least one value, or import a CSV file.', { type: 'warning' }); bcData.focus(); }
+        return;
+      }
+      if (ls.length > MAX_ITEMS) {
+        P.toast(`Only the first ${MAX_ITEMS.toLocaleString()} values are used.`, { type: 'warning' });
+        ls = ls.slice(0, MAX_ITEMS);
+      }
+
+      P.setLoading(btnGenerate, true);
+      try {
+        await ensureBwip();
+      } catch (e) {
+        P.setLoading(btnGenerate, false);
+        P.toast(e.message, { type: 'error' });
+        return;
+      }
+
+      // Validate every value quickly at low resolution, in chunks to keep the page responsive
+      const probe = document.createElement('canvas');
+      items = [];
+      for (let i = 0; i < ls.length; i++) {
+        try { window.bwipjs.toCanvas(probe, bwipOptions(ls[i], 1)); items.push({ text: ls[i], ok: true, error: '' }); }
+        catch (e) { items.push({ text: ls[i], ok: false, error: cleanError(e) }); }
+        if (i % 250 === 249) await P.nextFrame();
+      }
+
+      grid.innerHTML = '';
+      const frag = document.createDocumentFragment();
+      items.slice(0, PREVIEW_LIMIT).forEach((item, i) => frag.appendChild(buildTile(item, i)));
+      grid.appendChild(frag);
+
+      const invalid = items.filter(it => !it.ok);
+      const valid = items.length - invalid.length;
+      $('bcSummary').textContent = `${valid.toLocaleString()} valid barcode${valid === 1 ? '' : 's'}` + (invalid.length ? ` · ${invalid.length.toLocaleString()} invalid` : '') + ` · ${bcType.options[bcType.selectedIndex].text}`;
+      $('previewLimitWarning').hidden = items.length <= PREVIEW_LIMIT;
+
+      if (invalid.length) {
+        const first = invalid.slice(0, 3).map(it => `“${it.text}” — ${it.error}`).join('; ');
+        $('invalidText').innerHTML = '';
+        const b = document.createElement('b');
+        b.textContent = `${invalid.length} value${invalid.length === 1 ? ' is' : 's are'} not valid for this barcode type and will be skipped. `;
+        const rest = document.createElement('span');
+        rest.textContent = first + (invalid.length > 3 ? ' …' : '');
+        const fix = document.createElement('button');
+        fix.type = 'button';
+        fix.className = 'btn btn-sm btn-ghost';
+        fix.style.marginLeft = '8px';
+        fix.textContent = 'Remove invalid values';
+        fix.addEventListener('click', () => {
+          const bad = new Set(invalid.map(it => it.text));
+          bcData.value = getLines().filter(l => !bad.has(l)).join('\n');
+          updateCount();
+          generate();
+        });
+        $('invalidText').append(b, rest, fix);
+      }
+      $('invalidAlert').hidden = !invalid.length;
+      ['btnExportPdf', 'btnExportZip', 'btnExportWord', 'btnExportExcel'].forEach(id => { $(id).disabled = !valid; });
+
+      results.hidden = false;
+      P.setLoading(btnGenerate, false);
+      if (!silent) results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    btnGenerate.addEventListener('click', () => generate());
+
+    let regenTimer = null;
+    function settingsChanged() {
+      if (results.hidden) return;
+      clearTimeout(regenTimer);
+      regenTimer = setTimeout(() => generate({ silent: true }), 250);
+    }
+
+    bcType.addEventListener('change', () => { syncTypeUi(); settingsChanged(); });
+    showText.addEventListener('change', settingsChanged);
+    bcScale.addEventListener('input', () => { $('bcScaleVal').textContent = bcScale.value + '×'; settingsChanged(); });
+    bcHeight.addEventListener('input', () => { $('bcHeightVal').textContent = bcHeight.value + ' mm'; settingsChanged(); });
+
+    /* ---------- Export ---------- */
+    function setProgress(pct, text) {
+      prog.classList.add('on');
+      $('progBar').style.width = pct + '%';
+      $('progPct').textContent = Math.round(pct) + '%';
+      if (text) $('progText').textContent = text;
+    }
+
+    function endProgress() {
+      setTimeout(() => { prog.classList.remove('on'); $('progBar').style.width = '0%'; }, 600);
+    }
+
+    async function withExport(btn, fn) {
+      const valid = items.filter(it => it.ok);
+      if (!valid.length || exporting) return;
+      exporting = true;
+      P.setLoading(btn, true);
+      try {
+        await fn(valid);
+      } catch (e) {
+        console.error(e);
+        P.toast(e.message || 'Export failed.', { type: 'error' });
+        prog.classList.remove('on');
+      } finally {
+        exporting = false;
+        P.setLoading(btn, false);
+      }
+    }
+
+    async function renderAll(valid, label, onEach) {
+      for (let i = 0; i < valid.length; i++) {
+        await onEach(renderToCanvas(valid[i].text), valid[i], i);
+        if (i % 20 === 0) {
+          setProgress(5 + (i / valid.length) * 75, `${label} ${i + 1} of ${valid.length}…`);
+          await P.nextFrame();
+        }
+      }
+    }
+
+    /* PDF: label sheet laid out on A4, generated on-device */
+    $('btnExportPdf').addEventListener('click', e => withExport(e.currentTarget, async valid => {
+      setProgress(2, 'Preparing PDF…');
+      if (!window.PDFLib) await P.loadScript(PDFLIB_URL);
+      const { PDFDocument, StandardFonts, rgb } = window.PDFLib;
+      const doc = await PDFDocument.create();
+      doc.setTitle('Barcodes');
+      doc.setProducer('PIXNIVO');
+      const font = await doc.embedFont(StandardFonts.Helvetica);
+      const PW = 595.28, PH = 841.89, M = 36, GAP = 14;
+      const twoD = TWO_D.has(bcType.value);
+      const cols = twoD ? 4 : 3;
+      const cellW = (PW - M * 2 - GAP * (cols - 1)) / cols;
+      const maxImgH = twoD ? cellW : 110;
+      const captionH = showText.checked ? 0 : 14;
+      const winAnsi = s => s.replace(/[^\x20-\x7E -ÿ]/g, '?');
+
+      let pageObj = null, x = 0, y = 0, rowH = 0, col = 0;
+      const newPage = () => { pageObj = doc.addPage([PW, PH]); y = PH - M; col = 0; rowH = 0; };
+      newPage();
+
+      await renderAll(valid, 'Adding barcode', async (canvas, item) => {
+        // toDataURL is synchronous, so bulk exports aren't slowed by background-tab throttling
+        const png = await doc.embedPng(canvas.toDataURL('image/png'));
+        let w = Math.min(cellW, canvas.width * 0.5);
+        let h = w * canvas.height / canvas.width;
+        if (h > maxImgH) { h = maxImgH; w = h * canvas.width / canvas.height; }
+        const cellH = h + captionH + GAP;
+        if (col === 0 && y - cellH < M) newPage();
+        x = M + col * (cellW + GAP);
+        pageObj.drawImage(png, { x: x + (cellW - w) / 2, y: y - h, width: w, height: h });
+        if (captionH) {
+          let label = winAnsi(item.text);
+          while (label.length > 3 && font.widthOfTextAtSize(label, 8) > cellW) label = label.slice(0, -2) + '…';
+          pageObj.drawText(label, { x: x + (cellW - font.widthOfTextAtSize(label, 8)) / 2, y: y - h - 10, size: 8, font, color: rgb(0.2, 0.2, 0.22) });
+        }
+        rowH = Math.max(rowH, cellH);
+        col++;
+        if (col >= cols) { col = 0; y -= rowH; rowH = 0; }
+      });
+
+      setProgress(90, 'Saving PDF…');
+      const blob = new Blob([await doc.save()], { type: 'application/pdf' });
+      P.downloadBlob(blob, 'pixnivo-barcodes.pdf');
+      setProgress(100, 'Done');
+      endProgress();
+      P.toast(`PDF with ${valid.length.toLocaleString()} barcodes downloaded (${P.formatBytes(blob.size)}).`, { type: 'success' });
+    }));
+
+    /* PNG images bundled in a ZIP, generated on-device */
+    $('btnExportZip').addEventListener('click', e => withExport(e.currentTarget, async valid => {
+      setProgress(2, 'Preparing images…');
+      if (!window.JSZip) await P.loadScript(JSZIP_URL);
+      const zip = new window.JSZip();
+      await renderAll(valid, 'Rendering image', async (canvas, item, i) => {
+        zip.file(`${String(i + 1).padStart(4, '0')}-${safeName(item.text)}.png`, canvas.toDataURL('image/png').split(',')[1], { base64: true });
+      });
+      setProgress(85, 'Compressing ZIP…');
+      const blob = await zip.generateAsync({ type: 'blob' }, meta => setProgress(85 + meta.percent * 0.14, 'Compressing ZIP…'));
+      P.downloadBlob(blob, 'pixnivo-barcodes.zip');
+      setProgress(100, 'Done');
+      endProgress();
+      P.toast(`${valid.length.toLocaleString()} PNG files downloaded as a ZIP (${P.formatBytes(blob.size)}).`, { type: 'success' });
+    }));
+
+    /* Word & Excel documents are assembled by the PIXNIVO API */
+    async function serverExport(format, valid) {
+      const images = [];
+      await renderAll(valid, 'Rendering barcode', async (canvas, item) => {
+        images.push({ text: item.text, base64_data: canvas.toDataURL('image/png') });
+      });
+      setProgress(82, 'Building your document…');
+      let res;
+      try {
+        res = await fetch('/api/export-barcodes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ format, images })
+        });
+      } catch (e) {
+        throw new Error('Could not reach the export service. Check your connection, or download a PDF instead.');
+      }
+      if (res.status === 413) throw new Error('This batch is too large for Word/Excel export. Try fewer barcodes, or download a PDF instead.');
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(`${format === 'docx' ? 'Word' : 'Excel'} export is unavailable right now${err.detail ? ' (' + err.detail + ')' : ''}. Try PDF or PNG instead.`);
+      }
+      const blob = await res.blob();
+      P.downloadBlob(blob, `pixnivo-barcodes.${format}`);
+      setProgress(100, 'Done');
+      endProgress();
+      P.toast(`${format === 'docx' ? 'Word' : 'Excel'} file with ${valid.length.toLocaleString()} barcodes downloaded.`, { type: 'success' });
+    }
+
+    $('btnExportWord').addEventListener('click', e => withExport(e.currentTarget, valid => serverExport('docx', valid)));
+    $('btnExportExcel').addEventListener('click', e => withExport(e.currentTarget, valid => serverExport('xlsx', valid)));
+
+    syncTypeUi();
+    updateCount();
+  })();
+  </script>
 </body>
 </html>
-
-
-
-
-
-

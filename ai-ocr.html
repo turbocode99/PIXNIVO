@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Free AI OCR — Extract Text from Images &amp; PDFs | PIXNIVO</title>
   <meta name="description" content="Free online AI OCR tool. Extract editable text from scanned documents, invoices, receipts, photos, and multi-page PDFs with high accuracy." />
-  <meta name="theme-color" content="#08070b" />
+  <meta name="theme-color" content="#fafafa" />
 
   <!-- Open Graph / Social Meta -->
   <meta property="og:type" content="website" />
@@ -25,12 +25,13 @@
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8972850134795669" crossorigin="anonymous"></script>
 
-  <!-- External OCR & PDF Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
-  <!-- Modern Design System Stylesheet -->
-  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="/assets/css/main.css?v=20261010" />
+  <script src="/assets/js/site.js?v=20261010"></script>
 
   <!-- Instant Theme Detection Script -->
   <script>
@@ -43,711 +44,683 @@
       } catch(e) {}
     })();
   </script>
-
-  <style>
-    .ocr-workspace-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 28px;
-      margin-top: 24px;
-    }
-    @media (max-width: 960px) {
-      .ocr-workspace-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    .preview-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glass);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 380px;
-      position: relative;
-      overflow: hidden;
-    }
-    .preview-img-wrap {
-      max-width: 100%;
-      max-height: 480px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: auto;
-      border-radius: 8px;
-    }
-    .preview-img-wrap img, .preview-img-wrap canvas {
-      max-width: 100%;
-      max-height: 460px;
-      height: auto;
-      border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
-    .ocr-config-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glass);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .ocr-result-card {
-      margin-top: 28px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-glass);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-    }
-    .ocr-output-area {
-      width: 100%;
-      min-height: 280px;
-      padding: 16px 20px;
-      border-radius: 12px;
-      border: 1px solid var(--border-glass);
-      background: rgba(0, 0, 0, 0.35);
-      color: var(--text-main);
-      font-family: 'JetBrains Mono', monospace, Consolas, monospace;
-      font-size: 14px;
-      line-height: 1.6;
-      resize: vertical;
-      box-sizing: border-box;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .ocr-output-area:focus {
-      border-color: var(--primary);
-    }
-    .ocr-toolbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid var(--border-glass);
-    }
-    .ocr-stats {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-    .ocr-stats b {
-      color: var(--primary-light);
-    }
-    .ocr-actions-group {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .pdf-pager {
-      display: none;
-      align-items: center;
-      gap: 12px;
-      margin-top: 14px;
-      font-size: 13.5px;
-      color: var(--text-muted);
-    }
-    .engine-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
-      background: rgba(76, 175, 80, 0.15);
-      color: #81c784;
-      border: 1px solid rgba(76, 175, 80, 0.3);
-    }
-  </style>
 </head>
 <body>
 
-  <!-- Dynamic Colorful Aurora Background -->
-  <div class="ambient-bg" aria-hidden="true">
-    <div class="ambient-orb orb-1"></div>
-    <div class="ambient-orb orb-2"></div>
-    <div class="ambient-orb orb-3"></div>
-    <div class="ambient-orb orb-4"></div>
-    <div class="ambient-orb orb-5"></div>
-  </div>
 
-  <!-- Floating Glass Navigation -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
   <header class="site-header">
     <div class="nav-container">
-      <a class="brand" href="/">
-        <div class="brand-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-            <polyline points="2 17 12 22 22 17"></polyline>
-            <polyline points="2 12 12 17 22 12"></polyline>
-          </svg>
-        </div>
-        PIX<span>NIVO</span>
+      <a class="brand" href="/" aria-label="PIXNIVO home">
+        <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+        <span class="brand-name">PIX<span>NIVO</span></span>
       </a>
 
-      <nav class="nav-links" id="navLinks">
-        <a class="nav-link" href="/">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          Image Tools
-        </a>
-        <a class="nav-link" href="/logo-generator">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
-          Logo Generator
-        </a>
-        <a class="nav-link" href="/pdf-tools">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          PDF Tools
-        </a>
-        <a class="nav-link active" href="/ai-ocr">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          AI OCR
-        </a>
-        <a class="nav-link" href="/barcode-tools.html">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"></path><path d="M8 5v14"></path><path d="M12 5v14"></path><path d="M16 5v14"></path></svg>
-          Barcode Tools
-        </a>
-        <a class="nav-link" href="/blog">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          Guides
-        </a>
-        <a class="nav-link" href="/about">About</a>
-        <a class="nav-link" href="/contact">Contact</a>
+      <nav class="nav-links" id="navLinks" aria-label="Main">
+        <a class="nav-link" href="/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg><span>Image Tools</span></a>
+        <a class="nav-link" href="/logo-generator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg><span>Logo Generator</span></a>
+        <a class="nav-link" href="/pdf-tools"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>PDF Tools</span></a>
+        <a class="nav-link" href="/ai-ocr" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 8h8"/><path d="M7 12h10"/><path d="M7 16h6"/></svg><span>AI OCR</span></a>
+        <a class="nav-link" href="/barcode-tools.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5v14"/><path d="M8 5v14"/><path d="M12 5v14"/><path d="M17 5v14"/><path d="M21 5v14"/></svg><span>Barcode Tools</span></a>
+        <a class="nav-link" href="/blog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>Guides</span></a>
+        <div class="nav-divider" role="separator"></div>
+        <a class="nav-link nav-secondary" href="/about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span>About</span></a>
+        <a class="nav-link nav-secondary" href="/contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><span>Contact</span></a>
       </nav>
 
       <div class="nav-actions">
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme" title="Toggle Theme">
-          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
         </button>
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <button class="mobile-toggle" id="mobileToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+          <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="badge-privacy">
-      <span class="pulse-dot"></span>
-      Secure AI OCR • Multi-Engine Text Recognition
-    </div>
-    <h1>Professional <em>AI OCR Studio</em> in Your Browser</h1>
-    <p class="hero-subtitle">Extract clean, editable text from scanned documents, PDF files, invoices, receipts, and photos with dual-engine AI and multi-language support.</p>
-  </section>
-
-  <!-- Interactive Studio Workspace Card -->
-  <main class="studio-container">
-    <section class="studio-card active">
-      <div class="studio-header">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-          <div>
-            <h2>Document &amp; Image AI OCR</h2>
-            <p>Convert raster scans into clean text with neural classification and layout awareness.</p>
-          </div>
-          <span class="engine-badge">
-            <span class="pulse-dot"></span>
-            Dual Engine (Cloud &amp; Offline)
-          </span>
-        </div>
+  <main id="main">
+    <section class="hero">
+      <div class="badge-privacy">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        Two engines &middot; Choose fully private, in-browser processing
       </div>
-
-      <!-- Dropzone -->
-      <div class="dropzone" id="dropO">
-        <div class="dropzone-icon">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
-          </svg>
-        </div>
-        <h3 id="dropOH3">Drop PDF document or photo here for OCR</h3>
-        <p>Supports Multi-page PDF, JPG, PNG, WebP, TIFF &amp; iPhone HEIC Photos</p>
-        <span class="formats-badge">Drag &amp; drop or click to browse</span>
-        <input type="file" id="fileO" accept="image/*,.pdf,.jpg,.jpeg,.png,.webp,.tif,.tiff,.bmp,.heic,.heif" />
-      </div>
-
-      <!-- Workspace Grid (Appears on file selection) -->
-      <div class="ocr-workspace-grid" id="ocrWorkspace" style="display:none;">
-        
-        <!-- Left: Visual Inspection & Preview -->
-        <div class="preview-card">
-          <div class="preview-img-wrap">
-            <img id="ocrPreviewImg" alt="Document Preview" style="display:none;" />
-            <canvas id="ocrPreviewCanvas" style="display:none;"></canvas>
-          </div>
-          <div class="pdf-pager" id="pdfPager">
-            <button class="btn btn-ghost" id="pdfPrev" style="padding:6px 12px; font-size:12px;">&larr; Prev</button>
-            <span id="pdfPageNum">Page 1 of 1</span>
-            <button class="btn btn-ghost" id="pdfNext" style="padding:6px 12px; font-size:12px;">Next &rarr;</button>
-          </div>
-        </div>
-
-        <!-- Right: Engine & Extraction Controls -->
-        <div class="ocr-config-card">
-          <div class="field">
-            <label>OCR Engine</label>
-            <select id="ocrEngine" class="glass-select">
-              <option value="paddle" selected>PaddleOCR Neural Net (Server-Side, High Accuracy)</option>
-              <option value="tesseract">Tesseract.js Engine (Client-Side, 100% Private Offline)</option>
-            </select>
-            <p class="hint" style="margin-top:4px;">PaddleOCR delivers state-of-the-art layout and text accuracy. Tesseract runs completely in your browser.</p>
-          </div>
-
-          <div class="field">
-            <label>Document Language</label>
-            <select id="ocrLang" class="glass-select">
-              <option value="eng" selected>English</option>
-              <option value="spa">Spanish (Español)</option>
-              <option value="fra">French (Français)</option>
-              <option value="deu">German (Deutsch)</option>
-              <option value="chi_sim">Chinese Simplified (中文)</option>
-              <option value="jpn">Japanese (日本語)</option>
-              <option value="ara">Arabic (العربية)</option>
-              <option value="rus">Russian (Русский)</option>
-              <option value="hin">Hindi (हिन्दी)</option>
-              <option value="por">Portuguese (Português)</option>
-              <option value="ita">Italian (Italiano)</option>
-              <option value="kor">Korean (한국어)</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label>Image Pre-Processing Filter</label>
-            <select id="ocrEnhance" class="glass-select">
-              <option value="none" selected>Standard (Original Quality)</option>
-              <option value="auto">Auto Contrast &amp; Sharpen (Recommended for Scans)</option>
-              <option value="binarize">Binarize (High-Contrast Black &amp; White Threshold)</option>
-            </select>
-          </div>
-
-          <!-- Progress bar -->
-          <div id="progO" style="display:none; margin-top:10px;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px; color:var(--text-muted);">
-              <span id="progTxtO">Processing document...</span>
-              <span id="progPctO">0%</span>
-            </div>
-            <div style="height:6px; background:rgba(255,255,255,0.1); border-radius:99px; overflow:hidden;">
-              <div id="progBarO" style="height:100%; width:0%; background:var(--primary); transition:width 0.3s ease;"></div>
-            </div>
-          </div>
-
-          <button id="btnOcr" class="btn btn-primary" style="margin-top:12px; font-size:15px; padding:14px 20px;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-            Run AI OCR Extraction
-          </button>
-        </div>
-      </div>
-
-      <!-- Result Card -->
-      <div class="ocr-result-card" id="resO" style="display:none;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
-          <h3 style="font-size:18px; font-weight:700; color:var(--text-main);">Extracted Text</h3>
-          <div class="ocr-stats">
-            <span>Words: <b id="statWords">0</b></span>
-            <span>Characters: <b id="statChars">0</b></span>
-            <span>Lines: <b id="statLines">0</b></span>
-          </div>
-        </div>
-
-        <textarea id="ocrOut" class="ocr-output-area" placeholder="Extracted text will appear here..."></textarea>
-
-        <div class="ocr-toolbar">
-          <div style="display:flex; align-items:center; gap:8px;">
-            <input type="text" id="searchInText" placeholder="Search within text..." class="admin-input" style="padding:7px 12px; font-size:13px; max-width:200px;" />
-            <button class="btn btn-ghost" id="btnFindNext" style="padding:6px 12px; font-size:12px;">Find</button>
-          </div>
-
-          <div class="ocr-actions-group">
-            <button class="btn btn-ghost" id="btnCopyText" style="padding:8px 14px; font-size:13px;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-              Copy Text
-            </button>
-            <button class="btn btn-ghost" id="btnDownloadTxt" style="padding:8px 14px; font-size:13px;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-              Download .txt
-            </button>
-            <button class="btn btn-ghost" id="btnDownloadDoc" style="padding:8px 14px; font-size:13px;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-              Download Word (.doc)
-            </button>
-            <button class="btn btn-ghost danger" id="btnClearText" style="padding:8px 14px; font-size:13px;">
-              Clear
-            </button>
-          </div>
-        </div>
-      </div>
+      <h1>Extract text from images &amp; PDFs with <em>AI OCR</em></h1>
+      <p class="hero-subtitle">Turn scans, receipts, screenshots and multi-page PDFs into clean, editable text in 12 languages. Copy it, search it, or download it as TXT or Word.</p>
     </section>
 
-    <!-- Technical Guide Cards -->
-    <div style="margin-top:36px; display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
-      <div class="callout-box">
-        <h4 style="color:var(--primary-light); margin-bottom:8px; font-size:15px; font-weight:700;">Neural OCR Pipeline</h4>
-        <p style="font-size:13.5px; line-height:1.6; color:var(--text-muted);">Uses deep convolutional detection networks to identify text baselines, followed by an attentive recognizer that decodes characters across multilingual dictionaries.</p>
-      </div>
-      <div class="callout-box">
-        <h4 style="color:var(--primary-light); margin-bottom:8px; font-size:15px; font-weight:700;">Multi-Page PDF Support</h4>
-        <p style="font-size:13.5px; line-height:1.6; color:var(--text-muted);">Seamlessly render multi-page PDF documents and extract text page-by-page or batch process entire contracts, reports, and books in one click.</p>
-      </div>
-      <div class="callout-box">
-        <h4 style="color:var(--primary-light); margin-bottom:8px; font-size:15px; font-weight:700;">Zero Data Retention</h4>
-        <p style="font-size:13.5px; line-height:1.6; color:var(--text-muted);">With client-side mode, documents never leave your browser. With server-side mode, uploads are processed in volatile memory and purged immediately.</p>
+    <div class="studio-container">
+      <section class="studio-card active" aria-labelledby="ocrTitle">
+        <div class="studio-header">
+          <div>
+            <h2 id="ocrTitle">AI OCR</h2>
+            <p>Upload a document, choose an engine and language, then extract the text.</p>
+          </div>
+          <span class="badge badge-brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></svg>12 languages</span>
+        </div>
+
+        <div class="dropzone" id="dropO" aria-label="Choose an image or PDF for text extraction">
+          <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+          <h3>Drop an image or PDF here, or <span class="link">browse</span></h3>
+          <p>Multi-page PDF, JPG, PNG, WebP, TIFF and iPhone HEIC &middot; Paste screenshots with Ctrl+V</p>
+          <span class="formats-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Up to 50 MB</span>
+          <input type="file" id="fileO" accept="image/*,.pdf,application/pdf,.tif,.tiff,.heic,.heif" />
+        </div>
+
+        <div class="workspace-grid" id="ocrWorkspace">
+          <div class="workspace-main">
+            <div class="viewport-bar">
+              <div class="file-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg><span class="name" id="nameO"></span><span class="meta" id="metaO"></span></div>
+              <div class="viewport-actions">
+                <div class="pager" id="pdfPager" hidden>
+                  <button class="btn btn-sm btn-ghost btn-icon" type="button" id="pdfPrev" aria-label="Previous page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></button>
+                  <span id="pdfPageNum" aria-live="polite">Page 1 of 1</span>
+                  <button class="btn btn-sm btn-ghost btn-icon" type="button" id="pdfNext" aria-label="Next page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg></button>
+                </div>
+                <button class="btn btn-sm btn-ghost" type="button" id="replaceO"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>Replace file</button>
+              </div>
+            </div>
+            <div class="canvas-viewport">
+              <canvas id="ocrPreviewCanvas" aria-label="Document preview"></canvas>
+              <div class="empty-state" id="noPreview" hidden>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <h4>Preview not available</h4>
+                <p>Your browser can't display this format, but text can still be extracted.</p>
+              </div>
+              <div class="busy-overlay" id="previewBusy" role="status"><div class="spinner-ring" aria-hidden="true"></div><span>Loading preview…</span></div>
+            </div>
+          </div>
+
+          <aside class="control-panel" aria-label="OCR settings">
+            <div class="panel-section">
+              <span class="panel-section-title" id="engineLabel">Engine</span>
+              <div class="segmented" role="group" aria-labelledby="engineLabel">
+                <button class="chip active" type="button" data-engine="paddle" aria-pressed="true">Enhanced</button>
+                <button class="chip" type="button" data-engine="tesseract" aria-pressed="false">Private</button>
+              </div>
+              <p class="hint" id="engineHint"></p>
+            </div>
+
+            <div class="panel-section">
+              <div class="field">
+                <label for="ocrLang">Document language</label>
+                <select id="ocrLang">
+                  <option value="eng" selected>English</option>
+                  <option value="spa">Spanish (Español)</option>
+                  <option value="fra">French (Français)</option>
+                  <option value="deu">German (Deutsch)</option>
+                  <option value="por">Portuguese (Português)</option>
+                  <option value="ita">Italian (Italiano)</option>
+                  <option value="rus">Russian (Русский)</option>
+                  <option value="ara">Arabic (العربية)</option>
+                  <option value="hin">Hindi (हिन्दी)</option>
+                  <option value="chi_sim">Chinese, Simplified (中文)</option>
+                  <option value="jpn">Japanese (日本語)</option>
+                  <option value="kor">Korean (한국어)</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="ocrEnhance">Image clean-up</label>
+                <select id="ocrEnhance">
+                  <option value="none" selected>None</option>
+                  <option value="auto">Auto contrast (faded scans)</option>
+                  <option value="binarize">Black &amp; white (photos of paper)</option>
+                </select>
+              </div>
+              <div class="field" id="pagesField" hidden>
+                <label for="ocrPages">Pages</label>
+                <select id="ocrPages">
+                  <option value="all" selected>All pages</option>
+                  <option value="current">Current page only</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="prog" id="progO" role="status"><div class="bar"><i id="progBarO"></i></div><div class="txt"><span id="progTxtO">Preparing…</span><span id="progPctO">0%</span></div></div>
+
+            <div class="panel-actions">
+              <button id="btnOcr" class="btn btn-primary btn-lg btn-block" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 8h8"/><path d="M7 12h10"/><path d="M7 16h6"/></svg><span>Extract text</span></button>
+            </div>
+          </aside>
+        </div>
+
+        <div class="ocr-result" id="resO" hidden>
+          <div class="ocr-result-head">
+            <h3>Extracted text</h3>
+            <div class="ocr-stats" aria-live="polite">
+              <span><b id="statWords">0</b> words</span>
+              <span><b id="statChars">0</b> characters</span>
+              <span><b id="statLines">0</b> lines</span>
+              <span id="statEngine" class="badge"></span>
+            </div>
+          </div>
+          <label class="sr-only" for="ocrOut">Extracted text (editable)</label>
+          <textarea id="ocrOut" class="ocr-output" spellcheck="false"></textarea>
+          <div class="ocr-toolbar">
+            <form class="ocr-search" id="searchForm" role="search">
+              <label class="sr-only" for="searchInText">Find in text</label>
+              <input type="search" id="searchInText" placeholder="Find in text…" />
+              <button class="btn btn-sm btn-ghost" type="submit">Find next</button>
+              <span class="hint" id="searchStatus" aria-live="polite"></span>
+            </form>
+            <div class="btn-row">
+              <button class="btn btn-sm btn-ghost" type="button" id="btnCopyText"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copy</span></button>
+              <button class="btn btn-sm btn-ghost" type="button" id="btnDownloadTxt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>TXT</button>
+              <button class="btn btn-sm btn-ghost" type="button" id="btnDownloadDoc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Word</button>
+              <button class="btn btn-sm btn-danger" type="button" id="btnClearText">Clear</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="info-grid">
+        <div class="feature-item">
+          <span class="f-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/></svg></span>
+          <h3>Enhanced engine</h3>
+          <p>A PaddleOCR neural network on our server gives the best accuracy for English documents. Files are processed in memory and deleted immediately.</p>
+        </div>
+        <div class="feature-item">
+          <span class="f-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+          <h3>Private engine</h3>
+          <p>Tesseract runs entirely in your browser — your document never leaves your device. Ideal for sensitive files and non-English text.</p>
+        </div>
+        <div class="feature-item">
+          <span class="f-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>
+          <h3>Multi-page PDFs</h3>
+          <p>Extract every page of contracts, reports and statements in one go, with clear page separators in the output.</p>
+        </div>
       </div>
     </div>
   </main>
 
-  <!-- Modern Site Footer -->
   <footer class="site-footer">
-    <div class="footer-nav">
-      <a href="/">Image Tools</a>
-      <span class="dot">&bull;</span>
-      <a href="/logo-generator">Logo Generator</a>
-      <span class="dot">&bull;</span>
-      <a href="/pdf-tools">PDF Tools</a>
-      <span class="dot">&bull;</span>
-      <a href="/ai-ocr">AI OCR</a>
-      <span class="dot">&bull;</span>
-      <a href="/barcode-tools.html">Barcode Tools</a>
-      <span class="dot">&bull;</span>
-      <a href="/blog">Guides &amp; Blog</a>
-      <span class="dot">&bull;</span>
-      <a href="/about">About</a>
-      <span class="dot">&bull;</span>
-      <a href="/privacy">Privacy Policy</a>
-      <span class="dot">&bull;</span>
-      <a href="/terms">Terms &amp; Conditions</a>
-      <span class="dot">&bull;</span>
-      <a href="/contact">Contact</a>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="/" aria-label="PIXNIVO home">
+          <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+          <span class="brand-name">PIX<span>NIVO</span></span>
+        </a>
+        <p>Fast, privacy-first image, PDF and document tools that run right in your browser. No sign-up, no watermarks.</p>
+      </div>
+      <div class="footer-col">
+        <h2>Image tools</h2>
+        <ul>
+          <li><a href="/?tab=compress">Image Compressor</a></li>
+          <li><a href="/?tab=edit">Photo Editor</a></li>
+          <li><a href="/?tab=bg">Background Remover</a></li>
+          <li><a href="/?tab=upscale">Image Upscaler</a></li>
+          <li><a href="/logo-generator">Logo Generator</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Document tools</h2>
+        <ul>
+          <li><a href="/pdf-tools?tab=img2pdf">Images to PDF</a></li>
+          <li><a href="/pdf-tools?tab=merge">Merge PDF</a></li>
+          <li><a href="/pdf-tools?tab=compress">Compress PDF</a></li>
+          <li><a href="/ai-ocr">AI OCR</a></li>
+          <li><a href="/barcode-tools.html">Barcode Generator</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Resources</h2>
+        <ul>
+          <li><a href="/blog">All guides</a></li>
+          <li><a href="/compress-images-for-whatsapp">Compress for WhatsApp</a></li>
+          <li><a href="/jpg-vs-png-vs-webp">JPG vs PNG vs WebP</a></li>
+          <li><a href="/passport-size-photo-at-home">Passport photos at home</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Company</h2>
+        <ul>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
     </div>
     <div class="footer-bottom">
-      <span>PIXNIVO</span>
-      <span class="dot">&bull;</span>
-      <span>Neural AI Document &amp; Image OCR</span>
-      <span class="dot">&bull;</span>
-      <span>&copy; 2026 PIXNIVO</span>
+      <span>&copy; <span data-year>2026</span> PIXNIVO. All rights reserved.</span>
+      <span>Privacy-first tools &middot; Most processing happens on your device.</span>
     </div>
   </footer>
 
-  <!-- Scripts -->
   <script>
-    /* Theme Toggle */
-    const themeToggle = document.getElementById('themeToggle');
-    if (themeToggle) {
-      themeToggle.addEventListener('click', () => {
-        const current = document.documentElement.getAttribute('data-theme') || 'dark';
-        const next = current === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        try { localStorage.setItem('pixnivo_theme', next); } catch(e) {}
+  (function () {
+    'use strict';
+
+    const P = window.Pixnivo;
+    const $ = id => document.getElementById(id);
+    const PDFJS_URL = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js';
+    const PDFJS_WORKER = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+    const TESSERACT_URL = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
+    const ENGINE_KEY = 'pixnivo_ocr_engine';
+    const MAX_BYTES = 50 * 1024 * 1024;
+    const LANG_NAMES = {
+      eng: 'English', spa: 'Spanish', fra: 'French', deu: 'German', por: 'Portuguese', ita: 'Italian',
+      rus: 'Russian', ara: 'Arabic', hin: 'Hindi', chi_sim: 'Chinese', jpn: 'Japanese', kor: 'Korean'
+    };
+
+    const canvas = $('ocrPreviewCanvas');
+    const ocrLang = $('ocrLang'), ocrEnhance = $('ocrEnhance'), ocrPages = $('ocrPages');
+    const btnOcr = $('btnOcr'), prog = $('progO'), resO = $('resO'), ocrOut = $('ocrOut');
+    const engineChips = [...document.querySelectorAll('[data-engine]')];
+
+    let file = null, isPdf = false, pdfDoc = null, page = 1, totalPages = 1, previewSource = null;
+    let running = false;
+    let engine = 'paddle';
+    try { engine = localStorage.getItem(ENGINE_KEY) || 'paddle'; } catch (e) { /* default */ }
+
+    /* ---------- Engine & language ---------- */
+    function syncEngineUi() {
+      engineChips.forEach(c => {
+        const on = c.dataset.engine === engine;
+        c.classList.toggle('active', on);
+        c.setAttribute('aria-pressed', String(on));
       });
-    }
-
-    const mobileToggle = document.getElementById('mobileToggle');
-    const navLinks = document.getElementById('navLinks');
-    if (mobileToggle && navLinks) {
-      mobileToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
-    }
-
-    /* OCR Logic */
-    (function() {
-      if (window.pdfjsLib) {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+      const lang = ocrLang.value;
+      let hint;
+      if (engine === 'paddle' && lang !== 'eng') {
+        hint = `The enhanced engine is tuned for English, so ${LANG_NAMES[lang]} text will be read with the private in-browser engine.`;
+      } else if (engine === 'paddle') {
+        hint = 'Highest accuracy. Your file is sent over HTTPS, processed in memory and deleted immediately.';
+      } else {
+        hint = 'Runs entirely in your browser — nothing is uploaded. The language model downloads once, then works offline.';
       }
+      $('engineHint').textContent = hint;
+    }
 
-      const dropO = document.getElementById('dropO');
-      const fileO = document.getElementById('fileO');
-      const dropOH3 = document.getElementById('dropOH3');
-      const ocrWorkspace = document.getElementById('ocrWorkspace');
-      const ocrPreviewImg = document.getElementById('ocrPreviewImg');
-      const ocrPreviewCanvas = document.getElementById('ocrPreviewCanvas');
-      const pdfPager = document.getElementById('pdfPager');
-      const pdfPrev = document.getElementById('pdfPrev');
-      const pdfNext = document.getElementById('pdfNext');
-      const pdfPageNum = document.getElementById('pdfPageNum');
-      const ocrEngine = document.getElementById('ocrEngine');
-      const ocrLang = document.getElementById('ocrLang');
-      const ocrEnhance = document.getElementById('ocrEnhance');
-      const progO = document.getElementById('progO');
-      const progTxtO = document.getElementById('progTxtO');
-      const progPctO = document.getElementById('progPctO');
-      const progBarO = document.getElementById('progBarO');
-      const btnOcr = document.getElementById('btnOcr');
-      const resO = document.getElementById('resO');
-      const ocrOut = document.getElementById('ocrOut');
-      const statWords = document.getElementById('statWords');
-      const statChars = document.getElementById('statChars');
-      const statLines = document.getElementById('statLines');
-      const btnCopyText = document.getElementById('btnCopyText');
-      const btnDownloadTxt = document.getElementById('btnDownloadTxt');
-      const btnDownloadDoc = document.getElementById('btnDownloadDoc');
-      const btnClearText = document.getElementById('btnClearText');
-      const searchInText = document.getElementById('searchInText');
-      const btnFindNext = document.getElementById('btnFindNext');
+    engineChips.forEach(c => c.addEventListener('click', () => {
+      engine = c.dataset.engine;
+      try { localStorage.setItem(ENGINE_KEY, engine); } catch (e) { /* ignore */ }
+      syncEngineUi();
+    }));
+    ocrLang.addEventListener('change', syncEngineUi);
+    syncEngineUi();
 
-      let currentFile = null;
-      let pdfDoc = null;
-      let currentPdfPage = 1;
-      let totalPdfPages = 1;
+    /* ---------- Progress ---------- */
+    function setProgress(pct, text) {
+      prog.classList.add('on');
+      $('progBarO').style.width = Math.max(0, Math.min(100, pct)) + '%';
+      $('progPctO').textContent = Math.round(pct) + '%';
+      if (text) $('progTxtO').textContent = text;
+    }
 
-      // Dropzone
-      dropO.addEventListener('click', (e) => {
-        if (e.target !== fileO) fileO.click();
-      });
-      dropO.addEventListener('dragover', e => { e.preventDefault(); dropO.style.borderColor = 'var(--primary)'; });
-      dropO.addEventListener('dragleave', () => dropO.style.borderColor = 'rgba(255,255,255,0.2)');
-      dropO.addEventListener('drop', e => {
-        e.preventDefault();
-        dropO.style.borderColor = 'rgba(255,255,255,0.2)';
-        if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
-      });
-      fileO.addEventListener('change', e => {
-        if (e.target.files.length) handleFile(e.target.files[0]);
-      });
+    function hideProgress() {
+      prog.classList.remove('on');
+      $('progBarO').style.width = '0%';
+    }
 
-      async function handleFile(file) {
-        currentFile = file;
-        dropOH3.textContent = file.name + ' (' + (file.size / 1024 / 1024).toFixed(2) + ' MB)';
-        ocrWorkspace.style.display = 'grid';
-        resO.style.display = 'none';
-        progO.style.display = 'none';
+    /* ---------- Loading files ---------- */
+    async function pdfJs() {
+      if (!window.pdfjsLib) {
+        await P.loadScript(PDFJS_URL);
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER;
+      }
+      return window.pdfjsLib;
+    }
 
-        const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+    function resetToDropzone() {
+      file = null; pdfDoc = null; previewSource = null;
+      $('dropO').hidden = false;
+      $('ocrWorkspace').classList.remove('active');
+    }
 
+    async function handleFile(f) {
+      if (running) { P.toast('Please wait for the current extraction to finish.', { type: 'info' }); return; }
+      if (f.size > MAX_BYTES) { P.toast(`"${f.name}" is larger than 50 MB. Please split or compress it first.`, { type: 'error' }); return; }
+      const pdf = f.type === 'application/pdf' || /\.pdf$/i.test(f.name);
+      const tiff = /image\/tiff/.test(f.type) || /\.tiff?$/i.test(f.name);
+      const image = (f.type && f.type.startsWith('image/')) || P.looksHeic(f) || tiff || /\.(jpe?g|png|webp|gif|bmp|avif)$/i.test(f.name);
+      if (!pdf && !image) { P.toast(`"${f.name}" isn't a supported file. Choose a PDF or an image.`, { type: 'error' }); return; }
+
+      if (pdfDoc) { pdfDoc.destroy(); pdfDoc = null; }
+      file = f; isPdf = pdf; previewSource = null; page = 1; totalPages = 1;
+      $('nameO').textContent = f.name;
+      $('metaO').textContent = P.formatBytes(f.size);
+      $('dropO').hidden = true;
+      $('ocrWorkspace').classList.add('active');
+      resO.hidden = true;
+      hideProgress();
+      $('noPreview').hidden = true;
+      canvas.hidden = false;
+      $('previewBusy').classList.add('active');
+
+      try {
         if (isPdf) {
-          pdfPager.style.display = 'flex';
-          ocrPreviewImg.style.display = 'none';
-          ocrPreviewCanvas.style.display = 'block';
+          const pdfjs = await pdfJs();
+          pdfDoc = await pdfjs.getDocument({ data: new Uint8Array(await f.arrayBuffer()) }).promise;
+          totalPages = pdfDoc.numPages;
+          $('metaO').textContent = `${totalPages} page${totalPages === 1 ? '' : 's'} · ${P.formatBytes(f.size)}`;
+          $('pdfPager').hidden = totalPages < 2;
+          $('pagesField').hidden = totalPages < 2;
+          await renderPreviewPage(1);
+        } else {
+          $('pdfPager').hidden = true;
+          $('pagesField').hidden = true;
           try {
-            const arr = new Uint8Array(await file.arrayBuffer());
-            pdfDoc = await pdfjsLib.getDocument({ data: arr }).promise;
-            totalPdfPages = pdfDoc.numPages;
-            currentPdfPage = 1;
-            renderPdfPage(currentPdfPage);
-          } catch(err) {
-            console.error('PDF load error:', err);
+            previewSource = await P.decodeImage(f, { maxDim: 3000 });
+            canvas.width = previewSource.width;
+            canvas.height = previewSource.height;
+            canvas.getContext('2d').drawImage(previewSource, 0, 0);
+            $('metaO').textContent = `${previewSource.width} × ${previewSource.height} · ${P.formatBytes(f.size)}`;
+          } catch (err) {
+            if (!tiff) throw err;
+            canvas.hidden = true;
+            $('noPreview').hidden = false;
           }
-        } else {
-          pdfPager.style.display = 'none';
-          ocrPreviewCanvas.style.display = 'none';
-          ocrPreviewImg.style.display = 'block';
-          ocrPreviewImg.src = URL.createObjectURL(file);
         }
+      } catch (err) {
+        console.error(err);
+        const msg = err && err.name === 'PasswordException'
+          ? 'This PDF is password-protected. Unlock it first, then try again.'
+          : (err && err.message) || 'Could not open this file.';
+        P.toast(msg, { type: 'error' });
+        resetToDropzone();
+      } finally {
+        $('previewBusy').classList.remove('active');
+      }
+    }
 
-        ocrWorkspace.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    async function renderPdfPage(n, maxWidth) {
+      const pg = await pdfDoc.getPage(n);
+      const base = pg.getViewport({ scale: 1 });
+      const scale = Math.min(3, maxWidth / base.width);
+      const vp = pg.getViewport({ scale });
+      const c = document.createElement('canvas');
+      c.width = Math.round(vp.width);
+      c.height = Math.round(vp.height);
+      const cx = c.getContext('2d');
+      cx.fillStyle = '#ffffff';
+      cx.fillRect(0, 0, c.width, c.height);
+      await pg.render({ canvasContext: cx, viewport: vp, intent: 'print' }).promise;
+      pg.cleanup();
+      return c;
+    }
+
+    async function renderPreviewPage(n) {
+      if (!pdfDoc) return;
+      page = n;
+      const c = await renderPdfPage(n, 1400);
+      canvas.width = c.width;
+      canvas.height = c.height;
+      canvas.getContext('2d').drawImage(c, 0, 0);
+      $('pdfPageNum').textContent = `Page ${n} of ${totalPages}`;
+      $('pdfPrev').disabled = n <= 1;
+      $('pdfNext').disabled = n >= totalPages;
+    }
+
+    $('pdfPrev').addEventListener('click', () => { if (page > 1) renderPreviewPage(page - 1); });
+    $('pdfNext').addEventListener('click', () => { if (page < totalPages) renderPreviewPage(page + 1); });
+
+    P.wireDropzone($('dropO'), $('fileO'), files => handleFile(files[0]));
+    $('replaceO').addEventListener('click', () => $('fileO').click());
+
+    document.addEventListener('paste', e => {
+      if (e.target.closest && e.target.closest('input, textarea')) return;
+      const item = [...((e.clipboardData && e.clipboardData.items) || [])].find(it => it.kind === 'file');
+      const f = item && item.getAsFile();
+      if (f) { e.preventDefault(); handleFile(new File([f], f.name && f.name !== 'image.png' ? f.name : 'pasted-screenshot.png', { type: f.type })); }
+    });
+
+    /* ---------- Image clean-up for the in-browser engine ---------- */
+    function preprocess(source, mode) {
+      const c = document.createElement('canvas');
+      c.width = source.width; c.height = source.height;
+      const cx = c.getContext('2d', { willReadFrequently: true });
+      cx.fillStyle = '#ffffff';
+      cx.fillRect(0, 0, c.width, c.height);
+      cx.drawImage(source, 0, 0);
+      if (mode === 'none') return c;
+
+      const id = cx.getImageData(0, 0, c.width, c.height);
+      const d = id.data;
+      const n = d.length / 4;
+      const gray = new Uint8ClampedArray(n);
+      const hist = new Uint32Array(256);
+      for (let i = 0; i < n; i++) {
+        const g = (0.299 * d[i * 4] + 0.587 * d[i * 4 + 1] + 0.114 * d[i * 4 + 2]) | 0;
+        gray[i] = g;
+        hist[g]++;
       }
 
-      async function renderPdfPage(pageNum) {
-        if (!pdfDoc) return;
-        const page = await pdfDoc.getPage(pageNum);
-        const viewport = page.getViewport({ scale: 1.2 });
-        ocrPreviewCanvas.width = viewport.width;
-        ocrPreviewCanvas.height = viewport.height;
-        await page.render({ canvasContext: ocrPreviewCanvas.getContext('2d'), viewport }).promise;
-        pdfPageNum.textContent = `Page ${pageNum} of ${totalPdfPages}`;
+      let map;
+      if (mode === 'binarize') {
+        // Otsu's threshold
+        let sum = 0;
+        for (let t = 0; t < 256; t++) sum += t * hist[t];
+        let sumB = 0, wB = 0, best = 0, threshold = 128;
+        for (let t = 0; t < 256; t++) {
+          wB += hist[t];
+          if (!wB) continue;
+          const wF = n - wB;
+          if (!wF) break;
+          sumB += t * hist[t];
+          const mB = sumB / wB, mF = (sum - sumB) / wF;
+          const between = wB * wF * (mB - mF) * (mB - mF);
+          if (between > best) { best = between; threshold = t; }
+        }
+        map = v => (v > threshold ? 255 : 0);
+      } else {
+        // Auto contrast: stretch the 1st–99th percentile to full range
+        const lowCount = n * 0.01, highCount = n * 0.99;
+        let acc = 0, lo = 0, hi = 255;
+        for (let t = 0; t < 256; t++) { acc += hist[t]; if (acc >= lowCount) { lo = t; break; } }
+        acc = 0;
+        for (let t = 0; t < 256; t++) { acc += hist[t]; if (acc >= highCount) { hi = t; break; } }
+        const range = Math.max(1, hi - lo);
+        map = v => ((v - lo) * 255) / range;
       }
 
-      pdfPrev.addEventListener('click', () => {
-        if (currentPdfPage > 1) {
-          currentPdfPage--;
-          renderPdfPage(currentPdfPage);
-        }
-      });
-      pdfNext.addEventListener('click', () => {
-        if (currentPdfPage < totalPdfPages) {
-          currentPdfPage++;
-          renderPdfPage(currentPdfPage);
-        }
-      });
+      for (let i = 0; i < n; i++) {
+        const v = map(gray[i]);
+        d[i * 4] = d[i * 4 + 1] = d[i * 4 + 2] = v;
+      }
+      cx.putImageData(id, 0, 0);
+      return c;
+    }
 
-      // Run OCR
-      btnOcr.addEventListener('click', async () => {
-        if (!currentFile) return;
-        btnOcr.disabled = true;
-        progO.style.display = 'block';
-        progBarO.style.width = '10%';
-        progPctO.textContent = '10%';
-        progTxtO.textContent = 'Initializing OCR engine...';
-        resO.style.display = 'none';
-        ocrOut.value = '';
+    /* ---------- Engines ---------- */
+    let worker = null, workerLang = null, onWorkerProgress = null;
 
+    async function getWorker(lang) {
+      if (!window.Tesseract) await P.loadScript(TESSERACT_URL);
+      if (worker && workerLang === lang) return worker;
+      if (worker) { await worker.terminate(); worker = null; }
+      worker = await window.Tesseract.createWorker(lang, 1, {
+        logger: m => { if (onWorkerProgress) onWorkerProgress(m); }
+      });
+      workerLang = lang;
+      return worker;
+    }
+
+    async function runTesseract() {
+      const lang = ocrLang.value;
+      const mode = ocrEnhance.value;
+      setProgress(3, `Loading ${LANG_NAMES[lang]} language model…`);
+      onWorkerProgress = m => {
+        if (m.status && m.status.indexOf('loading') === 0 && m.progress) setProgress(3 + m.progress * 7, `Loading ${LANG_NAMES[lang]} language model…`);
+      };
+      const w = await getWorker(lang);
+
+      const pages = isPdf ? (ocrPages.value === 'current' ? [page] : Array.from({ length: totalPages }, (_, i) => i + 1)) : [null];
+      const out = [];
+      for (let i = 0; i < pages.length; i++) {
+        const label = pages.length > 1 ? `Reading page ${pages[i]} of ${totalPages}` : 'Recognizing text';
+        const base = 10 + (i / pages.length) * 88;
+        const span = 88 / pages.length;
+        setProgress(base, label + '…');
+        onWorkerProgress = m => {
+          if (m.status === 'recognizing text') setProgress(base + m.progress * span, `${label} (${Math.round(m.progress * 100)}%)…`);
+        };
+        let source;
+        if (isPdf) source = preprocess(await renderPdfPage(pages[i], 2400), mode);
+        else if (previewSource) source = preprocess(previewSource, mode);
+        else source = file;
+        const ret = await w.recognize(source);
+        const text = (ret.data.text || '').trim();
+        out.push(pages.length > 1 ? `--- Page ${pages[i]} ---\n${text}` : text);
+      }
+      onWorkerProgress = null;
+      return out.join('\n\n');
+    }
+
+    async function runServer() {
+      setProgress(15, 'Uploading securely…');
+      let upload = file;
+      if (isPdf && ocrPages.value === 'current' && totalPages > 1) {
+        const c = await renderPdfPage(page, 2400);
+        upload = new File([await P.canvasToBlob(c, 'image/png')], `${P.baseName(file.name)}-page-${page}.png`, { type: 'image/png' });
+      }
+      const form = new FormData();
+      form.append('file', upload);
+      form.append('enhance', ocrEnhance.value);
+
+      let res;
+      const ticker = setInterval(() => {
+        const cur = parseFloat($('progBarO').style.width) || 15;
+        if (cur < 90) setProgress(cur + (90 - cur) * 0.08, 'Recognizing text on the server…');
+      }, 600);
+      try {
         try {
-          if (ocrEngine.value === 'paddle') {
-            progTxtO.textContent = 'Connecting to Neural PaddleOCR engine...';
-            progBarO.style.width = '40%';
-            progPctO.textContent = '40%';
-
-            const formData = new FormData();
-            formData.append('file', currentFile);
-            formData.append('enhance', ocrEnhance.value);
-
-            let res = null;
-            try {
-              res = await fetch('/api/ocr', { method: 'POST', body: formData });
-            } catch(fetchErr) {
-              console.warn('Local proxy failed, trying https://admin.pixnivo.app/api/ocr', fetchErr);
-              res = await fetch('https://admin.pixnivo.app/api/ocr', { method: 'POST', body: formData });
-            }
-
-            if (!res || !res.ok) {
-              const err = await res.json().catch(() => ({}));
-              throw new Error(err.detail || 'PaddleOCR service error. Falling back to in-browser engine.');
-            }
-
-            progBarO.style.width = '90%';
-            progPctO.textContent = '90%';
-            progTxtO.textContent = 'Parsing extracted characters...';
-
-            const data = await res.json();
-            displayResult(data.text || 'No text detected.');
-
-          } else {
-            // Tesseract Client-side
-            progTxtO.textContent = 'Loading Tesseract.js language models...';
-            progBarO.style.width = '25%';
-
-            let imgSource = currentFile;
-            if (currentFile.type === 'application/pdf' || currentFile.name.toLowerCase().endsWith('.pdf')) {
-              // Use rendered canvas
-              imgSource = ocrPreviewCanvas;
-            }
-
-            const worker = await Tesseract.createWorker(ocrLang.value, 1, {
-              logger: m => {
-                if (m.status === 'recognizing text') {
-                  const pct = Math.round(m.progress * 100);
-                  progBarO.style.width = (25 + Math.round(pct * 0.7)) + '%';
-                  progPctO.textContent = pct + '%';
-                  progTxtO.textContent = `Recognizing text (${pct}%)...`;
-                }
-              }
-            });
-
-            const ret = await worker.recognize(imgSource);
-            await worker.terminate();
-            displayResult(ret.data.text || 'No text detected.');
-          }
-
-          progBarO.style.width = '100%';
-          progPctO.textContent = '100%';
-          progTxtO.textContent = 'Extraction complete!';
-        } catch(err) {
-          console.error(err);
-          // Fallback to Tesseract if Paddle failed
-          if (ocrEngine.value === 'paddle') {
-            progTxtO.textContent = 'Switching to in-browser engine fallback...';
-            try {
-              const worker = await Tesseract.createWorker(ocrLang.value, 1, {
-                logger: m => {
-                  if (m.status === 'recognizing text') {
-                    const pct = Math.round(m.progress * 100);
-                    progBarO.style.width = pct + '%';
-                    progPctO.textContent = pct + '%';
-                  }
-                }
-              });
-              let source = (currentFile.type === 'application/pdf' || currentFile.name.toLowerCase().endsWith('.pdf')) ? ocrPreviewCanvas : currentFile;
-              const ret = await worker.recognize(source);
-              await worker.terminate();
-              displayResult(ret.data.text || 'No text detected.');
-              progTxtO.textContent = 'Complete (via in-browser engine)!';
-            } catch(fbErr) {
-              alert('OCR Failed: ' + (err.message || 'Unknown error'));
-            }
-          } else {
-            alert('OCR Failed: ' + (err.message || 'Unknown error'));
-          }
-        } finally {
-          btnOcr.disabled = false;
+          res = await fetch('/api/ocr', { method: 'POST', body: form });
+        } catch (networkErr) {
+          res = await fetch('https://admin.pixnivo.app/api/ocr', { method: 'POST', body: form });
         }
-      });
-
-      function displayResult(text) {
-        ocrOut.value = text;
-        resO.style.display = 'block';
-        updateStats();
-        resO.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } finally {
+        clearInterval(ticker);
       }
-
-      function updateStats() {
-        const text = ocrOut.value.trim();
-        statChars.textContent = text.length;
-        statWords.textContent = text ? text.split(/\s+/).length : 0;
-        statLines.textContent = text ? text.split('\n').length : 0;
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || `Server responded with ${res.status}`);
       }
-      ocrOut.addEventListener('input', updateStats);
+      setProgress(95, 'Formatting text…');
+      const data = await res.json();
+      return (data.text || '').replace(/\n--- Page Break ---\n\n/g, '\n\n').trim();
+    }
 
-      // Copy Text
-      btnCopyText.addEventListener('click', async () => {
-        if (!ocrOut.value) return;
+    /* ---------- Run ---------- */
+    btnOcr.addEventListener('click', async () => {
+      if (!file || running) return;
+      running = true;
+      P.setLoading(btnOcr, true);
+      $('replaceO').disabled = true;
+      resO.hidden = true;
+      let used = engine === 'paddle' && ocrLang.value === 'eng' ? 'paddle' : 'tesseract';
+      let text = null;
+      try {
+        try {
+          text = used === 'paddle' ? await runServer() : await runTesseract();
+        } catch (err) {
+          if (used !== 'paddle') throw err;
+          console.warn('Enhanced OCR unavailable, using the in-browser engine:', err);
+          P.toast('The enhanced engine is unavailable right now, so the private in-browser engine was used instead.', { type: 'warning', duration: 6000 });
+          used = 'tesseract';
+          text = await runTesseract();
+        }
+        setProgress(100, 'Done');
+        displayResult(text, used);
+      } catch (err) {
+        console.error(err);
+        P.toast('Text extraction failed. ' + (err.message || 'Please try again.'), { type: 'error' });
+      } finally {
+        running = false;
+        P.setLoading(btnOcr, false);
+        $('replaceO').disabled = false;
+        setTimeout(hideProgress, 800);
+      }
+    });
+
+    /* ---------- Results ---------- */
+    function updateStats() {
+      const t = ocrOut.value.trim();
+      $('statChars').textContent = t.length.toLocaleString();
+      $('statWords').textContent = (t ? t.split(/\s+/).length : 0).toLocaleString();
+      $('statLines').textContent = (t ? t.split('\n').filter(l => l.trim()).length : 0).toLocaleString();
+    }
+
+    function displayResult(text, used) {
+      ocrOut.value = text || '';
+      $('statEngine').textContent = used === 'paddle' ? 'Enhanced engine' : 'Private engine';
+      $('statEngine').className = 'badge ' + (used === 'paddle' ? 'badge-info' : 'badge-success');
+      resO.hidden = false;
+      updateStats();
+      if (!text) {
+        ocrOut.placeholder = 'No text was found. Try "Black & white" clean-up, a sharper photo, or the other engine.';
+        P.toast('No text was detected in this file.', { type: 'warning' });
+      } else {
+        P.toast(`Extracted ${$('statWords').textContent} words.`, { type: 'success' });
+      }
+      resO.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    ocrOut.addEventListener('input', updateStats);
+    const outName = ext => `${file ? P.baseName(file.name) : 'extracted'}-text.${ext}`;
+
+    $('btnCopyText').addEventListener('click', async () => {
+      if (!ocrOut.value) return;
+      try {
         await navigator.clipboard.writeText(ocrOut.value);
-        const orig = btnCopyText.innerHTML;
-        btnCopyText.innerHTML = '✓ Copied!';
-        setTimeout(() => btnCopyText.innerHTML = orig, 2000);
-      });
-
-      // Download .txt
-      btnDownloadTxt.addEventListener('click', () => {
-        if (!ocrOut.value) return;
-        const blob = new Blob([ocrOut.value], { type: 'text/plain;charset=utf-8' });
-        downloadBlob(blob, (currentFile ? currentFile.name.replace(/\.[^.]+$/, '') : 'extracted-text') + '-ocr.txt');
-      });
-
-      // Download Word .doc
-      btnDownloadDoc.addEventListener('click', () => {
-        if (!ocrOut.value) return;
-        const html = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body>${ocrOut.value.split('\n').map(p => `<p>${p}</p>`).join('')}</body></html>`;
-        const blob = new Blob([html], { type: 'application/msword;charset=utf-8' });
-        downloadBlob(blob, (currentFile ? currentFile.name.replace(/\.[^.]+$/, '') : 'extracted-document') + '-ocr.doc');
-      });
-
-      // Clear
-      btnClearText.addEventListener('click', () => {
-        if (confirm('Clear extracted text?')) {
-          ocrOut.value = '';
-          updateStats();
-        }
-      });
-
-      // Search in text
-      btnFindNext.addEventListener('click', () => {
-        const query = searchInText.value.trim();
-        if (!query) return;
-        const text = ocrOut.value;
-        const idx = text.toLowerCase().indexOf(query.toLowerCase(), ocrOut.selectionEnd);
-        if (idx !== -1) {
-          ocrOut.focus();
-          ocrOut.setSelectionRange(idx, idx + query.length);
-        } else {
-          const wrapIdx = text.toLowerCase().indexOf(query.toLowerCase(), 0);
-          if (wrapIdx !== -1) {
-            ocrOut.focus();
-            ocrOut.setSelectionRange(wrapIdx, wrapIdx + query.length);
-          } else {
-            alert('Search phrase not found in extracted text.');
-          }
-        }
-      });
-
-      function downloadBlob(blob, filename) {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        setTimeout(() => URL.revokeObjectURL(url), 3000);
+      } catch (e) {
+        ocrOut.select();
+        document.execCommand('copy');
       }
-    })();
+      const label = $('btnCopyText').querySelector('span');
+      label.textContent = 'Copied';
+      setTimeout(() => { label.textContent = 'Copy'; }, 1800);
+      P.toast('Text copied to clipboard.', { type: 'success', duration: 2500 });
+    });
+
+    $('btnDownloadTxt').addEventListener('click', () => {
+      if (!ocrOut.value) return;
+      P.downloadBlob(new Blob([ocrOut.value], { type: 'text/plain;charset=utf-8' }), outName('txt'));
+    });
+
+    const escapeHtml = s => s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    $('btnDownloadDoc').addEventListener('click', () => {
+      if (!ocrOut.value) return;
+      const body = ocrOut.value.split('\n').map(line => `<p>${escapeHtml(line) || '&nbsp;'}</p>`).join('');
+      const html = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">'
+        + '<head><meta charset="utf-8"><title>Extracted text</title><style>body{font-family:Calibri,Arial,sans-serif;font-size:11pt}p{margin:0 0 4pt}</style></head>'
+        + `<body>${body}</body></html>`;
+      P.downloadBlob(new Blob(['﻿', html], { type: 'application/msword' }), outName('doc'));
+    });
+
+    $('btnClearText').addEventListener('click', () => {
+      if (!ocrOut.value) return;
+      const previous = ocrOut.value;
+      ocrOut.value = '';
+      updateStats();
+      P.toast('Text cleared.', { type: 'info', duration: 6000, action: { label: 'Undo', onClick: () => { ocrOut.value = previous; updateStats(); } } });
+    });
+
+    let lastQuery = '';
+    $('searchForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const q = $('searchInText').value.trim().toLowerCase();
+      const status = $('searchStatus');
+      if (!q) { status.textContent = ''; return; }
+      const hay = ocrOut.value.toLowerCase();
+      const positions = [];
+      for (let i = hay.indexOf(q); i !== -1; i = hay.indexOf(q, i + 1)) positions.push(i);
+      if (!positions.length) { status.textContent = 'No matches'; return; }
+      const from = q === lastQuery ? ocrOut.selectionEnd : 0;
+      let idx = positions.findIndex(p => p >= from);
+      if (idx === -1) idx = 0;
+      lastQuery = q;
+      ocrOut.focus();
+      ocrOut.setSelectionRange(positions[idx], positions[idx] + q.length);
+      const lineHeight = parseFloat(getComputedStyle(ocrOut).lineHeight) || 20;
+      ocrOut.scrollTop = Math.max(0, (ocrOut.value.slice(0, positions[idx]).split('\n').length - 3) * lineHeight);
+      status.textContent = `${idx + 1} of ${positions.length}`;
+    });
+  })();
   </script>
 </body>
 </html>

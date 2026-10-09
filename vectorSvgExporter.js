@@ -8,7 +8,7 @@
  * plus high-resolution PNG exports (1x, 2x, 4x) and favicon packages.
  */
 
-import { DEFAULT_COMPOSITION_STATE } from './canvasStudioEngine.js';
+import { DEFAULT_COMPOSITION_STATE } from './canvasStudioEngine.js?v=20261010';
 
 /**
  * Escapes XML special characters.
@@ -88,6 +88,14 @@ function generateBadgeFrameSVG(shape, width, height, strokeWidth = 6, strokeColo
  * @param {Object} [options={}]
  * @returns {string} Complete W3C SVG XML document string
  */
+function backgroundSvg(background, width, height) {
+  if (background === 'white') return `<rect width="${width}" height="${height}" fill="#ffffff" />`;
+  if (background === 'gradient') {
+    return `<defs><linearGradient id="bg-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1e1b4b" /><stop offset="0.5" stop-color="#311042" /><stop offset="1" stop-color="#0a0814" /></linearGradient></defs><rect width="${width}" height="${height}" fill="url(#bg-grad)" />`;
+  }
+  return `<rect width="${width}" height="${height}" fill="#0a0814" />`;
+}
+
 export function generateCompositionSVG(compositionState, logoDataUrl, options = {}) {
   const state = { ...DEFAULT_COMPOSITION_STATE, ...compositionState };
   const width = options.width || 1024;
@@ -208,7 +216,7 @@ export function generateCompositionSVG(compositionState, logoDataUrl, options = 
     </filter>
   </defs>
 
-  ${!transparentBackground ? `<rect width="${width}" height="${height}" fill="#0a0814" />` : ''}
+  ${!transparentBackground ? backgroundSvg(options.background, width, height) : ''}
 
   ${frameSvg}
 
