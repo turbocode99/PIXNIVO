@@ -1,6 +1,15 @@
+import os
+import secrets
+import tempfile
+
 from fastapi.testclient import TestClient
 import main
-import sys
+
+# Throwaway admin account so the test never needs (or touches) the real credentials
+TEST_PASSWORD = "Test-" + secrets.token_hex(8)
+main.AUTH_FILE = os.path.join(tempfile.mkdtemp(), "auth.json")
+_salt, _hash = main.hash_password_pbkdf2(TEST_PASSWORD)
+main.save_auth_credentials({"username": "admin@pixnivo.app", "salt": _salt, "hash": _hash})
 
 client = TestClient(main.app)
 
@@ -18,7 +27,7 @@ def test_auth_failure_and_success():
     print(f"PASS: Bad credentials rejected: {bad_res.json()['detail']}")
 
     # Test valid credentials
-    good_res = client.post("/api/auth/login", json={"username": "admin@pixnivo.app", "password": "PixnivoSecure#2026!"})
+    good_res = client.post("/api/auth/login", json={"username": "admin@pixnivo.app", "password": TEST_PASSWORD})
     assert good_res.status_code == 200, f"Expected 200, got {good_res.status_code}"
     data = good_res.json()
     assert "token" in data, "Token missing in login response"

@@ -306,41 +306,69 @@ os.makedirs(UPLOADS_DIR, exist_ok=True)
 if os.path.exists(UPLOADS_DIR):
     app.mount("/assets/uploads", StaticFiles(directory=UPLOADS_DIR), name="uploads")
 
-# Security settings
-SECRET_KEY = os.environ.get("ADMIN_SECRET_KEY", "pixnivo_super_secret_jwt_hmac_key_2026_x7a8b9")
+# Security settings. No credentials live in the source code: the session signing key
+# comes from ADMIN_SECRET_KEY (or a random key generated once and kept in data/), and
+# the admin account is created from ADMIN_PASSWORD the first time the server starts.
+SECRET_KEY_FILE = os.path.join(DATA_DIR, "secret.key")
 DEFAULT_USERNAME = os.environ.get("ADMIN_USERNAME", "admin@pixnivo.app")
-DEFAULT_SALT = "7069786e69766f5f7365635f32303236"
-DEFAULT_HASH = "c450b48ffcb2ae6f8ee1e81e43ff37bf5d81787d0f797b9711cb0515f972503f"  # PixnivoSecure#2026!
+
+def write_private_file(path: str, text: str):
+    """Write a file readable only by the server's own user."""
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    with os.fdopen(fd, "w", encoding="utf-8") as f:
+        f.write(text)
+
+def load_secret_key() -> str:
+    key = os.environ.get("ADMIN_SECRET_KEY")
+    if key:
+        return key
+    if os.path.exists(SECRET_KEY_FILE):
+        with open(SECRET_KEY_FILE, "r", encoding="utf-8") as f:
+            key = f.read().strip()
+        if key:
+            return key
+    key = secrets.token_hex(32)
+    write_private_file(SECRET_KEY_FILE, key)
+    return key
+
+SECRET_KEY = load_secret_key()
 
 # Brute force protection tracker: key -> {"count": int, "locked_until": float}
 FAILED_ATTEMPTS: Dict[str, Dict[str, Any]] = {}
 MAX_LOGIN_ATTEMPTS = 5
 LOCKOUT_SECONDS = 300  # 5 minutes
 
-def get_auth_credentials() -> Dict[str, str]:
-    """Retrieve stored admin credentials or create default if not present."""
+def get_auth_credentials() -> Optional[Dict[str, str]]:
+    """Stored admin credentials, created from ADMIN_PASSWORD on first start.
+    Returns None (admin login disabled) when no account has been set up."""
     if os.path.exists(AUTH_FILE):
         try:
             with open(AUTH_FILE, "r", encoding="utf-8") as f:
                 return json.load(f)
-        except Exception:
-            pass
+        except Exception as e:
+            print(f"Error reading admin credentials: {e}")
+            return None
+    password = os.environ.get("ADMIN_PASSWORD")
+    if not password:
+        return None
+    salt, pwd_hash = hash_password_pbkdf2(password)
     creds = {
         "username": DEFAULT_USERNAME,
-        "salt": DEFAULT_SALT,
-        "hash": DEFAULT_HASH,
+        "salt": salt,
+        "hash": pwd_hash,
         "updatedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     }
-    try:
-        with open(AUTH_FILE, "w", encoding="utf-8") as f:
-            json.dump(creds, f, indent=2)
-    except Exception:
-        pass
+    save_auth_credentials(creds)
+    return creds
+
+def require_auth_credentials() -> Dict[str, str]:
+    creds = get_auth_credentials()
+    if not creds:
+        raise HTTPException(status_code=503, detail="Admin account is not set up on this server.")
     return creds
 
 def save_auth_credentials(creds: Dict[str, str]):
-    with open(AUTH_FILE, "w", encoding="utf-8") as f:
-        json.dump(creds, f, indent=2)
+    write_private_file(AUTH_FILE, json.dumps(creds, indent=2))
 
 def hash_password_pbkdf2(password: str, salt: bytes = None) -> (str, str):
     if salt is None:
@@ -502,7 +530,7 @@ async def admin_login(req: AdminLoginRequest, request: Request):
             detail=f"Too many failed login attempts. Account temporarily locked. Try again in {remaining_lockout} seconds."
         )
 
-    creds = get_auth_credentials()
+    creds = require_auth_credentials()
     clean_user = req.username.strip().lower()
     expected_user = creds.get("username", "").strip().lower()
     
@@ -551,7 +579,7 @@ async def admin_logout():
 
 @app.post("/api/auth/change-password")
 async def admin_change_password(req: PasswordChangeRequest, admin: Dict[str, Any] = Depends(get_current_admin)):
-    creds = get_auth_credentials()
+    creds = require_auth_credentials()
     if not verify_password_pbkdf2(req.current_password, creds["salt"], creds["hash"]):
         raise HTTPException(status_code=400, detail="Current password incorrect")
 
