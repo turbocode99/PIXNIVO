@@ -295,7 +295,8 @@ async def export_barcodes(req: ExportRequest):
 BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(BACKEND_DIR)
 DATA_DIR = os.path.join(BACKEND_DIR, "data")
-AUTH_FILE = os.path.join(DATA_DIR, "auth.json")
+# Admin credentials (PBKDF2 hash + salt). Never commit this file; see backend/README.md.
+AUTH_FILE = os.environ.get("ADMIN_AUTH_FILE") or os.path.join(DATA_DIR, "auth.json")
 BLOGS_FILE = os.path.join(DATA_DIR, "blogs.json")
 UPLOADS_DIR = os.path.join(PROJECT_ROOT, "assets", "uploads")
 
@@ -307,9 +308,19 @@ if os.path.exists(UPLOADS_DIR):
     app.mount("/assets/uploads", StaticFiles(directory=UPLOADS_DIR), name="uploads")
 
 # Security settings. No credentials live in the source code: the session signing key
-# comes from ADMIN_SECRET_KEY (or a random key generated once and kept in data/), and
-# the admin account is created from ADMIN_PASSWORD the first time the server starts.
-SECRET_KEY_FILE = os.path.join(DATA_DIR, "secret.key")
+# must come from ADMIN_SECRET_KEY (/etc/pixnivo/backend.env on the server), and the
+# admin account is created from ADMIN_PASSWORD the first time the server starts.
+# There is deliberately no fallback key: if ADMIN_SECRET_KEY is missing or too short,
+# every /api/auth/* and /api/admin/* endpoint answers 503, while the public OCR,
+# barcode and blog endpoints keep working.
+MIN_SECRET_KEY_LENGTH = 32
+SECRET_KEY = os.environ.get("ADMIN_SECRET_KEY", "").strip()
+if len(SECRET_KEY) < MIN_SECRET_KEY_LENGTH:
+    _reason = "is not set" if not SECRET_KEY else f"is shorter than {MIN_SECRET_KEY_LENGTH} characters"
+    print(f"[SECURITY] ADMIN_SECRET_KEY {_reason}: admin login and all /api/auth/* and /api/admin/* "
+          "endpoints are DISABLED. Set it in /etc/pixnivo/backend.env and restart pixnivo-ocr.", flush=True)
+    SECRET_KEY = ""
+ADMIN_AUTH_ENABLED = bool(SECRET_KEY)
 DEFAULT_USERNAME = os.environ.get("ADMIN_USERNAME", "admin@pixnivo.app")
 
 def write_private_file(path: str, text: str):
@@ -317,40 +328,45 @@ def write_private_file(path: str, text: str):
     fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
     with os.fdopen(fd, "w", encoding="utf-8") as f:
         f.write(text)
-
-def load_secret_key() -> str:
-    key = os.environ.get("ADMIN_SECRET_KEY")
-    if key:
-        return key
-    if os.path.exists(SECRET_KEY_FILE):
-        with open(SECRET_KEY_FILE, "r", encoding="utf-8") as f:
-            key = f.read().strip()
-        if key:
-            return key
-    key = secrets.token_hex(32)
-    write_private_file(SECRET_KEY_FILE, key)
-    return key
-
-SECRET_KEY = load_secret_key()
+    os.chmod(path, 0o600)
 
 # Brute force protection tracker: key -> {"count": int, "locked_until": float}
 FAILED_ATTEMPTS: Dict[str, Dict[str, Any]] = {}
 MAX_LOGIN_ATTEMPTS = 5
 LOCKOUT_SECONDS = 300  # 5 minutes
 
+def password_policy_error(password: str) -> Optional[str]:
+    """Return why a password is too weak for the admin account, or None if it is acceptable."""
+    if len(password) < 10:
+        return "Password must be at least 10 characters long"
+    if not (re.search(r"[A-Z]", password) and re.search(r"[a-z]", password) and re.search(r"[0-9]", password)):
+        return "Password must contain uppercase, lowercase, and numeric characters"
+    return None
+
 def get_auth_credentials() -> Optional[Dict[str, str]]:
     """Stored admin credentials, created from ADMIN_PASSWORD on first start.
-    Returns None (admin login disabled) when no account has been set up."""
+    Returns None (admin login disabled) when no usable account exists."""
     if os.path.exists(AUTH_FILE):
         try:
             with open(AUTH_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception as e:
-            print(f"Error reading admin credentials: {e}")
-            return None
-    password = os.environ.get("ADMIN_PASSWORD")
-    if not password:
+                creds = json.load(f)
+            if creds.get("username") and creds.get("salt") and creds.get("hash"):
+                return creds
+        except Exception:
+            pass
+        print(f"[SECURITY] Admin credentials file {AUTH_FILE} is unreadable or incomplete: admin login is disabled.", flush=True)
         return None
+
+    password = os.environ.get("ADMIN_PASSWORD", "")
+    if not password:
+        print(f"[SECURITY] No admin credentials at {AUTH_FILE} and ADMIN_PASSWORD is not set: "
+              "admin login is disabled. See backend/README.md for first-run setup.", flush=True)
+        return None
+    policy_error = password_policy_error(password)
+    if policy_error:
+        print(f"[SECURITY] ADMIN_PASSWORD rejected ({policy_error}): admin login is disabled.", flush=True)
+        return None
+
     salt, pwd_hash = hash_password_pbkdf2(password)
     creds = {
         "username": DEFAULT_USERNAME,
@@ -358,7 +374,13 @@ def get_auth_credentials() -> Optional[Dict[str, str]]:
         "hash": pwd_hash,
         "updatedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     }
-    save_auth_credentials(creds)
+    try:
+        save_auth_credentials(creds)
+    except Exception as e:
+        print(f"[SECURITY] Could not write admin credentials to {AUTH_FILE} ({e}): admin login is disabled.", flush=True)
+        return None
+    print(f"[SECURITY] Created admin account {DEFAULT_USERNAME} in {AUTH_FILE} from ADMIN_PASSWORD. "
+          "Remove ADMIN_PASSWORD from /etc/pixnivo/backend.env now.", flush=True)
     return creds
 
 def require_auth_credentials() -> Dict[str, str]:
@@ -387,6 +409,8 @@ def verify_password_pbkdf2(password: str, salt_hex: str, hash_hex: str) -> bool:
 
 def generate_session_token(username: str, role: str = "super_admin", expires_in_seconds: int = 86400) -> str:
     """Generate tamper-proof HMAC-SHA256 session token."""
+    if not SECRET_KEY:
+        raise RuntimeError("ADMIN_SECRET_KEY is not configured; refusing to issue admin session tokens")
     header = base64.urlsafe_b64encode(json.dumps({"alg": "HS256", "typ": "JWT"}).encode()).decode().rstrip("=")
     now = int(time.time())
     payload_data = {
@@ -403,6 +427,8 @@ def generate_session_token(username: str, role: str = "super_admin", expires_in_
 
 def verify_session_token(token: str) -> Optional[Dict[str, Any]]:
     """Verify session token and check expiration."""
+    if not SECRET_KEY:
+        return None
     try:
         parts = token.split(".")
         if len(parts) != 3:
@@ -452,8 +478,14 @@ def record_failed_attempt(key: str) -> (int, Optional[int]):
 def reset_failed_attempts(key: str):
     FAILED_ATTEMPTS.pop(key, None)
 
+def require_admin_auth_enabled():
+    """Reject admin/auth requests while ADMIN_SECRET_KEY is not configured."""
+    if not ADMIN_AUTH_ENABLED:
+        raise HTTPException(status_code=503, detail="Admin authentication is not configured on this server")
+
 def get_current_admin(authorization: Optional[str] = Header(None)) -> Dict[str, Any]:
     """Dependency to validate admin token from Authorization header."""
+    require_admin_auth_enabled()
     if not authorization or not authorization.startswith("Bearer "):
         raise HTTPException(status_code=401, detail="Authentication required: Bearer token missing")
     token = authorization.split(" ", 1)[1].strip()
@@ -461,6 +493,10 @@ def get_current_admin(authorization: Optional[str] = Header(None)) -> Dict[str, 
     if not payload:
         raise HTTPException(status_code=401, detail="Invalid or expired session token")
     return payload
+
+# Create the admin account on first run (or log why admin login is unavailable) at startup.
+if ADMIN_AUTH_ENABLED:
+    get_auth_credentials()
 
 # Pydantic Schemas
 class AdminLoginRequest(BaseModel):
@@ -519,6 +555,7 @@ def write_blogs(blogs: List[Dict[str, Any]]) -> bool:
 
 @app.post("/api/auth/login")
 async def admin_login(req: AdminLoginRequest, request: Request):
+    require_admin_auth_enabled()
     forwarded = request.headers.get("X-Forwarded-For")
     client_ip = forwarded.split(",")[0].strip() if forwarded else (request.headers.get("X-Real-IP") or (request.client.host if request.client else "unknown"))
     lockout_key = f"{client_ip}:{req.username.strip().lower()}"
@@ -583,12 +620,10 @@ async def admin_change_password(req: PasswordChangeRequest, admin: Dict[str, Any
     if not verify_password_pbkdf2(req.current_password, creds["salt"], creds["hash"]):
         raise HTTPException(status_code=400, detail="Current password incorrect")
 
-    if len(req.new_password) < 10:
-        raise HTTPException(status_code=400, detail="New password must be at least 10 characters long")
-    
     # Enforce strong password complexity
-    if not (re.search(r"[A-Z]", req.new_password) and re.search(r"[a-z]", req.new_password) and re.search(r"[0-9]", req.new_password)):
-        raise HTTPException(status_code=400, detail="Password must contain uppercase, lowercase, and numeric characters")
+    policy_error = password_policy_error(req.new_password)
+    if policy_error:
+        raise HTTPException(status_code=400, detail=policy_error)
 
     new_salt, new_hash = hash_password_pbkdf2(req.new_password)
     creds["salt"] = new_salt

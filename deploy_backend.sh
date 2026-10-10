@@ -1,3 +1,10 @@
+# Backend secrets (ADMIN_SECRET_KEY, ...) live only in /etc/pixnivo/backend.env on the
+# server (root-owned, mode 600), never in this repo. See backend/README.md.
+if ! sudo test -f /etc/pixnivo/backend.env; then
+    echo "ERROR: /etc/pixnivo/backend.env is missing. Create it (root, mode 600) as described in backend/README.md, then re-run." >&2
+    exit 1
+fi
+
 cd /var/www/html
 sudo git pull origin main
 
@@ -28,6 +35,7 @@ After=network.target
 [Service]
 User=root
 WorkingDirectory=/opt/pixnivo-backend
+EnvironmentFile=/etc/pixnivo/backend.env
 ExecStart=/opt/pixnivo-backend/venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000
 Restart=always
 
