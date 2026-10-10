@@ -9,3 +9,12 @@ scratch_test/
 live_*.png
 test_*.png
 test_*.txt
+
+# The repo root is the public web root: keep one-off scripts and screenshots out of it.
+# Operational scripts go in scripts/, tests in tests/ (both blocked by the nginx snippet).
+/*.sh
+/*.py
+/fix_*
+/check_*
+/test_*
+/screenshot_*
