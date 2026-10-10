@@ -208,16 +208,6 @@
         } catch (e) { /* ignore */ }
       }
 
-      if (!article) {
-        try {
-          const res = await fetch('/backend/data/blogs.json');
-          if (res.ok) {
-            const list = await res.json();
-            article = list.find(a => a.slug === slug && a.status === 'published');
-          }
-        } catch (e) { /* ignore */ }
-      }
-
       if (!article) return showError('This article doesn’t exist or is no longer published.');
       render(article);
     }
