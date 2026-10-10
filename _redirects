@@ -1,4 +1,4 @@
-# Never serve repo internals (must stay first; nginx equivalent: scripts/nginx/pixnivo-private-paths.conf)
+# Never serve repo internals (must stay first; nginx equivalent: scripts/nginx/private-paths.conf)
 /scripts/*                             /404.html                                404!
 /tests/*                               /404.html                                404!
 /backend/*                             /404.html                                404!
