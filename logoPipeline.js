@@ -10,9 +10,9 @@
  * 4. Transparent PNG delivery & canvas injection
  */
 
-import { removeBackground } from './backgroundRemover.js';
-import { injectOntoCanvas } from './canvasInjector.js';
-import { LOGO_THEMES, buildAIPrompt } from './themeDictionary.js';
+import { removeBackground } from './backgroundRemover.js?v=20261010';
+import { injectOntoCanvas } from './canvasInjector.js?v=20261010';
+import { LOGO_THEMES, buildAIPrompt } from './themeDictionary.js?v=20261010';
 
 /**
  * Default configuration for AgentRouter API.

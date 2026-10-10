@@ -7,7 +7,7 @@
  * artboards with high-DPI awareness, aspect ratio retention, and layout modes.
  */
 
-import { loadImage } from './backgroundRemover.js';
+import { loadImage } from './backgroundRemover.js?v=20261010';
 
 /**
  * Calculates optimal scale and centered coordinates to draw an asset onto a canvas.
@@ -83,7 +83,7 @@ export function calculateCanvasPlacement(canvasWidth, canvasHeight, imgWidth, im
 /**
  * Draws a subtle checkered transparency grid onto a 2D canvas context.
  */
-export function drawCheckerboard(ctx, width, height, size = 16, color1 = '#120e20', color2 = '#1a152c') {
+export function drawCheckerboard(ctx, width, height, size = 16, color1 = '#1c1c1f', color2 = '#26262a') {
   ctx.save();
   for (let y = 0; y < height; y += size) {
     for (let x = 0; x < width; x += size) {

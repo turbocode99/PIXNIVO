@@ -11,8 +11,8 @@
  * 5. Circular Arc Text rendering engine
  */
 
-import { loadImage } from './backgroundRemover.js';
-import { drawCheckerboard } from './canvasInjector.js';
+import { loadImage } from './backgroundRemover.js?v=20261010';
+import { drawCheckerboard } from './canvasInjector.js?v=20261010';
 
 /**
  * Curated typography catalog for studio branding.
@@ -204,12 +204,14 @@ export async function renderComposition(canvas, logoSource, compositionState = {
   const state = { ...DEFAULT_COMPOSITION_STATE, ...compositionState };
   const {
     background = 'transparent', // 'transparent' | 'checkers' | 'dark' | 'white' | 'gradient'
-    clearCanvas = true
+    clearCanvas = true,
+    scale = 1 // render the 600px layout at higher resolution (e.g. 2048 / 600 for print)
   } = options;
 
-  const width = canvas.width;
-  const height = canvas.height;
+  const width = canvas.width / scale;
+  const height = canvas.height / scale;
   const ctx = canvas.getContext('2d');
+  ctx.setTransform(scale, 0, 0, scale, 0, 0);
 
   if (clearCanvas) {
     ctx.clearRect(0, 0, width, height);

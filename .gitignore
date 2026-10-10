@@ -18,3 +18,7 @@ test_*.txt
 /check_*
 /test_*
 /screenshot_*
+
+# Large AI model files are deployed separately (not stored in git)
+models/*.onnx
+models/*.ok

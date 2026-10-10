@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Free PDF Tools &mdash; Image to PDF, Merge &amp; Compress | PIXNIVO</title>
   <meta name="description" content="Convert images to PDF, merge multiple PDF files, and compress PDFs in your browser. 100% private, client-side execution." />
-  <meta name="theme-color" content="#08070b" />
+  <meta name="theme-color" content="#fafafa" />
 
   <!-- Open Graph / Social Meta -->
   <meta property="og:type" content="website" />
@@ -25,8 +25,13 @@
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8972850134795669" crossorigin="anonymous"></script>
 
-  <!-- Modern Design System Stylesheet -->
-  <link rel="stylesheet" href="/assets/css/main.css" />
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="/assets/css/main.css?v=20261010" />
+  <script src="/assets/js/site.js?v=20261010"></script>
 
   <!-- Instant Theme Detection Script -->
   <script>
@@ -40,753 +45,793 @@
     
     })();
   </script>
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
 <body>
 
-  <!-- Dynamic Colorful Aurora Background -->
-  <div class="ambient-bg" aria-hidden="true">
-    <div class="ambient-orb orb-1"></div>
-    <div class="ambient-orb orb-2"></div>
-    <div class="ambient-orb orb-3"></div>
-    <div class="ambient-orb orb-4"></div>
-    <div class="ambient-orb orb-5"></div>
-  </div>
 
-  <!-- Floating Glass Navigation -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
   <header class="site-header">
     <div class="nav-container">
-      <a class="brand" href="/">
-        <div class="brand-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-            <polyline points="2 17 12 22 22 17"></polyline>
-            <polyline points="2 12 12 17 22 12"></polyline>
-          </svg>
-        </div>
-        PIX<span>NIVO</span>
+      <a class="brand" href="/" aria-label="PIXNIVO home">
+        <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+        <span class="brand-name">PIX<span>NIVO</span></span>
       </a>
 
-      <nav class="nav-links" id="navLinks">
-        <a class="nav-link" href="/">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          Image Tools
-        </a>
-        <a class="nav-link" href="/logo-generator">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
-          Logo Generator
-        </a>
-        <a class="nav-link active" href="/pdf-tools">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          PDF Tools
-        </a>
-        <a class="nav-link" href="/ai-ocr">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          AI OCR
-        </a>
-          <a class="nav-link" href="/barcode-tools.html">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"></path><path d="M8 5v14"></path><path d="M12 5v14"></path><path d="M16 5v14"></path></svg>
-            Barcode Tools
-          </a>
-        <a class="nav-link" href="/blog">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          Guides
-        </a>
-        <a class="nav-link" href="/about">About</a>
-        <a class="nav-link" href="/contact">Contact</a>
+      <nav class="nav-links" id="navLinks" aria-label="Main">
+        <a class="nav-link" href="/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg><span>Image Tools</span></a>
+        <a class="nav-link" href="/logo-generator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg><span>Logo Generator</span></a>
+        <a class="nav-link" href="/pdf-tools" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>PDF Tools</span></a>
+        <a class="nav-link" href="/ai-ocr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 8h8"/><path d="M7 12h10"/><path d="M7 16h6"/></svg><span>AI OCR</span></a>
+        <a class="nav-link" href="/barcode-tools.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5v14"/><path d="M8 5v14"/><path d="M12 5v14"/><path d="M17 5v14"/><path d="M21 5v14"/></svg><span>Barcode Tools</span></a>
+        <a class="nav-link" href="/blog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>Guides</span></a>
+        <div class="nav-divider" role="separator"></div>
+        <a class="nav-link nav-secondary" href="/about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span>About</span></a>
+        <a class="nav-link nav-secondary" href="/contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><span>Contact</span></a>
       </nav>
 
       <div class="nav-actions">
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme" title="Toggle Theme">
-          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
         </button>
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <button class="mobile-toggle" id="mobileToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+          <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="badge-privacy">
-      <span class="pulse-dot"></span>
-      100% Client-Side &bull; Secure Document Processing
+  <main id="main">
+    <section class="hero">
+      <div class="badge-privacy">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        Runs in your browser &middot; Documents are never uploaded
+      </div>
+      <h1>Free <em>PDF tools</em> that work in your browser</h1>
+      <p class="hero-subtitle">Turn photos and scans into a PDF, merge documents in any order, or shrink large PDFs for email and upload portals.</p>
+    </section>
+
+    <div class="tab-nav-wrapper">
+      <div class="tab-nav" role="tablist" aria-label="PDF tools">
+        <button class="tab-btn active" type="button" role="tab" id="tab-img2pdf" aria-selected="true" aria-controls="stage-img2pdf" data-tab="img2pdf">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg>
+          Images to PDF
+        </button>
+        <button class="tab-btn" type="button" role="tab" id="tab-merge" aria-selected="false" aria-controls="stage-merge" data-tab="merge" tabindex="-1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 6 4-4 4 4"/><path d="M12 2v10.3a4 4 0 0 1-1.172 2.872L4 22"/><path d="m20 22-5-5"/></svg>
+          Merge PDF
+        </button>
+        <button class="tab-btn" type="button" role="tab" id="tab-compress" aria-selected="false" aria-controls="stage-compress" data-tab="compress" tabindex="-1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+          Compress PDF
+        </button>
+      </div>
     </div>
-    <h1>Professional <em>PDF Studio</em> in Your Browser</h1>
-    <p class="hero-subtitle">Convert multi-page image sets into formatted PDFs, merge documents into a single file, or shrink bulky PDFs for email and portals &mdash; completely offline.</p>
-  </section>
 
-  <!-- PDF Tool Tabs -->
-  <div class="tab-nav-wrapper">
-    <div class="tab-nav">
-      <button class="tab-btn active" data-tab="img2pdf">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        Images to PDF
-      </button>
-      <button class="tab-btn" data-tab="merge">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        Merge PDFs
-      </button>
-      <button class="tab-btn" data-tab="compress">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-        Compress PDF
-      </button>
+    <div class="studio-container">
+
+      <!-- ==================== IMAGES TO PDF ==================== -->
+      <section class="studio-card active" id="stage-img2pdf" role="tabpanel" aria-labelledby="tab-img2pdf">
+        <div class="studio-header">
+          <div>
+            <h2>Images to PDF</h2>
+            <p>Combine photos or scanned pages into a single PDF. Drag to reorder pages before you create it.</p>
+          </div>
+          <span class="badge badge-success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Processed on-device</span>
+        </div>
+
+        <div class="dropzone" id="dropI" aria-label="Choose images to convert to PDF">
+          <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+          <h3>Drop images here, or <span class="link">browse</span></h3>
+          <p>JPG, PNG, WebP and iPhone HEIC &middot; Add as many as you like</p>
+          <span class="formats-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Never leaves your device</span>
+          <input type="file" id="fileI" accept="image/*,.heic,.heif" multiple />
+        </div>
+
+        <div class="filelist" id="listI" aria-label="Pages in order"></div>
+
+        <div class="pdf-settings" id="settingsI">
+          <div class="field-grid">
+            <div class="field">
+              <label for="pageSize">Page size</label>
+              <select id="pageSize">
+                <option value="fit">Fit to image (no white borders)</option>
+                <option value="a4">A4 (210 &times; 297 mm)</option>
+                <option value="letter">US Letter (8.5 &times; 11 in)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="orientation">Orientation</label>
+              <select id="orientation" disabled>
+                <option value="auto">Automatic (match each image)</option>
+                <option value="portrait">Portrait</option>
+                <option value="landscape">Landscape</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="margin">Margins <span class="val" id="marginVal">0 mm</span></label>
+              <input type="range" id="margin" min="0" max="30" value="0" />
+            </div>
+            <div class="field">
+              <label for="imgQuality">Image quality <span class="val" id="iqVal">85%</span></label>
+              <input type="range" id="imgQuality" min="40" max="100" value="85" />
+            </div>
+          </div>
+        </div>
+
+        <div class="prog" id="progI" role="status"><div class="bar"><i></i></div><div class="txt"><span class="msg"></span><span class="pct"></span></div></div>
+        <div class="result" id="resI"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+
+        <div class="btn-row action-bar">
+          <button class="btn btn-primary btn-lg btn-grow" type="button" id="makePdf" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg><span>Create PDF</span></button>
+          <button class="btn btn-ghost btn-lg" type="button" id="addI" hidden>Add more</button>
+          <button class="btn btn-ghost btn-lg" type="button" id="clearI" hidden>Clear all</button>
+        </div>
+      </section>
+
+      <!-- ==================== MERGE ==================== -->
+      <section class="studio-card" id="stage-merge" role="tabpanel" aria-labelledby="tab-merge" hidden>
+        <div class="studio-header">
+          <div>
+            <h2>Merge PDF</h2>
+            <p>Combine contracts, statements and reports into one file. Pages, text and links stay exactly as they are.</p>
+          </div>
+          <span class="badge badge-success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Processed on-device</span>
+        </div>
+
+        <div class="dropzone" id="dropM" aria-label="Choose PDF files to merge">
+          <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+          <h3>Drop PDF files here, or <span class="link">browse</span></h3>
+          <p>Choose two or more PDFs &middot; Reorder them below before merging</p>
+          <span class="formats-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Lossless &middot; never leaves your device</span>
+          <input type="file" id="fileM" accept="application/pdf,.pdf" multiple />
+        </div>
+
+        <div class="filelist" id="listM" aria-label="Documents in merge order"></div>
+
+        <div class="prog" id="progM" role="status"><div class="bar"><i></i></div><div class="txt"><span class="msg"></span><span class="pct"></span></div></div>
+        <div class="result" id="resM"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+
+        <div class="btn-row action-bar">
+          <button class="btn btn-primary btn-lg btn-grow" type="button" id="doMerge" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 6 4-4 4 4"/><path d="M12 2v10.3a4 4 0 0 1-1.172 2.872L4 22"/><path d="m20 22-5-5"/></svg><span>Merge PDFs</span></button>
+          <button class="btn btn-ghost btn-lg" type="button" id="addM" hidden>Add more</button>
+          <button class="btn btn-ghost btn-lg" type="button" id="clearM" hidden>Clear all</button>
+        </div>
+        <p class="hint action-hint">Password-protected PDFs need to be unlocked before they can be merged.</p>
+      </section>
+
+      <!-- ==================== COMPRESS ==================== -->
+      <section class="studio-card" id="stage-compress" role="tabpanel" aria-labelledby="tab-compress" hidden>
+        <div class="studio-header">
+          <div>
+            <h2>Compress PDF</h2>
+            <p>Shrink scanned and image-heavy PDFs to fit email attachments and upload limits.</p>
+          </div>
+          <span class="badge badge-success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Processed on-device</span>
+        </div>
+
+        <div class="dropzone" id="dropC" aria-label="Choose a PDF to compress">
+          <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+          <h3>Drop a PDF here, or <span class="link">browse</span></h3>
+          <p>One document at a time &middot; Best for scans and photo-heavy files</p>
+          <span class="formats-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Never leaves your device</span>
+          <input type="file" id="fileC" accept="application/pdf,.pdf" />
+        </div>
+
+        <div class="filelist" id="listC"></div>
+
+        <div class="pdf-settings" id="settingsC">
+          <div class="field-grid">
+            <div class="field">
+              <span class="field-label" id="levelLabel">Compression level</span>
+              <div class="segmented" role="group" aria-labelledby="levelLabel">
+                <button class="chip" type="button" data-level="1" aria-pressed="false">Light</button>
+                <button class="chip active" type="button" data-level="2" aria-pressed="true">Balanced</button>
+                <button class="chip" type="button" data-level="3" aria-pressed="false">Strong</button>
+              </div>
+            </div>
+            <div class="field">
+              <label for="dpi">Resolution <span class="val" id="dpiVal">150 DPI</span></label>
+              <input type="range" id="dpi" min="72" max="220" step="1" value="150" />
+            </div>
+          </div>
+          <div class="alert alert-info">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <p>Pages are re-rendered as optimized images, so text won't be selectable in the compressed copy. Your original file is never changed.</p>
+          </div>
+        </div>
+
+        <div class="prog" id="progC" role="status"><div class="bar"><i></i></div><div class="txt"><span class="msg"></span><span class="pct"></span></div></div>
+        <div class="result" id="resC"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+
+        <div class="btn-row action-bar">
+          <button class="btn btn-primary btn-lg btn-grow" type="button" id="doCompress" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></svg><span>Compress PDF</span></button>
+          <button class="btn btn-ghost btn-lg" type="button" id="clearC" hidden>Choose another file</button>
+        </div>
+      </section>
     </div>
-  </div>
 
-  <!-- Studio Workspaces -->
-  <main class="studio-container">
-
-    <!-- ==================== TAB 1: IMAGES TO PDF ==================== -->
-    <section class="studio-card active" id="stage-img2pdf">
-      <div class="studio-header">
-        <h2>Images to PDF Builder</h2>
-        <p>Combine multiple photos or scans into a single, beautifully formatted PDF document.</p>
+    <section class="page-section" aria-labelledby="relatedTitle">
+      <div class="section-header">
+        <span class="section-eyebrow">Related tools</span>
+        <h2 id="relatedTitle">Need to do more with your documents?</h2>
       </div>
-
-      <div class="dropzone" id="dropI">
-        <div class="dropzone-icon">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        </div>
-        <h3>Drop photos or document scans here</h3>
-        <p>Supports JPG, PNG, WebP &amp; iPhone HEIC &bull; Add as many files as needed</p>
-        <span class="formats-badge">Drag &amp; drop or click to browse</span>
-        <input type="file" id="fileI" accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp,.avif,.heic,.heif" multiple />
-      </div>
-
-      <div class="filelist" id="listI"></div>
-
-      <div class="workspace-grid" style="display:grid; grid-template-columns:1fr 1fr; margin-top:20px;">
-        <div class="field">
-          <label>Page Size</label>
-          <select id="pageSize">
-            <option value="fit">Fit Page to Image (Preserves native proportions)</option>
-            <option value="a4">Standard A4 Sheet</option>
-            <option value="letter">US Letter Format</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Orientation</label>
-          <select id="orientation">
-            <option value="auto">Auto-Detect per Image</option>
-            <option value="portrait">Portrait</option>
-            <option value="landscape">Landscape</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="workspace-grid" style="display:grid; grid-template-columns:1fr 1fr; margin-top:14px;">
-        <div class="field">
-          <label>Page Margins <span class="val" id="marginVal">0 mm</span></label>
-          <input type="range" id="margin" min="0" max="30" value="0" />
-        </div>
-        <div class="field">
-          <label>Image Quality <span class="val" id="iqVal">85%</span></label>
-          <input type="range" id="imgQuality" min="40" max="100" value="85" />
-        </div>
-      </div>
-
-      <div class="prog" id="progI"><div class="bar"><i></i></div><div class="txt"></div></div>
-      <div class="result" id="resI"><div class="h"></div><div class="d"></div></div>
-
-      <div class="btn-row" style="margin-top:24px;">
-        <button class="btn btn-primary" id="makePdf" disabled style="flex:2;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          Create PDF Document
-        </button>
-        <button class="btn btn-ghost" id="clearI" style="flex:1;">Clear All</button>
-      </div>
-
-      <p class="hint" style="margin-top:16px;"><b>Pro Tip:</b> "Fit Page" creates clean edge-to-edge margins ideal for photo albums and smartphone scans.</p>
-    </section>
-
-    <!-- ==================== TAB 2: MERGE PDFS ==================== -->
-    <section class="studio-card" id="stage-merge">
-      <div class="studio-header">
-        <h2>Merge Multiple PDFs</h2>
-        <p>Combine contracts, bank statements, and reports into a single file with custom page ordering.</p>
-      </div>
-
-      <div class="dropzone" id="dropM">
-        <div class="dropzone-icon">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        </div>
-        <h3>Drop PDF files here to merge</h3>
-        <p>Select two or more PDF files &bull; Reorder pages with arrows below</p>
-        <span class="formats-badge">Lossless combination &bull; Vector crispness preserved</span>
-        <input type="file" id="fileM" accept="application/pdf" multiple />
-      </div>
-
-      <div class="filelist" id="listM"></div>
-
-      <div class="prog" id="progM"><div class="bar"><i></i></div><div class="txt"></div></div>
-      <div class="result" id="resM"><div class="h"></div><div class="d"></div></div>
-
-      <div class="btn-row" style="margin-top:24px;">
-        <button class="btn btn-primary" id="doMerge" disabled style="flex:2;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-          Merge PDF Files
-        </button>
-        <button class="btn btn-ghost" id="clearM" style="flex:1;">Clear All</button>
-      </div>
-
-      <p class="hint" style="margin-top:16px;">All pages maintain their original vector typography and embedded links. Password-protected PDFs must be unlocked prior to merging.</p>
-    </section>
-
-    <!-- ==================== TAB 3: COMPRESS PDF ==================== -->
-    <section class="studio-card" id="stage-compress">
-      <div class="studio-header">
-        <h2>PDF File Compressor</h2>
-        <p>Shrink heavy, scanned, and graphic-dense PDFs to fit email attachment and portal size limits.</p>
-      </div>
-
-      <div class="dropzone" id="dropC">
-        <div class="dropzone-icon">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-        </div>
-        <h3>Drop a PDF file here to compress</h3>
-        <p>One document at a time &bull; Live raster re-sampling</p>
-        <span class="formats-badge">Optimized for scanned documents &amp; large attachments</span>
-        <input type="file" id="fileC" accept="application/pdf" />
-      </div>
-
-      <div class="filelist" id="listC"></div>
-
-      <div class="workspace-grid" style="display:grid; grid-template-columns:1fr 1fr; margin-top:20px;">
-        <div class="field">
-          <label>Compression Preset <span class="val" id="cqVal">Balanced</span></label>
-          <input type="range" id="compLevel" min="1" max="3" value="2" />
-        </div>
-        <div class="field">
-          <label>Raster Density <span class="val" id="dpiVal">150 DPI</span></label>
-          <input type="range" id="dpi" min="72" max="220" step="1" value="150" />
-        </div>
-      </div>
-
-      <div class="prog" id="progC"><div class="bar"><i></i></div><div class="txt"></div></div>
-      <div class="result" id="resC"><div class="h"></div><div class="d"></div></div>
-
-      <div class="btn-row" style="margin-top:24px;">
-        <button class="btn btn-primary" id="doCompress" disabled style="flex:2;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Compress PDF Document
-        </button>
-        <button class="btn btn-ghost" id="clearC" style="flex:1;">Clear</button>
-      </div>
-
-      <p class="hint" style="margin-top:16px;"><b>Technical Note:</b> Scanned pages are re-rendered with smooth anti-aliased resampling. For text-only contracts, original PDFs may already be minimal in size.</p>
-    </section>
-
-
-    <div style="margin-top:24px;">
-      <div class="callout-box" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
-        <div>
-          <h3 style="color:var(--primary-light); margin-bottom:6px; font-size:16px; font-weight:700;">Looking for AI Document &amp; Image OCR?</h3>
-          <p style="margin:0; font-size:13.5px; color:var(--text-muted);">Extract editable text from scanned PDFs, invoices, and photos using our neural OCR engine.</p>
-        </div>
-        <a class="btn btn-primary" href="/ai-ocr" style="padding:10px 18px; font-size:13.5px; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
-          Open AI OCR Studio &rarr;
+      <div class="tools-grid">
+        <a class="tool-card" href="/ai-ocr">
+          <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 8h8"/><path d="M7 12h10"/><path d="M7 16h6"/></svg></span>
+          <h3>AI OCR <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></h3>
+          <p>Extract editable text from scanned PDFs, invoices and photos.</p>
+        </a>
+        <a class="tool-card" href="/?tab=compress">
+          <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
+          <h3>Image Compressor <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></h3>
+          <p>Shrink photos before adding them to a PDF for even smaller files.</p>
+        </a>
+        <a class="tool-card" href="/barcode-tools.html">
+          <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5v14"/><path d="M8 5v14"/><path d="M12 5v14"/><path d="M17 5v14"/><path d="M21 5v14"/></svg></span>
+          <h3>Barcode Generator <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></h3>
+          <p>Create printable barcode and QR code sheets as PDF, Word or Excel.</p>
         </a>
       </div>
-    </div>
+    </section>
   </main>
 
-  <!-- Modern Site Footer -->
   <footer class="site-footer">
-    <div class="footer-nav">
-      <a href="/">Home</a>
-      <span class="dot">&bull;</span>
-      <a href="/pdf-tools">PDF Tools</a>
-      <span class="dot">&bull;</span>
-      <a href="/ai-ocr">AI OCR</a>
-      <span class="dot">&bull;</span>
-      <a href="/barcode-tools.html">Barcode Tools</a>
-      <span class="dot">&bull;</span>
-      <a href="/blog">Guides &amp; Blog</a>
-      <span class="dot">&bull;</span>
-      <a href="/about">About</a>
-      <span class="dot">&bull;</span>
-      <a href="/privacy">Privacy Policy</a>
-      <span class="dot">&bull;</span>
-      <a href="/terms">Terms &amp; Conditions</a>
-      <span class="dot">&bull;</span>
-      <a href="/contact">Contact</a>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="/" aria-label="PIXNIVO home">
+          <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+          <span class="brand-name">PIX<span>NIVO</span></span>
+        </a>
+        <p>Fast, privacy-first image, PDF and document tools that run right in your browser. No sign-up, no watermarks.</p>
+      </div>
+      <div class="footer-col">
+        <h2>Image tools</h2>
+        <ul>
+          <li><a href="/?tab=compress">Image Compressor</a></li>
+          <li><a href="/?tab=edit">Photo Editor</a></li>
+          <li><a href="/?tab=bg">Background Remover</a></li>
+          <li><a href="/?tab=upscale">Image Upscaler</a></li>
+          <li><a href="/logo-generator">Logo Generator</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Document tools</h2>
+        <ul>
+          <li><a href="/pdf-tools?tab=img2pdf">Images to PDF</a></li>
+          <li><a href="/pdf-tools?tab=merge">Merge PDF</a></li>
+          <li><a href="/pdf-tools?tab=compress">Compress PDF</a></li>
+          <li><a href="/ai-ocr">AI OCR</a></li>
+          <li><a href="/barcode-tools.html">Barcode Generator</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Resources</h2>
+        <ul>
+          <li><a href="/blog">All guides</a></li>
+          <li><a href="/compress-images-for-whatsapp">Compress for WhatsApp</a></li>
+          <li><a href="/jpg-vs-png-vs-webp">JPG vs PNG vs WebP</a></li>
+          <li><a href="/passport-size-photo-at-home">Passport photos at home</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Company</h2>
+        <ul>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
     </div>
     <div class="footer-bottom">
-      <span>PIXNIVO</span>
-      <span class="dot">&bull;</span>
-      <span>Private In-Browser Image &amp; PDF Studio</span>
-      <span class="dot">&bull;</span>
-      <span>&copy; 2026 PIXNIVO</span>
+      <span>&copy; <span data-year>2026</span> PIXNIVO. All rights reserved.</span>
+      <span>Privacy-first tools &middot; Most processing happens on your device.</span>
     </div>
   </footer>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
   <script>
-    /* Theme Toggle */
-    const themeToggle = document.getElementById('themeToggle');
-    if (themeToggle) {
-      themeToggle.addEventListener('click', () => {
-        const current = document.documentElement.getAttribute('data-theme') || 'dark';
-        const next = current === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        try { localStorage.setItem('pixnivo_theme', next); } catch(e) {}
-      });
+  (function () {
+    'use strict';
+
+    const P = window.Pixnivo;
+    const $ = id => document.getElementById(id);
+    const MM_PER_PT = 0.352777778;
+    const A4 = { w: 595.28, h: 841.89 };
+    const LETTER = { w: 612, h: 792 };
+    const PDFLIB_URL = 'https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js';
+    const PDFJS_URL = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js';
+    const PDFJS_WORKER = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+
+    const ICON = {
+      up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>',
+      down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>',
+      remove: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>',
+      pdf: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>',
+      image: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg>',
+      grip: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg>'
+    };
+
+    async function pdfLib() {
+      if (!window.PDFLib) await P.loadScript(PDFLIB_URL);
+      return window.PDFLib;
     }
 
-    /* Mobile Menu */
-    const mobileToggle = document.getElementById('mobileToggle');
-    const navLinks = document.getElementById('navLinks');
-    if (mobileToggle && navLinks) {
-      mobileToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+    async function pdfJs() {
+      if (!window.pdfjsLib) {
+        await P.loadScript(PDFJS_URL);
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER;
+      }
+      return window.pdfjsLib;
     }
 
-    (function(){
-      'use strict';
+    // Warm up the PDF engine once the page is idle so the first action feels instant
+    (window.requestIdleCallback || (cb => setTimeout(cb, 1500)))(() => { pdfLib().catch(() => {}); });
 
-      if (window.pdfjsLib){
-        pdfjsLib.GlobalWorkerOptions.workerSrc =
-          'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+    P.initTabs();
+
+    const isPdf = f => f.type === 'application/pdf' || /\.pdf$/i.test(f.name);
+    const isImage = f => (f.type && f.type.startsWith('image/')) || P.looksHeic(f) || /\.(jpe?g|png|webp|gif|bmp|avif)$/i.test(f.name);
+
+    function progress(el, pct, msg) {
+      el.classList.add('on');
+      el.querySelector('i').style.width = pct + '%';
+      el.querySelector('.msg').textContent = msg || '';
+      el.querySelector('.pct').textContent = Math.round(pct) + '%';
+    }
+
+    function progressDone(el) {
+      el.classList.remove('on');
+      el.querySelector('i').style.width = '0%';
+    }
+
+    function showResult(el, head, detail, opts) {
+      const o = Object.assign({ warn: false, actionLabel: 'Download again' }, opts);
+      el.classList.add('on');
+      el.classList.toggle('warn', o.warn);
+      el.querySelector('.h').textContent = head;
+      el.querySelector('.d').textContent = detail;
+      el.querySelector('[data-redownload]').textContent = o.actionLabel;
+    }
+
+    function hideResult(el) { el.classList.remove('on', 'warn'); }
+
+    function pdfBlob(bytes) { return new Blob([bytes], { type: 'application/pdf' }); }
+
+    /* Shared, reorderable file list (drag & drop plus keyboard buttons) */
+    function renderList(container, items, opts) {
+      const o = Object.assign({ reorder: true, meta: () => '', onChange: () => {} }, opts);
+      container.innerHTML = '';
+      container.classList.toggle('on', items.length > 0);
+      if (!items.length) return;
+
+      if (o.summary) {
+        const head = document.createElement('div');
+        head.className = 'filelist-head';
+        head.innerHTML = `<span>${o.summary}</span>${o.reorder && items.length > 1 ? '<span>Drag or use the arrows to reorder</span>' : ''}`;
+        container.appendChild(head);
       }
 
-      const MM_PER_PT = 0.352777778;
-      const A4     = { w: 595.28, h: 841.89 };
-      const LETTER = { w: 612,    h: 792    };
-
-      const $ = id => document.getElementById(id);
-      const fmt = b => b < 1024 ? b + ' B'
-                     : b < 1048576 ? (b/1024).toFixed(1) + ' KB'
-                     : (b/1048576).toFixed(2) + ' MB';
-
-      function loadScriptOnce(src){
-        return new Promise((resolve, reject) => {
-          const s = document.createElement('script');
-          s.src = src; s.onload = resolve;
-          s.onerror = () => reject(new Error('Failed to load ' + src));
-          document.body.appendChild(s);
-        });
-      }
-
-      function looksHeic(file){
-        const n = (file.name || '').toLowerCase(), t = (file.type || '').toLowerCase();
-        return n.endsWith('.heic') || n.endsWith('.heif') || t.includes('heic') || t.includes('heif');
-      }
-
-      let heicNoteEl = null;
-      function heicNote(show){
-        if (!heicNoteEl){
-          heicNoteEl = document.createElement('div');
-          heicNoteEl.style.cssText =
-            'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);max-width:88vw;' +
-            'background:rgba(21,19,29,0.95);color:#f5f3ef;border:1px solid rgba(255,255,255,0.12);padding:13px 24px;' +
-            'border-radius:9999px;font-size:14px;font-weight:600;z-index:9999;box-shadow:0 10px 30px rgba(0,0,0,.5);backdrop-filter:blur(16px);';
-          heicNoteEl.textContent = 'Converting iPhone photo...';
-          document.body.appendChild(heicNoteEl);
-        }
-        heicNoteEl.style.display = show ? 'block' : 'none';
-      }
-
-      async function convertHeic(file){
-        heicNote(true);
-        try{
-          if (!window.HeicTo) await loadScriptOnce('https://cdn.jsdelivr.net/npm/heic-to@1.5.2/dist/iife/heic-to.js');
-          if (window.HeicTo) return await window.HeicTo({ blob:file, type:'image/jpeg', quality:0.92 });
-          throw new Error('HeicTo unavailable');
-        } catch(e){
-          if (!window.heic2any) await loadScriptOnce('https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js');
-          const out = await window.heic2any({ blob:file, toType:'image/jpeg', quality:0.92 });
-          return Array.isArray(out) ? out[0] : out;
-        } finally { heicNote(false); }
-      }
-      window.looksHeic = looksHeic;
-      window.convertHeic = convertHeic;
-      window.loadScriptOnce = loadScriptOnce;
-
-      function whyFailed(file){
-        const name = (file && file.name) ? file.name : 'This file';
-        const ext = name.includes('.') ? name.split('.').pop().toUpperCase() : '';
-        if (['HEIC','HEIF'].includes(ext))
-          return 'Could not open "' + name + '".\n\nThis iPhone photo could not be converted. Try saving as JPG.';
-        if (['TIF','TIFF','PSD','SVG','CR2','NEF','DNG','RAW','ARW'].includes(ext))
-          return 'Could not open "' + name + '".\n\nThis format is not supported by browsers. Please use JPG/PNG.';
-        return 'Could not open "' + name + '".\n\nThe file may be damaged or too large.';
-      }
-
-      function loadImageFile(file){
-        return new Promise((resolve, reject) => {
-          if (!file){ reject(new Error('No file')); return; }
-          if (file.size === 0){ reject(new Error(whyFailed(file))); return; }
-
-          const decode = blob => {
-            if (window.createImageBitmap){
-              return createImageBitmap(blob).then(resolve).catch(() => legacy(blob));
-            }
-            return legacy(blob);
-          };
-          const legacy = blob => new Promise(res => {
-            const url = URL.createObjectURL(blob);
-            const img = new Image();
-            img.onload = () => { URL.revokeObjectURL(url); resolve(img); res(); };
-            img.onerror = () => { URL.revokeObjectURL(url); reject(new Error(whyFailed(file))); res(); };
-            img.src = url;
+      let dragFrom = null;
+      items.forEach((item, i) => {
+        const row = document.createElement('div');
+        row.className = 'fitem' + (item.error ? ' has-error' : '');
+        if (o.reorder && items.length > 1) {
+          row.draggable = true;
+          row.addEventListener('dragstart', e => { dragFrom = i; row.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', String(i)); });
+          row.addEventListener('dragend', () => { row.classList.remove('dragging'); container.querySelectorAll('.drop-target').forEach(r => r.classList.remove('drop-target')); });
+          row.addEventListener('dragover', e => { if (dragFrom === null) return; e.preventDefault(); row.classList.add('drop-target'); });
+          row.addEventListener('dragleave', () => row.classList.remove('drop-target'));
+          row.addEventListener('drop', e => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (dragFrom === null || dragFrom === i) return;
+            const [moved] = items.splice(dragFrom, 1);
+            items.splice(i, 0, moved);
+            dragFrom = null;
+            o.onChange();
           });
+        }
 
-          if (looksHeic(file)){
-            convertHeic(file).then(decode).catch(() => reject(new Error(whyFailed(file))));
-            return;
-          }
-          if (window.createImageBitmap){
-            createImageBitmap(file).then(resolve).catch(() => {
-              convertHeic(file).then(decode).catch(() => legacy(file));
-            });
-            return;
-          }
-          legacy(file);
+        if (o.reorder && items.length > 1) {
+          const grip = document.createElement('span');
+          grip.className = 'grip';
+          grip.innerHTML = ICON.grip;
+          row.appendChild(grip);
+        }
+
+        const idx = document.createElement('span');
+        idx.className = 'idx';
+        idx.textContent = String(i + 1);
+
+        const th = document.createElement('div');
+        th.className = 'thumb';
+        if (item.thumb) {
+          const im = document.createElement('img');
+          im.alt = '';
+          im.src = item.thumb;
+          im.onerror = () => { th.innerHTML = ICON.image; };
+          th.appendChild(im);
+        } else {
+          th.innerHTML = item.kind === 'image' ? ICON.image : ICON.pdf;
+        }
+
+        const info = document.createElement('div');
+        info.className = 'finfo';
+        const nm = document.createElement('span');
+        nm.className = 'fname';
+        nm.textContent = item.file.name;
+        nm.title = item.file.name;
+        const meta = document.createElement('span');
+        meta.className = 'fsize';
+        meta.textContent = item.error ? item.error : [P.formatBytes(item.file.size), o.meta(item)].filter(Boolean).join(' · ');
+        info.append(nm, meta);
+
+        const actions = document.createElement('div');
+        actions.className = 'mv';
+        if (o.reorder && items.length > 1) {
+          const up = document.createElement('button');
+          up.type = 'button'; up.innerHTML = ICON.up; up.disabled = i === 0;
+          up.setAttribute('aria-label', `Move ${item.file.name} up`);
+          up.onclick = () => { [items[i - 1], items[i]] = [items[i], items[i - 1]]; o.onChange(); };
+          const dn = document.createElement('button');
+          dn.type = 'button'; dn.innerHTML = ICON.down; dn.disabled = i === items.length - 1;
+          dn.setAttribute('aria-label', `Move ${item.file.name} down`);
+          dn.onclick = () => { [items[i + 1], items[i]] = [items[i], items[i + 1]]; o.onChange(); };
+          actions.append(up, dn);
+        }
+        const rm = document.createElement('button');
+        rm.type = 'button'; rm.className = 'rm'; rm.innerHTML = ICON.remove;
+        rm.setAttribute('aria-label', `Remove ${item.file.name}`);
+        rm.onclick = () => {
+          const [gone] = items.splice(i, 1);
+          if (gone && gone.thumb) URL.revokeObjectURL(gone.thumb);
+          o.onChange();
+        };
+        actions.appendChild(rm);
+
+        row.append(idx, th, info, actions);
+        container.appendChild(row);
+      });
+    }
+
+    function wireRedownload(resEl, getBlob) {
+      resEl.querySelector('[data-redownload]').addEventListener('click', () => {
+        const r = getBlob();
+        if (r) P.downloadBlob(r.blob, r.name);
+      });
+    }
+
+    /* ==================== 1. IMAGES TO PDF ==================== */
+    (function () {
+      const items = [];
+      const list = $('listI'), prog = $('progI'), res = $('resI'), go = $('makePdf');
+      let last = null, busy = false;
+
+      function refresh() {
+        renderList(list, items, {
+          summary: `${items.length} image${items.length === 1 ? '' : 's'} · ${items.length} page${items.length === 1 ? '' : 's'}`,
+          onChange: refresh
         });
+        const has = items.length > 0;
+        go.disabled = !has || busy;
+        go.querySelector('span').textContent = has ? `Create PDF (${items.length} page${items.length === 1 ? '' : 's'})` : 'Create PDF';
+        $('dropI').classList.toggle('dropzone-sm', has);
+        $('addI').hidden = !has;
+        $('clearI').hidden = !has;
+        $('settingsI').hidden = !has;
+        hideResult(res);
       }
 
-      /* Tabs */
-      document.querySelectorAll('.tab-btn[data-tab]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.tab-btn[data-tab]').forEach(b => b.classList.remove('active'));
-          document.querySelectorAll('.studio-card').forEach(s => s.classList.remove('active'));
-          btn.classList.add('active');
-          $('stage-' + btn.dataset.tab).classList.add('active');
-        });
+      P.wireDropzone($('dropI'), $('fileI'), incoming => {
+        const imgs = incoming.filter(isImage);
+        const skipped = incoming.length - imgs.length;
+        if (skipped) P.toast(`${skipped} file${skipped === 1 ? ' was' : 's were'} skipped — only images can be added here.`, { type: 'warning' });
+        imgs.forEach(f => items.push({ file: f, kind: 'image', thumb: P.looksHeic(f) ? null : URL.createObjectURL(f) }));
+        refresh();
       });
 
-      function wireDrop(zone, input, onFiles){
-        zone.addEventListener('click', () => input.click());
-        input.addEventListener('change', e => { if (e.target.files.length) onFiles([...e.target.files]); input.value=''; });
-        ['dragover','dragenter'].forEach(ev =>
-          zone.addEventListener(ev, e => { e.preventDefault(); zone.classList.add('drag'); }));
-        ['dragleave','drop'].forEach(ev =>
-          zone.addEventListener(ev, e => { e.preventDefault(); zone.classList.remove('drag'); }));
-        zone.addEventListener('drop', e => { if (e.dataTransfer.files.length) onFiles([...e.dataTransfer.files]); });
-      }
-
-      function progress(el, pct, msg){
-        el.classList.add('on');
-        el.querySelector('i').style.width = pct + '%';
-        el.querySelector('.txt').textContent = msg || '';
-      }
-      function progressDone(el){ el.classList.remove('on'); el.querySelector('i').style.width = '0%'; }
-
-      function showResult(el, head, detail){
-        el.classList.add('on');
-        el.querySelector('.h').textContent = head;
-        el.querySelector('.d').textContent = detail;
-      }
-      function hideResult(el){ el.classList.remove('on'); }
-
-      function save(bytes, name, type){
-        const blob = new Blob([bytes], { type: type || 'application/pdf' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url; a.download = name; a.style.display = 'none';
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        setTimeout(() => URL.revokeObjectURL(url), 4000);
-        return blob.size;
-      }
-
-      function renderList(container, files, onChange, thumbs){
-        container.innerHTML = '';
-        container.classList.toggle('on', files.length > 0);
-        files.forEach((f, i) => {
-          const row = document.createElement('div');
-          row.className = 'fitem';
-
-          const th = document.createElement('div');
-          th.className = 'thumb';
-          if (thumbs && f.type.startsWith('image/')){
-            const im = document.createElement('img');
-            im.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:7px;';
-            im.src = URL.createObjectURL(f);
-            im.onload = () => URL.revokeObjectURL(im.src);
-            th.appendChild(im);
-          } else {
-            th.textContent = 'ðŸ“„';
-          }
-
-          const nm = document.createElement('div');
-          nm.className = 'fname'; nm.textContent = (i+1) + '. ' + f.name;
-
-          const sz = document.createElement('div');
-          sz.className = 'fsize'; sz.textContent = fmt(f.size);
-
-          const mv = document.createElement('div');
-          mv.className = 'mv';
-          const up = document.createElement('button'); up.textContent = 'â†‘'; up.title = 'Move up';
-          const dn = document.createElement('button'); dn.textContent = 'â†“'; dn.title = 'Move down';
-          up.disabled = i === 0; dn.disabled = i === files.length - 1;
-          up.onclick = e => { e.stopPropagation(); [files[i-1], files[i]] = [files[i], files[i-1]]; onChange(); };
-          dn.onclick = e => { e.stopPropagation(); [files[i+1], files[i]] = [files[i], files[i+1]]; onChange(); };
-          mv.append(up, dn);
-
-          const rm = document.createElement('button');
-          rm.textContent = 'âœ•'; rm.title = 'Remove';
-          rm.onclick = e => { e.stopPropagation(); files.splice(i,1); onChange(); };
-
-          row.append(th, nm, sz, mv, rm);
-          container.appendChild(row);
-        });
-      }
-
-      /* 1. Images to PDF */
-      (function(){
-        let files = [];
-        const list = $('listI'), prog = $('progI'), res = $('resI'), go = $('makePdf');
-
-        function refresh(){
-          renderList(list, files, refresh, true);
-          go.disabled = files.length === 0;
-          go.textContent = files.length
-            ? 'Create PDF from ' + files.length + ' image' + (files.length>1?'s':'')
-            : 'Create PDF Document';
-          hideResult(res);
-        }
-
-        wireDrop($('dropI'), $('fileI'), incoming => {
-          const imgs = incoming.filter(f => f.type.startsWith('image/'));
-          if (imgs.length !== incoming.length) alert('Only image files can be added here.');
-          files = files.concat(imgs);
-          refresh();
-        });
-
-        $('margin').addEventListener('input', e => $('marginVal').textContent = e.target.value + ' mm');
-        $('imgQuality').addEventListener('input', e => $('iqVal').textContent = e.target.value + '%');
-        $('clearI').addEventListener('click', () => { files = []; refresh(); progressDone(prog); });
-
-        async function toJpeg(file, quality){
-          const img = await loadImageFile(file);
-          const cap = 2400;
-          const scale = Math.min(1, cap / Math.max(img.width, img.height));
-          const c = document.createElement('canvas');
-          c.width  = Math.max(1, Math.round(img.width  * scale));
-          c.height = Math.max(1, Math.round(img.height * scale));
-          const cx = c.getContext('2d');
-          cx.fillStyle = '#ffffff';
-          cx.fillRect(0, 0, c.width, c.height);
-          cx.drawImage(img, 0, 0, c.width, c.height);
-          const blob = await new Promise(r => c.toBlob(r, 'image/jpeg', quality));
-          if (!blob) throw new Error('Could not encode ' + file.name);
-          const ab = await blob.arrayBuffer();
-          return { bytes: new Uint8Array(ab), w: c.width, h: c.height };
-        }
-
-        go.addEventListener('click', async () => {
-          if (!files.length) return;
-          go.disabled = true; hideResult(res);
-          try{
-            const { PDFDocument } = PDFLib;
-            const pdf = await PDFDocument.create();
-            const quality = parseInt($('imgQuality').value) / 100;
-            const marginPt = parseInt($('margin').value) / MM_PER_PT;
-            const sizeMode = $('pageSize').value;
-            const orient   = $('orientation').value;
-
-            for (let i = 0; i < files.length; i++){
-              progress(prog, Math.round(i / files.length * 100), 'Adding page ' + (i+1) + ' of ' + files.length + 'â€¦');
-              await new Promise(r => setTimeout(r, 0));
-
-              const { bytes, w, h } = await toJpeg(files[i], quality);
-              const embedded = await pdf.embedJpg(bytes);
-
-              let pw, ph;
-              if (sizeMode === 'fit'){
-                pw = w + marginPt*2; ph = h + marginPt*2;
-              } else {
-                const base = sizeMode === 'a4' ? A4 : LETTER;
-                const landscape = orient === 'landscape' || (orient === 'auto' && w > h);
-                pw = landscape ? base.h : base.w;
-                ph = landscape ? base.w : base.h;
-              }
-
-              const page = pdf.addPage([pw, ph]);
-              const availW = pw - marginPt*2, availH = ph - marginPt*2;
-              const fit = Math.min(availW / w, availH / h);
-              const dw = w * fit, dh = h * fit;
-              page.drawImage(embedded, {
-                x: (pw - dw)/2, y: (ph - dh)/2, width: dw, height: dh
-              });
-            }
-
-            progress(prog, 100, 'Finalizing PDFâ€¦');
-            const out = await pdf.save();
-            const size = save(out, 'pixnivo-document.pdf');
-            progressDone(prog);
-            showResult(res, 'PDF Created Successfully',
-              files.length + ' page' + (files.length>1?'s':'') + ' Â· ' + fmt(size) + ' Â· Saved to your device.');
-          } catch(err){
-            console.error(err);
-            progressDone(prog);
-            alert('Could not create PDF: ' + (err.message || err));
-          }
-          go.disabled = false;
-        });
-
+      $('addI').addEventListener('click', () => $('fileI').click());
+      $('clearI').addEventListener('click', () => {
+        items.splice(0).forEach(it => it.thumb && URL.revokeObjectURL(it.thumb));
+        progressDone(prog);
         refresh();
-      })();
+      });
 
-      /* 2. Merge PDFs */
-      (function(){
-        let files = [];
-        const list = $('listM'), prog = $('progM'), res = $('resM'), go = $('doMerge');
+      $('pageSize').addEventListener('change', e => { $('orientation').disabled = e.target.value === 'fit'; });
+      $('margin').addEventListener('input', e => { $('marginVal').textContent = e.target.value + ' mm'; });
+      $('imgQuality').addEventListener('input', e => { $('iqVal').textContent = e.target.value + '%'; });
+      wireRedownload(res, () => last);
 
-        function refresh(){
-          renderList(list, files, refresh, false);
-          go.disabled = files.length < 2;
-          go.textContent = files.length >= 2 ? 'Merge ' + files.length + ' PDFs' : 'Merge PDFs';
-          hideResult(res);
-        }
+      async function toJpeg(file, quality) {
+        const img = await P.decodeImage(file, { maxDim: 2400 });
+        const c = document.createElement('canvas');
+        c.width = img.width; c.height = img.height;
+        const cx = c.getContext('2d');
+        cx.fillStyle = '#ffffff';
+        cx.fillRect(0, 0, c.width, c.height);
+        cx.drawImage(img, 0, 0);
+        const blob = await P.canvasToBlob(c, 'image/jpeg', quality);
+        return { bytes: new Uint8Array(await blob.arrayBuffer()), w: c.width, h: c.height };
+      }
 
-        wireDrop($('dropM'), $('fileM'), incoming => {
-          const pdfs = incoming.filter(f => f.type === 'application/pdf' || /\.pdf$/i.test(f.name));
-          if (pdfs.length !== incoming.length) alert('Only PDF files can be merged.');
-          files = files.concat(pdfs);
-          refresh();
-        });
+      go.addEventListener('click', async () => {
+        if (!items.length || busy) return;
+        busy = true;
+        P.setLoading(go, true);
+        hideResult(res);
+        try {
+          const { PDFDocument } = await pdfLib();
+          const pdf = await PDFDocument.create();
+          pdf.setProducer('PIXNIVO');
+          pdf.setCreator('PIXNIVO Images to PDF');
+          const quality = parseInt($('imgQuality').value, 10) / 100;
+          const marginPt = parseInt($('margin').value, 10) / MM_PER_PT;
+          const sizeMode = $('pageSize').value;
+          const orient = $('orientation').value;
 
-        $('clearM').addEventListener('click', () => { files = []; refresh(); progressDone(prog); });
-
-        go.addEventListener('click', async () => {
-          if (files.length < 2) return;
-          go.disabled = true; hideResult(res);
-          try{
-            const { PDFDocument } = PDFLib;
-            const merged = await PDFDocument.create();
-            let pageCount = 0;
-
-            for (let i = 0; i < files.length; i++){
-              progress(prog, Math.round(i / files.length * 100), 'Merging ' + files[i].name + 'â€¦');
-              await new Promise(r => setTimeout(r, 0));
-              const buf = await files[i].arrayBuffer();
-              let src;
-              try{
-                src = await PDFDocument.load(buf, { ignoreEncryption: false });
-              } catch(e){
-                throw new Error(files[i].name + ' could not be read. It may be password-protected or damaged.');
-              }
-              const pages = await merged.copyPages(src, src.getPageIndices());
-              pages.forEach(p => { merged.addPage(p); pageCount++; });
-            }
-
-            progress(prog, 100, 'Saving merged fileâ€¦');
-            const out = await merged.save();
-            const size = save(out, 'pixnivo-merged.pdf');
-            progressDone(prog);
-            showResult(res, 'PDFs Merged Successfully', pageCount + ' total pages Â· ' + fmt(size) + ' Â· Saved to device.');
-          } catch(err){
-            console.error(err);
-            progressDone(prog);
-            alert(err.message || 'Could not merge these PDFs.');
-          }
-          go.disabled = false;
-        });
-
-        refresh();
-      })();
-
-      /* 3. Compress PDF */
-      (function(){
-        let file = null;
-        const list = $('listC'), prog = $('progC'), res = $('resC'), go = $('doCompress');
-        const LEVELS = { 1:{q:.75,label:'Light'}, 2:{q:.6,label:'Balanced'}, 3:{q:.42,label:'Maximum'} };
-
-        function refresh(){
-          const arr = file ? [file] : [];
-          renderList(list, arr, () => { file = arr[0] || null; refresh(); }, false);
-          go.disabled = !file;
-          hideResult(res);
-        }
-
-        wireDrop($('dropC'), $('fileC'), incoming => {
-          const f = incoming.find(x => x.type === 'application/pdf' || /\.pdf$/i.test(x.name));
-          if (!f){ alert('Please choose a PDF file.'); return; }
-          file = f; refresh();
-        });
-
-        $('compLevel').addEventListener('input', e => $('cqVal').textContent = LEVELS[e.target.value].label);
-        $('dpi').addEventListener('input', e => $('dpiVal').textContent = e.target.value + ' DPI');
-        $('clearC').addEventListener('click', () => { file = null; refresh(); progressDone(prog); });
-
-        go.addEventListener('click', async () => {
-          if (!file) return;
-          if (!window.pdfjsLib){ alert('PDF engine did not load. Please check your connection and reload.'); return; }
-          go.disabled = true; hideResult(res);
-          const originalSize = file.size;
-
-          try{
-            const { PDFDocument } = PDFLib;
-            const quality = LEVELS[$('compLevel').value].q;
-            const targetDpi = parseInt($('dpi').value);
-            const scale = targetDpi / 72;
-
-            const buf = await file.arrayBuffer();
-            const src = await pdfjsLib.getDocument({ data: buf }).promise;
-            const out = await PDFDocument.create();
-
-            for (let n = 1; n <= src.numPages; n++){
-              progress(prog, Math.round((n-1) / src.numPages * 100), 'Compressing page ' + n + ' of ' + src.numPages + 'â€¦');
-              await new Promise(r => setTimeout(r, 0));
-
-              const page = await src.getPage(n);
-              const vp = page.getViewport({ scale: scale });
-
-              const c = document.createElement('canvas');
-              c.width = Math.max(1, Math.round(vp.width));
-              c.height = Math.max(1, Math.round(vp.height));
-              const cx = c.getContext('2d');
-              cx.fillStyle = '#ffffff';
-              cx.fillRect(0, 0, c.width, c.height);
-              await page.render({ canvasContext: cx, viewport: vp }).promise;
-
-              const blob = await new Promise(r => c.toBlob(r, 'image/jpeg', quality));
-              const bytes = new Uint8Array(await blob.arrayBuffer());
-              const img = await out.embedJpg(bytes);
-
-              const orig = page.getViewport({ scale: 1 });
-              const p = out.addPage([orig.width, orig.height]);
-              p.drawImage(img, { x:0, y:0, width: orig.width, height: orig.height });
-            }
-
-            progress(prog, 100, 'Saving compressed fileâ€¦');
-            const bytes = await out.save();
-            const newSize = save(bytes, file.name.replace(/\.pdf$/i,'') + '-compressed.pdf');
-            progressDone(prog);
-
-            const saved = originalSize - newSize;
-            if (saved > 0){
-              showResult(res, 'Compressed ' + Math.round(saved / originalSize * 100) + '% Smaller',
-                fmt(originalSize) + ' â†’ ' + fmt(newSize) + ' Â· ' + src.numPages + ' pages.');
+          for (let i = 0; i < items.length; i++) {
+            progress(prog, (i / items.length) * 100, `Adding page ${i + 1} of ${items.length}…`);
+            await P.nextFrame();
+            const { bytes, w, h } = await toJpeg(items[i].file, quality);
+            const embedded = await pdf.embedJpg(bytes);
+            let pw, ph;
+            if (sizeMode === 'fit') {
+              pw = w + marginPt * 2; ph = h + marginPt * 2;
             } else {
-              showResult(res, 'File Processed',
-                fmt(originalSize) + ' â†’ ' + fmt(newSize) + '. This PDF was already highly optimized.');
+              const base = sizeMode === 'a4' ? A4 : LETTER;
+              const landscape = orient === 'landscape' || (orient === 'auto' && w > h);
+              pw = landscape ? base.h : base.w;
+              ph = landscape ? base.w : base.h;
             }
-          } catch(err){
-            console.error(err);
-            progressDone(prog);
-            alert('Could not compress PDF: ' + (err.message || err));
+            const page = pdf.addPage([pw, ph]);
+            const fit = Math.min((pw - marginPt * 2) / w, (ph - marginPt * 2) / h);
+            const dw = w * fit, dh = h * fit;
+            page.drawImage(embedded, { x: (pw - dw) / 2, y: (ph - dh) / 2, width: dw, height: dh });
           }
-          go.disabled = false;
-        });
 
-        refresh();
-      })();
+          progress(prog, 100, 'Finalizing PDF…');
+          const blob = pdfBlob(await pdf.save());
+          const name = items.length === 1 ? `${P.baseName(items[0].file.name)}.pdf` : `pixnivo-${items.length}-pages.pdf`;
+          last = { blob, name };
+          P.downloadBlob(blob, name);
+          progressDone(prog);
+          showResult(res, 'Your PDF is ready', `${items.length} page${items.length === 1 ? '' : 's'} · ${P.formatBytes(blob.size)} · saved as ${name}`);
+        } catch (err) {
+          console.error(err);
+          progressDone(prog);
+          P.toast('Could not create the PDF. ' + (err.message || ''), { type: 'error' });
+        } finally {
+          busy = false;
+          P.setLoading(go, false);
+          go.disabled = !items.length;
+        }
+      });
 
+      refresh();
     })();
+
+    /* ==================== 2. MERGE PDF ==================== */
+    (function () {
+      const items = [];
+      const list = $('listM'), prog = $('progM'), res = $('resM'), go = $('doMerge');
+      let last = null, busy = false;
+
+      function valid() { return items.filter(it => !it.error && it.pages); }
+
+      function refresh() {
+        const ok = valid();
+        const pages = ok.reduce((n, it) => n + it.pages, 0);
+        renderList(list, items, {
+          summary: `${items.length} file${items.length === 1 ? '' : 's'} · ${pages} page${pages === 1 ? '' : 's'} total`,
+          meta: it => it.pages ? `${it.pages} page${it.pages === 1 ? '' : 's'}` : 'Reading…',
+          onChange: refresh
+        });
+        const hasErrors = items.some(it => it.error);
+        const pending = items.some(it => !it.pages && !it.error);
+        go.disabled = busy || ok.length < 2 || hasErrors || pending;
+        go.querySelector('span').textContent = ok.length >= 2 ? `Merge ${ok.length} PDFs` : 'Merge PDFs';
+        const has = items.length > 0;
+        $('dropM').classList.toggle('dropzone-sm', has);
+        $('addM').hidden = !has;
+        $('clearM').hidden = !has;
+        hideResult(res);
+      }
+
+      async function inspect(item) {
+        try {
+          const { PDFDocument } = await pdfLib();
+          const doc = await PDFDocument.load(await item.file.arrayBuffer(), { ignoreEncryption: true, updateMetadata: false });
+          if (doc.isEncrypted) item.error = 'Password-protected — unlock it first, then remove and re-add';
+          else item.pages = doc.getPageCount();
+        } catch (e) {
+          item.error = 'Couldn’t read this file — it may be damaged';
+        }
+        refresh();
+      }
+
+      P.wireDropzone($('dropM'), $('fileM'), incoming => {
+        const pdfs = incoming.filter(isPdf);
+        const skipped = incoming.length - pdfs.length;
+        if (skipped) P.toast(`${skipped} file${skipped === 1 ? ' was' : 's were'} skipped — only PDF files can be merged.`, { type: 'warning' });
+        const added = pdfs.map(f => ({ file: f, kind: 'pdf', pages: 0, error: '' }));
+        items.push(...added);
+        refresh();
+        added.forEach(inspect);
+        if (items.length === 1) P.toast('Add at least one more PDF to merge.', { type: 'info' });
+      });
+
+      $('addM').addEventListener('click', () => $('fileM').click());
+      $('clearM').addEventListener('click', () => { items.splice(0); progressDone(prog); refresh(); });
+      wireRedownload(res, () => last);
+
+      go.addEventListener('click', async () => {
+        const ok = valid();
+        if (ok.length < 2 || busy) return;
+        busy = true;
+        P.setLoading(go, true);
+        hideResult(res);
+        try {
+          const { PDFDocument } = await pdfLib();
+          const merged = await PDFDocument.create();
+          merged.setProducer('PIXNIVO');
+          let pageCount = 0;
+          for (let i = 0; i < ok.length; i++) {
+            progress(prog, (i / ok.length) * 100, `Adding ${ok[i].file.name}…`);
+            await P.nextFrame();
+            const src = await PDFDocument.load(await ok[i].file.arrayBuffer(), { ignoreEncryption: true });
+            const pages = await merged.copyPages(src, src.getPageIndices());
+            pages.forEach(p => { merged.addPage(p); pageCount++; });
+          }
+          progress(prog, 100, 'Saving merged file…');
+          const blob = pdfBlob(await merged.save());
+          const name = 'pixnivo-merged.pdf';
+          last = { blob, name };
+          P.downloadBlob(blob, name);
+          progressDone(prog);
+          showResult(res, 'PDFs merged', `${ok.length} files · ${pageCount} pages · ${P.formatBytes(blob.size)} · saved as ${name}`);
+        } catch (err) {
+          console.error(err);
+          progressDone(prog);
+          P.toast('Could not merge these PDFs. ' + (err.message || ''), { type: 'error' });
+        } finally {
+          busy = false;
+          P.setLoading(go, false);
+          go.disabled = valid().length < 2;
+        }
+      });
+
+      refresh();
+    })();
+
+    /* ==================== 3. COMPRESS PDF ==================== */
+    (function () {
+      const LEVELS = { 1: { q: 0.75, label: 'Light' }, 2: { q: 0.6, label: 'Balanced' }, 3: { q: 0.42, label: 'Strong' } };
+      const MAX_RENDER_DIM = 5000;
+      const list = $('listC'), prog = $('progC'), res = $('resC'), go = $('doCompress');
+      const levelChips = [...document.querySelectorAll('#stage-compress [data-level]')];
+      let item = null, level = 2, last = null, busy = false, pendingLarger = null;
+
+      function refresh() {
+        const arr = item ? [item] : [];
+        renderList(list, arr, {
+          reorder: false,
+          meta: it => it.pages ? `${it.pages} page${it.pages === 1 ? '' : 's'}` : 'Reading…',
+          onChange: () => { item = arr[0] || null; refresh(); }
+        });
+        go.disabled = busy || !item || !!item.error || !item.pages;
+        $('dropC').hidden = !!item;
+        $('clearC').hidden = !item;
+        $('settingsC').hidden = !item;
+        hideResult(res);
+      }
+
+      async function inspect(it) {
+        try {
+          const { PDFDocument } = await pdfLib();
+          const doc = await PDFDocument.load(await it.file.arrayBuffer(), { ignoreEncryption: true, updateMetadata: false });
+          if (doc.isEncrypted) it.error = 'Password-protected — unlock it first';
+          else it.pages = doc.getPageCount();
+        } catch (e) {
+          it.error = 'Couldn’t read this file — it may be damaged';
+        }
+        if (it === item) refresh();
+      }
+
+      P.wireDropzone($('dropC'), $('fileC'), incoming => {
+        const f = incoming.find(isPdf);
+        if (!f) { P.toast('Please choose a PDF file.', { type: 'warning' }); return; }
+        item = { file: f, kind: 'pdf', pages: 0, error: '' };
+        last = null;
+        refresh();
+        inspect(item);
+      });
+
+      levelChips.forEach(chip => chip.addEventListener('click', () => {
+        level = parseInt(chip.dataset.level, 10);
+        levelChips.forEach(c => { const on = c === chip; c.classList.toggle('active', on); c.setAttribute('aria-pressed', String(on)); });
+      }));
+      $('dpi').addEventListener('input', e => { $('dpiVal').textContent = e.target.value + ' DPI'; });
+      $('clearC').addEventListener('click', () => { item = null; last = null; progressDone(prog); refresh(); $('fileC').click(); });
+
+      res.querySelector('[data-redownload]').addEventListener('click', () => {
+        if (pendingLarger) { P.downloadBlob(pendingLarger.blob, pendingLarger.name); return; }
+        if (last) P.downloadBlob(last.blob, last.name);
+      });
+
+      go.addEventListener('click', async () => {
+        if (!item || busy) return;
+        busy = true;
+        pendingLarger = null;
+        P.setLoading(go, true);
+        hideResult(res);
+        const originalSize = item.file.size;
+        let doc = null;
+        try {
+          const [{ PDFDocument }, pdfjs] = await Promise.all([pdfLib(), pdfJs()]);
+          const quality = LEVELS[level].q;
+          const scale = parseInt($('dpi').value, 10) / 72;
+          doc = await pdfjs.getDocument({ data: new Uint8Array(await item.file.arrayBuffer()) }).promise;
+          const out = await PDFDocument.create();
+          out.setProducer('PIXNIVO');
+
+          for (let n = 1; n <= doc.numPages; n++) {
+            progress(prog, ((n - 1) / doc.numPages) * 100, `Compressing page ${n} of ${doc.numPages}…`);
+            await P.nextFrame();
+            const page = await doc.getPage(n);
+            const base = page.getViewport({ scale: 1 });
+            const s = Math.min(scale, MAX_RENDER_DIM / Math.max(base.width, base.height));
+            const vp = page.getViewport({ scale: s });
+            const c = document.createElement('canvas');
+            c.width = Math.max(1, Math.round(vp.width));
+            c.height = Math.max(1, Math.round(vp.height));
+            const cx = c.getContext('2d');
+            cx.fillStyle = '#ffffff';
+            cx.fillRect(0, 0, c.width, c.height);
+            // 'print' intent renders without requestAnimationFrame, so work continues in background tabs
+            await page.render({ canvasContext: cx, viewport: vp, intent: 'print' }).promise;
+            const blob = await P.canvasToBlob(c, 'image/jpeg', quality);
+            const img = await out.embedJpg(new Uint8Array(await blob.arrayBuffer()));
+            const p = out.addPage([base.width, base.height]);
+            p.drawImage(img, { x: 0, y: 0, width: base.width, height: base.height });
+            page.cleanup();
+            c.width = c.height = 0;
+          }
+
+          progress(prog, 100, 'Saving compressed file…');
+          const blob = pdfBlob(await out.save());
+          const name = `${P.baseName(item.file.name)}-compressed.pdf`;
+          progressDone(prog);
+
+          if (blob.size < originalSize) {
+            last = { blob, name };
+            P.downloadBlob(blob, name);
+            const pct = Math.round((1 - blob.size / originalSize) * 100);
+            showResult(res, `${pct}% smaller`, `${P.formatBytes(originalSize)} → ${P.formatBytes(blob.size)} · ${doc.numPages} page${doc.numPages === 1 ? '' : 's'} · saved as ${name}`);
+          } else {
+            pendingLarger = { blob, name };
+            showResult(res, 'This PDF is already well optimized',
+              `A compressed copy would be ${P.formatBytes(blob.size)} — not smaller than your original (${P.formatBytes(originalSize)}). Keep the original, or try a lower resolution or Strong compression.`,
+              { warn: true, actionLabel: 'Download anyway' });
+          }
+        } catch (err) {
+          console.error(err);
+          progressDone(prog);
+          const msg = err && err.name === 'PasswordException' ? 'This PDF is password-protected. Unlock it first, then try again.' : 'Could not compress this PDF. ' + (err.message || '');
+          P.toast(msg, { type: 'error' });
+        } finally {
+          if (doc) doc.destroy();
+          busy = false;
+          P.setLoading(go, false);
+          go.disabled = !item;
+        }
+      });
+
+      refresh();
+    })();
+  })();
   </script>
-
-
-<script>
-
-</script>
 </body>
 </html>
-
-
-

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>How to Convert Photos to PDF on Your Phone — PIXNIVO</title>
   <meta name="description" content="Turn document photos into a clean, correctly ordered PDF in your browser — no app to install and nothing uploaded." />
-  <meta name="theme-color" content="#08070b" />
+  <meta name="theme-color" content="#fafafa" />
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9RDW8F1H9D"></script>
@@ -19,7 +19,13 @@
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8972850134795669" crossorigin="anonymous"></script>
 
-  <link rel="stylesheet" href="/assets/css/main.css" />
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="/assets/css/main.css?v=20261010" />
+  <script src="/assets/js/site.js?v=20261010"></script>
 
   <!-- Instant Theme Detection Script -->
   <script>
@@ -35,55 +41,42 @@
 </head>
 <body>
 
-  <!-- Dynamic Colorful Aurora Background -->
-  <div class="ambient-bg" aria-hidden="true">
-    <div class="ambient-orb orb-1"></div>
-    <div class="ambient-orb orb-2"></div>
-    <div class="ambient-orb orb-3"></div>
-    <div class="ambient-orb orb-4"></div>
-    <div class="ambient-orb orb-5"></div>
-  </div>
 
-  <!-- Floating Glass Navigation -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
   <header class="site-header">
     <div class="nav-container">
-      <a class="brand" href="/">
-        <div class="brand-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="12 2 2 7 12 12 22 7 12 12 22 7 12 2"></polygon>
-            <polyline points="2 17 12 22 22 17"></polyline>
-            <polyline points="2 12 12 17 22 12"></polyline>
-          </svg>
-        </div>
-        PIX<span>NIVO</span>
+      <a class="brand" href="/" aria-label="PIXNIVO home">
+        <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+        <span class="brand-name">PIX<span>NIVO</span></span>
       </a>
 
-      <nav class="nav-links" id="navLinks">
-        <a class="nav-link" href="/">Image Tools</a>
-        <a class="nav-link" href="/logo-generator">Logo Generator</a>
-        <a class="nav-link" href="/pdf-tools">PDF Tools</a>
-                <a class="nav-link" href="/ai-ocr">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          AI OCR
-        </a>
-        <a class="nav-link active" href="/blog">Guides</a>
-        <a class="nav-link" href="/about">About</a>
-        <a class="nav-link" href="/contact">Contact</a>
+      <nav class="nav-links" id="navLinks" aria-label="Main">
+        <a class="nav-link" href="/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg><span>Image Tools</span></a>
+        <a class="nav-link" href="/logo-generator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg><span>Logo Generator</span></a>
+        <a class="nav-link" href="/pdf-tools"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>PDF Tools</span></a>
+        <a class="nav-link" href="/ai-ocr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 8h8"/><path d="M7 12h10"/><path d="M7 16h6"/></svg><span>AI OCR</span></a>
+        <a class="nav-link" href="/barcode-tools.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5v14"/><path d="M8 5v14"/><path d="M12 5v14"/><path d="M17 5v14"/><path d="M21 5v14"/></svg><span>Barcode Tools</span></a>
+        <a class="nav-link" href="/blog" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>Guides</span></a>
+        <div class="nav-divider" role="separator"></div>
+        <a class="nav-link nav-secondary" href="/about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span>About</span></a>
+        <a class="nav-link nav-secondary" href="/contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><span>Contact</span></a>
       </nav>
 
       <div class="nav-actions">
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme" title="Toggle Theme">
-          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
         </button>
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <button class="mobile-toggle" id="mobileToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+          <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
     </div>
   </header>
 
-  <main class="article-wrap">
+  <main id="main" class="article-wrap">
     <a class="back-link" href="/blog">← All Guides</a>
 
     <header class="article-header">
@@ -150,36 +143,58 @@
   </main>
 
   <footer class="site-footer">
-    <div class="footer-nav">
-      <a href="/">Home</a><span class="dot">&bull;</span>
-      <a href="/pdf-tools">PDF Tools</a><span class="dot">&bull;</span>
-      <a href="/ai-ocr">AI OCR</a><span class="dot">&bull;</span>
-      <a href="/blog">Guides</a><span class="dot">&bull;</span>
-      <a href="/about">About</a><span class="dot">&bull;</span>
-      <a href="/privacy">Privacy</a><span class="dot">&bull;</span>
-      <a href="/terms">Terms</a><span class="dot">&bull;</span>
-      <a href="/contact">Contact</a>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="/" aria-label="PIXNIVO home">
+          <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+          <span class="brand-name">PIX<span>NIVO</span></span>
+        </a>
+        <p>Fast, privacy-first image, PDF and document tools that run right in your browser. No sign-up, no watermarks.</p>
+      </div>
+      <div class="footer-col">
+        <h2>Image tools</h2>
+        <ul>
+          <li><a href="/?tab=compress">Image Compressor</a></li>
+          <li><a href="/?tab=edit">Photo Editor</a></li>
+          <li><a href="/?tab=bg">Background Remover</a></li>
+          <li><a href="/?tab=upscale">Image Upscaler</a></li>
+          <li><a href="/logo-generator">Logo Generator</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Document tools</h2>
+        <ul>
+          <li><a href="/pdf-tools?tab=img2pdf">Images to PDF</a></li>
+          <li><a href="/pdf-tools?tab=merge">Merge PDF</a></li>
+          <li><a href="/pdf-tools?tab=compress">Compress PDF</a></li>
+          <li><a href="/ai-ocr">AI OCR</a></li>
+          <li><a href="/barcode-tools.html">Barcode Generator</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Resources</h2>
+        <ul>
+          <li><a href="/blog">All guides</a></li>
+          <li><a href="/compress-images-for-whatsapp">Compress for WhatsApp</a></li>
+          <li><a href="/jpg-vs-png-vs-webp">JPG vs PNG vs WebP</a></li>
+          <li><a href="/passport-size-photo-at-home">Passport photos at home</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Company</h2>
+        <ul>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
     </div>
     <div class="footer-bottom">
-      <span>&copy; 2026 PIXNIVO</span>
+      <span>&copy; <span data-year>2026</span> PIXNIVO. All rights reserved.</span>
+      <span>Privacy-first tools &middot; Most processing happens on your device.</span>
     </div>
   </footer>
 
-  <script>
-    /* Theme Toggle */
-    const themeToggle = document.getElementById('themeToggle');
-    if (themeToggle) {
-      themeToggle.addEventListener('click', () => {
-        const current = document.documentElement.getAttribute('data-theme') || 'dark';
-        const next = current === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        try { localStorage.setItem('pixnivo_theme', next); } catch(e) {}
-      });
-    }
-
-    const mobileToggle = document.getElementById('mobileToggle');
-    const navLinks = document.getElementById('navLinks');
-    if (mobileToggle && navLinks) mobileToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
-  </script>
 </body>
 </html>
