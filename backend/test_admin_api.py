@@ -1,15 +1,18 @@
 import os
 import secrets
+import sys
 import tempfile
+
+# main reads these at import time. Throwaway values keep the test independent of real
+# credentials and away from backend/data/auth.json.
+TEST_ADMIN_PASSWORD = "Test1" + secrets.token_urlsafe(16)
+os.environ["ADMIN_SECRET_KEY"] = secrets.token_urlsafe(48)
+os.environ["ADMIN_USERNAME"] = "admin@pixnivo.app"
+os.environ["ADMIN_PASSWORD"] = TEST_ADMIN_PASSWORD
+os.environ["ADMIN_AUTH_FILE"] = os.path.join(tempfile.mkdtemp(), "auth.json")
 
 from fastapi.testclient import TestClient
 import main
-
-# Throwaway admin account so the test never needs (or touches) the real credentials
-TEST_PASSWORD = "Test-" + secrets.token_hex(8)
-main.AUTH_FILE = os.path.join(tempfile.mkdtemp(), "auth.json")
-_salt, _hash = main.hash_password_pbkdf2(TEST_PASSWORD)
-main.save_auth_credentials({"username": "admin@pixnivo.app", "salt": _salt, "hash": _hash})
 
 client = TestClient(main.app)
 
@@ -22,12 +25,12 @@ def test_public_blogs():
 
 def test_auth_failure_and_success():
     # Test invalid credentials
-    bad_res = client.post("/api/auth/login", json={"username": "admin@pixnivo.app", "password": "WrongPassword123!"})
+    bad_res = client.post("/api/auth/login", json={"username": "admin@pixnivo.app", "password": "wrong-password"})
     assert bad_res.status_code == 401, f"Expected 401, got {bad_res.status_code}"
     print(f"PASS: Bad credentials rejected: {bad_res.json()['detail']}")
 
     # Test valid credentials
-    good_res = client.post("/api/auth/login", json={"username": "admin@pixnivo.app", "password": TEST_PASSWORD})
+    good_res = client.post("/api/auth/login", json={"username": "admin@pixnivo.app", "password": TEST_ADMIN_PASSWORD})
     assert good_res.status_code == 200, f"Expected 200, got {good_res.status_code}"
     data = good_res.json()
     assert "token" in data, "Token missing in login response"
