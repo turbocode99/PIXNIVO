@@ -333,7 +333,7 @@
           <aside class="control-panel" aria-label="Background removal controls">
             <div class="panel-section">
               <button class="btn btn-primary btn-lg btn-block" type="button" id="removeBgBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"/><path d="m14 7 3 3"/><path d="M5 6v4"/><path d="M19 14v4"/><path d="M10 2v2"/><path d="M7 8H3"/><path d="M21 16h-4"/><path d="M11 3H9"/></svg><span>Remove background</span></button>
-              <p class="hint" id="bgHint">The first use downloads a compact AI model, then everything runs on your device — later photos are much faster.</p>
+              <p class="hint" id="bgHint">Powered by BiRefNet. The first use downloads the AI model (about 190 MB on most computers) and saves it in your browser, so later photos take just seconds.</p>
             </div>
 
             <fieldset class="panel-section" id="bgBackdrop" disabled>
@@ -354,10 +354,10 @@
             <fieldset class="panel-section" id="bgRefine" disabled>
               <legend class="panel-section-title">Refine edges</legend>
               <div class="field">
-                <label for="edgeClean">Edge cleanup <span class="val" id="edgeCleanVal">45</span></label>
-                <input type="range" id="edgeClean" min="0" max="100" value="45" />
+                <label for="edgeClean">Edge tightening <span class="val" id="edgeCleanVal">0</span></label>
+                <input type="range" id="edgeClean" min="0" max="100" value="0" />
               </div>
-              <p class="hint">Removes halos around the subject without eating into hair or clothing.</p>
+              <p class="hint">Edges are already colour-corrected. Increase this only if a thin outline of the old background remains.</p>
             </fieldset>
 
             <fieldset class="panel-section" id="bgEraser" disabled>
@@ -1396,15 +1396,16 @@
         return err;
       }
 
-      async function rmbg2Supported() {
+      /* Returns '' when the high-quality GPU model can run here, otherwise the reason it can't */
+      async function webgpuReason() {
         const conn = navigator.connection;
-        if (conn && conn.saveData) return 'Data Saver is on, so a lighter model was used.';
-        if (navigator.deviceMemory && navigator.deviceMemory < 4) return 'This device has limited memory, so a lighter model was used.';
-        if (!navigator.gpu) return 'RMBG-2.0 needs WebGPU, which this browser doesn’t support yet, so a lighter model was used.';
+        if (conn && conn.saveData) return 'Data Saver is on, so the lighter model was used.';
+        if (navigator.deviceMemory && navigator.deviceMemory < 4) return 'This device has limited memory, so the lighter model was used.';
+        if (!navigator.gpu) return 'This browser doesn’t support WebGPU, so the lighter model was used.';
         try {
-          if (!(await navigator.gpu.requestAdapter())) return 'No compatible graphics adapter was found for RMBG-2.0, so a lighter model was used.';
+          if (!(await navigator.gpu.requestAdapter())) return 'No compatible graphics adapter was found, so the lighter model was used.';
         } catch (e) {
-          return 'WebGPU is unavailable, so a lighter model was used.';
+          return 'WebGPU is unavailable, so the lighter model was used.';
         }
         return '';
       }
@@ -1494,7 +1495,7 @@
 
       async function removeWithRmbg2(source) {
         if (!rmbg2Session) {
-          const reason = await rmbg2Supported();
+          const reason = await webgpuReason();
           if (reason) throw skipEngine(reason);
           if (!ortMod) ortMod = await import(ORT_URL);
           let bytes = await fetchModel(RMBG2_URL, 'rmbg-2.0-webgpu-fp16.onnx', 'RMBG-2.0');
@@ -1537,31 +1538,103 @@
           throw err;
         }
 
-        // 1024² alpha mask → scaled smoothly to the photo's full resolution
-        const maskData = wx.createImageData(S, S);
-        for (let i = 0; i < plane; i++) {
-          const v = alphas[i];
-          maskData.data[i * 4] = 255;
-          maskData.data[i * 4 + 1] = 255;
-          maskData.data[i * 4 + 2] = 255;
-          maskData.data[i * 4 + 3] = v <= 0 ? 0 : v >= 1 ? 255 : Math.round(v * 255);
-        }
-        wx.clearRect(0, 0, S, S);
-        wx.putImageData(maskData, 0, 0);
+        return applyMatte(source, alphas, S, S);
+      }
 
+      /* ---- Mask → full-resolution matte ----
+         Upscales a low-resolution alpha mask smoothly to the photo's full size.
+         (Guided-filter edge snapping was evaluated against RMBG-2.0 output and
+         made agreement slightly worse, so a high-quality bilinear upscale is used.) */
+      function applyMatte(source, alpha, mw, mh) {
+        const mc = document.createElement('canvas');
+        mc.width = mw; mc.height = mh;
+        const mx = mc.getContext('2d');
+        const md = mx.createImageData(mw, mh);
+        for (let i = 0; i < mw * mh; i++) {
+          const v = alpha[i];
+          md.data[i * 4] = 255; md.data[i * 4 + 1] = 255; md.data[i * 4 + 2] = 255;
+          md.data[i * 4 + 3] = v <= 0 ? 0 : v >= 1 ? 255 : Math.round(v * 255);
+        }
+        mx.putImageData(md, 0, 0);
+
+        const W = source.width, H = source.height;
         const out = document.createElement('canvas');
-        out.width = source.width; out.height = source.height;
+        out.width = W; out.height = H;
         const ox = out.getContext('2d', { willReadFrequently: true });
         ox.imageSmoothingQuality = 'high';
-        ox.drawImage(work, 0, 0, out.width, out.height);
-        const mask = ox.getImageData(0, 0, out.width, out.height).data;
-        ox.clearRect(0, 0, out.width, out.height);
+        ox.drawImage(mc, 0, 0, W, H);
+        const matte = ox.getImageData(0, 0, W, H).data;
+        ox.clearRect(0, 0, W, H);
         ox.drawImage(source, 0, 0);
-        const id = ox.getImageData(0, 0, out.width, out.height);
+        const id = ox.getImageData(0, 0, W, H);
         const d = id.data;
-        for (let p = 3; p < d.length; p += 4) d[p] = Math.round((d[p] * mask[p]) / 255);
+        for (let q = 3; q < d.length; q += 4) d[q] = Math.round((d[q] * matte[q]) / 255);
         ox.putImageData(id, 0, 0);
         return out;
+      }
+
+      /* ---- Engine 0: BiRefNet (MIT) on the GPU ----
+         BiRefNet is the open architecture RMBG-2.0 is built on. The full general
+         model runs at 512x512 on WebGPU (the 1024 exports exhaust the 4 GB
+         WebAssembly heap). MatMul weights are 4-bit (194 MB; see
+         scripts/models/build_birefnet.py). On our test photos its masks agree
+         with RMBG-2.0 at IoU 0.98-0.998 on clear subjects (0.927 mean). */
+      const BIREFNET = {
+        url: '/models/birefnet-general-512-q4-v1.onnx',
+        file: 'birefnet-general-512-q4-v1.onnx',
+        size: 512,
+        mean: [0.485, 0.456, 0.406],
+        std: [0.229, 0.224, 0.225]
+      };
+      let birefnetSession = null;
+
+      async function removeWithBirefnet(source) {
+        if (!birefnetSession) {
+          const reason = await webgpuReason();
+          if (reason) throw skipEngine(reason);
+          if (!ortMod) ortMod = await import(ORT_URL);
+          let bytes = await fetchModel(BIREFNET.url, BIREFNET.file, 'BiRefNet');
+          setOverlay(true, 'Preparing AI model…', 'Loading BiRefNet onto your graphics card.');
+          try {
+            birefnetSession = await ortMod.InferenceSession.create(bytes, { executionProviders: ['webgpu'] });
+            bytes = null;
+          } catch (e) {
+            const err = new Error('BiRefNet could not start: ' + (e && e.message || e));
+            err.persistent = true;
+            throw err;
+          }
+        }
+
+        setOverlay(true, 'Removing background…', 'BiRefNet is analyzing your photo on your device.');
+        const S = BIREFNET.size, plane = S * S;
+        const work = document.createElement('canvas');
+        work.width = S; work.height = S;
+        const wx = work.getContext('2d', { willReadFrequently: true });
+        wx.imageSmoothingQuality = 'high';
+        wx.drawImage(source, 0, 0, S, S);
+        const px = wx.getImageData(0, 0, S, S).data;
+        const input = new Float32Array(3 * plane);
+        for (let i = 0; i < plane; i++) {
+          const p = i * 4;
+          input[i] = (px[p] / 255 - BIREFNET.mean[0]) / BIREFNET.std[0];
+          input[plane + i] = (px[p + 1] / 255 - BIREFNET.mean[1]) / BIREFNET.std[1];
+          input[2 * plane + i] = (px[p + 2] / 255 - BIREFNET.mean[2]) / BIREFNET.std[2];
+        }
+
+        let logits;
+        try {
+          const result = await birefnetSession.run({ [birefnetSession.inputNames[0]]: new ortMod.Tensor('float32', input, [1, 3, S, S]) });
+          logits = result[birefnetSession.outputNames[0]].data;
+        } catch (e) {
+          birefnetSession = null;
+          const err = new Error('BiRefNet failed while processing: ' + (e && e.message || e));
+          err.persistent = true;
+          throw err;
+        }
+
+        const alpha = new Float32Array(plane);
+        for (let i = 0; i < plane; i++) alpha[i] = 1 / (1 + Math.exp(-logits[i]));
+        return applyMatte(source, alpha, S, S);
       }
 
       /* ---- Engine 2: IMG.LY ISNet ---- */
@@ -1633,11 +1706,124 @@
         return out;
       }
 
-      /* Engines in order of preference. ISNet runs reliably in every modern
-         browser; person segmentation is the last resort. Engines that crash on a
-         device (for example out of memory) are skipped there for two weeks. */
+      /* ---- Foreground colour decontamination ----
+         Removes the background-coloured fringe that semi-transparent edges (hair,
+         fur, soft outlines) pick up from the original photo. Port of "Approximate
+         Fast Foreground Colour Estimation" (Forte & Pitié, ICIP 2021) as used by
+         BiRefNet's refine_foreground (MIT). Two blur-fusion passes run at a capped
+         working resolution; the final colour is solved at full resolution only for
+         semi-transparent pixels, so memory stays bounded on large photos. */
+      function boxBlurPlanes(planes, w, h, size) {
+        const r = Math.max(1, Math.floor(size / 2));
+        const tmp = new Float32Array(w * h);
+        for (const src of planes) {
+          for (let y = 0; y < h; y++) {
+            const row = y * w;
+            let acc = 0;
+            for (let k = -r; k <= r; k++) acc += src[row + Math.min(w - 1, Math.max(0, k))];
+            for (let x = 0; x < w; x++) {
+              tmp[row + x] = acc / (2 * r + 1);
+              acc += src[row + Math.min(w - 1, x + r + 1)] - src[row + Math.max(0, x - r)];
+            }
+          }
+          for (let x = 0; x < w; x++) {
+            let acc = 0;
+            for (let k = -r; k <= r; k++) acc += tmp[Math.min(h - 1, Math.max(0, k)) * w + x];
+            for (let y = 0; y < h; y++) {
+              src[y * w + x] = acc / (2 * r + 1);
+              acc += tmp[Math.min(h - 1, y + r + 1) * w + x] - tmp[Math.max(0, y - r) * w + x];
+            }
+          }
+        }
+      }
+
+      /* One blur-fusion pass. I, F, B: 3 planes each; A: alpha plane (0..1).
+         Returns { F: new foreground planes, bB: blurred background planes }. */
+      function blurFusion(I, F, B, A, w, h, size) {
+        const n = w * h;
+        const bA = Float32Array.from(A);
+        const bFA = [0, 1, 2].map(c => { const p = new Float32Array(n); for (let i = 0; i < n; i++) p[i] = F[c][i] * A[i]; return p; });
+        const bBA = [0, 1, 2].map(c => { const p = new Float32Array(n); for (let i = 0; i < n; i++) p[i] = B[c][i] * (1 - A[i]); return p; });
+        boxBlurPlanes([bA, ...bFA, ...bBA], w, h, size);
+        const outF = [0, 1, 2].map(() => new Float32Array(n));
+        for (let c = 0; c < 3; c++) {
+          const fa = bFA[c], ba = bBA[c], of = outF[c], ic = I[c];
+          for (let i = 0; i < n; i++) {
+            const bf = fa[i] / (bA[i] + 1e-5);
+            const bb = ba[i] / (1 - bA[i] + 1e-5);
+            const a = A[i];
+            const v = bf + a * (ic[i] - a * bf - (1 - a) * bb);
+            of[i] = v < 0 ? 0 : v > 1 ? 1 : v;
+            ba[i] = bb; // keep blurred background for the caller
+            fa[i] = bf;
+          }
+        }
+        return { F: outF, bF: bFA, bB: bBA };
+      }
+
+      function decontaminate(cut, source) {
+        const W = cut.width, H = cut.height;
+        const scale = Math.min(1, 1536 / Math.max(W, H));
+        const w = Math.max(1, Math.round(W * scale)), h = Math.max(1, Math.round(H * scale)), n = w * h;
+
+        // Working-resolution copies of the photo and the alpha matte
+        const wc = document.createElement('canvas');
+        wc.width = w; wc.height = h;
+        const wx = wc.getContext('2d', { willReadFrequently: true });
+        wx.imageSmoothingQuality = 'high';
+        wx.drawImage(source, 0, 0, w, h);
+        const ip = wx.getImageData(0, 0, w, h).data;
+        wx.clearRect(0, 0, w, h);
+        wx.drawImage(cut, 0, 0, w, h);
+        const ap = wx.getImageData(0, 0, w, h).data;
+        const I = [0, 1, 2].map(c => { const p = new Float32Array(n); for (let i = 0; i < n; i++) p[i] = ip[i * 4 + c] / 255; return p; });
+        const A = new Float32Array(n);
+        for (let i = 0; i < n; i++) A[i] = ap[i * 4 + 3] / 255;
+
+        const long = Math.max(w, h);
+        const pass1 = blurFusion(I, I, I, A, w, h, Math.max(9, Math.round(long * 0.088)));
+        const pass2 = blurFusion(I, pass1.F, pass1.bB, A, w, h, Math.max(3, Math.round(long * 0.006)));
+
+        // Solve the final colour at full resolution for semi-transparent pixels only
+        const cx = cut.getContext('2d', { willReadFrequently: true });
+        const full = cx.getImageData(0, 0, W, H);
+        const d = full.data;
+        const sc = document.createElement('canvas');
+        sc.width = W; sc.height = H;
+        const sx = sc.getContext('2d', { willReadFrequently: true });
+        sx.drawImage(source, 0, 0, W, H);
+        const src = sx.getImageData(0, 0, W, H).data;
+        const fx = (w - 1) / Math.max(1, W - 1), fy = (h - 1) / Math.max(1, H - 1);
+        const bf = pass2.bF, bb = pass2.bB;
+        for (let y = 0; y < H; y++) {
+          const gy = y * fy, y0 = Math.floor(gy), y1 = Math.min(h - 1, y0 + 1), ty = gy - y0;
+          for (let x = 0; x < W; x++) {
+            const p = (y * W + x) * 4;
+            const a8 = d[p + 3];
+            if (a8 === 0 || a8 === 255) continue;
+            const a = a8 / 255;
+            const gx = x * fx, x0 = Math.floor(gx), x1 = Math.min(w - 1, x0 + 1), tx = gx - x0;
+            const i00 = y0 * w + x0, i01 = y0 * w + x1, i10 = y1 * w + x0, i11 = y1 * w + x1;
+            const w00 = (1 - tx) * (1 - ty), w01 = tx * (1 - ty), w10 = (1 - tx) * ty, w11 = tx * ty;
+            for (let c = 0; c < 3; c++) {
+              const fc = bf[c], bc = bb[c];
+              const F0 = fc[i00] * w00 + fc[i01] * w01 + fc[i10] * w10 + fc[i11] * w11;
+              const B0 = bc[i00] * w00 + bc[i01] * w01 + bc[i10] * w10 + bc[i11] * w11;
+              const v = F0 + a * (src[p + c] / 255 - a * F0 - (1 - a) * B0);
+              d[p + c] = Math.round((v < 0 ? 0 : v > 1 ? 1 : v) * 255);
+            }
+          }
+        }
+        cx.putImageData(full, 0, 0);
+      }
+
+      /* Engines in order of preference. BiRefNet (best quality) runs on WebGPU;
+         ISNet runs in every modern browser; person segmentation is the last resort.
+         Engines that crash on a device (for example out of memory) are skipped there
+         for two weeks. */
       const ENGINES = [
         RMBG2_IN_BROWSER && { id: 'rmbg2', label: () => 'RMBG-2.0', run: removeWithRmbg2, denoise: true },
+        { id: 'birefnet', label: () => 'BiRefNet', run: removeWithBirefnet, denoise: true },
         { id: 'isnet', label: () => 'ISNet', run: removeWithImgly, denoise: true },
         { id: 'bodyseg', label: () => 'person segmentation', run: removeWithBodySeg, denoise: false }
       ].filter(Boolean);
@@ -1675,6 +1861,9 @@
             if (engine.denoise) denoiseAlpha(cut);
             const visible = visibleFraction(cut);
             if (visible < 0.02 || visible > 0.995) continue;
+            setOverlay(true, 'Refining edges…', 'Cleaning colour fringes around hair and soft edges.');
+            await P.nextFrame();
+            decontaminate(cut, img);
             rawCutout = cut;
             modelWarm = true;
             manualErase = null; strokeHistory = []; undoStroke.disabled = true;
@@ -1774,7 +1963,7 @@
         resetBackdropUi();
         $('customSwatchB').classList.remove('active');
         setResultControls(false);
-        bgHint.textContent = 'The first use downloads a compact AI model, then everything runs on your device — later photos are much faster.';
+        bgHint.textContent = 'Powered by BiRefNet. The first use downloads the AI model (about 190 MB on most computers) and saves it in your browser, so later photos take just seconds.';
         drawOriginal();
       });
 

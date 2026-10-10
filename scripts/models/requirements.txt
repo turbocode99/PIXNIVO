@@ -1,0 +1,5 @@
+onnx==1.23.2
+onnxruntime==1.31.0
+onnx-ir==1.0.0
+numpy==2.5.3
+ml_dtypes==0.6.0

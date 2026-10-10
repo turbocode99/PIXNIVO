@@ -100,7 +100,7 @@
       <p>Color bleeding from the original background (e.g. green cast from foliage) is desaturated along the matte rim to prevent halo fringes when superimposed on white or dark canvases.</p>
 
       <div class="callout-box">
-        <p><b>On your device:</b> PIXNIVO runs an ISNet segmentation model directly in your browser with ONNX Runtime Web, so your photo is processed on your own hardware and never uploaded.</p>
+        <p><b>On your device:</b> PIXNIVO runs BiRefNet — the open architecture behind leading commercial background removers — directly in your browser with ONNX Runtime Web and WebGPU, so your photo is processed on your own hardware and never uploaded. Browsers without WebGPU automatically use the lighter ISNet model.</p>
       </div>
 
       <h2>Why In-Browser Neural Execution Matters</h2>

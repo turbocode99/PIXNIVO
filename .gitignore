@@ -9,3 +9,7 @@ scratch_test/
 live_*.png
 test_*.png
 test_*.txt
+
+# Large AI model files are deployed separately (not stored in git)
+models/*.onnx
+models/*.ok
