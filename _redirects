@@ -1,3 +1,12 @@
+# Never serve repo internals (must stay first; nginx equivalent: scripts/nginx/private-paths.conf)
+/scripts/*                             /404.html                                404!
+/tests/*                               /404.html                                404!
+/backend/*                             /404.html                                404!
+/.git/*                                /404.html                                404!
+/package.json                          /404.html                                404!
+/package-lock.json                     /404.html                                404!
+/netlify.toml                          /404.html                                404!
+
 # Admin Subdomain & Portal Rewrites (admin.pixnivo.app)
 https://admin.pixnivo.app/*            /admin.html                              200!
 https://admin.pixnivo.app              /admin.html                              200!
