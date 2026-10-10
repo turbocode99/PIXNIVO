@@ -2,6 +2,7 @@
 # Runs ON the server after the repo is deployed: installs scripts/nginx/pixnivo-private-paths.conf
 # and includes it in every nginx server block whose root is /var/www/html. Backs up each edited
 # file and rolls back automatically if `nginx -t` fails. Safe to re-run. See scripts/README.md.
+[ -n "${BASH_VERSION:-}" ] || exec bash "$0" "$@"  # az run-command may start us with sh
 set -euo pipefail
 
 SRC=/var/www/html/scripts/nginx/pixnivo-private-paths.conf

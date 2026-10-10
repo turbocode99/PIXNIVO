@@ -2,6 +2,7 @@
 # Runs ON the server: generates a new ADMIN_SECRET_KEY for the backend, loads it into
 # pixnivo-ocr via a systemd drop-in, and restarts the service. All admin sessions are
 # logged out. The secret is created on the server and never printed. See scripts/README.md.
+[ -n "${BASH_VERSION:-}" ] || exec bash "$0" "$@"  # az run-command may start us with sh
 set -euo pipefail
 
 ENV_FILE=/etc/pixnivo/backend.env
