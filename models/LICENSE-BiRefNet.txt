@@ -21,7 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ---
-The file birefnet-general-512-q4-v1.onnx in this folder is a derivative of
-BiRefNet (https://github.com/ZhengPeng7/BiRefNet), exported to ONNX by
-onnx-community/BiRefNet_512x512-ONNX, with MatMul weights compressed to
-4-bit by scripts/models/build_birefnet.py. Licensed under the MIT License above.
+The file birefnet-general-1024-q4-v1.onnx in this folder is a derivative of
+BiRefNet (https://github.com/ZhengPeng7/BiRefNet), exported to ONNX from the
+official weights by scripts/models/build_birefnet.py (deformable convolutions
+rewritten with GridSample, fp16 activations, 4-bit MatMul weights).
+Licensed under the MIT License above.

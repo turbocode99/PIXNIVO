@@ -333,7 +333,7 @@
           <aside class="control-panel" aria-label="Background removal controls">
             <div class="panel-section">
               <button class="btn btn-primary btn-lg btn-block" type="button" id="removeBgBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"/><path d="m14 7 3 3"/><path d="M5 6v4"/><path d="M19 14v4"/><path d="M10 2v2"/><path d="M7 8H3"/><path d="M21 16h-4"/><path d="M11 3H9"/></svg><span>Remove background</span></button>
-              <p class="hint" id="bgHint">Powered by BiRefNet. The first use downloads the AI model (about 190 MB on most computers) and saves it in your browser, so later photos take just seconds.</p>
+              <p class="hint" id="bgHint">Powered by BiRefNet at full 1024-pixel detail. The first use downloads the AI model (about 240 MB) and saves it in your browser, so later photos take just seconds on most computers.</p>
             </div>
 
             <fieldset class="panel-section" id="bgBackdrop" disabled>
@@ -1433,6 +1433,27 @@
         return null;
       }
 
+      /* Delete earlier BiRefNet versions so a model update doesn't leave hundreds of MB behind */
+      async function pruneOldModels(currentUrl, currentFile) {
+        const dir = await modelDir();
+        if (dir) {
+          try {
+            const stale = [];
+            for await (const name of dir.keys()) {
+              if (name.startsWith('birefnet-') && name !== currentFile && name !== currentFile + '.ok') stale.push(name);
+            }
+            for (const name of stale) { try { await dir.removeEntry(name); } catch (e) { /* in use */ } }
+          } catch (e) { /* directory listing unsupported */ }
+        }
+        try {
+          const cache = await caches.open(MODEL_CACHE);
+          const current = new URL(currentUrl, location.href).href;
+          for (const req of await cache.keys()) {
+            if (/\/birefnet-[^/]*\.onnx$/.test(new URL(req.url).pathname) && req.url !== current) await cache.delete(req);
+          }
+        } catch (e) { /* Cache Storage unavailable */ }
+      }
+
       async function fetchModel(url, fileName, label) {
         const cached = await readCachedModel(url, fileName);
         if (cached) return cached;
@@ -1575,14 +1596,16 @@
 
       /* ---- Engine 0: BiRefNet (MIT) on the GPU ----
          BiRefNet is the open architecture RMBG-2.0 is built on. The full general
-         model runs at 512x512 on WebGPU (the 1024 exports exhaust the 4 GB
-         WebAssembly heap). MatMul weights are 4-bit (194 MB; see
-         scripts/models/build_birefnet.py). On our test photos its masks agree
-         with RMBG-2.0 at IoU 0.98-0.998 on clear subjects (0.927 mean). */
+         model runs at its native 1024x1024 on WebGPU, re-exported with GridSample-
+         based deformable convolutions so it fits in browser memory; MatMul weights
+         are 4-bit (239 MB; see scripts/models/build_birefnet.py). Masks agree with
+         the original PyTorch model at IoU 0.998 and with RMBG-2.0 at 0.986-0.999 on
+         clear subjects. The 512 version lost low-contrast edges (a dark jacket on a
+         night background) that 1024 keeps. */
       const BIREFNET = {
-        url: '/models/birefnet-general-512-q4-v1.onnx',
-        file: 'birefnet-general-512-q4-v1.onnx',
-        size: 512,
+        url: '/models/birefnet-general-1024-q4-v1.onnx',
+        file: 'birefnet-general-1024-q4-v1.onnx',
+        size: 1024,
         mean: [0.485, 0.456, 0.406],
         std: [0.229, 0.224, 0.225]
       };
@@ -1594,6 +1617,7 @@
           if (reason) throw skipEngine(reason);
           if (!ortMod) ortMod = await import(ORT_URL);
           let bytes = await fetchModel(BIREFNET.url, BIREFNET.file, 'BiRefNet');
+          pruneOldModels(BIREFNET.url, BIREFNET.file);
           setOverlay(true, 'Preparing AI model…', 'Loading BiRefNet onto your graphics card.');
           try {
             birefnetSession = await ortMod.InferenceSession.create(bytes, { executionProviders: ['webgpu'] });
@@ -1605,7 +1629,7 @@
           }
         }
 
-        setOverlay(true, 'Removing background…', 'BiRefNet is analyzing your photo on your device.');
+        setOverlay(true, 'Removing background…', 'BiRefNet is analyzing your photo on your device. This takes a few seconds, longer on older computers.');
         const S = BIREFNET.size, plane = S * S;
         const work = document.createElement('canvas');
         work.width = S; work.height = S;
@@ -1963,7 +1987,7 @@
         resetBackdropUi();
         $('customSwatchB').classList.remove('active');
         setResultControls(false);
-        bgHint.textContent = 'Powered by BiRefNet. The first use downloads the AI model (about 190 MB on most computers) and saves it in your browser, so later photos take just seconds.';
+        bgHint.textContent = 'Powered by BiRefNet at full 1024-pixel detail. The first use downloads the AI model (about 240 MB) and saves it in your browser, so later photos take just seconds on most computers.';
         drawOriginal();
       });
 

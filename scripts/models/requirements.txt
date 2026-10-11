@@ -1,5 +1,14 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.14.1+cpu
+torchvision==0.29.1+cpu
+timm==1.0.30
+einops==0.8.2
+kornia==0.8.3
+transformers==5.19.0
+safetensors==0.8.0
 onnx==1.23.2
 onnxruntime==1.31.0
 onnx-ir==1.0.0
-numpy==2.5.3
+onnxconverter-common==1.16.0
+numpy==2.5.2
 ml_dtypes==0.6.0
