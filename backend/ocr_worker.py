@@ -5,8 +5,9 @@ the server) and grows with each new image size. Running it inside the web server
 made every other API request wait during a job and let that memory pile up until
 the VM could run out. Here it lives in a child process that:
   - handles one job at a time (each job already uses every CPU core),
-  - is replaced after every job, returning its memory to the system; the next
-    process loads PaddleOCR (~3 s on the server) while the server is idle,
+  - is kept between jobs (a process's first full page takes ~3.5 s longer, 9.7 s
+    vs 6.2 s on the server), but replaced once it holds more than RECYCLE_RSS or
+    has run MAX_JOBS_PER_PROCESS jobs, returning its memory to the system,
   - is killed and replaced if a job exceeds JOB_TIMEOUT or the process dies
     (for example killed for using too much memory), without affecting the API.
 PDFs are rendered one page at a time, capped at MAX_PDF_PAGES pages and
@@ -22,8 +23,9 @@ MAX_SIDE = 2400           # longest image edge sent to OCR
 MAX_PDF_PAGES = 20
 PDF_DPI = 200
 PDF_TIME_BUDGET = 150     # seconds: no new PDF page is started after this
-JOBS_PER_PROCESS = 1
-JOB_TIMEOUT = 230         # seconds for one file, then the process is killed
+RECYCLE_RSS = 6 * 1024 ** 3  # replace the process once it holds more memory than this
+MAX_JOBS_PER_PROCESS = 50
+JOB_TIMEOUT = 230        # seconds for one file, then the process is killed
 QUEUE_TIMEOUT = 60        # seconds a request waits for the previous job to finish
 
 
@@ -90,25 +92,6 @@ def _ocr_file(engine, path, enhance, work_dir):
     return text
 
 
-def _warm_up(engine):
-    """The first recognition in a new process is ~3 s slower (one-time setup inside
-    Paddle). Run it on a small sample while the server is idle so jobs don't wait."""
-    try:
-        import numpy as np
-        from PIL import Image, ImageDraw, ImageFont
-        img = Image.new('RGB', (960, 720), 'white')
-        draw = ImageDraw.Draw(img)
-        try:
-            font = ImageFont.load_default(size=28)
-        except TypeError:  # Pillow < 10.1
-            font = ImageFont.load_default()
-        for i in range(6):
-            draw.text((40, 30 + i * 40), 'Warm-up line: the quick brown fox 0123456789', fill='black', font=font)
-        engine.ocr(np.asarray(img)[:, :, ::-1].copy(), cls=True)  # PaddleOCR expects BGR
-    except Exception:
-        pass
-
-
 def _serve(conn):
     """Child process: load PaddleOCR once, then OCR the files sent over the pipe."""
     os.environ.setdefault('FLAGS_enable_pir_api', '0')
@@ -120,7 +103,6 @@ def _serve(conn):
         pass
     from paddleocr import PaddleOCR
     engine = PaddleOCR(use_angle_cls=True, use_gpu=False, lang='en', show_log=False)
-    _warm_up(engine)
     while True:
         job = conn.recv()
         if job is None:
@@ -135,6 +117,18 @@ def _serve(conn):
 
 # ---------------------------------------------------------------- parent side
 
+def _rss(pid):
+    """Resident memory of a process in bytes (Linux; 0 elsewhere)."""
+    try:
+        with open(f'/proc/{pid}/status') as f:
+            for line in f:
+                if line.startswith('VmRSS:'):
+                    return int(line.split()[1]) * 1024
+    except OSError:
+        pass
+    return 0
+
+
 class OcrWorker:
     def __init__(self):
         self._lock = threading.Lock()
@@ -143,7 +137,7 @@ class OcrWorker:
         self._jobs = 0
 
     def start(self):
-        """Start (and warm up) the child process if it isn't running."""
+        """Start the child process (it loads PaddleOCR in ~3 s) if it isn't running."""
         if self._proc is not None and self._proc.is_alive():
             return
         self._stop()
@@ -183,9 +177,9 @@ class OcrWorker:
                 self._stop()
                 raise OcrFailed('This file was too large or complex to read. Try fewer pages or a smaller image.')
             self._jobs += 1
-            if self._jobs >= JOBS_PER_PROCESS:
+            if self._jobs >= MAX_JOBS_PER_PROCESS or _rss(self._proc.pid) > RECYCLE_RSS:
                 self._stop()
-                self.start()  # warm a fresh process for the next job
+                self.start()  # load a fresh process now, while the server is idle
             if status == 'bad_input':
                 raise OcrBadInput(value)
             if status == 'error':
