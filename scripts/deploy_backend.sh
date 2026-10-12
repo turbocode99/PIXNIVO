@@ -10,7 +10,7 @@ sudo apt-get install -y python3-pip python3-venv poppler-utils libgl1 libglib2.0
 sudo mkdir -p /opt/pixnivo-backend/data
 sudo mkdir -p /var/www/html/assets/uploads
 sudo chmod -R 777 /var/www/html/assets/uploads
-sudo cp /var/www/html/backend/main.py /opt/pixnivo-backend/
+sudo cp /var/www/html/backend/main.py /var/www/html/backend/ocr_worker.py /opt/pixnivo-backend/
 sudo cp /var/www/html/backend/requirements.txt /opt/pixnivo-backend/
 if [ ! -f /opt/pixnivo-backend/data/blogs.json ]; then
     sudo cp -r /var/www/html/backend/data/* /opt/pixnivo-backend/data/ || true
@@ -31,11 +31,22 @@ After=network.target
 [Service]
 User=root
 WorkingDirectory=/opt/pixnivo-backend
-ExecStart=/opt/pixnivo-backend/venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000
+ExecStart=/opt/pixnivo-backend/venv/bin/uvicorn main:app --host 127.0.0.1 --port 8001
 Restart=always
 
 [Install]
 WantedBy=multi-user.target
+EOF'
+
+# OCR runs in a child process (ocr_worker.py). Cap the service's memory so a runaway
+# job is killed and replaced instead of exhausting the VM, and keep the API running
+# when that happens (OOMPolicy=continue).
+sudo mkdir -p /etc/systemd/system/pixnivo-ocr.service.d
+sudo bash -c 'cat > /etc/systemd/system/pixnivo-ocr.service.d/20-memory.conf <<EOF
+[Service]
+MemoryHigh=60%
+MemoryMax=70%
+OOMPolicy=continue
 EOF'
 
 sudo systemctl daemon-reload
@@ -47,7 +58,7 @@ with open('/etc/nginx/sites-available/default', 'r') as f:
     config = f.read()
 if 'location /api/' not in config:
     config = config.replace('location / {', '''location /api/ {
-        proxy_pass http://localhost:8000;
+        proxy_pass http://localhost:8001;
         client_max_body_size 50M;
     }
     

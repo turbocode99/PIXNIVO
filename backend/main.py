@@ -1,9 +1,13 @@
 import os
 os.environ['FLAGS_enable_pir_api'] = '0'
 os.environ['FLAGS_enable_pir_in_executor'] = '0'
-import os
+import asyncio
+import importlib.util
 import shutil
 import tempfile
+from contextlib import asynccontextmanager
+
+import ocr_worker
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Request, Header, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -47,26 +51,23 @@ class ExportRequest(BaseModel):
     format: str
     images: List[BarcodeImage]
 
-try:
-    from paddleocr import PaddleOCR
-    from pdf2image import convert_from_path
-    from PIL import Image, ImageOps, ImageEnhance
-    import pillow_heif
-    pillow_heif.register_heif_opener()
-    print('Initializing PaddleOCR...')
-    ocr_engine = PaddleOCR(use_angle_cls=True, use_gpu=False, lang='en')
-    print('PaddleOCR ready!')
-except Exception as e:
-    ocr_engine = None
-    from PIL import Image, ImageOps, ImageEnhance
-    try:
-        import pillow_heif
-        pillow_heif.register_heif_opener()
-    except Exception:
-        pass
-    print(f'Note: PaddleOCR deferred or unavailable ({e}). OCR endpoint will notify if invoked.')
+from PIL import Image
 
-app = FastAPI(title="PIXNIVO API & Admin Backend")
+# PaddleOCR runs in a separate, recyclable process (see ocr_worker.py)
+OCR_AVAILABLE = importlib.util.find_spec('paddleocr') is not None
+if not OCR_AVAILABLE:
+    print('Note: PaddleOCR is not installed. The OCR endpoint will report it as unavailable.')
+
+
+@asynccontextmanager
+async def lifespan(app):
+    if OCR_AVAILABLE:
+        ocr_worker.worker.start()  # load PaddleOCR now so the first request isn't slow
+    yield
+    ocr_worker.worker.stop()
+
+
+app = FastAPI(title="PIXNIVO API & Admin Backend", lifespan=lifespan)
 
 ALLOWED_ORIGINS = [
     "https://pixnivo.app",
@@ -96,79 +97,23 @@ def health_check():
 async def process_ocr(file: UploadFile = File(...), enhance: str = Form('none')):
     if not file:
         raise HTTPException(status_code=400, detail='No file provided')
-    if ocr_engine is None:
+    if not OCR_AVAILABLE:
         raise HTTPException(status_code=503, detail='PaddleOCR engine is not available in current environment')
-        
-    filename = file.filename or 'upload'
-    ext = filename.split('.')[-1].lower() if '.' in filename else ''
-    
+
     with tempfile.TemporaryDirectory() as temp_dir:
-        file_path = os.path.join(temp_dir, filename)
+        # Fixed name: the client-supplied filename could contain ../ and escape temp_dir
+        file_path = os.path.join(temp_dir, 'upload')
         with open(file_path, 'wb') as buffer:
             shutil.copyfileobj(file.file, buffer)
-            
-        full_text = ''
-        
         try:
-            # Detect if file is PDF
-            is_pdf = (ext == 'pdf')
-            if not is_pdf:
-                try:
-                    with open(file_path, 'rb') as f_chk:
-                        if f_chk.read(5).startswith(b'%PDF-'):
-                            is_pdf = True
-                except:
-                    pass
-
-            if is_pdf:
-                images = convert_from_path(file_path)
-                for i, img in enumerate(images):
-                    img = ImageOps.exif_transpose(img)
-                    if max(img.size) > 2400:
-                        img.thumbnail((2400, 2400), Image.Resampling.LANCZOS)
-                    if enhance == 'auto':
-                        img = ImageEnhance.Contrast(img).enhance(1.4)
-                        
-                    img_path = os.path.join(temp_dir, f'page_{i}.jpg')
-                    img.convert('RGB').save(img_path, 'JPEG', quality=95)
-                    
-                    result = ocr_engine.ocr(img_path, cls=True)
-                    for res in result:
-                        if res:
-                            for line in res:
-                                full_text += line[1][0] + '\n'
-                    full_text += '\n--- Page Break ---\n\n'
-            else:
-                # Universal image processing: HEIC, HEIF, JPG, PNG, WEBP, BMP, AVIF, TIFF
-                try:
-                    img = Image.open(file_path)
-                except Exception as img_err:
-                    raise HTTPException(status_code=400, detail=f'Unable to decode image file: {str(img_err)}')
-
-                # Crucial for phone photos: automatically rotate image based on EXIF tag (portrait/landscape)
-                img = ImageOps.exif_transpose(img)
-
-                # Downscale giant phone photos (e.g. 12MP - 48MP) to max 2400px edge for fast, reliable OCR
-                if max(img.size) > 2400:
-                    img.thumbnail((2400, 2400), Image.Resampling.LANCZOS)
-
-                if enhance == 'auto':
-                    img = ImageEnhance.Contrast(img).enhance(1.4)
-
-                norm_path = os.path.join(temp_dir, 'normalized_input.jpg')
-                img.convert('RGB').save(norm_path, 'JPEG', quality=95)
-
-                result = ocr_engine.ocr(norm_path, cls=True)
-                for res in result:
-                    if res:
-                        for line in res:
-                            full_text += line[1][0] + '\n'
-                            
-        except HTTPException:
-            raise
-        except Exception as e:
+            full_text = await asyncio.to_thread(ocr_worker.worker.run, file_path, enhance, temp_dir)
+        except ocr_worker.OcrBusy:
+            raise HTTPException(status_code=503, detail='The text recognizer is busy with other files. Please try again in a minute.')
+        except ocr_worker.OcrBadInput as e:
+            raise HTTPException(status_code=400, detail=str(e))
+        except ocr_worker.OcrFailed as e:
             raise HTTPException(status_code=500, detail=str(e))
-            
+
     if not full_text.strip():
         full_text = 'No text could be detected.'
         

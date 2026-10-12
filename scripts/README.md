@@ -5,7 +5,8 @@ Operational files for the PIXNIVO VM. **Nothing in this folder is part of the we
 | File | What it does |
 |---|---|
 | `deploy_ui.sh` | Hard-resets `/var/www/html` to `origin/main`, ensures `client_max_body_size 50M` in nginx, restarts nginx. Use for HTML/CSS/JS changes. |
-| `deploy_backend.sh` | Pulls `main`, installs system deps, copies `backend/` into `/opt/pixnivo-backend`, rebuilds the venv, (re)writes the `pixnivo-ocr` systemd unit, adds the `/api/` proxy to nginx if missing, restarts both. |
+| `deploy_backend.sh` | Pulls `main`, installs system deps, copies the backend (`main.py`, `ocr_worker.py`) into `/opt/pixnivo-backend`, rebuilds the venv, (re)writes the `pixnivo-ocr` systemd unit (localhost:8001) and its memory limit (`MemoryHigh=60%`, `MemoryMax=70%`, `OOMPolicy=continue`), adds the `/api/` proxy to nginx if missing, restarts both. |
+| `setup_swap.sh` | Creates a 4 GB `/swapfile` with `vm.swappiness=10`, a safety net against out-of-memory kills during OCR. Run once per VM; safe to re-run. |
 | `rotate_admin_secret.sh` | Generates a new `ADMIN_SECRET_KEY` on the server into `/etc/pixnivo/backend.env` (root-only), loads it via a systemd drop-in, restarts `pixnivo-ocr`, and waits for `/api/health`. Logs out every admin session. The secret is never printed. |
 | `install_nginx_private_paths.sh` | Installs `nginx/private-paths.conf` as `/etc/nginx/snippets/pixnivo-private-paths.conf` and includes it in every server block with `root /var/www/html`. Backs up edited files to `/root/nginx-backup-*` and rolls back if `nginx -t` fails. Safe to re-run. |
 | `nginx/private-paths.conf` | nginx rules that 404 `.git/`, `scripts/`, `tests/`, `backend/`, `node_modules/`, other dotfiles, root tooling files and script/source file types. |
