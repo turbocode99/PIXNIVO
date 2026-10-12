@@ -90,6 +90,25 @@ def _ocr_file(engine, path, enhance, work_dir):
     return text
 
 
+def _warm_up(engine):
+    """The first recognition in a new process is ~3 s slower (one-time setup inside
+    Paddle). Run it on a small sample while the server is idle so jobs don't wait."""
+    try:
+        import numpy as np
+        from PIL import Image, ImageDraw, ImageFont
+        img = Image.new('RGB', (960, 720), 'white')
+        draw = ImageDraw.Draw(img)
+        try:
+            font = ImageFont.load_default(size=28)
+        except TypeError:  # Pillow < 10.1
+            font = ImageFont.load_default()
+        for i in range(6):
+            draw.text((40, 30 + i * 40), 'Warm-up line: the quick brown fox 0123456789', fill='black', font=font)
+        engine.ocr(np.asarray(img)[:, :, ::-1].copy(), cls=True)  # PaddleOCR expects BGR
+    except Exception:
+        pass
+
+
 def _serve(conn):
     """Child process: load PaddleOCR once, then OCR the files sent over the pipe."""
     os.environ.setdefault('FLAGS_enable_pir_api', '0')
@@ -101,6 +120,7 @@ def _serve(conn):
         pass
     from paddleocr import PaddleOCR
     engine = PaddleOCR(use_angle_cls=True, use_gpu=False, lang='en', show_log=False)
+    _warm_up(engine)
     while True:
         job = conn.recv()
         if job is None:
