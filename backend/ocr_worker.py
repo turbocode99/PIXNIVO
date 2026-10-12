@@ -5,21 +5,26 @@ the server) and grows with each new image size. Running it inside the web server
 made every other API request wait during a job and let that memory pile up until
 the VM could run out. Here it lives in a child process that:
   - handles one job at a time (each job already uses every CPU core),
-  - is replaced after JOBS_PER_PROCESS jobs, returning its memory to the system,
+  - is replaced after every job, returning its memory to the system; the next
+    process loads PaddleOCR (~3 s on the server) while the server is idle,
   - is killed and replaced if a job exceeds JOB_TIMEOUT or the process dies
     (for example killed for using too much memory), without affecting the API.
-PDFs are rendered one page at a time and capped at MAX_PDF_PAGES.
+PDFs are rendered one page at a time, capped at MAX_PDF_PAGES pages and
+PDF_TIME_BUDGET seconds. QUEUE_TIMEOUT + JOB_TIMEOUT stays under nginx's 300 s
+proxy_read_timeout for /api/, so users get a message rather than a 504.
 """
 import multiprocessing
 import os
 import threading
+import time
 
 MAX_SIDE = 2400           # longest image edge sent to OCR
 MAX_PDF_PAGES = 20
 PDF_DPI = 200
-JOBS_PER_PROCESS = 5
-JOB_TIMEOUT = 300         # seconds for one file
-QUEUE_TIMEOUT = 120       # seconds a request waits for the previous job to finish
+PDF_TIME_BUDGET = 150     # seconds: no new PDF page is started after this
+JOBS_PER_PROCESS = 1
+JOB_TIMEOUT = 230         # seconds for one file, then the process is killed
+QUEUE_TIMEOUT = 60        # seconds a request waits for the previous job to finish
 
 
 class OcrBusy(Exception):
@@ -73,13 +78,15 @@ def _ocr_file(engine, path, enhance, work_dir):
         pages = int(pdfinfo_from_path(path)['Pages'])
     except Exception:
         raise OcrBadInput('This PDF couldn’t be opened. It may be damaged or password-protected.')
-    count = min(pages, MAX_PDF_PAGES)
-    text = ''
-    for page in range(1, count + 1):  # one page in memory at a time
+    start, read, text = time.monotonic(), 0, ''
+    for page in range(1, min(pages, MAX_PDF_PAGES) + 1):  # one page in memory at a time
+        if read and time.monotonic() - start > PDF_TIME_BUDGET:
+            break
         img = convert_from_path(path, dpi=PDF_DPI, first_page=page, last_page=page)[0]
         text += _read_lines(engine, _prepare(img, enhance, work_dir)) + '\n--- Page Break ---\n\n'
-    if pages > count:
-        text += f'--- Only the first {count} of {pages} pages were read. Split the PDF to read the rest. ---\n'
+        read = page
+    if read < pages:
+        text += f'--- Only the first {read} of {pages} pages were read. Split the PDF to read the rest. ---\n'
     return text
 
 
