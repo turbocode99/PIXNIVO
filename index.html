@@ -1454,10 +1454,31 @@
         } catch (e) { /* Cache Storage unavailable */ }
       }
 
-      async function fetchModel(url, fileName, label) {
-        const cached = await readCachedModel(url, fileName);
+      /* Download a model, trying each source in turn (a CDN first, our own server as the
+         fallback). With a SHA-256, a download that doesn't match is discarded and the next
+         source is tried, so a third-party host can never hand us a different file. The
+         first URL is the cache key, whichever source served the bytes. */
+      async function fetchModel(sources, fileName, label, sha256) {
+        const urls = [].concat(sources);
+        const cached = await readCachedModel(urls[0], fileName);
         if (cached) return cached;
+        let lastError = null;
+        for (const url of urls) {
+          try {
+            return await downloadModel(url, urls[0], fileName, label, sha256);
+          } catch (e) {
+            lastError = e;
+          }
+        }
+        throw lastError;
+      }
 
+      async function sha256Hex(bytes) {
+        const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', bytes));
+        return Array.from(digest, b => b.toString(16).padStart(2, '0')).join('');
+      }
+
+      async function downloadModel(url, cacheKey, fileName, label, sha256) {
         const res = await fetch(url);
         if (!res.ok || !res.body) throw new Error(`Model download failed (${res.status})`);
         const total = parseInt(res.headers.get('content-length'), 10) || 0;
@@ -1471,30 +1492,41 @@
           } catch (e) { writable = null; }
         }
 
-        // Write straight into one buffer so the model isn't held in memory twice
-        const bytes = total ? new Uint8Array(total) : null;
-        const chunks = bytes ? null : [];
-        const reader = res.body.getReader();
-        let loaded = 0, lastPct = -1;
-        for (;;) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          if (bytes) bytes.set(value, loaded); else chunks.push(value);
-          if (writable) { try { await writable.write(value); } catch (e) { writable = null; } }
-          loaded += value.length;
-          const pct = total ? Math.floor((loaded / total) * 100) : 0;
-          if (pct !== lastPct) {
-            lastPct = pct;
-            setOverlay(true, `Downloading AI model… ${pct}%`,
-              `${label}: ${Math.round(loaded / 1e6)} of ${Math.round(total / 1e6)} MB. This happens once — it's saved in your browser for next time.`);
+        let model;
+        try {
+          // Write straight into one buffer so the model isn't held in memory twice
+          const bytes = total ? new Uint8Array(total) : null;
+          const chunks = bytes ? null : [];
+          const reader = res.body.getReader();
+          let loaded = 0, lastPct = -1;
+          for (;;) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            if (bytes) bytes.set(value, loaded); else chunks.push(value);
+            if (writable) { try { await writable.write(value); } catch (e) { writable = null; } }
+            loaded += value.length;
+            const pct = total ? Math.floor((loaded / total) * 100) : 0;
+            if (pct !== lastPct) {
+              lastPct = pct;
+              setOverlay(true, `Downloading AI model… ${pct}%`,
+                `${label}: ${Math.round(loaded / 1e6)} of ${Math.round(total / 1e6)} MB. This happens once — it's saved in your browser for next time.`);
+            }
           }
-        }
+          if (total && loaded !== total) throw new Error('Model download was incomplete');
 
-        let model = bytes;
-        if (!model) {
-          model = new Uint8Array(loaded);
-          let offset = 0;
-          for (const c of chunks) { model.set(c, offset); offset += c.length; }
+          model = bytes;
+          if (!model) {
+            model = new Uint8Array(loaded);
+            let offset = 0;
+            for (const c of chunks) { model.set(c, offset); offset += c.length; }
+          }
+          if (sha256) {
+            setOverlay(true, 'Checking AI model…', 'Making sure the download is complete and genuine.');
+            if (await sha256Hex(model) !== sha256) throw new Error('Model download did not match its checksum');
+          }
+        } catch (e) {
+          if (writable) { try { await writable.abort(); } catch (err) { /* already closed */ } }
+          throw e;
         }
 
         let saved = false;
@@ -1502,13 +1534,13 @@
           try {
             await writable.close();
             const marker = await (await dir.getFileHandle(fileName + '.ok', { create: true })).createWritable();
-            await marker.write(String(loaded));
+            await marker.write(String(model.length));
             await marker.close();
             saved = true;
           } catch (e) { /* storage full */ }
         }
         if (!saved) {
-          try { await (await caches.open(MODEL_CACHE)).put(url, new Response(model, { headers: { 'content-type': 'application/octet-stream' } })); }
+          try { await (await caches.open(MODEL_CACHE)).put(cacheKey, new Response(model, { headers: { 'content-type': 'application/octet-stream' } })); }
           catch (e) { /* not cacheable here — it will download again next visit */ }
         }
         return model;
@@ -1603,7 +1635,9 @@
          clear subjects. The 512 version lost low-contrast edges (a dark jacket on a
          night background) that 1024 keeps. */
       const BIREFNET = {
-        url: '/models/birefnet-general-1024-q4-v1.onnx',
+        // Sources in order of preference; a CDN copy can go first to save our bandwidth
+        urls: ['/models/birefnet-general-1024-q4-v1.onnx'],
+        sha256: '4b4d28b9e5a860730744edfd814ce458a2506b9602ae7002483b2f2a3ea7c387',
         file: 'birefnet-general-1024-q4-v1.onnx',
         size: 1024,
         mean: [0.485, 0.456, 0.406],
@@ -1616,8 +1650,8 @@
           const reason = await webgpuReason();
           if (reason) throw skipEngine(reason);
           if (!ortMod) ortMod = await import(ORT_URL);
-          let bytes = await fetchModel(BIREFNET.url, BIREFNET.file, 'BiRefNet');
-          pruneOldModels(BIREFNET.url, BIREFNET.file);
+          let bytes = await fetchModel(BIREFNET.urls, BIREFNET.file, 'BiRefNet', BIREFNET.sha256);
+          pruneOldModels(BIREFNET.urls[0], BIREFNET.file);
           setOverlay(true, 'Preparing AI model…', 'Loading BiRefNet onto your graphics card.');
           try {
             birefnetSession = await ortMod.InferenceSession.create(bytes, { executionProviders: ['webgpu'] });
