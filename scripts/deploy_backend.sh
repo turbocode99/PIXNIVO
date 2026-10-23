@@ -1,5 +1,11 @@
 #!/bin/bash
 # Runs ON the server: pulls main, (re)installs the FastAPI backend in /opt/pixnivo-backend, restarts services. See scripts/README.md.
+# Backend secrets (ADMIN_SECRET_KEY, ...) live only in /etc/pixnivo/backend.env on the
+# server (root-owned, mode 600), never in this repo. See backend/README.md.
+if ! sudo test -f /etc/pixnivo/backend.env; then
+    echo "ERROR: /etc/pixnivo/backend.env is missing. Create it (root, mode 600) as described in backend/README.md, then re-run." >&2
+    exit 1
+fi
 sudo git config --global --get-all safe.directory | grep -qx /var/www/html || sudo git config --global --add safe.directory /var/www/html
 cd /var/www/html
 sudo git pull origin main
@@ -31,6 +37,7 @@ After=network.target
 [Service]
 User=root
 WorkingDirectory=/opt/pixnivo-backend
+EnvironmentFile=/etc/pixnivo/backend.env
 ExecStart=/opt/pixnivo-backend/venv/bin/uvicorn main:app --host 127.0.0.1 --port 8001
 Restart=always
 
