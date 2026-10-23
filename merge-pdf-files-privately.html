@@ -82,45 +82,82 @@
     <header class="article-header">
       <div class="article-eyebrow">Document Privacy &amp; Security</div>
       <h1>How to Merge PDF Files Without Uploading Them Anywhere</h1>
-      <p class="article-meta"><span>26 July 2026</span><span>•</span><span>6 min read</span></p>
+      <p class="article-meta"><span>26 July 2026</span><span>•</span><span>Updated 23 October 2026</span><span>•</span><span>4 min read</span></p>
     </header>
 
     <article class="article-content">
-      <p>You've been asked for "one PDF" and you have five: a CV and covering letter, a passport scan, a utility bill, and a bank statement. Merging them is a two-minute task. The part worth thinking about is <b>where</b> that task happens.</p>
+      <p>You've been asked for "one PDF", and you have five: a cover letter, a CV, a passport scan, a utility bill and a bank statement. Merging them takes a couple of minutes. The part worth thinking about is <b>where</b> that merging happens — because the files people most often need to combine are some of the most sensitive documents they own.</p>
 
-      <h2>The part most people don't consider</h2>
-      <p>Search for a PDF merger and you'll find dozens of services. Almost all of them work the same way: you upload your files to their remote servers, their server merges them, and you download the result.</p>
-      <p>The files that typically need combining are exactly the sensitive ones — passport scans, financial records, medical documents, and signed contracts. Those files sit on someone else's server for at least as long as the process takes.</p>
+      <h2>What most online PDF tools actually do</h2>
+      <p>Search for "merge PDF" and you'll find dozens of free websites. Most of them follow the same pattern: you upload your files to their server, the server combines them, and you download the result. Even with the best intentions, your documents then sit on a computer you don't control for at least as long as the job takes — often longer, depending on the service's retention policy.</p>
+      <p>For a recipe or a flyer that hardly matters. For a passport scan, payslips, a medical report or a signed contract, it's worth avoiding.</p>
 
       <div class="callout-box">
-        <p><b>A useful test:</b> Before uploading any document anywhere, ask whether you'd be comfortable emailing that same file to a stranger. If the answer is no, use an on-device, client-side tool.</p>
+        <p><b>A simple test:</b> before uploading a document anywhere, ask whether you'd be comfortable emailing that same file to a stranger. If the answer is no, use a tool that works on your own device.</p>
       </div>
 
-      <h2>Merging without uploading</h2>
-      <p>Modern browsers can parse and manipulate PDF byte streams directly:</p>
-
-      <a class="article-cta" href="/pdf-tools">Open Merge PDFs Studio →</a>
-
+      <h2>Merging on your own device</h2>
+      <p>Modern browsers are powerful enough to read and write PDF files directly. PIXNIVO's <a href="/pdf-tools?tab=merge">Merge PDF</a> tool uses the open-source pdf-lib library running inside your browser tab, so the files are combined in your device's memory and never sent anywhere.</p>
       <ol>
-        <li>Add all PDFs you want to combine.</li>
-        <li>Put them in order using the arrows. The order in the list is the order in the output document.</li>
-        <li>Click Merge — the combined document builds locally in browser memory and downloads immediately.</li>
+        <li>Open <a href="/pdf-tools?tab=merge">Merge PDF</a> and drop in two or more PDF files.</li>
+        <li>Put them in order — drag the rows, or use the arrows. The order of the list is the order of the pages in the final document.</li>
+        <li>Click <b>Merge PDFs</b>. The combined file is built in your browser and downloads as <code>pixnivo-merged.pdf</code>. Rename it to something the recipient will recognise.</li>
       </ol>
+      <p>Merging is lossless: the pages are copied as they are, so text stays sharp and selectable, web links keep working, and each page keeps its original size and orientation. Nothing is re-compressed.</p>
 
-      <h2>Getting the sequence right</h2>
+      <h2>Getting the order right</h2>
+      <p>The person receiving the file will read it front to back. A sensible order saves them time and makes your application look organised.</p>
       <ul>
-        <li><b>Job Applications:</b> Covering letter first, then CV, followed by credentials and references.</li>
-        <li><b>Identity Verification:</b> Follow the recipient's checklist order exactly.</li>
-        <li><b>Reports &amp; Whitepapers:</b> Title page, contents, executive summary, main body, appendices.</li>
-        <li><b>Expense Claims:</b> Strict chronological sequence for straightforward accounting reconciliation.</li>
+        <li><b>Job applications:</b> cover letter, CV, then certificates and references.</li>
+        <li><b>Visa and identity checks:</b> follow the checklist you were given exactly, item by item. Officials often tick documents off in order.</li>
+        <li><b>Rental and loan applications:</b> application form, ID, proof of address, then income documents with the most recent first.</li>
+        <li><b>Expense claims:</b> the claim form first, then receipts in date order.</li>
+        <li><b>Reports:</b> title page, contents, summary, main body, then appendices.</li>
       </ul>
 
-      <h2>Troubleshooting Common Merge Issues</h2>
+      <h2>Before you merge: a quick checklist</h2>
       <ul>
-        <li><b>Password-protected files:</b> Remove the encryption lock in a PDF viewer prior to merging.</li>
-        <li><b>Interrupted downloads:</b> Corrupt PDF byte structures must be re-downloaded cleanly.</li>
-        <li><b>Oversized final files:</b> If a 10-page merged document exceeds email limits, run it through our <a href="/pdf-tools" style="color:var(--primary-light) !important;">Compress PDF tool</a>.</li>
+        <li><b>Rotate sideways pages first.</b> A scan that came out sideways will still be sideways in the merged file. Fix it in the source document or rescan it.</li>
+        <li><b>Turn photos into PDFs.</b> If some of your documents are phone photos, convert them with <a href="/pdf-tools?tab=img2pdf">Images to PDF</a> first, then merge everything together. <a href="/convert-photos-to-pdf">How to convert photos to PDF</a> covers taking clean photos of paperwork.</li>
+        <li><b>Fill in forms before merging.</b> Interactive form fields and the bookmarks panel from the original files may not carry over into the merged document. Complete and save any forms first, or print them to PDF so the answers become part of the page.</li>
+        <li><b>Remove pages you don't need.</b> Blank pages and duplicate copies make a document longer and larger for no benefit.</li>
       </ul>
+
+      <h2>Troubleshooting</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Problem</th><th>What's happening</th><th>Fix</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>"Password-protected" error</td><td>The file is encrypted and can't be read without the password</td><td>Open it with the password in your PDF viewer, save or print an unlocked copy, and add that instead</td></tr>
+            <tr><td>A file won't load</td><td>It's damaged or only partly downloaded</td><td>Download it again from the original source</td></tr>
+            <tr><td>Merged file is too big to email</td><td>One or more inputs are large scans</td><td>Run the result through <a href="/pdf-tools?tab=compress">Compress PDF</a>, or compress the scanned parts before merging</td></tr>
+            <tr><td>Pages are different sizes</td><td>Inputs mix A4, Letter or photo pages</td><td>That's normal — each page keeps its size; viewers and printers handle it</td></tr>
+            <tr><td>Wrong page order</td><td>The list wasn't reordered before merging</td><td>Reorder and merge again — it only takes seconds</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Other private ways to merge</h2>
+      <p>If you prefer an installed app, your computer may already have one. On a Mac, Preview can combine PDFs: open one, show the sidebar's thumbnails and drag in the pages of another. Desktop PDF editors do the same. Whatever you use, the principle is the same: for sensitive documents, choose a method that processes the files where they already are.</p>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Is there a limit on how many files I can merge?</h3>
+      <p>There's no fixed limit. Because everything happens in your browser, the practical limit is your device's memory. Dozens of ordinary documents merge comfortably; very large scans may be slow on older phones.</p>
+
+      <h3>Will merging reduce the quality of my documents?</h3>
+      <p>No. Pages are copied exactly, without re-compression. If you need a smaller file, compress it as a separate step.</p>
+
+      <h3>Can I merge on my phone?</h3>
+      <p>Yes. The tool works in mobile browsers on iPhone and Android. Choose the files from your Files or Downloads app and they're combined on the phone itself.</p>
+
+      <h3>How do I know my files weren't uploaded?</h3>
+      <p>The merge runs in the page you have open, and the result is created on your device. You can check this yourself with your browser's developer tools, which show any files a page sends over the network.</p>
+
+      <div style="text-align:center; margin-top:36px;">
+        <a class="article-cta" href="/pdf-tools?tab=merge">Merge PDFs Privately →</a>
+      </div>
     </article>
   </main>
 

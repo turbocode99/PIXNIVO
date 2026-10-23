@@ -82,48 +82,101 @@
     <header class="article-header">
       <div class="article-eyebrow">File Formats</div>
       <h1>JPG vs PNG vs WebP: Which Format Should You Actually Use?</h1>
-      <p class="article-meta"><span>5 July 2026</span><span>•</span><span>8 min read</span></p>
+      <p class="article-meta"><span>5 July 2026</span><span>•</span><span>Updated 23 October 2026</span><span>•</span><span>5 min read</span></p>
     </header>
 
     <article class="article-content">
-      <p>Most people pick an image format by accident — whatever the camera or download button generated. That's fine until a logo turns out to have an unwanted solid white background, or a simple graphic balloons to 4 MB.</p>
-      <p>There are three core formats worth knowing for everyday use, and each is engineered for distinct requirements.</p>
+      <p>Most people end up with an image format by accident: whatever the camera, the screenshot tool or the download button produced. That works until a logo arrives with an ugly white box around it, a simple graphic weighs 4 MB, or an upload form refuses your file.</p>
+      <p>Three formats cover almost every everyday need — JPG, PNG and WebP — and each is built for a different kind of image. Once you know what each one is good at, choosing takes seconds.</p>
 
-      <h2>The Executive Summary</h2>
+      <h2>The short answer</h2>
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>Format</th><th>Primary Strength</th><th>Transparency Support</th></tr>
+            <tr><th>Format</th><th>Best for</th><th>Compression</th><th>Transparency</th><th>Compatibility</th></tr>
           </thead>
           <tbody>
-            <tr><td><b>JPG</b></td><td>Photographs &amp; complex gradients</td><td>No</td></tr>
-            <tr><td><b>PNG</b></td><td>Logos, UI graphics, text screenshots</td><td>Yes (Alpha channel)</td></tr>
-            <tr><td><b>WebP</b></td><td>Modern web optimization</td><td>Yes (Lossy &amp; Lossless)</td></tr>
+            <tr><td><b>JPG</b></td><td>Photographs</td><td>Lossy</td><td>No</td><td>Everywhere</td></tr>
+            <tr><td><b>PNG</b></td><td>Logos, graphics, screenshots, cut-outs</td><td>Lossless</td><td>Yes</td><td>Everywhere</td></tr>
+            <tr><td><b>WebP</b></td><td>Images on websites</td><td>Lossy or lossless</td><td>Yes</td><td>All current browsers; some older software and upload forms refuse it</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>If you remember nothing else: <b>photos → JPG, graphics and transparency → PNG, your own website → WebP.</b></p>
+
+      <h2>JPG: made for photographs</h2>
+      <p>JPG (or JPEG — the same thing) is lossy: when it saves an image, it throws away detail the eye is unlikely to notice. It works in small 8 × 8 pixel blocks, smooths out tiny variations within each block, and stores colour at lower detail than brightness, because human vision is far more sensitive to light and dark than to colour.</p>
+      <p>For photographs, which are full of soft gradients and natural texture, this is extremely effective. A JPG at 80% quality is often a tenth of the size of the uncompressed image with no difference you'd see at normal viewing size.</p>
+      <h3>Where JPG goes wrong</h3>
+      <ul>
+        <li><b>Text, lines and flat colour.</b> Sharp edges are exactly what JPG is worst at. Screenshots, diagrams and logos saved as JPG get fuzzy "ringing" around every edge.</li>
+        <li><b>Transparency.</b> JPG can't store it. A logo with a transparent background becomes a logo on a solid box — white in PIXNIVO, which warns you before it happens.</li>
+        <li><b>Repeated saving.</b> Each time a JPG is edited and saved again, it loses a little more. Keep the original and export copies.</li>
+      </ul>
+      <p>Sensible quality settings: 75–85% for the web and messaging, 85–92% for prints and archives. Going from 92% to 100% often doubles the file size for a difference almost nobody can see.</p>
+
+      <h2>PNG: exact, lossless, transparent</h2>
+      <p>PNG is lossless: every pixel is stored exactly. It compresses by finding repeated patterns, which works brilliantly for images with large areas of identical colour — interface screenshots, charts, icons and logos — and poorly for photographs, where neighbouring pixels are almost never identical.</p>
+      <p>PNG also supports a full alpha channel, meaning each pixel can be partly transparent. That's what lets a cut-out keep soft, natural edges around hair or fur when placed on a new background — and it's why the <a href="/?tab=bg">Background Remover</a> downloads PNG files.</p>
+      <h3>Where PNG goes wrong</h3>
+      <p>Saving a photograph as PNG is the most common format mistake there is. The file is typically several times larger than a good JPG, and it doesn't look any better. Converting an existing JPG to PNG doesn't restore lost quality either — it just stores the JPG's imperfections losslessly, at a larger size.</p>
+
+      <h2>WebP: the modern all-rounder</h2>
+      <p>WebP, developed by Google for the web, can work in lossy mode like JPG or lossless mode like PNG, and supports transparency in both. In lossy mode it typically produces files around a quarter to a third smaller than a JPG of similar visual quality. For a website, that means faster pages and lower bandwidth without any visible change.</p>
+      <h3>Where WebP goes wrong</h3>
+      <p>Every current major browser displays WebP, but not every program or upload form accepts it. Older desktop software, some print services and many government, bank and job portals still only take JPG or PNG. Use WebP for images you publish yourself; send JPG or PNG to anyone else's system.</p>
+
+      <h2>Other formats you'll run into</h2>
+      <ul>
+        <li><b>HEIC</b> — the default on iPhones. It's efficient, roughly half the size of a comparable JPG, but many websites, Windows programs and upload forms can't open it. Convert to JPG before sharing outside Apple devices; PIXNIVO converts HEIC automatically when you open it.</li>
+        <li><b>AVIF</b> — a newer format that's often even smaller than WebP. Browser support is now broad, but software and upload-form support lags behind. PIXNIVO can open AVIF files and save them as JPG, PNG or WebP.</li>
+        <li><b>GIF</b> — limited to 256 colours, so photos look grainy. It survives mainly for simple animations. A still GIF is better saved as PNG.</li>
+        <li><b>SVG</b> — not pixels at all, but shapes described in code, so it stays sharp at any size. Ideal for logos and icons, and the format designers use for master logo files.</li>
+      </ul>
+
+      <h2>Choosing by situation</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>You're saving…</th><th>Use</th><th>Why</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>A photo to email, share or upload</td><td>JPG</td><td>Small and accepted everywhere</td></tr>
+            <tr><td>A photo for your own website</td><td>WebP</td><td>Smaller than JPG at the same quality</td></tr>
+            <tr><td>A screenshot with text</td><td>PNG</td><td>Text stays perfectly sharp</td></tr>
+            <tr><td>A logo or icon</td><td>SVG, or PNG with transparency</td><td>Clean edges and no background box</td></tr>
+            <tr><td>A product cut-out</td><td>PNG (or WebP for the web)</td><td>Keeps the transparent background</td></tr>
+            <tr><td>A photo for a government or job portal</td><td>JPG</td><td>The format these portals almost always require</td></tr>
+            <tr><td>A photo to print</td><td>JPG at 90%+, or PNG</td><td>Maximum detail for the printer</td></tr>
           </tbody>
         </table>
       </div>
 
-      <h2>JPG: Engineered for Continuous-Tone Photos</h2>
-      <p>JPG utilizes discrete cosine transform (DCT) lossy compression. It discards high-frequency chromatic variations that the human visual cortex struggles to detect. On complex photographic scenes, it achieves 10× file size reduction with virtually imperceptible degradation.</p>
+      <h2>Converting between formats in PIXNIVO</h2>
+      <ol>
+        <li>Open the <a href="/?tab=compress">Image Compressor</a> and drop in a JPG, PNG, WebP, AVIF, GIF, BMP or HEIC file.</li>
+        <li>Choose the output <b>Format</b>: JPG, WebP or PNG.</li>
+        <li>For JPG and WebP, set <b>Quality</b> and watch the size. PNG is lossless, so quality doesn't apply.</li>
+        <li>Download. Conversion happens in your browser, so the file isn't uploaded anywhere.</li>
+      </ol>
 
-      <h3>Where JPG Fails</h3>
-      <p>Around sharp geometric transitions (text, vector icons, interface borders), JPG compression produces ringing smudges known as artifacts. Furthermore, JPG lacks an alpha transparency channel — replacing transparent pixels with solid white.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>Does converting a JPG to PNG improve its quality?</h3>
+      <p>No. The detail JPG discarded is gone for good. The PNG will look the same as the JPG it came from and be much larger.</p>
 
-      <h2>PNG: Precision Lossless Reproduction</h2>
-      <p>PNG uses DEFLATE lossless compression. Every pixel is preserved identically. It supports an 8-bit alpha channel, enabling soft feathered edges around cut-outs and hair strands.</p>
+      <h3>Is WebP lower quality than JPG?</h3>
+      <p>Not inherently. At equivalent settings WebP usually matches JPG's visual quality at a smaller size. Like any lossy format, it only looks worse if you compress it too hard.</p>
 
-      <h3>Where PNG Fails</h3>
-      <p>On continuous photographs, lossless compression lacks predictable patterns, producing files 5–10× heavier than JPG for no discernible visual improvement.</p>
+      <h3>Why does my transparent logo have a white or black box?</h3>
+      <p>It was saved as JPG, which can't store transparency, or a program flattened it. Save logos as PNG or SVG, and check the format before sending them to a printer or website.</p>
 
-      <h2>WebP: The High-Efficiency Modern Standard</h2>
-      <p>Developed specifically for web performance, WebP delivers files 25–35% smaller than JPEG at equivalent visual quality while supporting both lossy and lossless transparency.</p>
+      <h3>What's the difference between .jpg and .jpeg?</h3>
+      <p>None. They're two spellings of the same format; the shorter one dates from old systems that only allowed three-letter file extensions.</p>
 
-      <div class="callout-box">
-        <p><b>Compatibility advisory:</b> While 100% of modern web browsers support WebP, some legacy desktop print drivers and strict corporate upload forms still require traditional JPG/PNG files.</p>
-      </div>
+      <p>File size still too big after choosing the right format? <a href="/resolution-dpi-file-size-explained">Resolution, DPI and file size explained</a> shows how dimensions affect size.</p>
 
       <div style="text-align:center; margin-top:36px;">
-        <a class="article-cta" href="/">Convert Formats in PIXNIVO Studio →</a>
+        <a class="article-cta" href="/?tab=compress">Convert Image Formats in PIXNIVO →</a>
       </div>
     </article>
   </main>

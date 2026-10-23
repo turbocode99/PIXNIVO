@@ -82,48 +82,111 @@
     <header class="article-header">
       <div class="article-eyebrow">Practical Optimization</div>
       <h1>How to Reduce Photo Size for Online Forms (20 KB, 50 KB, 100 KB Limits)</h1>
-      <p class="article-meta"><span>28 June 2026</span><span>•</span><span>8 min read</span></p>
+      <p class="article-meta"><span>28 June 2026</span><span>•</span><span>Updated 23 October 2026</span><span>•</span><span>5 min read</span></p>
     </header>
 
     <article class="article-content">
-      <p>You are applying for a passport, visa, university admission, or job portal, and the form states: <b>"File size must not exceed 50 KB."</b> Your phone camera generated a crisp 4.8 MB file.</p>
-      <p>If you simply drag the compression slider down to 10%, the face turns into a blocky smudge and the automated verification system rejects the photo. Here is how to hit strict limits while keeping the image crisp.</p>
+      <p>Exam registrations, visa applications, university admissions, job portals and government services all ask for the same thing in slightly different words: <b>"Upload a JPG photo, maximum 50 KB."</b> Meanwhile your phone produced a 4 MB file. Push a compression slider all the way down and the face turns into blocky mush — and some portals reject photos that look degraded.</p>
+      <p>Hitting a strict limit cleanly is mostly about doing two things in the right order. This guide shows how, plus how to handle signatures, minimum file sizes and exact pixel dimensions.</p>
 
-      <h2>The Two Levers: Dimensions vs Quality</h2>
-      <p>File size is governed by two factors:</p>
+      <h2>First, read the requirements carefully</h2>
+      <p>Portals often state more than one rule, and the photo has to satisfy all of them. Look for:</p>
+      <ul>
+        <li><b>File type</b> — usually JPG/JPEG. PNG and iPhone HEIC files are often refused.</li>
+        <li><b>Maximum size</b> — such as 20 KB, 50 KB, 100 KB or 200 KB.</li>
+        <li><b>Minimum size</b> — some forms reject files that are too small, for example "between 10 KB and 50 KB".</li>
+        <li><b>Dimensions</b> — either exact pixels (such as 200 × 230 px) or a proportion (such as "passport size" or "square").</li>
+        <li><b>Content rules</b> — plain light background, face fully visible, photo taken recently.</li>
+      </ul>
+
+      <h2>The two levers: dimensions and quality</h2>
+      <p>A JPG's file size depends mainly on two things:</p>
       <ol>
-        <li><b>Pixel Dimensions:</b> The total number of pixels in the grid (e.g. 4000 × 3000 = 12,000,000 pixels).</li>
-        <li><b>Compression Quality:</b> How much data is discarded when encoding those pixels.</li>
+        <li><b>Pixel dimensions</b> — how many pixels are in the image. A 4,000 × 3,000 photo has 12 million; a 500 × 500 photo has 250,000, about 2% as many.</li>
+        <li><b>Quality</b> — how much detail the JPG encoder is allowed to throw away when it saves those pixels.</li>
       </ol>
-
       <div class="callout-box">
-        <p><b>The Golden Rule of Portal Photos:</b> Reduce pixel dimensions first, and lower quality second. A 600 × 600 px photo at 80% quality is vastly sharper than a 4000 × 4000 px photo crushed to 15% quality.</p>
+        <p><b>The golden rule:</b> reduce the dimensions first and lower quality second. A 500 × 500 photo at 80% quality looks far sharper than a 4,000 × 3,000 photo crushed to 10% — and it is smaller too.</p>
       </div>
+      <p>Portals display your photo small, usually as a thumbnail on an admit card or ID. A few hundred pixels across is all they need, so cutting dimensions costs you nothing you'll ever see.</p>
 
-      <h2>Target Dimension Benchmarks</h2>
+      <h2>Starting points for common limits</h2>
+      <p>These settings are good first guesses for a head-and-shoulders photo. The exact result depends on the photo — a plain background compresses smaller than a busy one — so treat them as a starting point and watch the actual size.</p>
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>Portal Constraint</th><th>Optimal Dimensions</th><th>Target Quality</th></tr>
+            <tr><th>File size limit</th><th>Max width</th><th>Quality</th></tr>
           </thead>
           <tbody>
-            <tr><td>Under 20 KB</td><td>350 × 350 px</td><td>70–75%</td></tr>
-            <tr><td>Under 50 KB</td><td>500 × 500 px</td><td>80%</td></tr>
-            <tr><td>Under 100 KB</td><td>800 × 800 px</td><td>82%</td></tr>
-            <tr><td>Under 200 KB</td><td>1200 × 1200 px</td><td>85%</td></tr>
+            <tr><td>Under 20 KB</td><td>300–350 px</td><td>65–75%</td></tr>
+            <tr><td>Under 50 KB</td><td>450–500 px</td><td>75–80%</td></tr>
+            <tr><td>Under 100 KB</td><td>700–800 px</td><td>80–85%</td></tr>
+            <tr><td>Under 200 KB</td><td>1,000–1,200 px</td><td>85%</td></tr>
           </tbody>
         </table>
       </div>
 
-      <h2>Step-by-Step Optimization Workflow</h2>
+      <h2>Step-by-step in PIXNIVO</h2>
       <ol>
-        <li><b>Crop tightly to the subject:</b> Remove excess background to dedicate pixel budget strictly to the face.</li>
-        <li><b>Set exact width:</b> Scale down the longest dimension to the recommended bracket above.</li>
-        <li><b>Export as JPG:</b> Always choose JPG for portal photos unless PNG is explicitly mandated.</li>
+        <li><b>Crop first.</b> Open the photo in the <a href="/?tab=edit">Photo Editor</a>. Choose the proportion the form expects — <b>1:1</b> for square photos, <b>4:5</b> for a slightly tall portrait — and frame your head and shoulders so the face fills most of the picture. Export as <b>PNG</b> so this step doesn't add any compression.</li>
+        <li><b>Open the cropped photo in the <a href="/?tab=compress">Image Compressor</a>.</b> HEIC photos from an iPhone are converted automatically.</li>
+        <li><b>Set Format to JPG.</b></li>
+        <li><b>Drag Max width</b> to the starting point from the table above.</li>
+        <li><b>Watch the Compressed figure</b> while you adjust <b>Quality</b>. Stop when it's about 5–10% under the limit — for a 50 KB limit, aim for 45–47 KB.</li>
+        <li><b>Check the preview.</b> It shows the real compressed result. The eyes and the edge of the face should be clear, without blocky patches.</li>
+        <li><b>Download</b> and upload the file to the portal.</li>
+      </ol>
+      <p>If you can't reach the limit without dropping quality below about 60%, reduce Max width a little more instead. Smaller-but-clean always beats larger-but-blocky.</p>
+      <p>Everything happens in your browser: your photo isn't uploaded to PIXNIVO at any point, which matters when it's going onto an identity or exam document.</p>
+
+      <h3>When the form asks for exact pixel dimensions</h3>
+      <p>For a requirement like 200 × 230 px, the width and height need the right proportion before resizing. Crop to that proportion with any editor that supports a custom ratio, then set Max width to exactly 200 px in the Image Compressor — the height follows automatically. For square requirements such as 300 × 300 px, the Photo Editor's 1:1 crop does the job.</p>
+
+      <h3>When the file is too small</h3>
+      <p>If a portal says the file must be at least 10 KB or 20 KB, raise Quality or Max width until the Compressed figure passes the minimum. Very small files sometimes get rejected because the system assumes the photo is too degraded to use.</p>
+
+      <h2>Signatures and thumb impressions</h2>
+      <p>Many applications also want a scanned signature, often with tight limits such as 10–20 KB. Signatures are easy to make small because they're simple black-and-white shapes:</p>
+      <ol>
+        <li>Sign with a black or dark blue pen on plain white paper. Make the signature reasonably large.</li>
+        <li>Photograph it in daylight from directly above, so the paper fills the frame without shadows.</li>
+        <li>In the <a href="/?tab=edit">Photo Editor</a>, crop tightly around the signature, choose the <b>Mono</b> filter and raise <b>Contrast</b> until the paper turns white and the ink stays solid. Export as PNG.</li>
+        <li>In the Image Compressor, choose JPG, set Max width to around 400–600 px, and adjust quality until you're under the limit.</li>
       </ol>
 
+      <h2>Common error messages and what they mean</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Portal message</th><th>Likely cause</th><th>Fix</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>File size exceeds limit</td><td>Too many pixels or quality too high</td><td>Lower Max width first, then quality</td></tr>
+            <tr><td>Invalid file format</td><td>PNG, HEIC or WebP uploaded</td><td>Re-save as JPG — renaming the file extension doesn't convert it</td></tr>
+            <tr><td>Invalid dimensions</td><td>Wrong proportions or pixel size</td><td>Crop to the required ratio, then set the exact width</td></tr>
+            <tr><td>File too small</td><td>Compressed below the minimum</td><td>Increase quality or width slightly</td></tr>
+            <tr><td>Photo not clear</td><td>Over-compression or a blurry original</td><td>Keep quality above ~60%; retake in daylight if needed</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Frequently asked questions</h2>
+      <h3>My file shows 49 KB but the portal says it's over 50 KB. Why?</h3>
+      <p>Some systems count a kilobyte as 1,000 bytes and others as 1,024. A file that's 49 KB on one device can be just over the limit by another system's count. Aiming 5–10% under the limit avoids the problem.</p>
+
+      <h3>Can I just rename a PNG to .jpg?</h3>
+      <p>No. Renaming changes the label, not the file. Portals that check the actual format will still reject it. Export it as JPG instead.</p>
+
+      <h3>Does the photo need to be 300 DPI?</h3>
+      <p>Usually what matters is the pixel size and file size, not the DPI tag. If a form asks for a print size at a DPI — say 2 × 2 inches at 300 DPI — it means 600 × 600 pixels. <a href="/resolution-dpi-file-size-explained">Resolution, DPI and file size explained</a> covers the arithmetic.</p>
+
+      <h3>What if the form needs a PDF instead of an image?</h3>
+      <p>Combine your images with <a href="/pdf-tools?tab=img2pdf">Images to PDF</a> and lower its Image quality setting to keep the file small. If you already have a PDF that's too large, see <a href="/compress-pdf-too-large">how to compress a PDF</a>.</p>
+
+      <p>Preparing the photo itself? <a href="/passport-size-photo-at-home">How to make a passport-size photo at home</a> covers backgrounds, lighting and framing.</p>
+
       <div style="text-align:center; margin-top:36px;">
-        <a class="article-cta" href="/">Optimize Photo for Online Form Now →</a>
+        <a class="article-cta" href="/?tab=compress">Optimize a Photo for an Online Form →</a>
       </div>
     </article>
   </main>
