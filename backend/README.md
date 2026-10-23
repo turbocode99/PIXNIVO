@@ -2,14 +2,13 @@
 
 FastAPI app (`main.py`) serving OCR, barcode export, the public blog API and the admin portal API.
 On the server it runs from `/opt/pixnivo-backend` as the systemd service `pixnivo-ocr`, written by
-`deploy_backend.sh`. `deploy_backend.sh`, `deploy_backend_patch.sh` and the other deploy scripts copy
-`backend/main.py` there. A `git pull` into `/var/www/html` on its own does not update the running backend.
+`scripts/deploy_backend.sh`, which also copies `backend/main.py` and `backend/ocr_worker.py` there. A `git pull` into `/var/www/html` on its own does not update the running backend.
 
 ## Secrets: `/etc/pixnivo/backend.env`
 
 The repo holds no secrets. Everything sensitive goes in `/etc/pixnivo/backend.env` on the server.
 The systemd unit loads it with `EnvironmentFile=/etc/pixnivo/backend.env`. The file must be owned by
-root with mode `600`. `deploy_backend.sh` refuses to run if it is missing. Never commit it, and never
+root with mode `600`. `scripts/deploy_backend.sh` refuses to run if it is missing. Never commit it, and never
 copy its values into scripts, tests or commit messages.
 
 | Variable | Required | Purpose |
@@ -35,8 +34,7 @@ at least 10 characters with uppercase, lowercase and a digit. Avoid spaces, quot
 because systemd parses the file.
 
 If the server's unit was written before this change, it does not load the file yet. Either re-run
-`deploy_backend.sh`, or add a drop-in. Check that the unit's port matches nginx before re-running the
-script: `fix_port.sh` may have moved the service to 8001. To add a drop-in:
+`scripts/deploy_backend.sh`, use `scripts/rotate_admin_secret.sh` (see `scripts/README.md`), or add a drop-in:
 
 ```bash
 sudo mkdir -p /etc/systemd/system/pixnivo-ocr.service.d

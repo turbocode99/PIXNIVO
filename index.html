@@ -333,7 +333,7 @@
           <aside class="control-panel" aria-label="Background removal controls">
             <div class="panel-section">
               <button class="btn btn-primary btn-lg btn-block" type="button" id="removeBgBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"/><path d="m14 7 3 3"/><path d="M5 6v4"/><path d="M19 14v4"/><path d="M10 2v2"/><path d="M7 8H3"/><path d="M21 16h-4"/><path d="M11 3H9"/></svg><span>Remove background</span></button>
-              <p class="hint" id="bgHint">Powered by BiRefNet. The first use downloads the AI model (about 190 MB on most computers) and saves it in your browser, so later photos take just seconds.</p>
+              <p class="hint" id="bgHint">Powered by BiRefNet at full 1024-pixel detail. The first use downloads the AI model (about 240 MB) and saves it in your browser, so later photos take just seconds on most computers.</p>
             </div>
 
             <fieldset class="panel-section" id="bgBackdrop" disabled>
@@ -559,37 +559,37 @@
           <span class="card-tag">Optimization</span>
           <h3>How to Compress Images for WhatsApp Without Losing Quality</h3>
           <p>WhatsApp re-encodes photos heavily. Learn how to work around it and keep images sharp.</p>
-          <div class="meta"><span>Read guide &rarr;</span><span>6 min read</span></div>
+          <div class="meta"><span>Read guide &rarr;</span><span>5 min read</span></div>
         </a>
         <a class="guide-card" href="/jpg-vs-png-vs-webp">
           <span class="card-tag">File Formats</span>
           <h3>JPG vs PNG vs WebP: Which Format Should You Use?</h3>
           <p>Three formats built for different jobs. Pick the right one for speed and fidelity.</p>
-          <div class="meta"><span>Read guide &rarr;</span><span>8 min read</span></div>
+          <div class="meta"><span>Read guide &rarr;</span><span>5 min read</span></div>
         </a>
         <a class="guide-card" href="/reduce-photo-size-for-online-forms">
           <span class="card-tag">Online Forms</span>
           <h3>How to Reduce Photo Size for Online Forms &amp; Applications</h3>
           <p>Hit strict 100 KB or 200 KB limits on portals without pixelated, unreadable results.</p>
-          <div class="meta"><span>Read guide &rarr;</span><span>7 min read</span></div>
+          <div class="meta"><span>Read guide &rarr;</span><span>5 min read</span></div>
         </a>
         <a class="guide-card" href="/how-ai-background-removal-works">
           <span class="card-tag">AI</span>
           <h3>How AI Background Removal Actually Works</h3>
           <p>A clear look at segmentation networks, alpha matting and on-device inference.</p>
-          <div class="meta"><span>Read guide &rarr;</span><span>8 min read</span></div>
+          <div class="meta"><span>Read guide &rarr;</span><span>5 min read</span></div>
         </a>
         <a class="guide-card" href="/white-background-product-photos">
           <span class="card-tag">E-commerce</span>
           <h3>How to Make White Background Product Photos</h3>
           <p>Turn casual phone shots into marketplace-ready product images with clean white backdrops.</p>
-          <div class="meta"><span>Read guide &rarr;</span><span>9 min read</span></div>
+          <div class="meta"><span>Read guide &rarr;</span><span>6 min read</span></div>
         </a>
         <a class="guide-card" href="/passport-size-photo-at-home">
           <span class="card-tag">Documents</span>
           <h3>How to Make a Passport-Size Photo at Home</h3>
           <p>Meet official requirements for framing, plain backgrounds and exact dimensions.</p>
-          <div class="meta"><span>Read guide &rarr;</span><span>8 min read</span></div>
+          <div class="meta"><span>Read guide &rarr;</span><span>6 min read</span></div>
         </a>
       </div>
 
@@ -1433,10 +1433,52 @@
         return null;
       }
 
-      async function fetchModel(url, fileName, label) {
-        const cached = await readCachedModel(url, fileName);
-        if (cached) return cached;
+      /* Delete earlier BiRefNet versions so a model update doesn't leave hundreds of MB behind */
+      async function pruneOldModels(currentUrl, currentFile) {
+        const dir = await modelDir();
+        if (dir) {
+          try {
+            const stale = [];
+            for await (const name of dir.keys()) {
+              if (name.startsWith('birefnet-') && name !== currentFile && name !== currentFile + '.ok') stale.push(name);
+            }
+            for (const name of stale) { try { await dir.removeEntry(name); } catch (e) { /* in use */ } }
+          } catch (e) { /* directory listing unsupported */ }
+        }
+        try {
+          const cache = await caches.open(MODEL_CACHE);
+          const current = new URL(currentUrl, location.href).href;
+          for (const req of await cache.keys()) {
+            if (/\/birefnet-[^/]*\.onnx$/.test(new URL(req.url).pathname) && req.url !== current) await cache.delete(req);
+          }
+        } catch (e) { /* Cache Storage unavailable */ }
+      }
 
+      /* Download a model, trying each source in turn (a CDN first, our own server as the
+         fallback). With a SHA-256, a download that doesn't match is discarded and the next
+         source is tried, so a third-party host can never hand us a different file. The
+         first URL is the cache key, whichever source served the bytes. */
+      async function fetchModel(sources, fileName, label, sha256) {
+        const urls = [].concat(sources);
+        const cached = await readCachedModel(urls[0], fileName);
+        if (cached) return cached;
+        let lastError = null;
+        for (const url of urls) {
+          try {
+            return await downloadModel(url, urls[0], fileName, label, sha256);
+          } catch (e) {
+            lastError = e;
+          }
+        }
+        throw lastError;
+      }
+
+      async function sha256Hex(bytes) {
+        const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', bytes));
+        return Array.from(digest, b => b.toString(16).padStart(2, '0')).join('');
+      }
+
+      async function downloadModel(url, cacheKey, fileName, label, sha256) {
         const res = await fetch(url);
         if (!res.ok || !res.body) throw new Error(`Model download failed (${res.status})`);
         const total = parseInt(res.headers.get('content-length'), 10) || 0;
@@ -1450,30 +1492,41 @@
           } catch (e) { writable = null; }
         }
 
-        // Write straight into one buffer so the model isn't held in memory twice
-        const bytes = total ? new Uint8Array(total) : null;
-        const chunks = bytes ? null : [];
-        const reader = res.body.getReader();
-        let loaded = 0, lastPct = -1;
-        for (;;) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          if (bytes) bytes.set(value, loaded); else chunks.push(value);
-          if (writable) { try { await writable.write(value); } catch (e) { writable = null; } }
-          loaded += value.length;
-          const pct = total ? Math.floor((loaded / total) * 100) : 0;
-          if (pct !== lastPct) {
-            lastPct = pct;
-            setOverlay(true, `Downloading AI model… ${pct}%`,
-              `${label}: ${Math.round(loaded / 1e6)} of ${Math.round(total / 1e6)} MB. This happens once — it's saved in your browser for next time.`);
+        let model;
+        try {
+          // Write straight into one buffer so the model isn't held in memory twice
+          const bytes = total ? new Uint8Array(total) : null;
+          const chunks = bytes ? null : [];
+          const reader = res.body.getReader();
+          let loaded = 0, lastPct = -1;
+          for (;;) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            if (bytes) bytes.set(value, loaded); else chunks.push(value);
+            if (writable) { try { await writable.write(value); } catch (e) { writable = null; } }
+            loaded += value.length;
+            const pct = total ? Math.floor((loaded / total) * 100) : 0;
+            if (pct !== lastPct) {
+              lastPct = pct;
+              setOverlay(true, `Downloading AI model… ${pct}%`,
+                `${label}: ${Math.round(loaded / 1e6)} of ${Math.round(total / 1e6)} MB. This happens once — it's saved in your browser for next time.`);
+            }
           }
-        }
+          if (total && loaded !== total) throw new Error('Model download was incomplete');
 
-        let model = bytes;
-        if (!model) {
-          model = new Uint8Array(loaded);
-          let offset = 0;
-          for (const c of chunks) { model.set(c, offset); offset += c.length; }
+          model = bytes;
+          if (!model) {
+            model = new Uint8Array(loaded);
+            let offset = 0;
+            for (const c of chunks) { model.set(c, offset); offset += c.length; }
+          }
+          if (sha256) {
+            setOverlay(true, 'Checking AI model…', 'Making sure the download is complete and genuine.');
+            if (await sha256Hex(model) !== sha256) throw new Error('Model download did not match its checksum');
+          }
+        } catch (e) {
+          if (writable) { try { await writable.abort(); } catch (err) { /* already closed */ } }
+          throw e;
         }
 
         let saved = false;
@@ -1481,13 +1534,13 @@
           try {
             await writable.close();
             const marker = await (await dir.getFileHandle(fileName + '.ok', { create: true })).createWritable();
-            await marker.write(String(loaded));
+            await marker.write(String(model.length));
             await marker.close();
             saved = true;
           } catch (e) { /* storage full */ }
         }
         if (!saved) {
-          try { await (await caches.open(MODEL_CACHE)).put(url, new Response(model, { headers: { 'content-type': 'application/octet-stream' } })); }
+          try { await (await caches.open(MODEL_CACHE)).put(cacheKey, new Response(model, { headers: { 'content-type': 'application/octet-stream' } })); }
           catch (e) { /* not cacheable here — it will download again next visit */ }
         }
         return model;
@@ -1575,14 +1628,18 @@
 
       /* ---- Engine 0: BiRefNet (MIT) on the GPU ----
          BiRefNet is the open architecture RMBG-2.0 is built on. The full general
-         model runs at 512x512 on WebGPU (the 1024 exports exhaust the 4 GB
-         WebAssembly heap). MatMul weights are 4-bit (194 MB; see
-         scripts/models/build_birefnet.py). On our test photos its masks agree
-         with RMBG-2.0 at IoU 0.98-0.998 on clear subjects (0.927 mean). */
+         model runs at its native 1024x1024 on WebGPU, re-exported with GridSample-
+         based deformable convolutions so it fits in browser memory; MatMul weights
+         are 4-bit (239 MB; see scripts/models/build_birefnet.py). Masks agree with
+         the original PyTorch model at IoU 0.998 and with RMBG-2.0 at 0.986-0.999 on
+         clear subjects. The 512 version lost low-contrast edges (a dark jacket on a
+         night background) that 1024 keeps. */
       const BIREFNET = {
-        url: '/models/birefnet-general-512-q4-v1.onnx',
-        file: 'birefnet-general-512-q4-v1.onnx',
-        size: 512,
+        // Sources in order of preference; a CDN copy can go first to save our bandwidth
+        urls: ['/models/birefnet-general-1024-q4-v1.onnx'],
+        sha256: '4b4d28b9e5a860730744edfd814ce458a2506b9602ae7002483b2f2a3ea7c387',
+        file: 'birefnet-general-1024-q4-v1.onnx',
+        size: 1024,
         mean: [0.485, 0.456, 0.406],
         std: [0.229, 0.224, 0.225]
       };
@@ -1593,7 +1650,8 @@
           const reason = await webgpuReason();
           if (reason) throw skipEngine(reason);
           if (!ortMod) ortMod = await import(ORT_URL);
-          let bytes = await fetchModel(BIREFNET.url, BIREFNET.file, 'BiRefNet');
+          let bytes = await fetchModel(BIREFNET.urls, BIREFNET.file, 'BiRefNet', BIREFNET.sha256);
+          pruneOldModels(BIREFNET.urls[0], BIREFNET.file);
           setOverlay(true, 'Preparing AI model…', 'Loading BiRefNet onto your graphics card.');
           try {
             birefnetSession = await ortMod.InferenceSession.create(bytes, { executionProviders: ['webgpu'] });
@@ -1605,7 +1663,7 @@
           }
         }
 
-        setOverlay(true, 'Removing background…', 'BiRefNet is analyzing your photo on your device.');
+        setOverlay(true, 'Removing background…', 'BiRefNet is analyzing your photo on your device. This takes a few seconds, longer on older computers.');
         const S = BIREFNET.size, plane = S * S;
         const work = document.createElement('canvas');
         work.width = S; work.height = S;
@@ -1963,7 +2021,7 @@
         resetBackdropUi();
         $('customSwatchB').classList.remove('active');
         setResultControls(false);
-        bgHint.textContent = 'Powered by BiRefNet. The first use downloads the AI model (about 190 MB on most computers) and saves it in your browser, so later photos take just seconds.';
+        bgHint.textContent = 'Powered by BiRefNet at full 1024-pixel detail. The first use downloads the AI model (about 240 MB) and saves it in your browser, so later photos take just seconds on most computers.';
         drawOriginal();
       });
 

@@ -229,6 +229,47 @@ PIXNIVO-PRO
         </div>
       </div>
     </section>
+
+    <section class="page-section" aria-labelledby="barcodeGuideTitle">
+      <div class="section-header">
+        <span class="section-eyebrow">Guide</span>
+        <h2 id="barcodeGuideTitle">How to create barcodes in bulk</h2>
+        <p>From a list of values to a printable sheet of scannable codes in five steps.</p>
+      </div>
+      <div class="article-content" style="max-width:760px;">
+        <ol>
+          <li><b>Enter your data.</b> Type or paste one value per line, or import a CSV or TXT file — the first column of each row becomes one barcode. A spreadsheet column saved as CSV works well.</li>
+          <li><b>Choose the barcode type.</b> Twelve symbologies are available, from QR Code and Data Matrix to Code 128, EAN-13, UPC-A, ITF-14 and the GS1 formats. The guide above helps you pick.</li>
+          <li><b>Set the appearance.</b> Turn the human-readable text under each code on or off, choose a resolution from 2× to 8× (higher is sharper for print), and set the bar height between 6 and 30 mm for linear barcodes.</li>
+          <li><b>Generate and check.</b> Every value is validated for the chosen type, and invalid entries are counted and flagged so you can fix them before exporting. The preview shows the first 100 codes; every valid code is included in the export.</li>
+          <li><b>Export.</b> Download a <b>PDF</b> for printing or a <b>ZIP of PNG</b> images for labels and design software — both are created on your device. <b>Word</b> and <b>Excel</b> files are generated on our server and not stored.</li>
+        </ol>
+
+        <h3>Check digits are handled for you</h3>
+        <p>Retail barcodes end in a check digit calculated from the other digits. For EAN-13, enter 12 digits and the check digit is added, or enter all 13 and it's verified. UPC-A works the same way with 11 or 12 digits, and ITF-14 with 13 or 14.</p>
+
+        <h3>Tips for barcodes that scan first time</h3>
+        <ul>
+          <li><b>Keep a clear margin.</b> Scanners need a blank "quiet zone" on both sides of a linear barcode. Don't let text, borders or the edge of a label touch the bars.</li>
+          <li><b>Print dark on light.</b> Black bars on a white background scan most reliably. Coloured, reversed or patterned backgrounds often fail.</li>
+          <li><b>Don't shrink too far.</b> Very small linear barcodes and dense QR codes become hard to scan. For QR codes, shorter text or URLs produce simpler, more robust codes.</li>
+          <li><b>Test before printing a batch.</b> Print one page and scan several codes with the scanner or phone you'll actually use.</li>
+        </ul>
+
+        <h2>Frequently asked questions</h2>
+        <h3>Can I use these EAN or UPC barcodes on products I sell in stores?</h3>
+        <p>The generator encodes whatever numbers you provide; it doesn't issue product numbers. To sell through retailers, you need GTINs from a GS1 company prefix registered to your business. For internal stock, asset tags and shipping labels, use Code 128 or QR codes with your own numbering instead.</p>
+
+        <h3>How many barcodes can I make at once?</h3>
+        <p>Thousands. The preview shows the first 100 to keep the page fast, but every valid value is included when you export.</p>
+
+        <h3>Which export is best for printing labels?</h3>
+        <p>PDF is ready to print. Choose PNG images if you're placing codes into label software or a design file, and Word or Excel if you want to add your own text or layout around each code.</p>
+
+        <h3>Do QR codes from this tool expire?</h3>
+        <p>No. The content is stored inside the code itself, not on a server, so a QR code keeps working as long as the link or text in it is valid.</p>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">

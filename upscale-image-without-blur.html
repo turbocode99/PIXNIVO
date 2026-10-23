@@ -82,54 +82,69 @@
     <header class="article-header">
       <div class="article-eyebrow">Super-Resolution &amp; Enhancing</div>
       <h1>How to Upscale an Image Without It Looking Blurry</h1>
-      <p class="article-meta"><span>12 August 2026</span><span>•</span><span>8 min read</span></p>
+      <p class="article-meta"><span>12 August 2026</span><span>•</span><span>Updated 23 October 2026</span><span>•</span><span>6 min read</span></p>
     </header>
 
     <article class="article-content">
       <p>You have a photo that's too small. Maybe it's an old picture, a logo someone emailed you, or an image saved from a website years ago. You need it bigger, and every time you enlarge it, it turns into a soft, mushy mess.</p>
-
-      <p>Here's what's actually happening, what can realistically be fixed, and how to get the best result available.</p>
+      <p>Here's what's actually happening, what can realistically be improved, and how to get the best result your image allows.</p>
 
       <h2>Why enlarging makes things blurry</h2>
       <p>An image is a grid of pixels. A 400 × 300 photo contains exactly 120,000 of them — no more, no less.</p>
-      <p>To display that image at 800 × 600, the software needs 480,000 pixels. It only has 120,000. The other 360,000 have to come from somewhere, and there's only one place: <b>they're invented</b>, by looking at the real pixels nearby and guessing what should sit between them.</p>
-      <p>This process is called interpolation, and no amount of it creates information that was never captured. If a face in your photo is twelve pixels wide, there is no eyelash detail hiding in there waiting to be recovered. It simply isn't in the file.</p>
+      <p>To display that image at 800 × 600, the software needs 480,000 pixels. It only has 120,000. The other 360,000 have to come from somewhere, and there's only one place: <b>they're calculated</b>, by looking at the real pixels nearby and estimating what should sit between them.</p>
+      <p>This is called interpolation, and no amount of it recovers information that was never captured. If a face in your photo is twelve pixels wide, there's no eyelash detail hiding in there waiting to be revealed. It simply isn't in the file.</p>
 
       <div class="callout-box">
-        <p><b>Films lie about this.</b> The "enhance that reflection" scene isn't how images work. Detail below the resolution of the original was never recorded, and nothing can bring it back — a modern AI model can generate a <i>plausible</i> version of it, but it's inventing, not recovering.</p>
+        <p><b>Films get this wrong.</b> The "enhance that reflection" scene isn't how images work. Detail finer than the original resolution was never recorded. An AI model can generate a <i>plausible</i> version of it, but it's inventing, not recovering.</p>
       </div>
 
-      <h2>What can genuinely be improved</h2>
-      <p>Given that, why bother upscaling at all? Because there's a big difference between <b>enlarging badly</b> and <b>enlarging well</b>. Two things are within reach:</p>
+      <h2>Two approaches: resampling and AI generation</h2>
+      <p>There are two broad ways to make an image bigger:</p>
+      <ul>
+        <li><b>Resampling</b> calculates the new pixels from the existing ones using careful mathematics, then sharpens the result. It never adds anything that wasn't suggested by the original, so it's predictable and faithful. This is what PIXNIVO's <a href="/image-upscaler">Image Upscaler</a> does, entirely in your browser.</li>
+        <li><b>AI super-resolution</b> uses a neural network trained on millions of images to paint in detail it thinks should be there. Results on faces and landscapes can look impressive, but the details are guesses — text can turn into convincing nonsense, and a face can come out subtly different.</li>
+      </ul>
+      <p>For documents, screenshots, logos and anything where accuracy matters, faithful resampling is the safer choice. For an old family snapshot where you just want something that looks nicer, an AI tool may be worth trying, as long as you remember the new detail is invented.</p>
 
-      <h3>1. Clean enlargement instead of blocky enlargement</h3>
-      <p>A naive resize produces jagged staircase edges and visible squares. A good resize produces smooth edges. Same amount of detail, dramatically different appearance.</p>
-
+      <h2>What resampling can genuinely improve</h2>
+      <p>There's a big difference between enlarging badly and enlarging well. Two things are within reach:</p>
+      <h3>1. Smooth edges instead of blocky ones</h3>
+      <p>A naive resize produces jagged staircase edges and visible squares. PIXNIVO enlarges in several small, high-quality steps instead of one big jump, which keeps edges smooth. Same amount of detail, dramatically better appearance.</p>
       <h3>2. Restored apparent sharpness</h3>
-      <p>Enlargement always softens edges. Sharpening increases the contrast right at those edges, which makes the image read as crisp again. It isn't adding detail — it's making the detail that survived stand out properly.</p>
-      <p>Together these turn "obviously stretched" into "acceptably large."</p>
+      <p>Enlargement always softens edges. Sharpening — specifically an "unsharp mask" — increases the contrast right at those edges, so the image reads as crisp again. It isn't adding detail; it's making the detail that survived stand out properly.</p>
+      <p>Together these turn "obviously stretched" into "acceptably large".</p>
 
-      <h2>Doing it properly</h2>
-      <a class="article-cta" href="/image-upscaler">Open the Image Upscaler Tool →</a>
+      <h2>How big do you actually need?</h2>
+      <p>Before enlarging, work out the target. For print, multiply the size in inches by 300 to get the pixels needed for a sharp result: a 10 × 8 inch print needs about 3,000 × 2,400 pixels. If you have 1,500 × 1,200, a 2× enlargement gets you there. For screens, the target is the display size — often 1,920 pixels wide for a full-width image, or twice the displayed width on high-density screens. <a href="/resolution-dpi-file-size-explained">Resolution, DPI and file size explained</a> has a full table.</p>
+      <p>Enlarge only as far as you need. Going 4× when 2× would do just makes a bigger file with more visible softness.</p>
 
-      <h3>Step 1: Choose a realistic scale</h3>
-      <p>2× is comfortable for most images. 4× is possible, but be honest about the starting point — a sharp 1,000 px photo at 4× can look fine, while a soft 300 px thumbnail at 4× will look soft and large rather than soft and small.</p>
-      <p>A rough rule: <b>the sharper and larger the original, the further you can push it.</b></p>
+      <h2>Step by step</h2>
+      <a class="article-cta" href="/image-upscaler">Open the Image Upscaler →</a>
 
-      <h3>Step 2: Sharpen, but not too much</h3>
-      <p>Start around 50–60 and adjust while watching the preview. Signs you've gone too far:</p>
+      <h3>Step 1: Start from the best copy you have</h3>
+      <p>Use the original file from the camera or the source, not a version that's been through a messaging app or a screenshot. Every round of compression adds artifacts, and enlarging makes them bigger.</p>
+
+      <h3>Step 2: Choose a realistic scale</h3>
+      <p>Pick <b>2×</b>, <b>3×</b> or <b>4×</b>. 2× is comfortable for most images. 4× is possible, but be honest about the starting point — a sharp 1,000 px photo at 4× can look fine, while a soft 300 px thumbnail at 4× just looks soft and large. The <b>1×</b> option keeps the size and applies only sharpening and tone, which is handy for a slightly soft photo that's already big enough.</p>
+      <p>A rough rule: <b>the sharper and larger the original, the further you can push it.</b> To keep your browser responsive, output is capped at 40 megapixels.</p>
+
+      <h3>Step 3: Sharpen, but not too much</h3>
+      <p>The <b>Sharpen</b> strength starts at 55. Adjust while watching the preview. Signs you've gone too far:</p>
       <ul>
         <li>Bright halos outlining dark objects against light backgrounds</li>
         <li>Skin that looks grainy or crunchy</li>
-        <li>Noise in flat areas like sky or walls becoming obvious</li>
+        <li>Noise in flat areas such as sky or walls becoming obvious</li>
       </ul>
       <p>Back off until those disappear. Slightly under-sharpened looks natural; over-sharpened looks processed, and everyone can tell.</p>
 
-      <h3>Step 3: Use the comparison slider honestly</h3>
-      <p>Drag the divider back and forth. If you can't see a clear improvement over the plain enlargement, the settings aren't helping — reduce them rather than pushing harder.</p>
+      <h3>Step 4: Use the comparison slider honestly</h3>
+      <p>Drag the divider across the image to compare the original and the upscaled version. If you can't see a clear improvement, the settings aren't helping — reduce them rather than pushing harder.</p>
 
-      <h3>Step 4: Adjust contrast last</h3>
-      <p>A small contrast increase (105–115%) often makes an upscaled image feel sharper than sharpening alone does, without introducing halos. Try that before turning sharpening up further.</p>
+      <h3>Step 5: Adjust contrast before sharpening harder</h3>
+      <p>A small contrast increase, to around 105–115%, often makes an upscaled image feel sharper than extra sharpening does, without introducing halos. Brightness and saturation are there for small corrections too.</p>
+
+      <h3>Step 6: Export in the right format</h3>
+      <p>Choose <b>PNG</b> for logos, graphics and screenshots, where every edge matters. Choose <b>JPG</b> or <b>WebP</b> for photos — the quality starts at 92%, a good setting for prints — to keep the file size reasonable.</p>
 
       <h2>What works well, and what doesn't</h2>
       <div class="table-wrap">
@@ -149,9 +164,27 @@
       </div>
 
       <h2>The mistake that makes everything worse</h2>
-      <p><b>Upscaling something you've already compressed heavily.</b></p>
+      <p><b>Upscaling something that has already been compressed heavily.</b></p>
       <p>Heavy JPG compression leaves blocky artifacts around edges. When you enlarge, those artifacts get enlarged too — and when you then sharpen, sharpening emphasises them, because to the software they look exactly like edges.</p>
       <p>Always start from the best copy you have. A version straight from the camera will upscale far better than the same photo after it has been through a messaging app twice.</p>
+
+      <h2>A better option for logos</h2>
+      <p>If the small image is a logo, the best "upscale" is often not upscaling at all. Ask the designer or the company for the original vector file — SVG, EPS, AI or PDF — which stays sharp at any size. If you're creating a new logo, export it large from the start — the <a href="/logo-generator">Logo Generator</a> produces a 2,048 px PNG and an SVG whose text and frame stay sharp at any size — and keep those files as your masters.</p>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Is upscaling the same as increasing DPI?</h3>
+      <p>No. Changing the DPI value only changes the suggested print size; the pixels stay the same. Upscaling actually creates a larger pixel grid.</p>
+
+      <h3>Can I upscale on my phone?</h3>
+      <p>Yes. The upscaler runs in mobile browsers. Very large outputs use a lot of memory, so on older phones choose 2× rather than 4×.</p>
+
+      <h3>Are my images uploaded?</h3>
+      <p>No. Upscaling, sharpening and exporting all happen in your browser, so the image never leaves your device.</p>
+
+      <h3>Why does my upscaled photo look worse than the original?</h3>
+      <p>Usually because it was over-sharpened, or because the original was a compressed copy whose artifacts are now bigger. Lower Sharpen, raise contrast slightly instead, and start from a better source if you can.</p>
+
+      <p>For the right order of editing steps from start to finish, see <a href="/image-quality-checklist">The Image Quality Checklist</a>.</p>
     </article>
   </main>
 

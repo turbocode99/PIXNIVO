@@ -82,49 +82,89 @@
     <header class="article-header">
       <div class="article-eyebrow">Messaging &amp; Sharing</div>
       <h1>How to Compress Images for WhatsApp Without Losing Quality</h1>
-      <p class="article-meta"><span>12 July 2026</span><span>•</span><span>6 min read</span></p>
+      <p class="article-meta"><span>12 July 2026</span><span>•</span><span>Updated 23 October 2026</span><span>•</span><span>5 min read</span></p>
     </header>
 
     <article class="article-content">
-      <p>You take a sharp picture, send it on WhatsApp, and the recipient says it looks blurry. The original is razor sharp in your phone gallery. So what happened in between?</p>
-      <p>WhatsApp compressed it aggressively to conserve its server bandwidth. Once you understand the algorithm, you can preserve quality easily.</p>
+      <p>You take a sharp photo, send it on WhatsApp, and the reply comes back: "it's a bit blurry." On your phone the picture is crisp, because you're looking at the original. What arrived on their phone is a much smaller copy that WhatsApp made on the way.</p>
+      <p>WhatsApp compresses photos so they send quickly and don't fill up phones and servers. You can't switch that off for ordinary photos, but you can choose how your image gets there — and prepare it so less is lost. Here's how.</p>
 
-      <h2>What WhatsApp does to your photos</h2>
+      <h2>What WhatsApp does to a photo</h2>
+      <p>When you send a picture the normal way, from the gallery or camera button, WhatsApp:</p>
       <ul>
-        <li><b>Resizes dimensions:</b> Downscales the longest side to ~1,600 pixels (throwing away 60% of sensor detail).</li>
-        <li><b>Re-encodes with heavy lossy JPEG quantization:</b> Introduces visible artifact ringing around text and sharp edges.</li>
-        <li><b>Strips EXIF metadata:</b> Discards camera parameters and orientation tags.</li>
+        <li><b>Shrinks it.</b> At standard quality, photos are scaled down so the longest side is roughly 1,600 pixels. A 4,000-pixel-wide phone photo loses more than half its width — and most of its fine detail.</li>
+        <li><b>Re-saves it as a fairly low-quality JPG.</b> That's what softens fine textures and puts fuzzy halos around text and sharp edges.</li>
+        <li><b>Converts screenshots.</b> PNG screenshots are turned into JPGs, which is why small text in a screenshot often arrives smudged.</li>
+        <li><b>Removes most hidden metadata,</b> such as the camera model and location of the shot.</li>
       </ul>
+      <p>The damage stacks when an image goes round more than once. A photo someone saved from a chat, cropped or screenshotted and then sent again as a new photo goes through the whole process again, and each round removes a little more.</p>
 
+      <h2>Option 1: Turn on HD for important photos</h2>
+      <p>Recent versions of WhatsApp show an <b>HD</b> button at the top of the screen after you pick a photo to send. Tap it before sending and WhatsApp sends a much larger version. It is still compressed, but far less aggressively, and it is the right choice for photos people will want to zoom into or keep.</p>
+      <p>You can also make HD the default for all photos in <b>Settings → Storage and data → Media upload quality</b>. Menu names vary between versions and between Android and iPhone, so look for "upload quality" if the wording is different on your phone. HD photos use more mobile data, for you and for the recipient.</p>
+
+      <h2>Option 2: Send the photo as a document</h2>
+      <p>For anything where every detail matters — photos for printing, scans of forms, receipts, screenshots full of small text — send the image as a file instead of a photo:</p>
+      <ol>
+        <li>In the chat, tap the <b>paperclip</b> or <b>+</b> icon.</li>
+        <li>Choose <b>Document</b>, not Gallery or Photos.</li>
+        <li>Pick the image and send it.</li>
+      </ol>
+      <p>Documents are delivered exactly as they are, byte for byte, up to WhatsApp's large file limit. The trade-offs: the recipient sees a file they have to tap to open rather than a picture in the chat, and the file keeps all of its metadata.</p>
       <div class="callout-box">
-        <p><b>Generational loss:</b> When someone forwards a received WhatsApp photo, the compression pass repeats. After 3 forwards, text becomes unreadable.</p>
+        <p><b>Privacy check:</b> because documents aren't processed, a photo sent this way still carries its EXIF data — often including the GPS coordinates of where it was taken. Running the photo through PIXNIVO first gives you a clean copy, since the compressor saves only the pixels.</p>
       </div>
 
-      <h2>Strategy 1: Send as an Uncompressed Document</h2>
+      <h2>Option 3: Prepare the photo yourself first</h2>
+      <p>Preparing an image before you send it doesn't stop WhatsApp from re-saving it, but it does put you in control of the parts that hurt most:</p>
+      <ul>
+        <li><b>Crop to what matters.</b> WhatsApp's roughly 1,600-pixel budget is spent on the whole frame. Crop away empty sky or floor and those pixels go to the subject instead.</li>
+        <li><b>Resize it yourself.</b> If the photo already fits within 1,600 pixels, WhatsApp doesn't need to shrink it, and you avoid its scaling step.</li>
+        <li><b>Split long images.</b> A tall infographic or a long screenshot is scaled down until its longest side fits, which can leave the text unreadable. Crop it into two or three parts, or send it as a document.</li>
+      </ul>
+      <p>With PIXNIVO:</p>
       <ol>
-        <li>In the chat window, tap the <b>+</b> or paperclip icon.</li>
-        <li>Choose <b>Document</b> instead of Gallery/Photos.</li>
-        <li>Browse and attach the original image file.</li>
+        <li>Open the photo in the <a href="/?tab=edit">Photo Editor</a> and crop it — <b>1:1</b> or <b>4:5</b> for photos in a chat, <b>9:16</b> for a full-screen status. Export as PNG.</li>
+        <li>Open the result in the <a href="/?tab=compress">Image Compressor</a>, choose <b>JPG</b> and set <b>Max width</b> to about <b>1,600 px</b> (1,080 px for a 9:16 status image).</li>
+        <li>Set <b>Quality</b> to <b>85%</b>, check the preview and download.</li>
+        <li>Send it from your gallery as usual, or with HD switched on.</li>
       </ol>
-      <p>WhatsApp delivers documents byte-for-byte with zero compression.</p>
+      <p>Everything runs in your browser on your own device, so the photo isn't uploaded anywhere along the way.</p>
 
-      <h2>Strategy 2: Pre-Compress with PIXNIVO</h2>
-      <p>When you feed WhatsApp a file that is already optimized (1,800px width at 80% quality), WhatsApp's pipeline detects the compact footprint and skips harsh re-encoding.</p>
-
-      <a class="article-cta" href="/">Launch PIXNIVO Image Compressor →</a>
-
+      <h2>Which method to use</h2>
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>Use Case</th><th>Recommended Transfer Method</th></tr>
+            <tr><th>What you're sending</th><th>Best method</th></tr>
           </thead>
           <tbody>
-            <tr><td>Everyday chats with friends</td><td>Standard Send with HD toggle enabled</td></tr>
-            <tr><td>Printing or framing</td><td>Send as Document (lossless)</td></tr>
-            <tr><td>Contracts, text scans, receipts</td><td>Send as Document (lossless)</td></tr>
-            <tr><td>Product catalogs for customers</td><td>Pre-compress to 1,800px at 80%</td></tr>
+            <tr><td>Everyday photos to friends and family</td><td>Normal send, or HD if they'll want to keep them</td></tr>
+            <tr><td>Photos someone will print or frame</td><td>Send as document</td></tr>
+            <tr><td>Screenshots, menus, receipts, forms</td><td>Send as document, or crop into readable parts</td></tr>
+            <tr><td>Product photos for customers</td><td>Crop square, resize to 1,600 px at 85%, then send with HD</td></tr>
+            <tr><td>Status updates</td><td>Crop 9:16 and resize to 1,080 px wide before posting</td></tr>
+            <tr><td>Anything with location data you'd rather not share</td><td>Run it through the Image Compressor first</td></tr>
           </tbody>
         </table>
+      </div>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Why does the photo look sharp on my phone but blurry on theirs?</h3>
+      <p>Your gallery shows the original; the chat shows the compressed copy that was sent. If you open the photo inside the chat on your own phone, you'll usually see the same softness the recipient sees.</p>
+
+      <h3>Can the recipient get the original quality afterwards?</h3>
+      <p>No. Once WhatsApp has compressed a photo, the discarded detail is gone. Send it again as a document if they need the full-quality version.</p>
+
+      <h3>Does WhatsApp Web or Desktop compress photos too?</h3>
+      <p>Yes, photos you drag into a chat on a computer are compressed the same way. Use the attach menu's Document option to send the original file.</p>
+
+      <h3>Why are text screenshots worse than photos?</h3>
+      <p>JPG compression handles soft photographic detail well but struggles with hard edges like letters, so screenshot text gets fuzzy halos. Sending screenshots as documents keeps them as sharp PNGs. <a href="/jpg-vs-png-vs-webp">JPG vs PNG vs WebP</a> explains the difference.</p>
+
+      <p>Sending photos by email instead? See <a href="/photos-too-large-for-email">Photos Too Large for Email</a>.</p>
+
+      <div style="text-align:center; margin-top:36px;">
+        <a class="article-cta" href="/?tab=compress">Prepare a Photo for WhatsApp →</a>
       </div>
     </article>
   </main>
