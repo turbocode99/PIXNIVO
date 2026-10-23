@@ -82,41 +82,96 @@
     <header class="article-header">
       <div class="article-eyebrow">E-Commerce Photography</div>
       <h1>How to Create Clean White Background Product Photos for E-Commerce</h1>
-      <p class="article-meta"><span>14 June 2026</span><span>•</span><span>7 min read</span></p>
+      <p class="article-meta"><span>14 June 2026</span><span>•</span><span>Updated 23 October 2026</span><span>•</span><span>6 min read</span></p>
     </header>
 
     <article class="article-content">
-      <p>Major e-commerce marketplaces (Amazon, Google Shopping, eBay, Shopify) require main hero product images to have pure, seamless RGB #FFFFFF white backgrounds.</p>
-      <p>Shooting on a real white sheet usually yields a muddy grey cast due to shadows and uneven exposure. Here is how to achieve pristine marketplace-compliant catalog photos without studio gear.</p>
+      <p>Scroll through any large marketplace and the main product images look almost identical in style: the item, centred and sharp, on a perfectly white background. That uniformity isn't an accident. Several marketplaces require it for the main image, and shoppers comparing a dozen listings side by side find clean, consistent photos easier to trust.</p>
+      <p>You don't need a studio to get there. A window, a sheet of white card and an AI background remover will take a phone photo most of the way. This guide covers marketplace requirements, how to shoot so the cut-out is clean, and the exact workflow in PIXNIVO.</p>
 
-      <h2>Marketplace Standard Specifications</h2>
+      <h2>What the major platforms ask for</h2>
+      <p>Requirements are set by each platform and change from time to time, so treat this as a summary at the time of writing and check the seller help pages before a big upload.</p>
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>Platform</th><th>Background Standard</th><th>Minimum Resolution</th></tr>
+            <tr><th>Platform</th><th>Main image background</th><th>Size guidance</th></tr>
           </thead>
           <tbody>
-            <tr><td><b>Amazon</b></td><td>Pure RGB (255, 255, 255)</td><td>1000 × 1000 px (Zoom trigger)</td></tr>
-            <tr><td><b>Google Shopping</b></td><td>White or light neutral</td><td>800 × 800 px</td></tr>
-            <tr><td><b>Shopify Store</b></td><td>Consistent white / transparent</td><td>2048 × 2048 px recommended</td></tr>
-            <tr><td><b>eBay</b></td><td>Pure white / off-white</td><td>1600 px longest side</td></tr>
+            <tr><td><b>Amazon</b></td><td>Pure white (RGB 255, 255, 255); product should fill about 85% of the frame</td><td>1,000 px or more on the longest side enables zoom</td></tr>
+            <tr><td><b>eBay</b></td><td>White or neutral recommended; no borders, text or watermarks</td><td>At least 500 px; 1,600 px recommended</td></tr>
+            <tr><td><b>Shopify stores</b></td><td>Your choice, but consistent across products</td><td>2,048 × 2,048 px square recommended</td></tr>
+            <tr><td><b>Google Shopping</b></td><td>Plain white, transparent or light background recommended</td><td>Larger images display better in results</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Secondary images — the product in use, close-ups of details, size comparisons — usually don't need a white background. The white-background rule is about the first image a shopper sees in search results.</p>
+
+      <h2>Step 1: Shoot for a clean cut-out</h2>
+      <p>An AI background remover works by telling the product apart from everything else. The clearer that difference is in the photo, the cleaner the edges will be.</p>
+      <ul>
+        <li><b>Use soft daylight.</b> Place the product near a large window with indirect light. Hold a sheet of white card on the opposite side to bounce light back into the shadows.</li>
+        <li><b>Build a simple sweep.</b> Tape a large sheet of white paper or card to the wall and let it curve down onto the table. With no visible corner behind the product, the background stays even.</li>
+        <li><b>Mind the contrast.</b> A white product on white paper is hard to separate, for people and AI alike. Shoot white or very pale items on a mid-grey or coloured backdrop instead — you'll replace it with white afterwards.</li>
+        <li><b>Step back and zoom in.</b> Shooting from close up with a wide lens bends straight edges and exaggerates the front of the product. Stand back and use your phone's 2× lens if it has one.</li>
+        <li><b>Leave space around the product.</b> Room on every side lets you crop to a square later without cutting anything off.</li>
+        <li><b>Clean the product.</b> Dust, fingerprints and lint are far more visible on a white background than in real life.</li>
+      </ul>
+
+      <h2>Step 2: Crop to a square</h2>
+      <p>Most marketplaces display main images as squares, so crop before you remove the background. Open the photo in the <a href="/?tab=edit">Photo Editor</a>, choose the <b>1:1</b> crop and position the product so it fills most of the frame — around 85% for Amazon — with a small, even margin. Export it as PNG to avoid an extra round of compression.</p>
+
+      <h2>Step 3: Remove the background</h2>
+      <ol>
+        <li>Open the <a href="/?tab=bg">AI Background Remover</a> and drop in the square photo.</li>
+        <li>Click <b>Remove background</b>. The first time, your browser downloads the AI model (about 240 MB) and keeps it, so later photos take just a few seconds.</li>
+        <li>Under <b>Background</b>, choose the <b>White</b> swatch. It is exactly #FFFFFF — the pure white Amazon asks for.</li>
+        <li>Zoom in on the edges. If a thin outline of the old backdrop remains, raise <b>Edge tightening</b> a little at a time.</li>
+        <li>For stray patches — a shadow under the product, a bit of the table — switch on the <b>Touch-up eraser</b> and paint over them.</li>
+        <li>Click <b>Download PNG</b>.</li>
+      </ol>
+      <p>The photo is processed by an AI model running in your browser, so unreleased products and supplier samples are never uploaded to a server.</p>
+
+      <h2>Step 4: Export at the right size</h2>
+      <p>A PNG with a white background is often several megabytes. Marketplaces accept it, but a JPG uploads faster and loads faster for shoppers. Drop the PNG into the <a href="/?tab=compress">Image Compressor</a>, choose <b>JPG</b>, set <b>Max width</b> to 2,000 px and <b>Quality</b> to 85–90%. Flat white areas stay pure white at these settings.</p>
+      <p>If you also sell on your own website, keep a transparent version: download from the Background Remover with the <b>Transparent</b> swatch selected, then save as WebP or PNG so the product sits cleanly on any page colour.</p>
+
+      <h2>Products that need extra care</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Product type</th><th>What goes wrong</th><th>What helps</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Glass and clear plastic</td><td>The background shows through, so the AI may cut parts away</td><td>Shoot on a contrasting backdrop; touch up with the eraser; expect some manual work</td></tr>
+            <tr><td>Shiny metal and jewellery</td><td>Reflections of the room confuse the edges</td><td>Surround the item with white card so it reflects white</td></tr>
+            <tr><td>White or pale items</td><td>Low contrast with a white sweep</td><td>Shoot on mid-grey, then replace with white</td></tr>
+            <tr><td>Fluffy textiles and fur</td><td>Fine fibres look clipped</td><td>Use soft side light so the edge stands out from the backdrop</td></tr>
+            <tr><td>Products with holes or handles</td><td>Background left inside gaps</td><td>Check the gaps and erase what remains</td></tr>
           </tbody>
         </table>
       </div>
 
-      <h2>The Three-Step Catalog Workflow</h2>
-      <ol>
-        <li><b>Capture with strong contrast:</b> Place the merchandise against any uncluttered contrasting backdrop so the neural segmenter can clearly identify edges.</li>
-        <li><b>One-Click AI Background Removal:</b> Drop the image into PIXNIVO's neural studio to isolate the item instantly.</li>
-        <li><b>Add Pure White Canvas &amp; Shadow:</b> Switch the background fill to pure #FFFFFF or export as a transparent PNG.</li>
-      </ol>
+      <h2>Keep the whole catalogue consistent</h2>
+      <p>Shoppers notice when one product is larger, darker or framed differently from the rest. Use the same backdrop, light, camera distance and crop for every item, and process them with the same settings. A product that fills 85% of a 2,000 px square in one listing should do the same in every other listing.</p>
+      <p>PIXNIVO doesn't add artificial drop shadows. For a main image that's usually what you want — a clean product on pure white. For secondary images, a photo with its natural shadow kept in place often looks more realistic than any added effect.</p>
 
-      <div class="callout-box">
-        <p><b>Pro Conversion Tip:</b> Products with clean white backgrounds convert 27% higher on average because listings look professional, uniform, and trustworthy.</p>
-      </div>
+      <h2>Frequently asked questions</h2>
+      <h3>Is a near-white background good enough for Amazon?</h3>
+      <p>Not for the main image. A sheet of white paper photographed in real light usually comes out light grey (around 230–245 rather than 255), which automated checks can flag. Replacing the background with #FFFFFF makes it exactly white.</p>
+
+      <h3>Why does the edge of my product look rough or haloed?</h3>
+      <p>Either the backdrop was too similar to the product, or some of the old background colour is left on the outline. Increase Edge tightening slightly, use the eraser on problem areas, and for the next shoot use a backdrop with more contrast.</p>
+
+      <h3>Can I remove the background from many products at once?</h3>
+      <p>The Background Remover works on one photo at a time. Once the model is downloaded, each photo takes a few seconds, so a shoot of a few dozen products is manageable in one sitting.</p>
+
+      <h3>Should I edit brightness and colour as well?</h3>
+      <p>Only to correct, never to flatter. Colours that don't match the real product lead to returns. If the photo is slightly dark, nudge brightness in the Photo Editor before removing the background.</p>
+
+      <p>For a broader workflow that avoids quality loss at each step, see <a href="/image-quality-checklist">The Image Quality Checklist</a>, and for how the cut-out itself works, <a href="/how-ai-background-removal-works">How AI Background Removal Works</a>.</p>
 
       <div style="text-align:center; margin-top:36px;">
-        <a class="article-cta" href="/">Create White Background Product Photo →</a>
+        <a class="article-cta" href="/?tab=bg">Create a White Background Product Photo →</a>
       </div>
     </article>
   </main>

@@ -234,6 +234,48 @@
         </div>
       </div>
     </div>
+
+    <section class="page-section" aria-labelledby="ocrGuideTitle">
+      <div class="section-header">
+        <span class="section-eyebrow">Guide</span>
+        <h2 id="ocrGuideTitle">How to extract text from an image or PDF</h2>
+        <p>Turn a photo of a page, a screenshot or a scanned PDF into text you can edit, search and paste — in a few steps.</p>
+      </div>
+      <div class="article-content" style="max-width:760px;">
+        <ol>
+          <li><b>Add your file.</b> Drop in a JPG, PNG, WebP, TIFF or iPhone HEIC image, or a multi-page PDF up to 50 MB. You can also paste a screenshot with Ctrl+V.</li>
+          <li><b>Choose an engine.</b> <b>Enhanced</b> uses a PaddleOCR neural network on our server and gives the highest accuracy for English. <b>Private</b> uses Tesseract inside your browser, so the file never leaves your device. If you pick a language other than English, the private engine is used automatically.</li>
+          <li><b>Pick the document's language</b> from the 12 available: English, Spanish, French, German, Portuguese, Italian, Russian, Arabic, Hindi, Chinese (Simplified), Japanese and Korean.</li>
+          <li><b>Clean up the image if needed.</b> <b>Auto contrast</b> helps with faded or grey scans; <b>Black &amp; white</b> helps with photos of paper taken in uneven light.</li>
+          <li><b>For PDFs, choose the pages</b> — all pages, or just the one you're viewing.</li>
+          <li><b>Click Extract text.</b> The result appears in an editable box with word, character and line counts. Use <b>Find</b> to search it, then copy it or download it as a TXT or Word file.</li>
+        </ol>
+
+        <h3>Tips for accurate results</h3>
+        <ul>
+          <li><b>Start sharp and straight.</b> Photograph pages in daylight, straight from above, with the page filling the frame. Blur and steep angles cause most recognition errors.</li>
+          <li><b>Scan at 300 DPI</b> for small print. Lower resolutions are fine for large text but lose detail in footnotes and fine print.</li>
+          <li><b>Choose the right language.</b> The language setting tells the engine which characters and words to expect; the wrong one produces gibberish.</li>
+          <li><b>Proofread numbers.</b> OCR can confuse similar characters such as 0 and O or 1 and l. Check amounts, dates and reference numbers before relying on them.</li>
+        </ul>
+
+        <h2>Frequently asked questions</h2>
+        <h3>Is my document stored?</h3>
+        <p>No. With the Enhanced engine, the file is sent over an encrypted HTTPS connection, processed in memory and deleted as soon as the text is returned. With the Private engine, nothing is uploaded at all — choose it for confidential documents.</p>
+
+        <h3>Can it read handwriting?</h3>
+        <p>It's designed for printed text. Neat block capitals are often recognised; joined-up handwriting is unreliable.</p>
+
+        <h3>Does it keep the original layout?</h3>
+        <p>The output is plain text with line breaks, and multi-page PDFs get clear page separators. Formatting such as fonts, columns and table borders isn't recreated, so complex layouts may need tidying after you paste them.</p>
+
+        <h3>Why is the Private engine slower the first time?</h3>
+        <p>It downloads the language model for the language you choose once, then keeps it in your browser, so later runs start faster.</p>
+
+        <h3>My PDF already has selectable text. Do I need OCR?</h3>
+        <p>No — you can copy text from it directly. OCR is for scans and photos, where the text is part of an image. For making scanned PDFs smaller, see <a href="/compress-pdf-too-large">how to compress a PDF that's too large</a>.</p>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">

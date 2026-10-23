@@ -82,48 +82,95 @@
     <header class="article-header">
       <div class="article-eyebrow">File Compression</div>
       <h1>How to Compress a PDF That's Too Large to Email</h1>
-      <p class="article-meta"><span>19 July 2026</span><span>•</span><span>8 min read</span></p>
+      <p class="article-meta"><span>19 July 2026</span><span>•</span><span>Updated 23 October 2026</span><span>•</span><span>5 min read</span></p>
     </header>
 
     <article class="article-content">
-      <p>A portal insists your PDF must be under 2 MB, but your file is 14 MB. Or an email bounces because an attachment exceeded the server threshold. Understanding <b>why</b> your PDF is large determines whether it can be shrunk substantially.</p>
+      <p>An upload portal says your PDF must be under 2 MB, and your file is 14 MB. Or an email bounces because the attachment is over the limit. Before reaching for any compressor, it's worth spending ten seconds finding out <b>why</b> the PDF is large — because that decides whether it can shrink a lot, a little, or hardly at all.</p>
 
-      <h2>Two fundamentally different kinds of PDF</h2>
-      <h3>1. Text-based vector PDFs</h3>
-      <p>Exported directly from Word, Google Docs, or InDesign. The characters are stored as vector glyphs and font instructions. These are already highly compact (a 50-page document is often under 1 MB). There is very little to compress unless high-resolution photos were pasted into the body.</p>
+      <h2>Two very different kinds of PDF</h2>
+      <h3>1. Text-based PDFs</h3>
+      <p>These are exported from Word, Google Docs, Excel or design software. Text is stored as characters and fonts, and lines as shapes, which is extremely compact: a 50-page report is often under 1 MB. If a text-based PDF is large, the cause is almost always embedded photos or high-resolution images pasted into the document.</p>
 
-      <h3>2. Scanned image PDFs</h3>
-      <p>Created by scanners, copiers, or phone cameras. Each page is a raster photograph. A ten-page scan easily reaches 30–50 MB. <b>These compress dramatically</b>, routinely shrinking by 70–90%.</p>
+      <h3>2. Scanned or image-based PDFs</h3>
+      <p>These come from scanners, copiers and phone scanning apps, or from combining photos into a PDF. Every page is a picture of a page. Scanners often default to 300 or 600 DPI in full colour, so ten pages can easily reach 20–50 MB. <b>These shrink dramatically</b> — reductions of 70–90% are common.</p>
 
       <div class="callout-box">
-        <p><b>Quick verification:</b> Try highlighting words with your mouse cursor. If you can select individual characters, it's text-based. If your cursor drags a selection box over the whole sheet, it's a scanned photo.</p>
+        <p><b>Quick test:</b> open the PDF and try to select a single word with your mouse. If individual words highlight, it's text-based. If you can only draw a box over the page, or nothing highlights, each page is an image.</p>
       </div>
 
-      <h2>How PDF compression works</h2>
-      <p>For scanned documents, compression re-samples each page at a target DPI (dots per inch) and applies smooth JPEG encoding:</p>
+      <h2>How image PDFs are compressed</h2>
+      <p>A scanned page is a large photograph. Compressing it means two things: lowering its resolution to what's actually needed (measured in DPI, dots per inch of page) and saving it as an efficient JPG. A page scanned at 600 DPI in colour contains four times as many pixels as the same page at 300 DPI, and sixteen times as many as at 150 DPI — far more than anyone needs to read it on screen.</p>
+      <p>PIXNIVO's <a href="/pdf-tools?tab=compress">Compress PDF</a> tool re-renders each page in your browser at the resolution you choose and rebuilds the PDF from optimised images. Nothing is uploaded, and your original file is never changed.</p>
 
-      <a class="article-cta" href="/pdf-tools">Open PDF Compressor Studio →</a>
+      <h2>Step by step</h2>
+      <ol>
+        <li>Open <a href="/pdf-tools?tab=compress">Compress PDF</a> and drop in your file. It handles one document at a time.</li>
+        <li>Choose a <b>Compression level</b>: <b>Light</b> keeps the most detail, <b>Balanced</b> suits most documents, and <b>Strong</b> gives the smallest file.</li>
+        <li>Set the <b>Resolution</b>. The default of 150 DPI is a good balance; the range runs from 72 to 220 DPI.</li>
+        <li>Click <b>Compress PDF</b>. The result shows how much smaller the file is, and the compressed copy downloads with "-compressed" added to its name.</li>
+        <li>Open the new file and zoom into the smallest text — signatures, stamps, footnotes — before sending it.</li>
+      </ol>
 
+      <h3>Settings by destination</h3>
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>Intended Destination</th><th>Resolution (DPI)</th><th>Compression Preset</th></tr>
+            <tr><th>Where the PDF is going</th><th>Resolution</th><th>Compression level</th></tr>
           </thead>
           <tbody>
-            <tr><td>Screen viewing &amp; email reading</td><td>100–120 DPI</td><td>Maximum</td></tr>
-            <tr><td>Standard portal submission</td><td>150 DPI</td><td>Balanced</td></tr>
-            <tr><td>Physical printing at office</td><td>200 DPI</td><td>Light</td></tr>
-            <tr><td>Fine print contracts</td><td>200+ DPI</td><td>Light</td></tr>
+            <tr><td>Strict portal limit (1–2 MB)</td><td>100–120 DPI</td><td>Strong</td></tr>
+            <tr><td>Email and reading on screen</td><td>120–150 DPI</td><td>Balanced</td></tr>
+            <tr><td>Standard upload or archive</td><td>150 DPI</td><td>Balanced</td></tr>
+            <tr><td>Will be printed</td><td>200–220 DPI</td><td>Light</td></tr>
+            <tr><td>Contracts with fine print</td><td>200+ DPI</td><td>Light</td></tr>
           </tbody>
         </table>
       </div>
+      <p>If the file is still too large, lower the resolution in steps of about 20 DPI rather than jumping straight to the minimum. Below roughly 100 DPI, small print starts to blur.</p>
 
-      <h2>Practical Reduction Tips</h2>
+      <div class="callout-box">
+        <p><b>One trade-off to know:</b> because pages are rebuilt as images, text in the compressed copy can't be selected or searched. For scans that makes no difference — their text wasn't selectable to begin with. If you need searchable text afterwards, run the compressed file through <a href="/ai-ocr">AI OCR</a> or keep the original for your own records.</p>
+      </div>
+
+      <h2>When the PDF is text-based</h2>
+      <p>Turning a text PDF into images rarely helps: the text loses its sharpness and the file can even get larger. PIXNIVO checks for this, and if the compressed copy wouldn't be smaller, it tells you the PDF is already well optimised and keeps your original. Better options for text-based files:</p>
       <ul>
-        <li><b>Delete blank or duplicate pages:</b> Eliminates redundant megabytes instantly.</li>
-        <li><b>Crop white borders:</b> Remove dead scanner bed margins from page edges.</li>
-        <li><b>Scan in greyscale:</b> Text documents in greyscale are a third of the weight of 24-bit full colour scans.</li>
+        <li><b>Re-export from the source document.</b> In Microsoft Word, choose Save As → PDF and select the <i>Minimum size (publishing online)</i> option. Before exporting, Word's <i>Compress Pictures</i> command shrinks embedded photos.</li>
+        <li><b>On a Mac,</b> open the PDF in Preview, choose File → Export and set the Quartz Filter to <i>Reduce File Size</i>. It can be aggressive with photos, so check the result.</li>
+        <li><b>Shrink the photos first.</b> If you're building a document from images, resize them with the <a href="/?tab=compress">Image Compressor</a> before inserting them; 1,600–2,000 px wide is plenty for a page.</li>
       </ul>
+
+      <h2>Other ways to make a PDF smaller</h2>
+      <ul>
+        <li><b>Remove blank and duplicate pages.</b> Scanners often capture blank backs of single-sided pages.</li>
+        <li><b>Scan at the right settings next time.</b> For text documents, 150–200 DPI in greyscale produces far smaller files than 300–600 DPI in colour, with no loss in readability.</li>
+        <li><b>Crop dark borders.</b> Black edges from an open scanner lid add detail that compresses poorly.</li>
+        <li><b>Build the PDF small from the start.</b> When combining photos with <a href="/pdf-tools?tab=img2pdf">Images to PDF</a>, lower its Image quality setting to 60–75% for paperwork.</li>
+        <li><b>Send in parts.</b> If a portal accepts several uploads, splitting a long document can be easier than squeezing it into one tiny file.</li>
+      </ul>
+
+      <h2>Why this tool doesn't upload your files</h2>
+      <p>The PDFs that most often need compressing — bank statements, identity documents, medical records, signed contracts — are exactly the ones you shouldn't hand to an unknown server. PIXNIVO's PDF tools run entirely in your browser using well-known open-source libraries, so the document is processed on your own device and never leaves it.</p>
+
+      <h2>Frequently asked questions</h2>
+      <h3>How small can a scanned PDF get?</h3>
+      <p>It depends on the page count and content, but at 120–150 DPI with Balanced compression, a typical text page often comes to 100–300 KB. A 10-page scan of 20 MB commonly ends up between 1 and 3 MB.</p>
+
+      <h3>Will the compressed PDF still print properly?</h3>
+      <p>At 200 DPI or more with Light compression, printed text looks normal. At 100–120 DPI it's fine to read on screen but can look soft on paper.</p>
+
+      <h3>Can I compress a password-protected PDF?</h3>
+      <p>Not directly. Open it with the password in your PDF viewer and save or print an unlocked copy first, then compress that.</p>
+
+      <h3>Why is my compressed file still too big?</h3>
+      <p>Lower the resolution, switch to Strong, or check whether the document has pages that are large photographs. If the PDF turns out to be text-based, re-exporting from the original document usually works better.</p>
+
+      <p>Need to combine files before compressing? See <a href="/merge-pdf-files-privately">how to merge PDF files without uploading them</a>.</p>
+
+      <div style="text-align:center; margin-top:36px;">
+        <a class="article-cta" href="/pdf-tools?tab=compress">Compress a PDF Now →</a>
+      </div>
     </article>
   </main>
 

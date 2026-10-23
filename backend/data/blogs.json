@@ -6,7 +6,7 @@
     "category": "Super-Resolution",
     "date": "2026-08-12",
     "displayDate": "12 August 2026",
-    "readTime": "8 min read",
+    "readTime": "6 min read",
     "author": "PIXNIVO Team",
     "coverImage": "",
     "excerpt": "Understand what enlarging can and can't recover, how to select a realistic magnification factor, and how unsharp masking works.",
@@ -14,7 +14,7 @@
     "url": "/upscale-image-without-blur",
     "isStatic": true,
     "createdAt": "2026-08-12T10:00:00Z",
-    "updatedAt": "2026-08-12T10:00:00Z"
+    "updatedAt": "2026-10-23T00:00:00Z"
   },
   {
     "id": "post-2",
@@ -23,7 +23,7 @@
     "category": "Workflow",
     "date": "2026-08-05",
     "displayDate": "5 August 2026",
-    "readTime": "7 min read",
+    "readTime": "5 min read",
     "author": "PIXNIVO Team",
     "coverImage": "",
     "excerpt": "The optimal sequence to crop, edit, resize, and compress images without cumulative generation loss.",
@@ -31,7 +31,7 @@
     "url": "/image-quality-checklist",
     "isStatic": true,
     "createdAt": "2026-08-05T10:00:00Z",
-    "updatedAt": "2026-08-05T10:00:00Z"
+    "updatedAt": "2026-10-23T00:00:00Z"
   },
   {
     "id": "post-3",
@@ -40,7 +40,7 @@
     "category": "PDF Tools",
     "date": "2026-08-02",
     "displayDate": "2 August 2026",
-    "readTime": "7 min read",
+    "readTime": "5 min read",
     "author": "PIXNIVO Team",
     "coverImage": "",
     "excerpt": "Turn document photos into a cleanly ordered, multi-page PDF document on mobile without uploading private papers.",
@@ -48,7 +48,7 @@
     "url": "/convert-photos-to-pdf",
     "isStatic": true,
     "createdAt": "2026-08-02T10:00:00Z",
-    "updatedAt": "2026-08-02T10:00:00Z"
+    "updatedAt": "2026-10-23T00:00:00Z"
   },
   {
     "id": "post-4",
@@ -57,7 +57,7 @@
     "category": "Privacy",
     "date": "2026-07-26",
     "displayDate": "26 July 2026",
-    "readTime": "6 min read",
+    "readTime": "4 min read",
     "author": "PIXNIVO Team",
     "coverImage": "",
     "excerpt": "Join sensitive documents, contracts, and financial statements directly in browser memory without server exposure.",
@@ -65,7 +65,7 @@
     "url": "/merge-pdf-files-privately",
     "isStatic": true,
     "createdAt": "2026-07-26T10:00:00Z",
-    "updatedAt": "2026-07-26T10:00:00Z"
+    "updatedAt": "2026-10-23T00:00:00Z"
   },
   {
     "id": "post-5",
@@ -74,7 +74,7 @@
     "category": "Compression",
     "date": "2026-07-19",
     "displayDate": "19 July 2026",
-    "readTime": "8 min read",
+    "readTime": "5 min read",
     "author": "PIXNIVO Team",
     "coverImage": "",
     "excerpt": "Why scanned PDFs balloon in size, how page re-sampling reduces weight by up to 90%, and the tradeoffs involved.",
@@ -82,7 +82,7 @@
     "url": "/compress-pdf-too-large",
     "isStatic": true,
     "createdAt": "2026-07-19T10:00:00Z",
-    "updatedAt": "2026-07-19T10:00:00Z"
+    "updatedAt": "2026-10-23T00:00:00Z"
   },
   {
     "id": "post-6",
@@ -91,7 +91,7 @@
     "category": "Messaging",
     "date": "2026-07-12",
     "displayDate": "12 July 2026",
-    "readTime": "6 min read",
+    "readTime": "5 min read",
     "author": "PIXNIVO Team",
     "coverImage": "",
     "excerpt": "WhatsApp aggressively compresses media attachments. Discover 3 practical workarounds to preserve sharp detail.",
@@ -99,7 +99,7 @@
     "url": "/compress-images-for-whatsapp",
     "isStatic": true,
     "createdAt": "2026-07-12T10:00:00Z",
-    "updatedAt": "2026-07-12T10:00:00Z"
+    "updatedAt": "2026-10-23T00:00:00Z"
   },
   {
     "id": "post-7",
@@ -108,7 +108,7 @@
     "category": "File Formats",
     "date": "2026-07-05",
     "displayDate": "5 July 2026",
-    "readTime": "8 min read",
+    "readTime": "5 min read",
     "author": "PIXNIVO Team",
     "coverImage": "",
     "excerpt": "A definitive guide comparing DCT compression, DEFLATE lossless algorithms, and modern WebP predictive coding.",
@@ -116,7 +116,7 @@
     "url": "/jpg-vs-png-vs-webp",
     "isStatic": true,
     "createdAt": "2026-07-05T10:00:00Z",
-    "updatedAt": "2026-07-05T10:00:00Z"
+    "updatedAt": "2026-10-23T00:00:00Z"
   },
   {
     "id": "post-8",
@@ -125,7 +125,7 @@
     "category": "Applications",
     "date": "2026-06-28",
     "displayDate": "28 June 2026",
-    "readTime": "7 min read",
+    "readTime": "5 min read",
     "author": "PIXNIVO Team",
     "coverImage": "",
     "excerpt": "Meet strict 100 KB and 200 KB submission limits on government and corporate portals without failing review checks.",
@@ -133,7 +133,7 @@
     "url": "/reduce-photo-size-for-online-forms",
     "isStatic": true,
     "createdAt": "2026-06-28T10:00:00Z",
-    "updatedAt": "2026-06-28T10:00:00Z"
+    "updatedAt": "2026-10-23T00:00:00Z"
   },
   {
     "id": "post-9",
@@ -142,7 +142,7 @@
     "category": "Neural AI",
     "date": "2026-06-20",
     "displayDate": "20 June 2026",
-    "readTime": "8 min read",
+    "readTime": "5 min read",
     "author": "PIXNIVO Team",
     "coverImage": "",
     "excerpt": "How deep convolutional networks perform semantic subject segmentation, alpha matting, and on-device inference.",
@@ -150,7 +150,7 @@
     "url": "/how-ai-background-removal-works",
     "isStatic": true,
     "createdAt": "2026-06-20T10:00:00Z",
-    "updatedAt": "2026-06-20T10:00:00Z"
+    "updatedAt": "2026-10-23T00:00:00Z"
   },
   {
     "id": "post-10",
@@ -159,7 +159,7 @@
     "category": "E-Commerce",
     "date": "2026-06-14",
     "displayDate": "14 June 2026",
-    "readTime": "9 min read",
+    "readTime": "6 min read",
     "author": "PIXNIVO Team",
     "coverImage": "",
     "excerpt": "Amazon and Shopify product photography: create crisp, marketplace-compliant white backdrops with natural lighting.",
@@ -167,7 +167,7 @@
     "url": "/white-background-product-photos",
     "isStatic": true,
     "createdAt": "2026-06-14T10:00:00Z",
-    "updatedAt": "2026-06-14T10:00:00Z"
+    "updatedAt": "2026-10-23T00:00:00Z"
   },
   {
     "id": "post-11",
@@ -176,7 +176,7 @@
     "category": "Email Limits",
     "date": "2026-06-06",
     "displayDate": "6 June 2026",
-    "readTime": "6 min read",
+    "readTime": "5 min read",
     "author": "PIXNIVO Team",
     "coverImage": "",
     "excerpt": "Why modern smartphone cameras exceed 25MB attachment limits and how to optimize image sets for fast delivery.",
@@ -184,7 +184,7 @@
     "url": "/photos-too-large-for-email",
     "isStatic": true,
     "createdAt": "2026-06-06T10:00:00Z",
-    "updatedAt": "2026-06-06T10:00:00Z"
+    "updatedAt": "2026-10-23T00:00:00Z"
   },
   {
     "id": "post-12",
@@ -193,7 +193,7 @@
     "category": "ID Compliance",
     "date": "2026-05-30",
     "displayDate": "30 May 2026",
-    "readTime": "8 min read",
+    "readTime": "6 min read",
     "author": "PIXNIVO Team",
     "coverImage": "",
     "excerpt": "Biometric photo checklists: 2x2 inch and 35x45mm sizing, lighting rules, neutral background prep, and framing.",
@@ -201,7 +201,7 @@
     "url": "/passport-size-photo-at-home",
     "isStatic": true,
     "createdAt": "2026-05-30T10:00:00Z",
-    "updatedAt": "2026-05-30T10:00:00Z"
+    "updatedAt": "2026-10-23T00:00:00Z"
   },
   {
     "id": "post-13",
@@ -210,7 +210,7 @@
     "category": "Resolution Math",
     "date": "2026-05-22",
     "displayDate": "22 May 2026",
-    "readTime": "9 min read",
+    "readTime": "5 min read",
     "author": "PIXNIVO Team",
     "coverImage": "",
     "excerpt": "Why 300 DPI is a print concept, how pixel grids translate to physical dimensions, and what controls file weight.",
@@ -218,6 +218,6 @@
     "url": "/resolution-dpi-file-size-explained",
     "isStatic": true,
     "createdAt": "2026-05-22T10:00:00Z",
-    "updatedAt": "2026-05-22T10:00:00Z"
+    "updatedAt": "2026-10-23T00:00:00Z"
   }
 ]

@@ -82,36 +82,90 @@
     <header class="article-header">
       <div class="article-eyebrow">AI &amp; Neural Computation</div>
       <h1>How AI Background Removal Works Behind the Scenes</h1>
-      <p class="article-meta"><span>21 June 2026</span><span>•</span><span>9 min read</span></p>
+      <p class="article-meta"><span>21 June 2026</span><span>•</span><span>Updated 23 October 2026</span><span>•</span><span>5 min read</span></p>
     </header>
 
     <article class="article-content">
-      <p>Cutting out a subject from an image used to require hours of manual pen-tool tracing in Photoshop. Today, neural vision models isolate intricate hair strands and semi-transparent glass in under a second.</p>
-      <p>Here is a walkthrough of semantic segmentation, boundary refinement, and running the model on your own device.</p>
+      <p>Cutting a person or product out of a photo used to mean half an hour of careful tracing with a pen tool, and hair was nearly impossible. Today an AI model does it in a few seconds, often with individual strands intact. It looks like magic, but the process is surprisingly understandable — and knowing how it works explains why some photos cut out perfectly while others need a touch-up.</p>
+      <p>This guide walks through what happens between dropping in a photo and downloading the cut-out, using PIXNIVO's in-browser background remover as the example.</p>
 
-      <h2>The Neural Pipeline in Three Stages</h2>
-      <h3>1. Semantic Segmentation</h3>
-      <p>The network ingests image tensors through deep convolutional encoders, producing a low-resolution feature map that classifies every region as foreground subject vs background environment.</p>
+      <h2>Two problems in one: segmentation and matting</h2>
+      <p>Removing a background is really two tasks:</p>
+      <ul>
+        <li><b>Segmentation</b> — deciding which parts of the image belong to the subject and which belong to the background. This is the "where is the person?" question.</li>
+        <li><b>Matting</b> — deciding <i>how much</i> each edge pixel belongs to the subject. A pixel on a strand of hair may be 40% hair and 60% sky. A good cut-out keeps that pixel 40% visible rather than forcing it to be all or nothing.</li>
+      </ul>
+      <p>Older tools handled only the first task, which is why their cut-outs had hard, jagged edges and hair looked like a helmet. Modern models produce a smooth "alpha matte": a greyscale map where white means fully subject, black means fully background, and every shade in between is partial.</p>
 
-      <h3>2. Alpha Matte Estimation</h3>
-      <p>Rather than a harsh binary mask (0 or 1), the neural head produces continuous floating-point alpha weights from 0.0 (fully transparent) to 1.0 (fully opaque). This handles sheer fabrics, hair wisps, and motion blur.</p>
+      <h2>How the model sees an image</h2>
+      <p>Background-removal models are neural networks trained on many thousands of photos paired with hand-made, pixel-accurate masks. During training the network learns, layer by layer, what separates a subject from its surroundings:</p>
+      <ol>
+        <li><b>Early layers</b> pick up simple features: edges, colour changes and textures.</li>
+        <li><b>Middle layers</b> combine those into shapes and parts: an ear, a shoe, the rim of a cup.</li>
+        <li><b>Deep layers</b> understand the scene as a whole — that this is a person standing in front of a building — which tells the model which region is the subject even where the colours are similar.</li>
+        <li><b>The decoder</b> takes that understanding back up to full detail and draws the boundary, pixel by pixel.</li>
+      </ol>
+      <p>The hardest part is keeping both kinds of knowledge at once: the big picture that says "this is the subject" and the fine detail that says "this exact pixel is a hair". That's where the choice of model matters.</p>
 
-      <h3>3. Boundary Refinement &amp; Color Decontamination</h3>
-      <p>Color bleeding from the original background (e.g. green cast from foliage) is desaturated along the matte rim to prevent halo fringes when superimposed on white or dark canvases.</p>
+      <h2>The model PIXNIVO uses: BiRefNet</h2>
+      <p>PIXNIVO runs <b>BiRefNet</b>, an open-source model released under the MIT licence and designed for high-resolution, highly detailed segmentation. Its name comes from "bilateral reference": while it refines the boundary, it keeps referring back to high-resolution patches of the original photo and to maps of where edges are, so it can follow fine structures such as hair, fur and thin handles without losing track of the overall subject.</p>
+      <p>PIXNIVO runs the general-purpose version at its native working size of 1,024 × 1,024 pixels. That resolution matters: at lower working sizes, low-contrast edges — a dark jacket against a night sky, for example — tend to disappear.</p>
+
+      <h2>What happens when you click "Remove background"</h2>
+      <ol>
+        <li><b>The model loads.</b> The first time, your browser downloads the model file — about 240 MB, thanks to compact 4-bit weights. The download is checked against a known fingerprint (a SHA-256 hash) and saved in your browser's storage, so later visits start in seconds.</li>
+        <li><b>The photo is prepared.</b> A copy is resized to 1,024 × 1,024 and its colours are normalised the way the model was trained to expect.</li>
+        <li><b>The model runs on your graphics card.</b> Using WebGPU, the browser's modern interface to the GPU, the network produces a 1,024 × 1,024 alpha matte. On most computers this takes a few seconds; older machines take longer.</li>
+        <li><b>The matte is scaled up</b> to your photo's full resolution and applied as transparency.</li>
+        <li><b>Edge colours are cleaned.</b> Semi-transparent edge pixels still contain some of the old background's colour — a green tint from grass, a blue cast from sky. PIXNIVO estimates the true foreground colour of those pixels and removes the fringe, using a published technique for fast foreground colour estimation (Forte and Pitié, 2021).</li>
+        <li><b>The new background is applied</b> — transparent, a colour you pick, or a blurred version of the original backdrop.</li>
+      </ol>
+      <p>If your browser doesn't support WebGPU, your device has limited memory, or Data Saver is switched on, PIXNIVO automatically uses a lighter model (ISNet) instead and tells you why. It's quicker to download and runs on the processor, with somewhat less edge detail.</p>
 
       <div class="callout-box">
-        <p><b>On your device:</b> PIXNIVO runs BiRefNet — the open architecture behind leading commercial background removers — directly in your browser with ONNX Runtime Web and WebGPU, so your photo is processed on your own hardware and never uploaded. Browsers without WebGPU automatically use the lighter ISNet model.</p>
+        <p><b>Everything stays on your device.</b> Because the model runs inside your browser, your photo is never uploaded to a server. That's a meaningful difference for ID documents, unreleased products and personal photos, compared with services that process images in the cloud.</p>
       </div>
 
-      <h2>Why In-Browser Neural Execution Matters</h2>
+      <h2>Why some photos cut out better than others</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Situation</th><th>Why it's hard</th><th>What helps</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Subject and background are similar colours</td><td>Few visual cues separate them</td><td>Shoot against a contrasting backdrop</td></tr>
+            <tr><td>Glass, smoke, veils</td><td>The background genuinely shows through the subject</td><td>Expect partial transparency; touch up by hand</td></tr>
+            <tr><td>Busy backgrounds behind hair</td><td>Strands blend into the texture behind them</td><td>Plain backgrounds give the cleanest hair</td></tr>
+            <tr><td>Several overlapping subjects</td><td>The model must guess which are "the subject"</td><td>Crop to the subject you want first</td></tr>
+            <tr><td>Strong shadows on the floor</td><td>Shadows look like part of the object</td><td>Use soft light, or erase the shadow afterwards</td></tr>
+            <tr><td>Motion blur</td><td>The edge itself is smeared</td><td>Use a sharp photo</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Fixing what the model gets wrong</h2>
+      <p>No model is perfect on every photo, so the <a href="/?tab=bg">Background Remover</a> includes two manual controls:</p>
       <ul>
-        <li><b>Absolute Privacy:</b> Proprietary product photos and identity documents are never transmitted across the network.</li>
-        <li><b>Zero Latency Bottlenecks:</b> No uploading multi-megabyte payloads to congested cloud endpoints.</li>
-        <li><b>Offline Resilience:</b> Once cached in browser storage, tools function seamlessly without an internet connection.</li>
+        <li><b>Edge tightening</b> pulls the edge inwards slightly. Use it only when a thin line of the old background remains around the subject — edges are already colour-corrected, so most photos need none.</li>
+        <li><b>Touch-up eraser</b> lets you paint away leftover patches, such as a shadow or a bit of floor, with an adjustable brush and undo.</li>
       </ul>
+      <p>When you're done, download a PNG, the format that keeps transparency. For product photos destined for a marketplace, see <a href="/white-background-product-photos">how to create white background product photos</a>.</p>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Why is the first use so slow?</h3>
+      <p>The first run downloads the AI model, about 240 MB. After that it's stored in your browser and loads in seconds. Clearing your browser's site data removes it, and it's downloaded again next time.</p>
+
+      <h3>Does it work on phones?</h3>
+      <p>Yes, but phones and tablets with limited memory or no WebGPU support use the lighter model. Results are still good on clear subjects; for the finest hair detail, a computer gives the best results.</p>
+
+      <h3>Can it remove the background from a logo or a drawing?</h3>
+      <p>Often, yes, as long as the design stands out clearly from its background. For simple logos on a flat colour, the cut-out is usually clean.</p>
+
+      <h3>Is the result good enough for professional use?</h3>
+      <p>For most product photos, portraits and social media images, yes. Hair against a busy background or transparent objects may still need a few strokes with the eraser.</p>
 
       <div style="text-align:center; margin-top:36px;">
-        <a class="article-cta" href="/">Try AI Background Remover Studio →</a>
+        <a class="article-cta" href="/?tab=bg">Try the AI Background Remover →</a>
       </div>
     </article>
   </main>

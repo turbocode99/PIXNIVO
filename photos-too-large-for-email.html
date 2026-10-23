@@ -82,42 +82,97 @@
     <header class="article-header">
       <div class="article-eyebrow">Email &amp; Delivery</div>
       <h1>Photos Too Large for Email: Why It Happens &amp; How to Fix It in Seconds</h1>
-      <p class="article-meta"><span>7 June 2026</span><span>•</span><span>6 min read</span></p>
+      <p class="article-meta"><span>7 June 2026</span><span>•</span><span>Updated 23 October 2026</span><span>•</span><span>5 min read</span></p>
     </header>
 
     <article class="article-content">
-      <p>You try to email five photos to a colleague or client, and your email client immediately returns: <b>"Message blocked: Attachment size exceeds the 25 MB server limit."</b></p>
-      <p>Modern smartphone cameras (48 MP to 200 MP sensors) generate 6 MB to 18 MB per single exposure. Attaching three raw photos instantly breaches mail transfer protocols.</p>
+      <p>You attach a handful of photos, press send, and the email bounces back — or your mail app refuses to attach them at all. Nothing is wrong with the photos. They are simply far bigger than email was designed to carry, and fixing that takes about a minute once you know which two settings matter.</p>
 
-      <h2>Mail Provider Hard Attachment Limits</h2>
+      <h2>Why phone photos are so big</h2>
+      <p>A typical phone photo today is 12 megapixels — roughly 4,000 × 3,000 pixels — and is saved as a 2–5 MB JPG or HEIC file. Switch on the 48, 50 or 200 MP "high resolution" mode many phones now offer and a single shot can reach 10–30 MB. Five ordinary photos already add up to 15–25 MB, right at the edge of what most email services accept.</p>
+      <p>Very little of that resolution is needed to look at a photo on a screen. A 4,000-pixel-wide image shown on a 1,920-pixel laptop display is shrunk to less than half its width before anyone sees it. You are sending pixels nobody will ever view.</p>
+
+      <h2>Attachment limits by email provider</h2>
+      <p>Every provider caps the total size of a single message, attachments included. These are the published limits at the time of writing; work and school accounts can be set lower by an administrator.</p>
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>Email Service</th><th>Hard Limit per Message</th><th>Safe Total Attachment Size</th></tr>
+            <tr><th>Email service</th><th>Limit per message</th><th>Option for bigger files</th></tr>
           </thead>
           <tbody>
-            <tr><td><b>Gmail</b></td><td>25 MB</td><td>18 MB (due to Base64 overhead)</td></tr>
-            <tr><td><b>Outlook / Office 365</b></td><td>20 MB / 35 MB</td><td>15 MB</td></tr>
-            <tr><td><b>Apple iCloud Mail</b></td><td>20 MB</td><td>15 MB</td></tr>
-            <tr><td><b>Corporate Exchange</b></td><td>10 MB (typically)</td><td>7 MB</td></tr>
+            <tr><td><b>Gmail</b></td><td>25 MB</td><td>Offers to send larger files as a Google Drive link</td></tr>
+            <tr><td><b>Outlook.com</b></td><td>20 MB</td><td>Share larger files through OneDrive</td></tr>
+            <tr><td><b>Microsoft 365 work accounts</b></td><td>Commonly 25–35 MB</td><td>Set by your organisation's administrator</td></tr>
+            <tr><td><b>Yahoo Mail</b></td><td>25 MB</td><td>Share a cloud link instead</td></tr>
+            <tr><td><b>iCloud Mail</b></td><td>20 MB</td><td>Mail Drop sends up to 5 GB as a link that expires after 30 days</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The receiving side matters as well. A message that leaves Gmail without complaint can still be refused by a company mail server with a 10 MB limit. If you are emailing a business, a bank or a government office, staying under 10 MB is the safe choice.</p>
+
+      <div class="callout-box">
+        <p><b>Why 25 MB isn't really 25 MB:</b> Email can only carry text, so attachments are converted into a text encoding called Base64 before sending, which makes them about a third larger. In practice a "25 MB" limit holds roughly 18 MB of real files, and a 20 MB limit about 14–15 MB.</p>
+      </div>
+
+      <h2>The fix: resize first, then compress</h2>
+      <p>Two settings control the size of a photo: its pixel dimensions and its JPG quality. Reducing dimensions does most of the work. Halving the width and height leaves a quarter of the pixels — and roughly a quarter of the file size — while the photo looks the same on a phone or laptop screen. Lowering quality is the second, smaller lever.</p>
+      <p>In PIXNIVO's Image Compressor:</p>
+      <ol>
+        <li>Open the <a href="/?tab=compress">Image Compressor</a> and drop in your photo, or paste it with Ctrl+V. iPhone HEIC photos are converted automatically.</li>
+        <li>Set <b>Format</b> to <b>JPG</b> — the most compatible choice and the smallest for photographs.</li>
+        <li>Drag <b>Max width</b> down to about <b>1,920 px</b>, the width of a Full HD screen. For photos that will only be viewed on a phone, 1,600 px is plenty.</li>
+        <li>Leave <b>Quality</b> at <b>80%</b> and watch the <b>Compressed</b> figure. A 12 MP photo usually lands somewhere between 300 KB and 700 KB.</li>
+        <li>Check the preview — it shows the actual compressed output, not the original — then download. Repeat for each photo.</li>
+      </ol>
+      <p>Ten photos prepared this way typically total 3–7 MB: small enough for any provider and quick for the recipient to open on a phone. The compressor runs in your browser, so private photos are never uploaded anywhere in the process.</p>
+
+      <h3>Settings by purpose</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>What the recipient will do</th><th>Max width</th><th>Quality</th><th>Typical size per photo</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Look at them on a phone or laptop</td><td>1,600–1,920 px</td><td>75–80%</td><td>250–700 KB</td></tr>
+            <tr><td>Zoom in to check details</td><td>2,560 px</td><td>85%</td><td>0.8–1.5 MB</td></tr>
+            <tr><td>Print at 6 × 4 in (15 × 10 cm)</td><td>1,800 px</td><td>90%</td><td>0.8–1.5 MB</td></tr>
+            <tr><td>Print large or edit professionally</td><td>Keep the original</td><td>—</td><td>Send a share link instead</td></tr>
           </tbody>
         </table>
       </div>
 
-      <div class="callout-box">
-        <p><b>The Base64 Overhead Trap:</b> Email protocols encode binary attachments into ASCII text, inflating raw file sizes by approximately 33%. A 20 MB file behaves like a 26.6 MB payload to mail servers.</p>
-      </div>
+      <h2>Sending lots of photos at once</h2>
+      <p>The Image Compressor handles one photo at a time, which is quick for a handful of images. For bigger sets, one of these usually works better:</p>
+      <ul>
+        <li><b>One PDF instead of many attachments.</b> If the photos belong together — damage for an insurance claim, a property inspection, pages of a document — combine them into a single file with <a href="/pdf-tools?tab=img2pdf">Images to PDF</a>. With Image quality at 70–80%, a dozen photos usually fit comfortably in one email, and they arrive in the order you chose.</li>
+        <li><b>Your phone's own resize prompt.</b> When you send several photos from the iPhone Mail app, it offers to scale them to Small, Medium or Large before sending. Medium is fine for viewing on screen.</li>
+        <li><b>A share link.</b> For dozens of full-resolution photos — an event, a photo shoot — email is the wrong tool. A Google Drive or OneDrive link, iCloud Mail Drop or a shared album keeps the originals intact and the email itself tiny.</li>
+      </ul>
 
-      <h2>The Instant Batch Fix</h2>
-      <ol>
-        <li>Drag all photos into PIXNIVO Batch Compressor.</li>
-        <li>Select <b>1920px Max Width</b> (full high definition monitor standard).</li>
-        <li>Set quality to <b>80%</b>.</li>
-        <li>Download the entire optimized batch in under 2 seconds — shrinking 40 MB into less than 3 MB with zero visible loss.</li>
-      </ol>
+      <h2>Common mistakes that keep files large</h2>
+      <ul>
+        <li><b>Only lowering quality.</b> Dropping a full-size photo to 30% quality produces blocky artifacts and often still leaves a file of several megabytes. Resize first; then quality barely needs to move.</li>
+        <li><b>Saving photos as PNG.</b> PNG is lossless, so a photograph saved as PNG is usually several times larger than the same photo as JPG. <a href="/jpg-vs-png-vs-webp">JPG vs PNG vs WebP</a> explains why.</li>
+        <li><b>Zipping JPGs.</b> JPG files are already compressed, so a ZIP archive saves almost nothing — it just makes the photos harder to open on a phone.</li>
+        <li><b>Screenshotting photos to shrink them.</b> It reduces size by accident, but adds screen borders, loses detail and gives you no control over the result.</li>
+        <li><b>Forgetting the recipient's limit.</b> Your provider may allow 25 MB while the company you are writing to accepts 10 MB.</li>
+      </ul>
+
+      <h2>Frequently asked questions</h2>
+      <h3>Will the recipient notice the photos were compressed?</h3>
+      <p>Not when viewing them normally. At 1,920 px and 80% quality the difference only shows if someone zooms to 100% and compares them side by side with the originals. If they need to print large or edit the photos professionally, send the originals through a link instead.</p>
+
+      <h3>Does compressing remove a photo's location data?</h3>
+      <p>Yes. Photos often carry hidden EXIF metadata, including the GPS coordinates of where they were taken. PIXNIVO redraws the image in your browser and saves only the pixels, so that metadata is not copied into the new file. That's usually a privacy bonus; if you need the original date and camera details kept, send the untouched file.</p>
+
+      <h3>Why does my email app say the message is larger than my files?</h3>
+      <p>That's the Base64 encoding described above: attachments grow by about a third on their way into the message. Plan for it by keeping your files well under the stated limit.</p>
+
+      <h3>My attachment is a PDF, not a photo. What then?</h3>
+      <p>Scanned PDFs can usually be shrunk by 70–90%, but the method is different. See <a href="/compress-pdf-too-large">How to Compress a PDF That's Too Large to Email</a>.</p>
 
       <div style="text-align:center; margin-top:36px;">
-        <a class="article-cta" href="/">Compress Photos for Email Now →</a>
+        <a class="article-cta" href="/?tab=compress">Compress Photos for Email Now →</a>
       </div>
     </article>
   </main>
