@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Free PDF Tools &mdash; Image to PDF, Merge &amp; Compress | PIXNIVO</title>
-  <meta name="description" content="Convert images to PDF, merge multiple PDF files, and compress PDFs in your browser. 100% private, client-side execution." />
+  <title>Free PDF Tools Suite &mdash; Merge, Split, Compress, Convert, Edit &amp; Sign | PIXNIVO</title>
+  <meta name="description" content="All-in-one free PDF platform: Merge, split, compress, convert PDF to Word/Excel/PowerPoint, sign, edit, redact, and organize PDFs 100% free with privacy-first open technologies." />
   <meta name="theme-color" content="#fafafa" />
 
   <!-- Open Graph / Social Meta -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://pixnivo.app/pdf-tools" />
-  <meta property="og:title" content="Free PDF Tools &mdash; Image to PDF, Merge &amp; Compress | PIXNIVO" />
-  <meta property="og:description" content="Convert images to PDF, merge PDF files, and compress PDFs free in your browser." />
+  <meta property="og:title" content="Free PDF Tools Suite &mdash; Merge, Split, Convert &amp; Edit | PIXNIVO" />
+  <meta property="og:description" content="32 professional PDF tools running securely on your device. 100% free & open-source." />
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9RDW8F1H9D"></script>
@@ -25,12 +25,12 @@
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8972850134795669" crossorigin="anonymous"></script>
 
-
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
   <link rel="stylesheet" href="/assets/css/main.css?v=20261010" />
+  <link rel="stylesheet" href="/assets/css/pdf-studio.css?v=20261109" />
   <script src="/assets/js/site.js?v=20261010"></script>
 
   <!-- Instant Theme Detection Script -->
@@ -42,12 +42,10 @@
         const theme = saved || (prefersDark ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', theme);
       } catch(e) {}
-    
     })();
   </script>
 </head>
 <body>
-
 
   <a class="skip-link" href="#main">Skip to main content</a>
 
@@ -87,227 +85,1249 @@
     <section class="hero">
       <div class="badge-privacy">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
-        Runs in your browser &middot; Documents are never uploaded
+        32 Professional Tools &middot; Privacy First &middot; Free Forever
       </div>
-      <h1>Free <em>PDF tools</em> that work in your browser</h1>
-      <p class="hero-subtitle">Turn photos and scans into a PDF, merge documents in any order, or shrink large PDFs for email and upload portals.</p>
+      <h1>Every <em>PDF tool</em> you need, in one place</h1>
+      <p class="hero-subtitle">Merge, split, compress, convert to Word/Excel/PowerPoint, sign, edit, redact, and organize PDFs with 100% free open-source tools.</p>
     </section>
 
-    <div class="tab-nav-wrapper">
-      <div class="tab-nav" role="tablist" aria-label="PDF tools">
-        <button class="tab-btn active" type="button" role="tab" id="tab-img2pdf" aria-selected="true" aria-controls="stage-img2pdf" data-tab="img2pdf">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg>
-          Images to PDF
-        </button>
-        <button class="tab-btn" type="button" role="tab" id="tab-merge" aria-selected="false" aria-controls="stage-merge" data-tab="merge" tabindex="-1">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 6 4-4 4 4"/><path d="M12 2v10.3a4 4 0 0 1-1.172 2.872L4 22"/><path d="m20 22-5-5"/></svg>
-          Merge PDF
-        </button>
-        <button class="tab-btn" type="button" role="tab" id="tab-compress" aria-selected="false" aria-controls="stage-compress" data-tab="compress" tabindex="-1">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-          Compress PDF
-        </button>
+    <!-- ==================== CATALOG DIRECTORY SECTION ==================== -->
+    <div class="page-container" id="toolsCatalogSection">
+      
+      <!-- Category Filter Pills -->
+      <nav class="pdf-cat-nav" role="tablist" aria-label="PDF Tool Categories">
+        <button class="pdf-cat-btn active" data-category="all" role="tab">All Tools <span class="count">32</span></button>
+        <button class="pdf-cat-btn" data-category="organize" role="tab">Organize &amp; Manage <span class="count">6</span></button>
+        <button class="pdf-cat-btn" data-category="security" role="tab">Optimize &amp; Security <span class="count">5</span></button>
+        <button class="pdf-cat-btn" data-category="convert" role="tab">Convert Tools <span class="count">11</span></button>
+        <button class="pdf-cat-btn" data-category="edit" role="tab">Edit &amp; Advanced <span class="count">10</span></button>
+      </nav>
+
+      <!-- Search Input -->
+      <div class="pdf-search-wrapper">
+        <svg class="pdf-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" id="toolSearchInput" class="pdf-search-input" placeholder="Search 32 PDF tools (e.g. merge, split, word, protect, sign)..." aria-label="Search PDF tools" />
+      </div>
+
+      <!-- 32 Tools Catalog Grid -->
+      <div class="pdf-catalog-grid" id="catalogGrid">
+        
+        <!-- GROUP A: ORGANIZE & MANAGEMENT -->
+        <a class="pdf-tool-card" href="#merge" data-tool="merge" data-category="organize">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 6 4-4 4 4"/><path d="M12 2v10.3a4 4 0 0 1-1.172 2.872L4 22"/><path d="m20 22-5-5"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-device">On-Device</span>
+          </div>
+          <h3>Merge PDF <span class="arrow">→</span></h3>
+          <p>Combine multiple PDF files into a single unified document with custom order.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#split" data-tool="split" data-category="organize">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5"/><path d="M8 3H3v5"/><path d="M12 22v-8"/><path d="m9 17 3-3 3 3"/><path d="m14 8 7-5"/><path d="m10 8-7-5"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-device">On-Device</span>
+          </div>
+          <h3>Split PDF <span class="arrow">→</span></h3>
+          <p>Extract custom page ranges or separate every page into downloadable files.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#organize" data-tool="organize" data-category="organize">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-device">On-Device</span>
+          </div>
+          <h3>Organize PDF <span class="arrow">→</span></h3>
+          <p>Preview pages, drag and drop to reorder, rotate individual pages, or delete unwanted pages.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#rotate" data-tool="rotate" data-category="organize">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-device">On-Device</span>
+          </div>
+          <h3>Rotate PDF <span class="arrow">→</span></h3>
+          <p>Rotate pages 90°, 180°, or 270° clockwise to fix scanned document orientation.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#crop" data-tool="crop" data-category="organize">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-device">On-Device</span>
+          </div>
+          <h3>Crop PDF <span class="arrow">→</span></h3>
+          <p>Trim margins and headers/footers with precise margin controls across pages.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#compare" data-tool="compare" data-category="organize">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="9" height="18" rx="1"/><rect x="13" y="3" width="9" height="18" rx="1"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-device">On-Device</span>
+          </div>
+          <h3>Compare PDF <span class="arrow">→</span></h3>
+          <p>Side-by-side visual difference comparison highlighting modified content in red.</p>
+        </a>
+
+        <!-- GROUP B: OPTIMIZE & SECURITY -->
+        <a class="pdf-tool-card" href="#compress" data-tool="compress" data-category="security">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-device">On-Device</span>
+          </div>
+          <h3>Compress PDF <span class="arrow">→</span></h3>
+          <p>Reduce file size with Light, Balanced, or Strong compression while preserving clarity.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#protect" data-tool="protect" data-category="security">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-device">On-Device</span>
+          </div>
+          <h3>Protect PDF <span class="arrow">→</span></h3>
+          <p>Add strong password encryption to protect confidential documents from unauthorized access.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#unlock" data-tool="unlock" data-category="security">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-device">On-Device</span>
+          </div>
+          <h3>Unlock PDF <span class="arrow">→</span></h3>
+          <p>Remove security restrictions from authorized PDF files with your known password.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#redact" data-tool="redact" data-category="security">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/><rect x="2" y="2" width="20" height="20" rx="3"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-cloud">Pro Core</span>
+          </div>
+          <h3>Redact PDF <span class="arrow">→</span></h3>
+          <p>Permanently expunge sensitive text from document streams and metadata with verification.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#pdfa" data-tool="pdfa" data-category="security">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-cloud">Pro Core</span>
+          </div>
+          <h3>PDF to PDF/A <span class="arrow">→</span></h3>
+          <p>Convert to ISO 19005-1 (PDF/A-1b) archival standard with color profiles and schemas.</p>
+        </a>
+
+        <!-- GROUP C: CONVERSIONS -->
+        <a class="pdf-tool-card" href="#pdf2word" data-tool="pdf2word" data-category="convert">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-cloud">Pro Core</span>
+          </div>
+          <h3>PDF to Word <span class="arrow">→</span></h3>
+          <p>Convert PDF content into editable Microsoft Word (.docx) files preserving layout.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#pdf2pptx" data-tool="pdf2pptx" data-category="convert">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-cloud">Pro Core</span>
+          </div>
+          <h3>PDF to PowerPoint <span class="arrow">→</span></h3>
+          <p>Convert PDF pages into editable PowerPoint (.pptx) presentation slides.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#pdf2xlsx" data-tool="pdf2xlsx" data-category="convert">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-cloud">Pro Core</span>
+          </div>
+          <h3>PDF to Excel <span class="arrow">→</span></h3>
+          <p>Extract structured tables and numeric data from PDF pages into Microsoft Excel (.xlsx).</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#word2pdf" data-tool="word2pdf" data-category="convert">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-cloud">Pro Core</span>
+          </div>
+          <h3>Word to PDF <span class="arrow">→</span></h3>
+          <p>Convert DOC and DOCX documents into clean, professional vector PDF files.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#pptx2pdf" data-tool="pptx2pdf" data-category="convert">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-cloud">Pro Core</span>
+          </div>
+          <h3>PowerPoint to PDF <span class="arrow">→</span></h3>
+          <p>Convert PPT and PPTX slides into printable, landscape PDF presentations.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#xlsx2pdf" data-tool="xlsx2pdf" data-category="convert">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-cloud">Pro Core</span>
+          </div>
+          <h3>Excel to PDF <span class="arrow">→</span></h3>
+          <p>Convert XLS and XLSX spreadsheets into beautifully formatted PDF documents.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#pdf2jpg" data-tool="pdf2jpg" data-category="convert">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-device">On-Device</span>
+          </div>
+          <h3>PDF to JPG <span class="arrow">→</span></h3>
+          <p>Convert PDF pages into high-resolution JPG images with single or ZIP export.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#jpg2pdf" data-tool="jpg2pdf" data-category="convert">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-device">On-Device</span>
+          </div>
+          <h3>JPG to PDF <span class="arrow">→</span></h3>
+          <p>Convert multiple JPG photos and images into one clean PDF document.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#html2pdf" data-tool="html2pdf" data-category="convert">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-cloud">Pro Core</span>
+          </div>
+          <h3>HTML to PDF <span class="arrow">→</span></h3>
+          <p>Convert HTML web code, articles, and snippets into downloadable PDF files.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#scan2pdf" data-tool="scan2pdf" data-category="convert">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-device">On-Device</span>
+          </div>
+          <h3>Scan to PDF <span class="arrow">→</span></h3>
+          <p>Use your phone or webcam to snap paperwork photos and convert them directly into PDF.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#pdf2md" data-tool="pdf2md" data-category="convert">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="7 15 7 9 10 12 13 9 13 15"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-cloud">Pro Core</span>
+          </div>
+          <h3>PDF to Markdown <span class="arrow">→</span></h3>
+          <p>Extract document headings, bullet points, and tables into clean Markdown (.md).</p>
+        </a>
+
+        <!-- GROUP D: EDITING & ADVANCED -->
+        <a class="pdf-tool-card" href="#edit" data-tool="edit" data-category="edit">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-device">On-Device</span>
+          </div>
+          <h3>Edit PDF <span class="arrow">→</span></h3>
+          <p>Add text notes, highlights, shapes, and annotations directly onto PDF pages.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#sign" data-tool="sign" data-category="edit">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="m15 11 2 2 4-4"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-device">On-Device</span>
+          </div>
+          <h3>Sign PDF <span class="arrow">→</span></h3>
+          <p>Draw digital signature on canvas pad or upload image, and stamp onto any PDF page.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#watermark" data-tool="watermark" data-category="edit">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-device">On-Device</span>
+          </div>
+          <h3>Watermark PDF <span class="arrow">→</span></h3>
+          <p>Stamp custom text or logos across pages with adjustable opacity, angle, and position.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#pagenumbers" data-tool="pagenumbers" data-category="edit">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="9" x2="20" y2="9"/><line x1="10" y1="3" x2="8" y2="21"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-device">On-Device</span>
+          </div>
+          <h3>Page Numbers <span class="arrow">→</span></h3>
+          <p>Add page numbers in custom formats (e.g. Page X of Y) and positioning.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#forms" data-tool="forms" data-category="edit">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-device">On-Device</span>
+          </div>
+          <h3>PDF Forms <span class="arrow">→</span></h3>
+          <p>Fill interactive AcroForm fields, checkboxes, and text inputs, and save completed forms.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#repair" data-tool="repair" data-category="edit">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-cloud">Pro Core</span>
+          </div>
+          <h3>Repair PDF <span class="arrow">→</span></h3>
+          <p>Rebuild corrupted cross-reference tables and recover pages from damaged PDF files.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#ocr" data-tool="ocr" data-category="edit">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M7 8h8"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-device">On-Device</span>
+          </div>
+          <h3>OCR PDF <span class="arrow">→</span></h3>
+          <p>Extract searchable, selectable text from scanned PDF documents with optical recognition.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#img2pdf" data-tool="img2pdf" data-category="edit">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-device">On-Device</span>
+          </div>
+          <h3>Images to PDF <span class="arrow">→</span></h3>
+          <p>Convert PNG, JPG, WebP, GIF, and BMP images into a multi-page PDF.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#summarize" data-tool="summarize" data-category="edit">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-cloud">Pro Core</span>
+          </div>
+          <h3>AI Summarizer <span class="arrow">→</span></h3>
+          <p>Generate executive summaries, key takeaway bullet points, and reading metrics from document text.</p>
+        </a>
+
+        <a class="pdf-tool-card" href="#translate" data-tool="translate" data-category="edit">
+          <div class="pdf-tool-card-head">
+            <div class="pdf-tool-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+            <span class="pdf-badge-tag pdf-badge-cloud">Pro Core</span>
+          </div>
+          <h3>Translate PDF <span class="arrow">→</span></h3>
+          <p>Translate document text to Spanish, French, German, Arabic, Chinese, and Hindi into translated PDF.</p>
+        </a>
+
       </div>
     </div>
 
-    <div class="studio-container">
-
-      <!-- ==================== IMAGES TO PDF ==================== -->
-      <section class="studio-card active" id="stage-img2pdf" role="tabpanel" aria-labelledby="tab-img2pdf">
-        <div class="studio-header">
-          <div>
-            <h2>Images to PDF</h2>
-            <p>Combine photos or scanned pages into a single PDF. Drag to reorder pages before you create it.</p>
-          </div>
-          <span class="badge badge-success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Processed on-device</span>
+    <!-- ==================== INTERACTIVE WORKSPACE SECTION ==================== -->
+    <div class="page-container" id="workspaceSection" hidden>
+      
+      <!-- Workspace Breadcrumb Bar -->
+      <div class="pdf-breadcrumb-bar">
+        <div class="pdf-breadcrumb-path">
+          <a href="/pdf-tools">PDF Tools</a>
+          <span>/</span>
+          <span id="currentToolBreadcrumb">Tool Workspace</span>
         </div>
+        <button type="button" class="pdf-back-btn" id="backToCatalogBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="15 18 9 12 15 6"/></svg>
+          All 32 Tools
+        </button>
+      </div>
 
-        <div class="dropzone" id="dropI" aria-label="Choose images to convert to PDF">
-          <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
-          <h3>Drop images here, or <span class="link">browse</span></h3>
-          <p>JPG, PNG, WebP and iPhone HEIC &middot; Add as many as you like</p>
-          <span class="formats-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Never leaves your device</span>
-          <input type="file" id="fileI" accept="image/*,.heic,.heif" multiple />
-        </div>
+      <div class="studio-container">
 
-        <div class="filelist" id="listI" aria-label="Pages in order"></div>
-
-        <div class="pdf-settings" id="settingsI">
-          <div class="field-grid">
-            <div class="field">
-              <label for="pageSize">Page size</label>
-              <select id="pageSize">
-                <option value="fit">Fit to image (no white borders)</option>
-                <option value="a4">A4 (210 &times; 297 mm)</option>
-                <option value="letter">US Letter (8.5 &times; 11 in)</option>
-              </select>
+        <!-- 1. MERGE STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-merge">
+          <div class="studio-header">
+            <div>
+              <h2>Merge PDF</h2>
+              <p>Combine multiple PDF documents into one single file in your desired order.</p>
             </div>
-            <div class="field">
-              <label for="orientation">Orientation</label>
-              <select id="orientation" disabled>
-                <option value="auto">Automatic (match each image)</option>
-                <option value="portrait">Portrait</option>
-                <option value="landscape">Landscape</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="margin">Margins <span class="val" id="marginVal">0 mm</span></label>
-              <input type="range" id="margin" min="0" max="30" value="0" />
-            </div>
-            <div class="field">
-              <label for="imgQuality">Image quality <span class="val" id="iqVal">85%</span></label>
-              <input type="range" id="imgQuality" min="40" max="100" value="85" />
-            </div>
+            <span class="badge badge-success">Processed on-device</span>
           </div>
-        </div>
-
-        <div class="prog" id="progI" role="status"><div class="bar"><i></i></div><div class="txt"><span class="msg"></span><span class="pct"></span></div></div>
-        <div class="result" id="resI"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
-
-        <div class="btn-row action-bar">
-          <button class="btn btn-primary btn-lg btn-grow" type="button" id="makePdf" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg><span>Create PDF</span></button>
-          <button class="btn btn-ghost btn-lg" type="button" id="addI" hidden>Add more</button>
-          <button class="btn btn-ghost btn-lg" type="button" id="clearI" hidden>Clear all</button>
-        </div>
-      </section>
-
-      <!-- ==================== MERGE ==================== -->
-      <section class="studio-card" id="stage-merge" role="tabpanel" aria-labelledby="tab-merge" hidden>
-        <div class="studio-header">
-          <div>
-            <h2>Merge PDF</h2>
-            <p>Combine contracts, statements and reports into one file. Pages, text and links stay exactly as they are.</p>
+          <div class="dropzone" id="dropMerge">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 6 4-4 4 4"/><path d="M12 2v10.3a4 4 0 0 1-1.172 2.872L4 22"/><path d="m20 22-5-5"/></svg></div>
+            <h3>Drop PDFs here, or <span class="link">browse</span></h3>
+            <p>Select two or more PDF files &middot; 100% private in browser</p>
+            <input type="file" id="fileMerge" accept="application/pdf,.pdf" multiple />
           </div>
-          <span class="badge badge-success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Processed on-device</span>
-        </div>
-
-        <div class="dropzone" id="dropM" aria-label="Choose PDF files to merge">
-          <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
-          <h3>Drop PDF files here, or <span class="link">browse</span></h3>
-          <p>Choose two or more PDFs &middot; Reorder them below before merging</p>
-          <span class="formats-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Lossless &middot; never leaves your device</span>
-          <input type="file" id="fileM" accept="application/pdf,.pdf" multiple />
-        </div>
-
-        <div class="filelist" id="listM" aria-label="Documents in merge order"></div>
-
-        <div class="prog" id="progM" role="status"><div class="bar"><i></i></div><div class="txt"><span class="msg"></span><span class="pct"></span></div></div>
-        <div class="result" id="resM"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
-
-        <div class="btn-row action-bar">
-          <button class="btn btn-primary btn-lg btn-grow" type="button" id="doMerge" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 6 4-4 4 4"/><path d="M12 2v10.3a4 4 0 0 1-1.172 2.872L4 22"/><path d="m20 22-5-5"/></svg><span>Merge PDFs</span></button>
-          <button class="btn btn-ghost btn-lg" type="button" id="addM" hidden>Add more</button>
-          <button class="btn btn-ghost btn-lg" type="button" id="clearM" hidden>Clear all</button>
-        </div>
-        <p class="hint action-hint">Password-protected PDFs need to be unlocked before they can be merged.</p>
-      </section>
-
-      <!-- ==================== COMPRESS ==================== -->
-      <section class="studio-card" id="stage-compress" role="tabpanel" aria-labelledby="tab-compress" hidden>
-        <div class="studio-header">
-          <div>
-            <h2>Compress PDF</h2>
-            <p>Shrink scanned and image-heavy PDFs to fit email attachments and upload limits.</p>
+          <div class="filelist" id="listMerge"></div>
+          <div class="prog" id="progMerge" role="status"><div class="bar"><i></i></div><div class="txt"><span class="msg"></span><span class="pct"></span></div></div>
+          <div class="result" id="resMerge"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnMerge" disabled>Merge PDFs</button>
           </div>
-          <span class="badge badge-success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Processed on-device</span>
-        </div>
+        </section>
 
-        <div class="dropzone" id="dropC" aria-label="Choose a PDF to compress">
-          <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
-          <h3>Drop a PDF here, or <span class="link">browse</span></h3>
-          <p>One document at a time &middot; Best for scans and photo-heavy files</p>
-          <span class="formats-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Never leaves your device</span>
-          <input type="file" id="fileC" accept="application/pdf,.pdf" />
-        </div>
-
-        <div class="filelist" id="listC"></div>
-
-        <div class="pdf-settings" id="settingsC">
-          <div class="field-grid">
-            <div class="field">
-              <span class="field-label" id="levelLabel">Compression level</span>
-              <div class="segmented" role="group" aria-labelledby="levelLabel">
-                <button class="chip" type="button" data-level="1" aria-pressed="false">Light</button>
-                <button class="chip active" type="button" data-level="2" aria-pressed="true">Balanced</button>
-                <button class="chip" type="button" data-level="3" aria-pressed="false">Strong</button>
+        <!-- 2. SPLIT STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-split">
+          <div class="studio-header">
+            <div>
+              <h2>Split PDF</h2>
+              <p>Extract custom page ranges or split each page into a separate document.</p>
+            </div>
+            <span class="badge badge-success">Processed on-device</span>
+          </div>
+          <div class="dropzone" id="dropSplit">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5"/><path d="M8 3H3v5"/><path d="M12 22v-8"/></svg></div>
+            <h3>Drop a PDF here, or <span class="link">browse</span></h3>
+            <p>Single PDF file &middot; Extract pages instantly</p>
+            <input type="file" id="fileSplit" accept="application/pdf,.pdf" />
+          </div>
+          <p id="splitFileInfo" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="pdf-settings" id="settingsSplit">
+            <div class="field-grid">
+              <div class="field">
+                <label for="splitRangeInput">Page ranges to extract <span id="splitPageCount" class="val"></span></label>
+                <input type="text" id="splitRangeInput" placeholder="e.g. 1-3, 5 (Leave empty to extract all pages into a ZIP)" />
               </div>
             </div>
+          </div>
+          <div class="prog" id="progSplit" role="status"><div class="bar"><i></i></div><div class="txt"><span class="msg"></span><span class="pct"></span></div></div>
+          <div class="result" id="resSplit"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnSplit" disabled>Split Document</button>
+          </div>
+        </section>
+
+        <!-- 3. ORGANIZE STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-organize">
+          <div class="studio-header">
+            <div>
+              <h2>Organize PDF</h2>
+              <p>Preview pages visually, drag and drop to reorder, rotate individual pages, or remove pages.</p>
+            </div>
+            <span class="badge badge-success">Processed on-device</span>
+          </div>
+          <div class="dropzone" id="dropOrganize">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/></svg></div>
+            <h3>Drop PDF to organize, or <span class="link">browse</span></h3>
+            <input type="file" id="fileOrganize" accept="application/pdf,.pdf" />
+          </div>
+          <div class="pdf-pages-grid" id="gridOrganize"></div>
+          <div class="result" id="resOrganize"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnOrganize" disabled>Save Reorganized PDF</button>
+          </div>
+        </section>
+
+        <!-- 4. ROTATE STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-rotate">
+          <div class="studio-header">
+            <div>
+              <h2>Rotate PDF</h2>
+              <p>Rotate pages clockwise to correct scanned document orientation.</p>
+            </div>
+            <span class="badge badge-success">Processed on-device</span>
+          </div>
+          <div class="dropzone" id="dropRotate">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></div>
+            <h3>Drop PDF to rotate, or <span class="link">browse</span></h3>
+            <input type="file" id="fileRotate" accept="application/pdf,.pdf" />
+          </div>
+          <p id="rotateFileInfo" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="pdf-settings">
             <div class="field">
-              <label for="dpi">Resolution <span class="val" id="dpiVal">150 DPI</span></label>
-              <input type="range" id="dpi" min="72" max="220" step="1" value="150" />
+              <label for="rotateAngle">Rotation Angle</label>
+              <select id="rotateAngle">
+                <option value="90">90° Clockwise</option>
+                <option value="180">180° Flip</option>
+                <option value="270">270° (90° Counter-Clockwise)</option>
+              </select>
             </div>
           </div>
-          <div class="alert alert-info">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-            <p>Pages are re-rendered as optimized images, so text won't be selectable in the compressed copy. Your original file is never changed.</p>
+          <div class="result" id="resRotate"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnRotate" disabled>Rotate PDF</button>
           </div>
-        </div>
+        </section>
 
-        <div class="prog" id="progC" role="status"><div class="bar"><i></i></div><div class="txt"><span class="msg"></span><span class="pct"></span></div></div>
-        <div class="result" id="resC"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+        <!-- 5. CROP STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-crop">
+          <div class="studio-header">
+            <div>
+              <h2>Crop PDF</h2>
+              <p>Trim outer margins or remove unwanted whitespace across all pages.</p>
+            </div>
+            <span class="badge badge-success">Processed on-device</span>
+          </div>
+          <div class="dropzone" id="dropCrop">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2v14a2 2 0 0 0 2 2h14"/></svg></div>
+            <h3>Drop PDF to crop, or <span class="link">browse</span></h3>
+            <input type="file" id="fileCrop" accept="application/pdf,.pdf" />
+          </div>
+          <p id="cropFileInfo" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="pdf-settings">
+            <div class="field">
+              <label for="cropMarginInput">Margin Inset (points / ~0.35mm each)</label>
+              <input type="number" id="cropMarginInput" value="25" min="5" max="150" />
+            </div>
+          </div>
+          <div class="result" id="resCrop"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnCrop" disabled>Crop PDF Margins</button>
+          </div>
+        </section>
 
-        <div class="btn-row action-bar">
-          <button class="btn btn-primary btn-lg btn-grow" type="button" id="doCompress" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></svg><span>Compress PDF</span></button>
-          <button class="btn btn-ghost btn-lg" type="button" id="clearC" hidden>Choose another file</button>
-        </div>
-      </section>
+        <!-- 6. COMPARE STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-compare">
+          <div class="studio-header">
+            <div>
+              <h2>Compare PDF</h2>
+              <p>Detect visual differences between two revisions of a document.</p>
+            </div>
+            <span class="badge badge-success">Processed on-device</span>
+          </div>
+          <div class="pdf-compare-container">
+            <div class="pdf-compare-pane">
+              <h4>Original Document (A) <span id="compInfoA" class="badge">None</span></h4>
+              <div class="dropzone" id="dropCompA">
+                <h3>Select Document A</h3>
+                <input type="file" id="fileCompA" accept="application/pdf,.pdf" />
+              </div>
+            </div>
+            <div class="pdf-compare-pane">
+              <h4>Modified Document (B) <span id="compInfoB" class="badge">None</span></h4>
+              <div class="dropzone" id="dropCompB">
+                <h3>Select Document B</h3>
+                <input type="file" id="fileCompB" accept="application/pdf,.pdf" />
+              </div>
+            </div>
+          </div>
+          <div id="compareResultBox" class="pdf-ai-output-box" hidden>
+            <h4>Visual Difference Map</h4>
+            <p id="compareMetrics" style="font-weight:600; margin-bottom:12px;"></p>
+            <div class="pdf-compare-canvas-box">
+              <canvas id="canvasDiff"></canvas>
+            </div>
+          </div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnCompare" disabled>Run Visual Comparison</button>
+          </div>
+        </section>
+
+        <!-- 7. COMPRESS STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-compress">
+          <div class="studio-header">
+            <div>
+              <h2>Compress PDF</h2>
+              <p>Shrink scanned and photo-heavy PDFs to fit email attachments and upload limits.</p>
+            </div>
+            <span class="badge badge-success">Processed on-device</span>
+          </div>
+          <div class="dropzone" id="dropCompress">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/></svg></div>
+            <h3>Drop PDF to compress, or <span class="link">browse</span></h3>
+            <input type="file" id="fileCompress" accept="application/pdf,.pdf" />
+          </div>
+          <p id="compressFileInfo" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="pdf-settings" id="settingsCompress">
+            <div class="field-grid">
+              <div class="field">
+                <span class="field-label">Compression level</span>
+                <div class="segmented">
+                  <button class="chip" type="button" data-level="1">Light</button>
+                  <button class="chip active" type="button" data-level="2">Balanced</button>
+                  <button class="chip" type="button" data-level="3">Strong</button>
+                </div>
+              </div>
+              <div class="field">
+                <label for="dpiCompress">Resolution <span class="val" id="dpiValCompress">150 DPI</span></label>
+                <input type="range" id="dpiCompress" min="72" max="220" step="1" value="150" />
+              </div>
+            </div>
+          </div>
+          <div class="prog" id="progCompress" role="status"><div class="bar"><i></i></div><div class="txt"><span class="msg"></span><span class="pct"></span></div></div>
+          <div class="result" id="resCompress"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnCompress" disabled>Compress PDF</button>
+          </div>
+        </section>
+
+        <!-- 8. PROTECT STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-protect">
+          <div class="studio-header">
+            <div>
+              <h2>Protect PDF</h2>
+              <p>Encrypt your document with password protection.</p>
+            </div>
+            <span class="badge badge-success">Processed on-device</span>
+          </div>
+          <div class="dropzone" id="dropProtect">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+            <h3>Drop PDF to protect, or <span class="link">browse</span></h3>
+            <input type="file" id="fileProtect" accept="application/pdf,.pdf" />
+          </div>
+          <p id="protectFileInfo" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="pdf-settings">
+            <div class="field">
+              <label for="protectPassword">Set Document Password</label>
+              <input type="password" id="protectPassword" placeholder="Enter secure password…" />
+            </div>
+          </div>
+          <div class="result" id="resProtect"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnProtect" disabled>Encrypt &amp; Protect</button>
+          </div>
+        </section>
+
+        <!-- 9. UNLOCK STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-unlock">
+          <div class="studio-header">
+            <div>
+              <h2>Unlock PDF</h2>
+              <p>Remove passwords and restrictions from your authorized PDF files.</p>
+            </div>
+            <span class="badge badge-success">Processed on-device</span>
+          </div>
+          <div class="dropzone" id="dropUnlock">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg></div>
+            <h3>Drop protected PDF, or <span class="link">browse</span></h3>
+            <input type="file" id="fileUnlock" accept="application/pdf,.pdf" />
+          </div>
+          <p id="unlockFileInfo" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="pdf-settings">
+            <div class="field">
+              <label for="unlockPassword">Enter Document Password</label>
+              <input type="password" id="unlockPassword" placeholder="Enter password…" />
+            </div>
+          </div>
+          <div class="result" id="resUnlock"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnUnlock" disabled>Unlock PDF</button>
+          </div>
+        </section>
+
+        <!-- 10. REDACT STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-redact">
+          <div class="studio-header">
+            <div>
+              <h2>Redact PDF</h2>
+              <p>Permanently expunge confidential text from PDF streams and metadata.</p>
+            </div>
+            <span class="badge badge-pro">Pro Core</span>
+          </div>
+          <div class="dropzone" id="dropRedact">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+            <h3>Drop PDF to redact, or <span class="link">browse</span></h3>
+            <input type="file" id="fileRedact" accept="application/pdf,.pdf" />
+          </div>
+          <p id="redactFileInfo" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="pdf-settings">
+            <div class="field">
+              <label for="redactTerms">Target Words or Phrases to Redact (comma separated)</label>
+              <input type="text" id="redactTerms" placeholder="e.g. Confidential, Secret, Token123, John Doe" />
+            </div>
+          </div>
+          <div class="result" id="resRedact"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnRedact" disabled>Permanently Redact</button>
+          </div>
+        </section>
+
+        <!-- 11. PDF TO PDF/A STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-pdfa">
+          <div class="studio-header">
+            <div>
+              <h2>PDF to PDF/A</h2>
+              <p>Convert document to ISO 19005-1 (PDF/A-1b) archival standard.</p>
+            </div>
+            <span class="badge badge-pro">Pro Core</span>
+          </div>
+          <div class="dropzone" id="dropPdfA">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></div>
+            <h3>Drop PDF to convert, or <span class="link">browse</span></h3>
+            <input type="file" id="filePdfA" accept="application/pdf,.pdf" />
+          </div>
+          <p id="pdfaFileInfo" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="result" id="resPdfA"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnPdfA" disabled>Convert to PDF/A-1b</button>
+          </div>
+        </section>
+
+        <!-- 12. PDF TO WORD STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-pdf2word">
+          <div class="studio-header">
+            <div>
+              <h2>PDF to Word (DOCX)</h2>
+              <p>Convert PDF content into editable Microsoft Word documents.</p>
+            </div>
+            <span class="badge badge-pro">Pro Core</span>
+          </div>
+          <div class="dropzone" id="drop_pdf2word">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></div>
+            <h3>Drop PDF file, or <span class="link">browse</span></h3>
+            <input type="file" id="file_pdf2word" accept="application/pdf,.pdf" />
+          </div>
+          <p id="info_pdf2word" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="result" id="res_pdf2word"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btn_pdf2word" disabled>Convert to DOCX</button>
+          </div>
+        </section>
+
+        <!-- 13. PDF TO PPTX STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-pdf2pptx">
+          <div class="studio-header">
+            <div>
+              <h2>PDF to PowerPoint (PPTX)</h2>
+              <p>Convert PDF pages into editable PowerPoint slides.</p>
+            </div>
+            <span class="badge badge-pro">Pro Core</span>
+          </div>
+          <div class="dropzone" id="drop_pdf2pptx">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/></svg></div>
+            <h3>Drop PDF file, or <span class="link">browse</span></h3>
+            <input type="file" id="file_pdf2pptx" accept="application/pdf,.pdf" />
+          </div>
+          <p id="info_pdf2pptx" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="result" id="res_pdf2pptx"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btn_pdf2pptx" disabled>Convert to PPTX</button>
+          </div>
+        </section>
+
+        <!-- 14. PDF TO EXCEL STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-pdf2xlsx">
+          <div class="studio-header">
+            <div>
+              <h2>PDF to Excel (XLSX)</h2>
+              <p>Extract structured tables and numeric rows into Microsoft Excel.</p>
+            </div>
+            <span class="badge badge-pro">Pro Core</span>
+          </div>
+          <div class="dropzone" id="drop_pdf2xlsx">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+            <h3>Drop PDF file, or <span class="link">browse</span></h3>
+            <input type="file" id="file_pdf2xlsx" accept="application/pdf,.pdf" />
+          </div>
+          <p id="info_pdf2xlsx" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="result" id="res_pdf2xlsx"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btn_pdf2xlsx" disabled>Extract to XLSX</button>
+          </div>
+        </section>
+
+        <!-- 15. WORD TO PDF STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-word2pdf">
+          <div class="studio-header">
+            <div>
+              <h2>Word to PDF</h2>
+              <p>Convert DOCX documents into clean, professional PDF files.</p>
+            </div>
+            <span class="badge badge-pro">Pro Core</span>
+          </div>
+          <div class="dropzone" id="drop_word2pdf">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/></svg></div>
+            <h3>Drop Word document (.docx), or <span class="link">browse</span></h3>
+            <input type="file" id="file_word2pdf" accept=".docx,.doc" />
+          </div>
+          <p id="info_word2pdf" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="result" id="res_word2pdf"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btn_word2pdf" disabled>Convert to PDF</button>
+          </div>
+        </section>
+
+        <!-- 16. PPTX TO PDF STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-pptx2pdf">
+          <div class="studio-header">
+            <div>
+              <h2>PowerPoint to PDF</h2>
+              <p>Convert PPTX presentation slides into landscape PDF files.</p>
+            </div>
+            <span class="badge badge-pro">Pro Core</span>
+          </div>
+          <div class="dropzone" id="drop_pptx2pdf">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+            <h3>Drop PowerPoint (.pptx), or <span class="link">browse</span></h3>
+            <input type="file" id="file_pptx2pdf" accept=".pptx,.ppt" />
+          </div>
+          <p id="info_pptx2pdf" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="result" id="res_pptx2pdf"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btn_pptx2pdf" disabled>Convert to PDF</button>
+          </div>
+        </section>
+
+        <!-- 17. XLSX TO PDF STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-xlsx2pdf">
+          <div class="studio-header">
+            <div>
+              <h2>Excel to PDF</h2>
+              <p>Convert XLSX spreadsheet tables into clean PDF pages.</p>
+            </div>
+            <span class="badge badge-pro">Pro Core</span>
+          </div>
+          <div class="dropzone" id="drop_xlsx2pdf">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></div>
+            <h3>Drop Excel (.xlsx), or <span class="link">browse</span></h3>
+            <input type="file" id="file_xlsx2pdf" accept=".xlsx,.xls" />
+          </div>
+          <p id="info_xlsx2pdf" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="result" id="res_xlsx2pdf"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btn_xlsx2pdf" disabled>Convert to PDF</button>
+          </div>
+        </section>
+
+        <!-- 18. PDF TO JPG STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-pdf2jpg">
+          <div class="studio-header">
+            <div>
+              <h2>PDF to JPG</h2>
+              <p>Convert PDF pages into high-resolution JPG images.</p>
+            </div>
+            <span class="badge badge-success">Processed on-device</span>
+          </div>
+          <div class="dropzone" id="dropPdf2Jpg">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/></svg></div>
+            <h3>Drop PDF to export images, or <span class="link">browse</span></h3>
+            <input type="file" id="filePdf2Jpg" accept="application/pdf,.pdf" />
+          </div>
+          <p id="pdf2jpgInfo" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="result" id="resPdf2Jpg"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnPdf2Jpg" disabled>Convert to JPG</button>
+          </div>
+        </section>
+
+        <!-- 19. JPG TO PDF STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-jpg2pdf">
+          <div class="studio-header">
+            <div>
+              <h2>JPG to PDF</h2>
+              <p>Convert photos and JPG images into a single PDF.</p>
+            </div>
+            <span class="badge badge-success">Processed on-device</span>
+          </div>
+          <div class="dropzone" id="dropJpg2Pdf">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg></div>
+            <h3>Drop JPG images here, or <span class="link">browse</span></h3>
+            <input type="file" id="fileJpg2Pdf" accept="image/jpeg,image/jpg" multiple />
+          </div>
+          <p id="jpg2pdfInfo" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="result" id="resJpg2Pdf"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnJpg2Pdf" disabled>Create PDF</button>
+          </div>
+        </section>
+
+        <!-- 20. HTML TO PDF STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-html2pdf">
+          <div class="studio-header">
+            <div>
+              <h2>HTML to PDF</h2>
+              <p>Convert HTML markup or web snippets into PDF.</p>
+            </div>
+            <span class="badge badge-pro">Pro Core</span>
+          </div>
+          <div class="pdf-settings">
+            <div class="field">
+              <label for="htmlInput">HTML Code</label>
+              <textarea id="htmlInput" rows="6" style="width:100%; border-radius:8px; border:1px solid var(--border); padding:10px; font-family:var(--font-mono); font-size:0.85rem;" placeholder="<h1>Title</h1><p>Type or paste your HTML here...</p>"></textarea>
+            </div>
+          </div>
+          <div class="result" id="resHtml2Pdf"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnHtml2Pdf">Generate PDF</button>
+          </div>
+        </section>
+
+        <!-- 21. SCAN TO PDF STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-scan2pdf">
+          <div class="studio-header">
+            <div>
+              <h2>Scan to PDF</h2>
+              <p>Capture paperwork photos via camera and create a multi-page PDF.</p>
+            </div>
+            <span class="badge badge-success">Processed on-device</span>
+          </div>
+          <div class="pdf-camera-box">
+            <video id="scanVideo" class="pdf-camera-video" autoplay playsinline></video>
+            <div class="pdf-camera-overlay"></div>
+          </div>
+          <div class="btn-row" style="justify-content:center; gap:10px; margin:14px 0;">
+            <button class="btn btn-ghost" type="button" id="btnStartScan">Enable Camera</button>
+            <button class="btn btn-primary" type="button" id="btnSnapPage" disabled>Capture Page</button>
+          </div>
+          <p id="scanPagesCount" style="text-align:center; font-weight:600; color:var(--text-2);">Captured: 0 pages</p>
+          <div class="result" id="resScan2Pdf"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnMakeScanPdf" disabled>Compile into PDF</button>
+          </div>
+        </section>
+
+        <!-- 22. PDF TO MARKDOWN STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-pdf2md">
+          <div class="studio-header">
+            <div>
+              <h2>PDF to Markdown (.md)</h2>
+              <p>Extract structured text with headings, lists, and tables.</p>
+            </div>
+            <span class="badge badge-pro">Pro Core</span>
+          </div>
+          <div class="dropzone" id="drop_pdf2md">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/></svg></div>
+            <h3>Drop PDF to extract Markdown, or <span class="link">browse</span></h3>
+            <input type="file" id="file_pdf2md" accept="application/pdf,.pdf" />
+          </div>
+          <p id="info_pdf2md" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="result" id="res_pdf2md"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btn_pdf2md" disabled>Extract Markdown</button>
+          </div>
+        </section>
+
+        <!-- 23. EDIT PDF STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-edit">
+          <div class="studio-header">
+            <div>
+              <h2>Edit PDF</h2>
+              <p>Add text annotations, notes, and remarks to your PDF pages.</p>
+            </div>
+            <span class="badge badge-success">Processed on-device</span>
+          </div>
+          <div class="dropzone" id="dropEdit">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+            <h3>Drop PDF to annotate, or <span class="link">browse</span></h3>
+            <input type="file" id="fileEdit" accept="application/pdf,.pdf" />
+          </div>
+          <p id="editFileInfo" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="pdf-settings">
+            <div class="field-grid">
+              <div class="field">
+                <label for="editTextContent">Text Annotation</label>
+                <input type="text" id="editTextContent" placeholder="e.g. APPROVED &middot; 2026-11-09" />
+              </div>
+              <div class="field">
+                <label for="editTextSize">Font Size</label>
+                <select id="editTextSize">
+                  <option value="12">12 pt</option>
+                  <option value="16" selected>16 pt</option>
+                  <option value="20">20 pt</option>
+                  <option value="28">28 pt</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="result" id="resEdit"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnEdit" disabled>Apply Edits</button>
+          </div>
+        </section>
+
+        <!-- 24. SIGN PDF STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-sign">
+          <div class="studio-header">
+            <div>
+              <h2>Sign PDF</h2>
+              <p>Draw your digital signature with mouse or finger, and stamp onto document.</p>
+            </div>
+            <span class="badge badge-success">Processed on-device</span>
+          </div>
+          <div class="dropzone" id="dropSign">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 11 2 2 4-4"/></svg></div>
+            <h3>Drop PDF to sign, or <span class="link">browse</span></h3>
+            <input type="file" id="fileSign" accept="application/pdf,.pdf" />
+          </div>
+          <p id="signFileInfo" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="pdf-sign-pad-container">
+            <canvas id="signCanvas" class="pdf-sign-canvas" width="600" height="180"></canvas>
+            <div class="pdf-sign-actions">
+              <span style="font-size:0.8rem; color:var(--text-3);">Sign inside box</span>
+              <button type="button" class="btn btn-sm btn-ghost" id="btnClearSign">Clear Signature</button>
+            </div>
+          </div>
+          <div class="result" id="resSign"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnSign" disabled>Sign &amp; Download PDF</button>
+          </div>
+        </section>
+
+        <!-- 25. WATERMARK STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-watermark">
+          <div class="studio-header">
+            <div>
+              <h2>Watermark PDF</h2>
+              <p>Stamp confidential text across document pages with customized transparency.</p>
+            </div>
+            <span class="badge badge-success">Processed on-device</span>
+          </div>
+          <div class="dropzone" id="dropWatermark">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></div>
+            <h3>Drop PDF to watermark, or <span class="link">browse</span></h3>
+            <input type="file" id="fileWatermark" accept="application/pdf,.pdf" />
+          </div>
+          <p id="watermarkFileInfo" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="pdf-settings">
+            <div class="field-grid">
+              <div class="field">
+                <label for="watermarkText">Watermark Text</label>
+                <input type="text" id="watermarkText" value="CONFIDENTIAL" />
+              </div>
+              <div class="field">
+                <label for="watermarkOpacity">Opacity</label>
+                <select id="watermarkOpacity">
+                  <option value="0.15">15% (Subtle)</option>
+                  <option value="0.30" selected>30% (Standard)</option>
+                  <option value="0.60">60% (Bold)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="result" id="resWatermark"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnWatermark" disabled>Stamp Watermark</button>
+          </div>
+        </section>
+
+        <!-- 26. PAGE NUMBERS STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-pagenumbers">
+          <div class="studio-header">
+            <div>
+              <h2>Page Numbers</h2>
+              <p>Add page numbers with custom formats and alignments.</p>
+            </div>
+            <span class="badge badge-success">Processed on-device</span>
+          </div>
+          <div class="dropzone" id="dropPageNums">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="9" x2="20" y2="9"/><line x1="10" y1="3" x2="8" y2="21"/></svg></div>
+            <h3>Drop PDF to number, or <span class="link">browse</span></h3>
+            <input type="file" id="filePageNums" accept="application/pdf,.pdf" />
+          </div>
+          <p id="pageNumsFileInfo" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="pdf-settings">
+            <div class="field">
+              <label for="pageNumFormat">Numbering Format</label>
+              <select id="pageNumFormat">
+                <option value="Page {n} of {total}" selected>Page {n} of {total}</option>
+                <option value="Page {n}">Page {n}</option>
+                <option value="{n}">{n}</option>
+              </select>
+            </div>
+          </div>
+          <div class="result" id="resPageNums"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnPageNums" disabled>Add Page Numbers</button>
+          </div>
+        </section>
+
+        <!-- 27. PDF FORMS STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-forms">
+          <div class="studio-header">
+            <div>
+              <h2>PDF Forms</h2>
+              <p>Fill out interactive form fields directly in your browser.</p>
+            </div>
+            <span class="badge badge-success">Processed on-device</span>
+          </div>
+          <div class="dropzone" id="dropForms">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+            <h3>Drop PDF Form, or <span class="link">browse</span></h3>
+            <input type="file" id="fileForms" accept="application/pdf,.pdf" />
+          </div>
+          <p id="formsFileInfo" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div id="formFieldsContainer" class="pdf-settings" style="margin-top:16px;"></div>
+          <div class="result" id="resForms"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnForms" disabled>Save Filled Form</button>
+          </div>
+        </section>
+
+        <!-- 28. REPAIR STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-repair">
+          <div class="studio-header">
+            <div>
+              <h2>Repair PDF</h2>
+              <p>Reconstruct broken cross-reference tables and recover readable pages.</p>
+            </div>
+            <span class="badge badge-pro">Pro Core</span>
+          </div>
+          <div class="dropzone" id="dropRepair">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+            <h3>Drop corrupted PDF, or <span class="link">browse</span></h3>
+            <input type="file" id="fileRepair" accept="application/pdf,.pdf" />
+          </div>
+          <p id="repairFileInfo" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="result" id="resRepair"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnRepair" disabled>Repair Document</button>
+          </div>
+        </section>
+
+        <!-- 29. OCR PDF STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-ocr">
+          <div class="studio-header">
+            <div>
+              <h2>OCR PDF</h2>
+              <p>Extract searchable, selectable text from scanned PDF pages.</p>
+            </div>
+            <span class="badge badge-success">Processed on-device</span>
+          </div>
+          <div class="dropzone" id="dropOcr">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M7 8h8"/></svg></div>
+            <h3>Drop scanned PDF, or <span class="link">browse</span></h3>
+            <input type="file" id="fileOcr" accept="application/pdf,.pdf" />
+          </div>
+          <p id="ocrFileInfo" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="prog" id="progOcr" role="status"><div class="bar"><i></i></div><div class="txt"><span class="msg"></span><span class="pct"></span></div></div>
+          <div id="ocrOutputContainer" class="pdf-ai-output-box" hidden>
+            <h4>Extracted OCR Text</h4>
+            <textarea id="ocrResultText" rows="8" style="width:100%; border:1px solid var(--border); border-radius:6px; padding:10px; font-family:var(--font-mono); font-size:0.85rem;" readonly></textarea>
+            <div style="margin-top:10px; display:flex; gap:8px;">
+              <button class="btn btn-sm btn-ghost" type="button" id="btnCopyOcrText">Copy Text</button>
+            </div>
+          </div>
+          <div class="result" id="resOcr"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnOcr" disabled>Run OCR Recognition</button>
+          </div>
+        </section>
+
+        <!-- 30. IMAGES TO PDF (LEGACY COMPATIBLE) -->
+        <section class="studio-card pdf-workspace-view" id="stage-img2pdf">
+          <div class="studio-header">
+            <div>
+              <h2>Images to PDF</h2>
+              <p>Combine photos, PNGs, and scans into a single PDF.</p>
+            </div>
+            <span class="badge badge-success">Processed on-device</span>
+          </div>
+          <div class="dropzone" id="dropI">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/></svg></div>
+            <h3>Drop images here, or <span class="link">browse</span></h3>
+            <p>JPG, PNG, WebP, GIF &middot; Add as many as you like</p>
+            <input type="file" id="fileI" accept="image/*,.heic,.heif" multiple />
+          </div>
+          <div class="filelist" id="listI"></div>
+          <div class="pdf-settings" id="settingsI">
+            <div class="field-grid">
+              <div class="field">
+                <label for="pageSize">Page size</label>
+                <select id="pageSize">
+                  <option value="fit">Fit to image (no white borders)</option>
+                  <option value="a4">A4 (210 &times; 297 mm)</option>
+                  <option value="letter">US Letter (8.5 &times; 11 in)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="result" id="resI"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="makePdf" disabled>Create PDF</button>
+          </div>
+        </section>
+
+        <!-- 31. AI SUMMARIZER STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-summarize">
+          <div class="studio-header">
+            <div>
+              <h2>AI Summarizer</h2>
+              <p>Generate executive summaries, key takeaway bullet points, and document reading metrics.</p>
+            </div>
+            <span class="badge badge-pro">Pro Core</span>
+          </div>
+          <div class="dropzone" id="dropSummarize">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <h3>Drop PDF to summarize, or <span class="link">browse</span></h3>
+            <input type="file" id="fileSummarize" accept="application/pdf,.pdf" />
+          </div>
+          <p id="summarizeFileInfo" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="pdf-settings">
+            <div class="field">
+              <label for="summarizeSentences">Summary Length</label>
+              <select id="summarizeSentences">
+                <option value="3">Concise (3 Key Points)</option>
+                <option value="5" selected>Standard (5 Key Points)</option>
+                <option value="8">Detailed (8 Key Points)</option>
+              </select>
+            </div>
+          </div>
+          <div id="summarizeOutput" class="pdf-ai-output-box" hidden>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h4>Executive Summary</h4>
+              <span id="summaryWordCount" class="badge" style="font-size:0.75rem;"></span>
+            </div>
+            <p id="summaryParagraph" style="line-height:1.6; margin:8px 0; font-size:0.92rem;"></p>
+            <h4 style="margin-top:16px;">Key Takeaways</h4>
+            <ul id="summaryTakeawaysList" class="pdf-ai-takeaways"></ul>
+          </div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnSummarize" disabled>Generate AI Summary</button>
+          </div>
+        </section>
+
+        <!-- 32. TRANSLATE STAGE -->
+        <section class="studio-card pdf-workspace-view" id="stage-translate">
+          <div class="studio-header">
+            <div>
+              <h2>Translate PDF</h2>
+              <p>Translate document content into international languages.</p>
+            </div>
+            <span class="badge badge-pro">Pro Core</span>
+          </div>
+          <div class="dropzone" id="dropTranslate">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg></div>
+            <h3>Drop PDF to translate, or <span class="link">browse</span></h3>
+            <input type="file" id="fileTranslate" accept="application/pdf,.pdf" />
+          </div>
+          <p id="translateFileInfo" class="hint" hidden style="margin-top:10px; font-weight:600;"></p>
+          <div class="pdf-settings">
+            <div class="field">
+              <label for="translateLangSelect">Target Language</label>
+              <select id="translateLangSelect">
+                <option value="es" selected>Spanish (Español)</option>
+                <option value="fr">French (Français)</option>
+                <option value="de">German (Deutsch)</option>
+                <option value="it">Italian (Italiano)</option>
+                <option value="pt">Portuguese (Português)</option>
+                <option value="ar">Arabic (العربية)</option>
+                <option value="zh">Chinese (中文)</option>
+                <option value="hi">Hindi (हिन्दी)</option>
+              </select>
+            </div>
+          </div>
+          <div class="result" id="resTranslate"><div class="result-body"><div class="h"></div><div class="d"></div><div class="result-actions"><button class="btn btn-sm btn-ghost" type="button" data-redownload>Download again</button></div></div></div>
+          <div class="btn-row action-bar">
+            <button class="btn btn-primary btn-lg btn-grow" type="button" id="btnTranslate" disabled>Translate &amp; Export PDF</button>
+          </div>
+        </section>
+
+      </div>
     </div>
 
+    <!-- Related Tools Grid -->
     <section class="page-section" aria-labelledby="relatedTitle">
       <div class="section-header">
-        <span class="section-eyebrow">Related tools</span>
-        <h2 id="relatedTitle">Need to do more with your documents?</h2>
+        <span class="section-eyebrow">Ecosystem</span>
+        <h2 id="relatedTitle">Other Pixnivo Creative Tools</h2>
       </div>
       <div class="tools-grid">
         <a class="tool-card" href="/ai-ocr">
-          <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 8h8"/><path d="M7 12h10"/><path d="M7 16h6"/></svg></span>
-          <h3>AI OCR <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></h3>
-          <p>Extract editable text from scanned PDFs, invoices and photos.</p>
-        </a>
-        <a class="tool-card" href="/?tab=compress">
-          <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span>
-          <h3>Image Compressor <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></h3>
-          <p>Shrink photos before adding them to a PDF for even smaller files.</p>
+          <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M7 8h8"/></svg></span>
+          <h3>AI OCR <span class="arrow">→</span></h3>
+          <p>Extract editable text from scanned PDFs, invoices, and photos.</p>
         </a>
         <a class="tool-card" href="/aidc-studio">
-          <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5v14M8 5v14M12 5v14M17 5v14M21 5v14M5 12h14"/></svg></span>
-          <h3>AIDC Studio <span class="nav-badge-pro" style="font-size:0.65rem; font-weight:700; color:#fff; background:linear-gradient(135deg,#cf4a0c,#f97316); padding:2px 6px; border-radius:4px; margin-left:4px; text-transform:uppercase;">PRO</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></h3>
+          <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5v14M8 5v14M12 5v14M17 5v14M21 5v14M5 12h14"/></svg></span>
+          <h3>AIDC Studio <span class="nav-badge-pro" style="font-size:0.65rem; font-weight:700; color:#fff; background:linear-gradient(135deg,#cf4a0c,#f97316); padding:2px 6px; border-radius:4px; margin-left:4px; text-transform:uppercase;">PRO</span> <span class="arrow">→</span></h3>
           <p>Generate certified GTINs, 2D matrix codes, GS1 Digital Links, and industrial barcodes in bulk.</p>
+        </a>
+        <a class="tool-card" href="/logo-generator">
+          <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg></span>
+          <h3>Logo Generator <span class="arrow">→</span></h3>
+          <p>Design modern logos and export high-resolution vector brand assets.</p>
         </a>
       </div>
     </section>
 
+    <!-- Guide & FAQ -->
     <section class="page-section" aria-labelledby="pdfGuideTitle">
       <div class="section-header">
-        <span class="section-eyebrow">Guide</span>
-        <h2 id="pdfGuideTitle">Which PDF tool do you need?</h2>
-        <p>All three tools run in your browser using the open-source pdf-lib and PDF.js libraries, so your documents are processed on your device and never uploaded.</p>
+        <span class="section-eyebrow">Documentation</span>
+        <h2 id="pdfGuideTitle">Privacy-First Architecture &amp; FAQ</h2>
+        <p>Built with free and open-source software libraries. Client-side tools execute directly in your browser, keeping documents completely private on your device.</p>
       </div>
       <div class="article-content" style="max-width:760px;">
-        <h3>Images to PDF — when you have photos or scans</h3>
-        <p>Use it to turn photos of paperwork, receipts, ID cards or screenshots into a single PDF. Add as many images as you like, drag them into order, then choose a page size: <b>Fit to image</b> for borderless pages, or <b>A4</b> or <b>US Letter</b> for documents that will be printed. Margins of up to 30 mm and an Image quality setting (85% by default) let you balance appearance and file size. Each image is scaled to at most 2,400 pixels on its longest side, about 200 DPI on an A4 page. <a href="/convert-photos-to-pdf">How to convert photos to PDF</a> covers taking photos that stay readable.</p>
+        <h3>Are documents uploaded to external servers?</h3>
+        <p>No. Client-side operations (Merge, Split, Rotate, Crop, Organize, Protect, Unlock, Sign, Edit, Watermark, Page Numbers, Forms, Compare, PDF to JPG) run 100% locally in your browser memory. Conversion operations (Word, Excel, PowerPoint, Redact, Repair, Summarize) are processed securely through our dedicated, open-source backend core without data retention.</p>
 
-        <h3>Merge PDF — when you have several PDFs</h3>
-        <p>Combine two or more PDFs into one file in the order you set. Merging is lossless: pages are copied exactly, so text stays selectable and each page keeps its size. Password-protected files need to be unlocked first. For the best order for applications and claims, see <a href="/merge-pdf-files-privately">how to merge PDF files privately</a>.</p>
+        <h3>Is there any file size limit or cost?</h3>
+        <p>There are no subscriptions or paywalls. All 32 tools are free to use. Processing speed depends on your device's memory for client operations, making standard documents instant on both phones and desktops.</p>
 
-        <h3>Compress PDF — when a PDF is too large</h3>
-        <p>Best for scanned and photo-heavy PDFs, which often shrink by 70–90%. Choose <b>Light</b>, <b>Balanced</b> or <b>Strong</b> and a resolution from 72 to 220 DPI (150 by default). Pages are re-rendered as optimised images, so text in the compressed copy can't be selected, and your original is never changed. If the result wouldn't be smaller, the tool tells you and keeps your original. <a href="/compress-pdf-too-large">How to compress a PDF that's too large</a> explains which settings to use for email, portals and print.</p>
-
-        <h2>Frequently asked questions</h2>
-        <h3>Are my documents uploaded?</h3>
-        <p>No. Everything happens in the browser tab you have open. That's why these tools suit bank statements, contracts and identity documents.</p>
-
-        <h3>Is there a file size limit?</h3>
-        <p>There's no fixed limit; the practical limit is your device's memory. Ordinary documents are fine on any modern phone or computer. Very large scans with hundreds of pages are quicker on a computer.</p>
-
-        <h3>Do the tools work on phones?</h3>
-        <p>Yes, in Safari, Chrome and other modern mobile browsers. Pick files from your photo gallery or Files app.</p>
-
-        <h3>In what order should I use them?</h3>
-        <p>A common workflow is: photos to PDF first, then merge with your other PDFs, then compress the merged file if it's still too large for an email or portal.</p>
-
-        <h3>Can I make the text in a scanned PDF searchable?</h3>
-        <p>Yes — use <a href="/ai-ocr">AI OCR</a> to extract the text from scanned pages, then copy it or download it as a Word file.</p>
+        <h3>Does it work on mobile phones and tablets?</h3>
+        <p>Yes. Pixnivo is fully responsive across iOS Safari, Android Chrome, Edge, and Firefox. You can easily pick documents from your mobile Files or Photos app.</p>
       </div>
     </section>
   </main>
@@ -334,10 +1354,10 @@
       <div class="footer-col">
         <h2>Document tools</h2>
         <ul>
-          <li><a href="/pdf-tools?tab=img2pdf">Images to PDF</a></li>
-          <li><a href="/pdf-tools?tab=merge">Merge PDF</a></li>
-          <li><a href="/pdf-tools?tab=compress">Compress PDF</a></li>
-          <li><a href="/ai-ocr">AI OCR</a></li>
+          <li><a href="/pdf-tools#merge">Merge PDF</a></li>
+          <li><a href="/pdf-tools#split">Split PDF</a></li>
+          <li><a href="/pdf-tools#compress">Compress PDF</a></li>
+          <li><a href="/pdf-tools#pdf2word">PDF to Word</a></li>
           <li><a href="/aidc-studio">AIDC Studio (Barcodes &amp; GTIN)</a></li>
         </ul>
       </div>
@@ -362,510 +1382,10 @@
     </div>
     <div class="footer-bottom">
       <span>&copy; <span data-year>2026</span> PIXNIVO. All rights reserved.</span>
-      <span>Privacy-first tools &middot; Most processing happens on your device.</span>
+      <span>Privacy-first tools &middot; Genuine open-source processing.</span>
     </div>
   </footer>
 
-  <script>
-  (function () {
-    'use strict';
-
-    const P = window.Pixnivo;
-    const $ = id => document.getElementById(id);
-    const MM_PER_PT = 0.352777778;
-    const A4 = { w: 595.28, h: 841.89 };
-    const LETTER = { w: 612, h: 792 };
-    const PDFLIB_URL = 'https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js';
-    const PDFJS_URL = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js';
-    const PDFJS_WORKER = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
-
-    const ICON = {
-      up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>',
-      down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>',
-      remove: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>',
-      pdf: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>',
-      image: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg>',
-      grip: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg>'
-    };
-
-    async function pdfLib() {
-      if (!window.PDFLib) await P.loadScript(PDFLIB_URL);
-      return window.PDFLib;
-    }
-
-    async function pdfJs() {
-      if (!window.pdfjsLib) {
-        await P.loadScript(PDFJS_URL);
-        window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER;
-      }
-      return window.pdfjsLib;
-    }
-
-    // Warm up the PDF engine once the page is idle so the first action feels instant
-    (window.requestIdleCallback || (cb => setTimeout(cb, 1500)))(() => { pdfLib().catch(() => {}); });
-
-    P.initTabs();
-
-    const isPdf = f => f.type === 'application/pdf' || /\.pdf$/i.test(f.name);
-    const isImage = f => (f.type && f.type.startsWith('image/')) || P.looksHeic(f) || /\.(jpe?g|png|webp|gif|bmp|avif)$/i.test(f.name);
-
-    function progress(el, pct, msg) {
-      el.classList.add('on');
-      el.querySelector('i').style.width = pct + '%';
-      el.querySelector('.msg').textContent = msg || '';
-      el.querySelector('.pct').textContent = Math.round(pct) + '%';
-    }
-
-    function progressDone(el) {
-      el.classList.remove('on');
-      el.querySelector('i').style.width = '0%';
-    }
-
-    function showResult(el, head, detail, opts) {
-      const o = Object.assign({ warn: false, actionLabel: 'Download again' }, opts);
-      el.classList.add('on');
-      el.classList.toggle('warn', o.warn);
-      el.querySelector('.h').textContent = head;
-      el.querySelector('.d').textContent = detail;
-      el.querySelector('[data-redownload]').textContent = o.actionLabel;
-    }
-
-    function hideResult(el) { el.classList.remove('on', 'warn'); }
-
-    function pdfBlob(bytes) { return new Blob([bytes], { type: 'application/pdf' }); }
-
-    /* Shared, reorderable file list (drag & drop plus keyboard buttons) */
-    function renderList(container, items, opts) {
-      const o = Object.assign({ reorder: true, meta: () => '', onChange: () => {} }, opts);
-      container.innerHTML = '';
-      container.classList.toggle('on', items.length > 0);
-      if (!items.length) return;
-
-      if (o.summary) {
-        const head = document.createElement('div');
-        head.className = 'filelist-head';
-        head.innerHTML = `<span>${o.summary}</span>${o.reorder && items.length > 1 ? '<span>Drag or use the arrows to reorder</span>' : ''}`;
-        container.appendChild(head);
-      }
-
-      let dragFrom = null;
-      items.forEach((item, i) => {
-        const row = document.createElement('div');
-        row.className = 'fitem' + (item.error ? ' has-error' : '');
-        if (o.reorder && items.length > 1) {
-          row.draggable = true;
-          row.addEventListener('dragstart', e => { dragFrom = i; row.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', String(i)); });
-          row.addEventListener('dragend', () => { row.classList.remove('dragging'); container.querySelectorAll('.drop-target').forEach(r => r.classList.remove('drop-target')); });
-          row.addEventListener('dragover', e => { if (dragFrom === null) return; e.preventDefault(); row.classList.add('drop-target'); });
-          row.addEventListener('dragleave', () => row.classList.remove('drop-target'));
-          row.addEventListener('drop', e => {
-            e.preventDefault();
-            e.stopPropagation();
-            if (dragFrom === null || dragFrom === i) return;
-            const [moved] = items.splice(dragFrom, 1);
-            items.splice(i, 0, moved);
-            dragFrom = null;
-            o.onChange();
-          });
-        }
-
-        if (o.reorder && items.length > 1) {
-          const grip = document.createElement('span');
-          grip.className = 'grip';
-          grip.innerHTML = ICON.grip;
-          row.appendChild(grip);
-        }
-
-        const idx = document.createElement('span');
-        idx.className = 'idx';
-        idx.textContent = String(i + 1);
-
-        const th = document.createElement('div');
-        th.className = 'thumb';
-        if (item.thumb) {
-          const im = document.createElement('img');
-          im.alt = '';
-          im.src = item.thumb;
-          im.onerror = () => { th.innerHTML = ICON.image; };
-          th.appendChild(im);
-        } else {
-          th.innerHTML = item.kind === 'image' ? ICON.image : ICON.pdf;
-        }
-
-        const info = document.createElement('div');
-        info.className = 'finfo';
-        const nm = document.createElement('span');
-        nm.className = 'fname';
-        nm.textContent = item.file.name;
-        nm.title = item.file.name;
-        const meta = document.createElement('span');
-        meta.className = 'fsize';
-        meta.textContent = item.error ? item.error : [P.formatBytes(item.file.size), o.meta(item)].filter(Boolean).join(' · ');
-        info.append(nm, meta);
-
-        const actions = document.createElement('div');
-        actions.className = 'mv';
-        if (o.reorder && items.length > 1) {
-          const up = document.createElement('button');
-          up.type = 'button'; up.innerHTML = ICON.up; up.disabled = i === 0;
-          up.setAttribute('aria-label', `Move ${item.file.name} up`);
-          up.onclick = () => { [items[i - 1], items[i]] = [items[i], items[i - 1]]; o.onChange(); };
-          const dn = document.createElement('button');
-          dn.type = 'button'; dn.innerHTML = ICON.down; dn.disabled = i === items.length - 1;
-          dn.setAttribute('aria-label', `Move ${item.file.name} down`);
-          dn.onclick = () => { [items[i + 1], items[i]] = [items[i], items[i + 1]]; o.onChange(); };
-          actions.append(up, dn);
-        }
-        const rm = document.createElement('button');
-        rm.type = 'button'; rm.className = 'rm'; rm.innerHTML = ICON.remove;
-        rm.setAttribute('aria-label', `Remove ${item.file.name}`);
-        rm.onclick = () => {
-          const [gone] = items.splice(i, 1);
-          if (gone && gone.thumb) URL.revokeObjectURL(gone.thumb);
-          o.onChange();
-        };
-        actions.appendChild(rm);
-
-        row.append(idx, th, info, actions);
-        container.appendChild(row);
-      });
-    }
-
-    function wireRedownload(resEl, getBlob) {
-      resEl.querySelector('[data-redownload]').addEventListener('click', () => {
-        const r = getBlob();
-        if (r) P.downloadBlob(r.blob, r.name);
-      });
-    }
-
-    /* ==================== 1. IMAGES TO PDF ==================== */
-    (function () {
-      const items = [];
-      const list = $('listI'), prog = $('progI'), res = $('resI'), go = $('makePdf');
-      let last = null, busy = false;
-
-      function refresh() {
-        renderList(list, items, {
-          summary: `${items.length} image${items.length === 1 ? '' : 's'} · ${items.length} page${items.length === 1 ? '' : 's'}`,
-          onChange: refresh
-        });
-        const has = items.length > 0;
-        go.disabled = !has || busy;
-        go.querySelector('span').textContent = has ? `Create PDF (${items.length} page${items.length === 1 ? '' : 's'})` : 'Create PDF';
-        $('dropI').classList.toggle('dropzone-sm', has);
-        $('addI').hidden = !has;
-        $('clearI').hidden = !has;
-        $('settingsI').hidden = !has;
-        hideResult(res);
-      }
-
-      P.wireDropzone($('dropI'), $('fileI'), incoming => {
-        const imgs = incoming.filter(isImage);
-        const skipped = incoming.length - imgs.length;
-        if (skipped) P.toast(`${skipped} file${skipped === 1 ? ' was' : 's were'} skipped — only images can be added here.`, { type: 'warning' });
-        imgs.forEach(f => items.push({ file: f, kind: 'image', thumb: P.looksHeic(f) ? null : URL.createObjectURL(f) }));
-        refresh();
-      });
-
-      $('addI').addEventListener('click', () => $('fileI').click());
-      $('clearI').addEventListener('click', () => {
-        items.splice(0).forEach(it => it.thumb && URL.revokeObjectURL(it.thumb));
-        progressDone(prog);
-        refresh();
-      });
-
-      $('pageSize').addEventListener('change', e => { $('orientation').disabled = e.target.value === 'fit'; });
-      $('margin').addEventListener('input', e => { $('marginVal').textContent = e.target.value + ' mm'; });
-      $('imgQuality').addEventListener('input', e => { $('iqVal').textContent = e.target.value + '%'; });
-      wireRedownload(res, () => last);
-
-      async function toJpeg(file, quality) {
-        const img = await P.decodeImage(file, { maxDim: 2400 });
-        const c = document.createElement('canvas');
-        c.width = img.width; c.height = img.height;
-        const cx = c.getContext('2d');
-        cx.fillStyle = '#ffffff';
-        cx.fillRect(0, 0, c.width, c.height);
-        cx.drawImage(img, 0, 0);
-        const blob = await P.canvasToBlob(c, 'image/jpeg', quality);
-        return { bytes: new Uint8Array(await blob.arrayBuffer()), w: c.width, h: c.height };
-      }
-
-      go.addEventListener('click', async () => {
-        if (!items.length || busy) return;
-        busy = true;
-        P.setLoading(go, true);
-        hideResult(res);
-        try {
-          const { PDFDocument } = await pdfLib();
-          const pdf = await PDFDocument.create();
-          pdf.setProducer('PIXNIVO');
-          pdf.setCreator('PIXNIVO Images to PDF');
-          const quality = parseInt($('imgQuality').value, 10) / 100;
-          const marginPt = parseInt($('margin').value, 10) / MM_PER_PT;
-          const sizeMode = $('pageSize').value;
-          const orient = $('orientation').value;
-
-          for (let i = 0; i < items.length; i++) {
-            progress(prog, (i / items.length) * 100, `Adding page ${i + 1} of ${items.length}…`);
-            await P.nextFrame();
-            const { bytes, w, h } = await toJpeg(items[i].file, quality);
-            const embedded = await pdf.embedJpg(bytes);
-            let pw, ph;
-            if (sizeMode === 'fit') {
-              pw = w + marginPt * 2; ph = h + marginPt * 2;
-            } else {
-              const base = sizeMode === 'a4' ? A4 : LETTER;
-              const landscape = orient === 'landscape' || (orient === 'auto' && w > h);
-              pw = landscape ? base.h : base.w;
-              ph = landscape ? base.w : base.h;
-            }
-            const page = pdf.addPage([pw, ph]);
-            const fit = Math.min((pw - marginPt * 2) / w, (ph - marginPt * 2) / h);
-            const dw = w * fit, dh = h * fit;
-            page.drawImage(embedded, { x: (pw - dw) / 2, y: (ph - dh) / 2, width: dw, height: dh });
-          }
-
-          progress(prog, 100, 'Finalizing PDF…');
-          const blob = pdfBlob(await pdf.save());
-          const name = items.length === 1 ? `${P.baseName(items[0].file.name)}.pdf` : `pixnivo-${items.length}-pages.pdf`;
-          last = { blob, name };
-          P.downloadBlob(blob, name);
-          progressDone(prog);
-          showResult(res, 'Your PDF is ready', `${items.length} page${items.length === 1 ? '' : 's'} · ${P.formatBytes(blob.size)} · saved as ${name}`);
-        } catch (err) {
-          console.error(err);
-          progressDone(prog);
-          P.toast('Could not create the PDF. ' + (err.message || ''), { type: 'error' });
-        } finally {
-          busy = false;
-          P.setLoading(go, false);
-          go.disabled = !items.length;
-        }
-      });
-
-      refresh();
-    })();
-
-    /* ==================== 2. MERGE PDF ==================== */
-    (function () {
-      const items = [];
-      const list = $('listM'), prog = $('progM'), res = $('resM'), go = $('doMerge');
-      let last = null, busy = false;
-
-      function valid() { return items.filter(it => !it.error && it.pages); }
-
-      function refresh() {
-        const ok = valid();
-        const pages = ok.reduce((n, it) => n + it.pages, 0);
-        renderList(list, items, {
-          summary: `${items.length} file${items.length === 1 ? '' : 's'} · ${pages} page${pages === 1 ? '' : 's'} total`,
-          meta: it => it.pages ? `${it.pages} page${it.pages === 1 ? '' : 's'}` : 'Reading…',
-          onChange: refresh
-        });
-        const hasErrors = items.some(it => it.error);
-        const pending = items.some(it => !it.pages && !it.error);
-        go.disabled = busy || ok.length < 2 || hasErrors || pending;
-        go.querySelector('span').textContent = ok.length >= 2 ? `Merge ${ok.length} PDFs` : 'Merge PDFs';
-        const has = items.length > 0;
-        $('dropM').classList.toggle('dropzone-sm', has);
-        $('addM').hidden = !has;
-        $('clearM').hidden = !has;
-        hideResult(res);
-      }
-
-      async function inspect(item) {
-        try {
-          const { PDFDocument } = await pdfLib();
-          const doc = await PDFDocument.load(await item.file.arrayBuffer(), { ignoreEncryption: true, updateMetadata: false });
-          if (doc.isEncrypted) item.error = 'Password-protected — unlock it first, then remove and re-add';
-          else item.pages = doc.getPageCount();
-        } catch (e) {
-          item.error = 'Couldn’t read this file — it may be damaged';
-        }
-        refresh();
-      }
-
-      P.wireDropzone($('dropM'), $('fileM'), incoming => {
-        const pdfs = incoming.filter(isPdf);
-        const skipped = incoming.length - pdfs.length;
-        if (skipped) P.toast(`${skipped} file${skipped === 1 ? ' was' : 's were'} skipped — only PDF files can be merged.`, { type: 'warning' });
-        const added = pdfs.map(f => ({ file: f, kind: 'pdf', pages: 0, error: '' }));
-        items.push(...added);
-        refresh();
-        added.forEach(inspect);
-        if (items.length === 1) P.toast('Add at least one more PDF to merge.', { type: 'info' });
-      });
-
-      $('addM').addEventListener('click', () => $('fileM').click());
-      $('clearM').addEventListener('click', () => { items.splice(0); progressDone(prog); refresh(); });
-      wireRedownload(res, () => last);
-
-      go.addEventListener('click', async () => {
-        const ok = valid();
-        if (ok.length < 2 || busy) return;
-        busy = true;
-        P.setLoading(go, true);
-        hideResult(res);
-        try {
-          const { PDFDocument } = await pdfLib();
-          const merged = await PDFDocument.create();
-          merged.setProducer('PIXNIVO');
-          let pageCount = 0;
-          for (let i = 0; i < ok.length; i++) {
-            progress(prog, (i / ok.length) * 100, `Adding ${ok[i].file.name}…`);
-            await P.nextFrame();
-            const src = await PDFDocument.load(await ok[i].file.arrayBuffer(), { ignoreEncryption: true });
-            const pages = await merged.copyPages(src, src.getPageIndices());
-            pages.forEach(p => { merged.addPage(p); pageCount++; });
-          }
-          progress(prog, 100, 'Saving merged file…');
-          const blob = pdfBlob(await merged.save());
-          const name = 'pixnivo-merged.pdf';
-          last = { blob, name };
-          P.downloadBlob(blob, name);
-          progressDone(prog);
-          showResult(res, 'PDFs merged', `${ok.length} files · ${pageCount} pages · ${P.formatBytes(blob.size)} · saved as ${name}`);
-        } catch (err) {
-          console.error(err);
-          progressDone(prog);
-          P.toast('Could not merge these PDFs. ' + (err.message || ''), { type: 'error' });
-        } finally {
-          busy = false;
-          P.setLoading(go, false);
-          go.disabled = valid().length < 2;
-        }
-      });
-
-      refresh();
-    })();
-
-    /* ==================== 3. COMPRESS PDF ==================== */
-    (function () {
-      const LEVELS = { 1: { q: 0.75, label: 'Light' }, 2: { q: 0.6, label: 'Balanced' }, 3: { q: 0.42, label: 'Strong' } };
-      const MAX_RENDER_DIM = 5000;
-      const list = $('listC'), prog = $('progC'), res = $('resC'), go = $('doCompress');
-      const levelChips = [...document.querySelectorAll('#stage-compress [data-level]')];
-      let item = null, level = 2, last = null, busy = false, pendingLarger = null;
-
-      function refresh() {
-        const arr = item ? [item] : [];
-        renderList(list, arr, {
-          reorder: false,
-          meta: it => it.pages ? `${it.pages} page${it.pages === 1 ? '' : 's'}` : 'Reading…',
-          onChange: () => { item = arr[0] || null; refresh(); }
-        });
-        go.disabled = busy || !item || !!item.error || !item.pages;
-        $('dropC').hidden = !!item;
-        $('clearC').hidden = !item;
-        $('settingsC').hidden = !item;
-        hideResult(res);
-      }
-
-      async function inspect(it) {
-        try {
-          const { PDFDocument } = await pdfLib();
-          const doc = await PDFDocument.load(await it.file.arrayBuffer(), { ignoreEncryption: true, updateMetadata: false });
-          if (doc.isEncrypted) it.error = 'Password-protected — unlock it first';
-          else it.pages = doc.getPageCount();
-        } catch (e) {
-          it.error = 'Couldn’t read this file — it may be damaged';
-        }
-        if (it === item) refresh();
-      }
-
-      P.wireDropzone($('dropC'), $('fileC'), incoming => {
-        const f = incoming.find(isPdf);
-        if (!f) { P.toast('Please choose a PDF file.', { type: 'warning' }); return; }
-        item = { file: f, kind: 'pdf', pages: 0, error: '' };
-        last = null;
-        refresh();
-        inspect(item);
-      });
-
-      levelChips.forEach(chip => chip.addEventListener('click', () => {
-        level = parseInt(chip.dataset.level, 10);
-        levelChips.forEach(c => { const on = c === chip; c.classList.toggle('active', on); c.setAttribute('aria-pressed', String(on)); });
-      }));
-      $('dpi').addEventListener('input', e => { $('dpiVal').textContent = e.target.value + ' DPI'; });
-      $('clearC').addEventListener('click', () => { item = null; last = null; progressDone(prog); refresh(); $('fileC').click(); });
-
-      res.querySelector('[data-redownload]').addEventListener('click', () => {
-        if (pendingLarger) { P.downloadBlob(pendingLarger.blob, pendingLarger.name); return; }
-        if (last) P.downloadBlob(last.blob, last.name);
-      });
-
-      go.addEventListener('click', async () => {
-        if (!item || busy) return;
-        busy = true;
-        pendingLarger = null;
-        P.setLoading(go, true);
-        hideResult(res);
-        const originalSize = item.file.size;
-        let doc = null;
-        try {
-          const [{ PDFDocument }, pdfjs] = await Promise.all([pdfLib(), pdfJs()]);
-          const quality = LEVELS[level].q;
-          const scale = parseInt($('dpi').value, 10) / 72;
-          doc = await pdfjs.getDocument({ data: new Uint8Array(await item.file.arrayBuffer()) }).promise;
-          const out = await PDFDocument.create();
-          out.setProducer('PIXNIVO');
-
-          for (let n = 1; n <= doc.numPages; n++) {
-            progress(prog, ((n - 1) / doc.numPages) * 100, `Compressing page ${n} of ${doc.numPages}…`);
-            await P.nextFrame();
-            const page = await doc.getPage(n);
-            const base = page.getViewport({ scale: 1 });
-            const s = Math.min(scale, MAX_RENDER_DIM / Math.max(base.width, base.height));
-            const vp = page.getViewport({ scale: s });
-            const c = document.createElement('canvas');
-            c.width = Math.max(1, Math.round(vp.width));
-            c.height = Math.max(1, Math.round(vp.height));
-            const cx = c.getContext('2d');
-            cx.fillStyle = '#ffffff';
-            cx.fillRect(0, 0, c.width, c.height);
-            // 'print' intent renders without requestAnimationFrame, so work continues in background tabs
-            await page.render({ canvasContext: cx, viewport: vp, intent: 'print' }).promise;
-            const blob = await P.canvasToBlob(c, 'image/jpeg', quality);
-            const img = await out.embedJpg(new Uint8Array(await blob.arrayBuffer()));
-            const p = out.addPage([base.width, base.height]);
-            p.drawImage(img, { x: 0, y: 0, width: base.width, height: base.height });
-            page.cleanup();
-            c.width = c.height = 0;
-          }
-
-          progress(prog, 100, 'Saving compressed file…');
-          const blob = pdfBlob(await out.save());
-          const name = `${P.baseName(item.file.name)}-compressed.pdf`;
-          progressDone(prog);
-
-          if (blob.size < originalSize) {
-            last = { blob, name };
-            P.downloadBlob(blob, name);
-            const pct = Math.round((1 - blob.size / originalSize) * 100);
-            showResult(res, `${pct}% smaller`, `${P.formatBytes(originalSize)} → ${P.formatBytes(blob.size)} · ${doc.numPages} page${doc.numPages === 1 ? '' : 's'} · saved as ${name}`);
-          } else {
-            pendingLarger = { blob, name };
-            showResult(res, 'This PDF is already well optimized',
-              `A compressed copy would be ${P.formatBytes(blob.size)} — not smaller than your original (${P.formatBytes(originalSize)}). Keep the original, or try a lower resolution or Strong compression.`,
-              { warn: true, actionLabel: 'Download anyway' });
-          }
-        } catch (err) {
-          console.error(err);
-          progressDone(prog);
-          const msg = err && err.name === 'PasswordException' ? 'This PDF is password-protected. Unlock it first, then try again.' : 'Could not compress this PDF. ' + (err.message || '');
-          P.toast(msg, { type: 'error' });
-        } finally {
-          if (doc) doc.destroy();
-          busy = false;
-          P.setLoading(go, false);
-          go.disabled = !item;
-        }
-      });
-
-      refresh();
-    })();
-  })();
-  </script>
+  <script src="/assets/js/pdf/pdf-studio.js?v=20261109"></script>
 </body>
 </html>

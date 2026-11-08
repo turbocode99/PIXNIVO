@@ -99,6 +99,16 @@ try:
 except Exception as e:
     print(f"[PIXNIVO Backend] Warning: AIDC Studio router failed to mount: {e}")
 
+# ------------------------------------------------------------------------------
+# PIXNIVO PDF TOOLS SUITE ROUTER MOUNT
+# ------------------------------------------------------------------------------
+try:
+    from pdf.router import router as pdf_router
+    app.include_router(pdf_router, prefix="/api/v1/pdf", tags=["PDF Tools Suite"])
+    print("[PIXNIVO Backend] Successfully mounted PDF Tools Suite API at /api/v1/pdf")
+except Exception as e:
+    print(f"[PIXNIVO Backend] Warning: PDF router failed to mount: {e}")
+
 
 @app.get('/api/health')
 def health_check():
