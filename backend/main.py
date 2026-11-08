@@ -89,6 +89,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# ------------------------------------------------------------------------------
+# PIXNIVO AIDC STUDIO ROUTER MOUNT
+# ------------------------------------------------------------------------------
+try:
+    from aidc.router import router as aidc_router
+    app.include_router(aidc_router, prefix="/api/v1/aidc", tags=["AIDC Studio"])
+    print("[PIXNIVO Backend] Successfully mounted AIDC Studio API at /api/v1/aidc")
+except Exception as e:
+    print(f"[PIXNIVO Backend] Warning: AIDC Studio router failed to mount: {e}")
+
+
 @app.get('/api/health')
 def health_check():
     return {'status': 'ok'}

@@ -26,3 +26,5 @@ models/*.ok
 # Admin credentials and the session signing key exist only on the server
 backend/data/auth.json
 backend/data/secret.key
+backend/data/*.db
+pixnivo credentials.txt

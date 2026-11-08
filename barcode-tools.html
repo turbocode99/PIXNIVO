@@ -45,6 +45,12 @@
       } catch(e) {}
     })();
   </script>
+  <!-- Automatic upgrade redirection to AIDC Studio -->
+  <script>
+    if (window.location.pathname.includes('barcode-tools')) {
+      window.location.replace('/aidc-studio' + window.location.hash);
+    }
+  </script>
 </head>
 <body>
 

@@ -26,7 +26,10 @@ http://admin.pixnivo.app               /admin.html                              
 /pdf-tools                             /pdf-tools.html                          200
 /ai-ocr                                /ai-ocr.html                             200
 /ocr                                   /ai-ocr.html                             200
-/barcode-tools                         /barcode-tools.html                      200
+# AIDC Studio (Automatic Identification & Data Capture) & Barcode Redirection
+/aidc-studio                            /aidc-studio.html                        200
+/barcode-tools                          /aidc-studio                             301!
+/barcode-tools.html                     /aidc-studio                             301!
 /image-upscaler                        /image-upscaler.html                     200
 /blog                                  /blog.html                               200
 /about                                 /about.html                              200

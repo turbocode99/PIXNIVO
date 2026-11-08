@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIDC Studio — Professional Barcode, QR Code &amp; GTIN Suite | PIXNIVO</title>
+  <meta name="description" content="Generate, validate, and export 25+ linear and 2D barcodes, GS1 Digital Links, and GTIN identifiers in bulk. High-res vector PDF, SVG, PNG, Word, and Excel exports." />
+  <meta name="theme-color" content="#fafafa" />
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pixnivo.app/aidc-studio" />
+  <meta property="og:title" content="AIDC Studio — Professional Barcode &amp; Identifier Suite | PIXNIVO" />
+  <meta property="og:description" content="Create GS1-compliant barcodes, QR codes, Data Matrix, and GTINs in bulk with instant vector exports." />
+  <meta property="og:image" content="https://pixnivo.app/assets/og-image.png" />
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="/assets/css/main.css?v=20261010" />
+  <script src="/assets/js/site.js?v=20261010"></script>
+
+  <!-- Instant Theme Detection Script -->
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('pixnivo_theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+
+  <style>
+    /* ==========================================================================
+       AIDC STUDIO SPECIFIC STYLES
+       Seamlessly inherits Pixnivo design tokens & variables
+       ========================================================================== */
+    .aidc-hero-nav {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 6px;
+      background: var(--surface-2);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      margin: 20px auto 30px;
+      max-width: 980px;
+      scrollbar-width: none;
+    }
+    .aidc-hero-nav::-webkit-scrollbar { display: none; }
+
+    .aidc-tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-2);
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--transition-fast);
+    }
+    .aidc-tab-btn:hover {
+      color: var(--text);
+      background: var(--surface);
+    }
+    .aidc-tab-btn.active {
+      color: var(--text-on-brand);
+      background: var(--brand);
+      box-shadow: var(--shadow-xs);
+    }
+
+    .aidc-subview {
+      display: none;
+      animation: aidcTabFade 0.2s ease-in-out;
+    }
+    .aidc-subview.active {
+      display: block;
+    }
+    @keyframes aidcTabFade {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .aidc-val-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      margin-top: 6px;
+      transition: all var(--transition-fast);
+    }
+    .aidc-val-pill svg { width: 14px; height: 14px; }
+    .aidc-val-pill.pill-valid {
+      background: var(--success-soft);
+      color: var(--success);
+      border: 1px solid rgba(22, 163, 74, 0.25);
+    }
+    .aidc-val-pill.pill-warning {
+      background: var(--warning-soft);
+      color: var(--warning);
+      border: 1px solid rgba(217, 119, 6, 0.25);
+    }
+    .aidc-val-pill.pill-invalid {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border: 1px solid rgba(220, 38, 38, 0.25);
+    }
+
+    .aidc-canvas-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 280px;
+      padding: 24px;
+      background: var(--surface-2);
+      border-radius: var(--radius-md);
+      border: 1px dashed var(--border-strong);
+      overflow: auto;
+    }
+    .aidc-canvas-wrap canvas {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius-xs);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .color-swatch-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .color-swatch-item {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 4px 8px;
+    }
+    .color-swatch-item input[type="color"] {
+      width: 28px;
+      height: 28px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .aidc-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .aidc-kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-xs);
+    }
+    .aidc-kpi-card .val {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--brand-text);
+      margin: 8px 0 4px;
+    }
+    .aidc-kpi-card .lbl {
+      font-size: 0.85rem;
+      color: var(--text-2);
+    }
+
+    .aidc-template-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .aidc-template-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .aidc-template-card:hover {
+      border-color: var(--brand-border);
+      box-shadow: var(--shadow-sm);
+    }
+    .aidc-template-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .aidc-template-preview-code {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      background: var(--surface-2);
+      padding: 6px 10px;
+      border-radius: var(--radius-xs);
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .aidc-history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: 12px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .aidc-history-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+    .aidc-history-payload code {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+
+    .aidc-code-box {
+      background: #0f0f13;
+      color: #e4e4e7;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      padding: 18px;
+      border-radius: var(--radius-md);
+      border: 1px solid #27272b;
+      overflow-x: auto;
+      line-height: 1.5;
+    }
+
+    .nav-badge-pro {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #ffffff;
+      background: linear-gradient(135deg, #cf4a0c, #f97316);
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 4px;
+      vertical-align: middle;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- Main Site Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a class="brand" href="/" aria-label="PIXNIVO home">
+        <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+        <span class="brand-name">PIX<span>NIVO</span></span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Main">
+        <a class="nav-link" href="/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg><span>Image Tools</span></a>
+        <a class="nav-link" href="/logo-generator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg><span>Logo Generator</span></a>
+        <a class="nav-link" href="/pdf-tools"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>PDF Tools</span></a>
+        <a class="nav-link" href="/ai-ocr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 8h8"/><path d="M7 12h10"/><path d="M7 16h6"/></svg><span>AI OCR</span></a>
+        <a class="nav-link" href="/aidc-studio" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5v14M8 5v14M12 5v14M17 5v14M21 5v14M5 12h14"/></svg><span>AIDC Studio</span><span class="nav-badge-pro">PRO</span></a>
+        <a class="nav-link" href="/blog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>Guides</span></a>
+        <div class="nav-divider" role="separator"></div>
+        <a class="nav-link nav-secondary" href="/about">About</a>
+        <a class="nav-link nav-secondary" href="/contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+          <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="badge-privacy">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        Enterprise AIDC Suite &middot; Automatic Identification &amp; Data Capture
+      </div>
+      <h1>Industrial <em>Barcode, 2D Matrix</em> &amp; GTIN Studio</h1>
+      <p class="hero-subtitle">Generate, validate, preview, and export 25+ linear and 2D symbologies, GS1 Digital Links, and GTIN identifiers in bulk with real-time compliance checks.</p>
+    </section>
+
+    <!-- Sub-navigation Navigation Bar -->
+    <div class="aidc-hero-nav" role="tablist" aria-label="AIDC Studio Views">
+      <button class="aidc-tab-btn" data-tab="dashboard" role="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</button>
+      <button class="aidc-tab-btn active" data-tab="studio" role="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M3 5v14M8 5v14M12 5v14M17 5v14M21 5v14"/></svg>Barcode Studio</button>
+      <button class="aidc-tab-btn" data-tab="identifiers" role="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Identifiers (GTIN / UUID)</button>
+      <button class="aidc-tab-btn" data-tab="batch" role="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Batch Generator</button>
+      <button class="aidc-tab-btn" data-tab="templates" role="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Templates</button>
+      <button class="aidc-tab-btn" data-tab="history" role="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Library</button>
+      <button class="aidc-tab-btn" data-tab="api" role="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>API Playground</button>
+      <button class="aidc-tab-btn" data-tab="settings" role="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</button>
+    </div>
+
+    <div class="studio-container">
+
+      <!-- ==================== SUBVIEW 1: DASHBOARD ==================== -->
+      <section id="view_dashboard" class="aidc-subview" aria-labelledby="dashTitle">
+        <div class="studio-card active">
+          <div class="studio-header">
+            <div>
+              <h2 id="dashTitle">AIDC Analytics &amp; Operations</h2>
+              <p>Real-time telemetry, GS1 compliance overview, and production throughput.</p>
+            </div>
+          </div>
+
+          <div class="aidc-kpi-grid">
+            <div class="aidc-kpi-card">
+              <span class="lbl">Total Generations</span>
+              <div class="val" id="dashTotalGen">0</div>
+              <span class="hint">Across 1D &amp; 2D symbologies</span>
+            </div>
+            <div class="aidc-kpi-card">
+              <span class="lbl">Library Assets</span>
+              <div class="val" id="dashTotalAssets">0</div>
+              <span class="hint">Saved in cloud workspace</span>
+            </div>
+            <div class="aidc-kpi-card">
+              <span class="lbl">Storage Utilized</span>
+              <div class="val" id="dashStorage">0 KB</div>
+              <span class="hint">Vector &amp; raster cache</span>
+            </div>
+            <div class="aidc-kpi-card">
+              <span class="lbl">GS1 Readiness</span>
+              <div class="val" style="color: var(--success);">100%</div>
+              <span class="hint">Sunrise 2027 compliant</span>
+            </div>
+          </div>
+
+          <div class="btn-row" style="margin-top: 10px;">
+            <button class="btn btn-primary" onclick="PixnivoAIDC.switchTab('studio')">Open Barcode Studio</button>
+            <button class="btn btn-secondary" onclick="PixnivoAIDC.switchTab('identifiers')">Create New GTIN</button>
+            <button class="btn btn-secondary" onclick="PixnivoAIDC.switchTab('batch')">Upload Batch File</button>
+            <button class="btn btn-ghost" onclick="PixnivoAIDC.switchTab('templates')">Browse Templates</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SUBVIEW 2: BARCODE STUDIO ==================== -->
+      <section id="view_studio" class="aidc-subview active" aria-labelledby="studioTitle">
+        <div class="studio-card active">
+          <div class="studio-header">
+            <div>
+              <h2 id="studioTitle">Universal Barcode Studio</h2>
+              <p>Configure 25+ industrial symbologies with instant live rendering and validation.</p>
+            </div>
+            <span class="badge badge-brand">25+ Symbologies</span>
+          </div>
+
+          <div class="workspace-grid active bc-layout">
+            <!-- Left Controls Panel -->
+            <div class="workspace-main">
+              <div class="field">
+                <label for="aidcSymbology">Symbology / Format</label>
+                <select id="aidcSymbology"></select>
+                <p class="hint" id="symHint">Universal alphanumeric barcode standard.</p>
+              </div>
+
+              <div class="field">
+                <div class="field-label">
+                  <label for="aidcPayload">Data Payload</label>
+                  <button class="btn btn-sm btn-text" type="button" id="btnInsertSample">Insert Sample</button>
+                </div>
+                <textarea id="aidcPayload" class="bc-input" rows="4" spellcheck="false" placeholder="Enter barcode data, GTIN, or URL">PIXNIVO-PRO-2026</textarea>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px;">
+                  <div id="validationBadge" class="aidc-val-pill pill-valid">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Valid Payload</span>
+                  </div>
+                  <button id="btnAutoFix" class="btn btn-sm btn-secondary" hidden>Fix Check Digit</button>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="aidcTitle">Label Title (Optional)</label>
+                <input type="text" id="aidcTitle" placeholder="e.g. Master Carton Outer Case" />
+              </div>
+              <div class="field">
+                <label for="aidcSku">Product SKU (Optional)</label>
+                <input type="text" id="aidcSku" placeholder="e.g. SKU-8841-A" />
+              </div>
+            </div>
+
+            <!-- Right Controls Panel: Appearance -->
+            <aside class="control-panel" aria-label="Barcode Customization">
+              <div class="panel-section">
+                <div class="panel-section-title">Visual Styling</div>
+
+                <div class="field">
+                  <label for="aidcScale">Resolution Scale <span class="val" id="scaleVal">4×</span></label>
+                  <input type="range" id="aidcScale" min="2" max="8" value="4" />
+                </div>
+
+                <div class="field" id="heightField">
+                  <label for="aidcHeight">Bar Height <span class="val" id="heightVal">15 mm</span></label>
+                  <input type="range" id="aidcHeight" min="6" max="40" value="15" />
+                </div>
+
+                <label class="switch" for="aidcShowText">
+                  <input type="checkbox" id="aidcShowText" checked />
+                  <span class="track" aria-hidden="true"></span>
+                  Human-readable text
+                </label>
+
+                <div class="field">
+                  <label>Colors</label>
+                  <div class="color-swatch-row">
+                    <div class="color-swatch-item">
+                      <input type="color" id="aidcFgColor" value="#000000" />
+                      <span class="hint">Bars</span>
+                    </div>
+                    <div class="color-swatch-item">
+                      <input type="color" id="aidcBgColor" value="#ffffff" />
+                      <span class="hint">Background</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel-actions">
+                <button id="btnSaveLibrary" class="btn btn-secondary btn-block" type="button">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                  <span>Save to Library</span>
+                </button>
+              </div>
+            </aside>
+          </div>
+
+          <!-- Preview & Export Workspace -->
+          <div style="margin-top: 30px;">
+            <div class="bc-results-head">
+              <div>
+                <h3>Interactive Preview</h3>
+                <p class="hint">Rendered vector drawing with high-DPI scaling.</p>
+              </div>
+              <div class="btn-row">
+                <button id="btnExportPng" class="btn btn-primary" type="button">Download PNG</button>
+                <button id="btnExportSvg" class="btn btn-secondary" type="button">Download SVG</button>
+                <button id="btnCopySvg" class="btn btn-ghost" type="button">Copy SVG</button>
+                <button id="btnCopyBase64" class="btn btn-ghost" type="button">Copy Base64</button>
+              </div>
+            </div>
+
+            <div class="alert alert-warning" id="renderAlert" hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              <p id="renderAlertText"></p>
+            </div>
+
+            <div class="aidc-canvas-wrap">
+              <canvas id="aidcCanvas"></canvas>
+            </div>
+
+            <!-- Server Export Suite -->
+            <div style="margin-top: 20px; padding: 16px; background: var(--surface-2); border-radius: var(--radius-md); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <strong>Export Document Package:</strong>
+                <span class="hint" style="margin-left: 6px;">Industrial prepress layouts and printable sheets</span>
+              </div>
+              <div class="btn-row">
+                <button id="btnExportPdf" class="btn btn-sm btn-primary">Vector PDF Catalog</button>
+                <button id="btnExportDocx" class="btn btn-sm btn-ghost">Word (.docx)</button>
+                <button id="btnExportXlsx" class="btn btn-sm btn-ghost">Excel (.xlsx)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SUBVIEW 3: IDENTIFIERS GENERATOR ==================== -->
+      <section id="view_identifiers" class="aidc-subview" aria-labelledby="idTitle">
+        <div class="studio-card active">
+          <div class="studio-header">
+            <div>
+              <h2 id="idTitle">Product Identifiers &amp; GS1 Digital Link</h2>
+              <p>Generate certified GTIN-8, GTIN-12, GTIN-13, GTIN-14, GS1 Digital Links, and UUIDv4 / UUIDv7.</p>
+            </div>
+            <span class="badge badge-brand">GS1 Compliant</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div class="field">
+              <label for="idGenType">Identifier Type</label>
+              <select id="idGenType">
+                <option value="gtin13" selected>GTIN-13 (Standard Retail EAN)</option>
+                <option value="gtin12">GTIN-12 (North American UPC-A)</option>
+                <option value="gtin8">GTIN-8 (Small Package Retail)</option>
+                <option value="gtin14">GTIN-14 (Carton Shipping ITF)</option>
+                <option value="gs1_digital_link">GS1 Digital Link URI</option>
+                <option value="uuidv7">UUIDv7 (RFC 9562 Time-Ordered)</option>
+                <option value="uuidv4">UUIDv4 (Random Cryptographic)</option>
+                <option value="guid">Windows GUID {UUID}</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="idGenPrefix">Company / Country Prefix (Optional)</label>
+              <input type="text" id="idGenPrefix" placeholder="e.g. 0950110 (Leaves default if empty)" />
+            </div>
+
+            <div class="field">
+              <label for="idGenCount">Quantity to Synthesize</label>
+              <input type="number" id="idGenCount" min="1" max="100" value="5" />
+            </div>
+          </div>
+
+          <button id="btnGenIdentifiers" class="btn btn-primary btn-lg" style="margin-bottom: 24px;">
+            Generate Identifiers
+          </button>
+
+          <!-- Identifier Results -->
+          <div id="idResultsCard" hidden>
+            <h3>Generated Identifiers</h3>
+            <div style="overflow-x: auto; margin-top: 12px;">
+              <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                  <tr style="border-bottom: 2px solid var(--border); font-size: 0.85rem; color: var(--text-2);">
+                    <th style="padding: 10px;">#</th>
+                    <th style="padding: 10px;">Payload</th>
+                    <th style="padding: 10px;">Type</th>
+                    <th style="padding: 10px;">Check Digit</th>
+                    <th style="padding: 10px;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="idResultsBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SUBVIEW 4: BATCH GENERATOR ==================== -->
+      <section id="view_batch" class="aidc-subview" aria-labelledby="batchTitle">
+        <div class="studio-card active">
+          <div class="studio-header">
+            <div>
+              <h2 id="batchTitle">High-Throughput Batch Generator</h2>
+              <p>Import CSV or Excel files with thousands of SKUs and download a complete ZIP archive with an audit log.</p>
+            </div>
+            <span class="badge badge-brand">CSV &amp; Excel</span>
+          </div>
+
+          <div class="dropzone" id="batchDropZone" style="cursor: pointer;">
+            <div class="dropzone-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h2"/><path d="M14 13h2"/><path d="M8 17h2"/><path d="M14 17h2"/></svg></div>
+            <h3>Drag &amp; drop a CSV or Excel file</h3>
+            <p>Supported columns: Product Name, SKU, GTIN, URL, or Payload.</p>
+            <input type="file" id="batchFileInput" accept=".csv,.xlsx,.txt" style="display: none;" />
+          </div>
+
+          <div id="batchFileDetails" style="margin-top: 16px;" hidden>
+            <div style="display: flex; align-items: center; gap: 12px; background: var(--surface-2); padding: 12px 18px; border-radius: var(--radius-md);">
+              <span id="batchFileName" style="font-weight: 600;"></span>
+              <span id="batchFileSize" class="hint"></span>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 16px; align-items: flex-end; margin-top: 20px;">
+            <div class="field" style="flex: 1;">
+              <label for="batchDefaultSym">Default Symbology (if not specified in file)</label>
+              <select id="batchDefaultSym">
+                <option value="code128">Code 128 (Universal)</option>
+                <option value="ean13">EAN-13 (Retail)</option>
+                <option value="upca">UPC-A (US Retail)</option>
+                <option value="qrcode">QR Code</option>
+                <option value="datamatrix">Data Matrix</option>
+              </select>
+            </div>
+            <button id="btnProcessBatch" class="btn btn-primary btn-lg" disabled>
+              Process Batch &amp; Validate
+            </button>
+          </div>
+
+          <div id="batchProgress" class="prog" style="margin-top: 20px;" hidden>
+            <div class="bar"><i style="width: 100%;"></i></div>
+            <div class="txt"><span id="batchStatusText">Processing…</span></div>
+          </div>
+
+          <!-- Batch Results -->
+          <div id="batchResultsCard" style="margin-top: 30px;" hidden>
+            <div class="bc-results-head">
+              <div>
+                <h3>Batch Verification Results</h3>
+                <p id="batchSummaryCounts" class="hint"></p>
+              </div>
+              <button id="btnDownloadBatchZip" class="btn btn-primary" hidden>
+                Download All (.ZIP Archive)
+              </button>
+            </div>
+
+            <div style="overflow-x: auto; margin-top: 14px;">
+              <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                  <tr style="border-bottom: 2px solid var(--border); font-size: 0.85rem; color: var(--text-2);">
+                    <th style="padding: 10px;">Row</th>
+                    <th style="padding: 10px;">Product Name</th>
+                    <th style="padding: 10px;">SKU</th>
+                    <th style="padding: 10px;">Payload</th>
+                    <th style="padding: 10px;">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="batchTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SUBVIEW 5: TEMPLATES ==================== -->
+      <section id="view_templates" class="aidc-subview" aria-labelledby="tplTitle">
+        <div class="studio-card active">
+          <div class="studio-header">
+            <div>
+              <h2 id="tplTitle">Industry Compliance Templates</h2>
+              <p>Pre-configured standard templates for Retail, Healthcare, Logistics, and Manufacturing.</p>
+            </div>
+          </div>
+
+          <div class="aidc-template-grid" id="templatesGrid"></div>
+        </div>
+      </section>
+
+      <!-- ==================== SUBVIEW 6: HISTORY & LIBRARY ==================== -->
+      <section id="view_history" class="aidc-subview" aria-labelledby="histTitle">
+        <div class="studio-card active">
+          <div class="studio-header">
+            <div>
+              <h2 id="histTitle">Asset Library &amp; Generation History</h2>
+              <p>Search, filter, favorite, and regenerate previously created barcodes.</p>
+            </div>
+          </div>
+
+          <div id="historyList">
+            <p class="hint">Loading saved library…</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SUBVIEW 7: API PLAYGROUND ==================== -->
+      <section id="view_api" class="aidc-subview" aria-labelledby="apiTitle">
+        <div class="studio-card active">
+          <div class="studio-header">
+            <div>
+              <h2 id="apiTitle">Developer API Playground</h2>
+              <p>Integrate AIDC asset generation directly into your backend services and workflows.</p>
+            </div>
+            <span class="badge badge-brand">REST API</span>
+          </div>
+
+          <div class="field" style="max-width: 320px; margin-bottom: 20px;">
+            <label for="apiLanguage">Programming Language / SDK</label>
+            <select id="apiLanguage" onchange="PixnivoAIDC.switchTab('api')">
+              <option value="js">JavaScript (Fetch API)</option>
+              <option value="ts">TypeScript (Axios)</option>
+              <option value="python">Python (Requests)</option>
+              <option value="php">PHP (cURL)</option>
+              <option value="csharp">C# (.NET HttpClient)</option>
+              <option value="java">Java 11+ (HttpClient)</option>
+            </select>
+          </div>
+
+          <div style="position: relative;">
+            <pre class="aidc-code-box" id="apiCodeOutput"></pre>
+            <button class="btn btn-sm btn-ghost" style="position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.1); color: #fff;" onclick="PixnivoAIDC.copyToClipboard(document.getElementById('apiCodeOutput').textContent)">
+              Copy Code
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SUBVIEW 8: SETTINGS ==================== -->
+      <section id="view_settings" class="aidc-subview" aria-labelledby="cfgTitle">
+        <div class="studio-card active">
+          <div class="studio-header">
+            <div>
+              <h2 id="cfgTitle">GS1 Company Prefix &amp; Workspace Settings</h2>
+              <p>Configure your organization's official GS1 company prefix for automatic GTIN sequence numbering.</p>
+            </div>
+          </div>
+
+          <div style="max-width: 560px;">
+            <div class="field">
+              <label for="cfgCompanyName">Registered Company Name</label>
+              <input type="text" id="cfgCompanyName" placeholder="e.g. Acme Logistics Corp" />
+            </div>
+
+            <div class="field">
+              <label for="cfgCompanyPrefix">GS1 Company Prefix (7 to 10 digits)</label>
+              <input type="text" id="cfgCompanyPrefix" placeholder="e.g. 0950110" />
+              <p class="hint">Assigned directly by GS1 for your trade item ranges.</p>
+            </div>
+
+            <div class="field">
+              <label for="cfgNextRef">Next Sequential Item Reference</label>
+              <input type="number" id="cfgNextRef" min="1" value="101" />
+            </div>
+
+            <label class="switch" for="cfgPrefixActive" style="margin-bottom: 24px;">
+              <input type="checkbox" id="cfgPrefixActive" checked />
+              <span class="track" aria-hidden="true"></span>
+              Enable automatic GS1 prefix allocation in Identifiers generator
+            </label>
+
+            <div>
+              <button id="btnSavePrefixSettings" class="btn btn-primary btn-lg">
+                Save Workspace Settings
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Main Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="/" aria-label="PIXNIVO home">
+          <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+          <span class="brand-name">PIX<span>NIVO</span></span>
+        </a>
+        <p>Fast, privacy-first image, PDF, and AIDC barcode tools that run right in your browser. No sign-up required.</p>
+      </div>
+      <div class="footer-col">
+        <h2>Image tools</h2>
+        <ul>
+          <li><a href="/?tab=compress">Image Compressor</a></li>
+          <li><a href="/?tab=edit">Photo Editor</a></li>
+          <li><a href="/?tab=bg">Background Remover</a></li>
+          <li><a href="/?tab=upscale">Image Upscaler</a></li>
+          <li><a href="/logo-generator">Logo Generator</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Document tools</h2>
+        <ul>
+          <li><a href="/aidc-studio">AIDC Studio (New)</a></li>
+          <li><a href="/pdf-tools?tab=img2pdf">Images to PDF</a></li>
+          <li><a href="/pdf-tools?tab=merge">Merge PDF</a></li>
+          <li><a href="/pdf-tools?tab=compress">Compress PDF</a></li>
+          <li><a href="/ai-ocr">AI OCR</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Company</h2>
+        <ul>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span data-year>2026</span> PIXNIVO. All rights reserved.</span>
+      <span>Privacy-first tools &middot; Most processing happens on your device.</span>
+    </div>
+  </footer>
+
+  <script src="/assets/js/aidc/aidc-studio.js"></script>
+</body>
+</html>
+
