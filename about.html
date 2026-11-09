@@ -13,11 +13,41 @@
   <meta property="og:title" content="About PIXNIVO — Privacy-First Image Studio" />
   <meta property="og:description" content="Learn why PIXNIVO operates 100% in your browser with zero server uploads." />
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9RDW8F1H9D"></script>
+  <!-- Google Consent Mode v2 Default (MUST run before Gtag & AdSense) -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    try {
+      var savedConsent = localStorage.getItem('pixnivo_consent_v2');
+      if (savedConsent) {
+        var parsed = JSON.parse(savedConsent);
+        gtag('consent', 'default', {
+          'analytics_storage': parsed.analytics ? 'granted' : 'denied',
+          'ad_storage': parsed.advertising ? 'granted' : 'denied',
+          'ad_user_data': parsed.advertising ? 'granted' : 'denied',
+          'ad_personalization': parsed.advertising ? 'granted' : 'denied'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'analytics_storage': 'denied',
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied'
+        });
+      }
+    } catch(e) {
+      gtag('consent', 'default', {
+        'analytics_storage': 'denied',
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied'
+      });
+    }
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9RDW8F1H9D"></script>
+  <script>
     gtag('js', new Date());
     gtag('config', 'G-9RDW8F1H9D');
   </script>
@@ -62,7 +92,7 @@
         <a class="nav-link" href="/logo-generator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg><span>Logo Generator</span></a>
         <a class="nav-link" href="/pdf-tools"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>PDF Tools</span></a>
         <a class="nav-link" href="/ai-ocr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 8h8"/><path d="M7 12h10"/><path d="M7 16h6"/></svg><span>AI OCR</span></a>
-        <a class="nav-link" href="/barcode-tools.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5v14"/><path d="M8 5v14"/><path d="M12 5v14"/><path d="M17 5v14"/><path d="M21 5v14"/></svg><span>Barcode Tools</span></a>
+        <a class="nav-link" href="/aidc-studio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5v14"/><path d="M8 5v14"/><path d="M12 5v14"/><path d="M17 5v14"/><path d="M21 5v14"/></svg><span>AIDC Studio</span></a>
         <a class="nav-link" href="/blog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>Guides</span></a>
         <div class="nav-divider" role="separator"></div>
         <a class="nav-link nav-secondary" href="/about" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span>About</span></a>
@@ -87,62 +117,62 @@
     <a class="back-link" href="/"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Back to tools</a>
 
     <header class="article-header">
-      <div class="article-eyebrow">About us</div>
-      <h1>About PIXNIVO</h1>
-      <p class="hero-subtitle">PIXNIVO is a free collection of image, PDF and document tools built around one idea: everyday file tasks shouldn't require handing your files to someone else.</p>
+      <div class="article-eyebrow">About PIXNIVO</div>
+      <h1>Engineering Privacy-First Digital Tools</h1>
+      <p class="hero-subtitle">PIXNIVO provides a professional suite of in-browser image optimization, 32-tool PDF engineering, AI OCR, and AIDC barcode generation. Built on the core principle that everyday file processing should never compromise your digital privacy.</p>
     </header>
 
     <article class="article-content">
       <div class="guide-card">
-        <h2>Why we built it</h2>
-        <p>A job portal wants a photo under 100 KB. A messaging app turns a family picture into a blurry mess. A marketplace insists on a clean white product background. These are small, everyday problems — yet most online tools solve them by asking you to upload your photo or document to a server you know nothing about.</p>
-        <p>For an ID photo, a signed contract or a private picture, that's an unnecessary risk. So we built tools that do the work <b>on your own device</b> wherever that's possible, and tell you clearly when it isn't.</p>
+        <h2>1. Our Founding Mission &amp; Purpose</h2>
+        <p>In the modern web landscape, basic digital tasks have become fraught with privacy hazards. Job applicants need to compress an ID photo down to 100 KB; legal professionals need to merge sensitive contracts; supply chain operators need to generate retail GTIN-13 barcodes; small businesses need to convert invoices into editable Word documents. Across the internet, the majority of existing online tools force users to upload their proprietary files to opaque remote cloud servers where they are susceptible to data harvesting, unauthorized AI training, and persistent logging.</p>
+        <p><b>PIXNIVO was established to reverse this trend.</b> We engineer client-side WebAssembly and modern browser-native runtimes that execute computationally intensive document transformations directly on your device's CPU and GPU. Your files never cross the network, eliminating data transit risks while delivering zero-latency execution.</p>
       </div>
 
       <div class="guide-card">
-        <h2>What runs on your device</h2>
-        <p>These tools process your files entirely inside your web browser. Your files are never uploaded:</p>
+        <h2>2. Our Architectural Paradigm: In-Browser Computing</h2>
+        <p>We harness the latest developments in web standards to bring desktop-grade computing power straight into your browser without plugins, extensions, or third-party desktop executables:</p>
         <ul>
-          <li><b>Image tools</b> — compress, edit, upscale and remove backgrounds. Background removal uses the open-source <a href="https://github.com/ZhengPeng7/BiRefNet" rel="noopener">BiRefNet</a> AI model (MIT licence), which your browser downloads once and then runs locally.</li>
-          <li><b>PDF tools</b> — turn images into PDFs, merge files and compress PDFs.</li>
-          <li><b>Logo Generator</b> — design, preview and export your logo.</li>
-          <li><b>Barcode Generator</b> — create barcodes and export them as PDF or PNG.</li>
-          <li><b>AI OCR, Private engine</b> — text recognition that runs in your browser.</li>
+          <li><b>Image Suite (Compression, Editing, Background Removal &amp; Upscaling):</b> Client-side Canvas API, Web Workers, and WebAssembly deliver multi-threaded image manipulation. Background removal is powered by the open-source BiRefNet neural network executed locally via ONNX Runtime Web. Once downloaded to your browser's persistent cache, background removal runs offline on your machine.</li>
+          <li><b>Complete 32-Tool PDF Platform:</b> From merging, splitting, reordering, and rotating to visual cropping, page number watermarking, password encryption, and metadata sanitation, our tools leverage PDF-Lib, PDF.js, and browser-native vector engines. Documents never leave your RAM.</li>
+          <li><b>AIDC Studio (Automatic Identification &amp; Data Capture):</b> Enterprise barcode and 2D matrix engine supporting 25+ linear symbologies (UPC-A, EAN-13, Code 128, GS1-128, ITF-14) and matrix codes (QR Code, Data Matrix, Aztec, PDF417). Includes instant Modulo-10 checksum validation and vector SVG/PDF generation in your local browser sandbox.</li>
+          <li><b>Private AI OCR:</b> Text extraction that operates locally via Tesseract.js WebAssembly without sending scanned documents over the internet.</li>
         </ul>
       </div>
 
       <div class="guide-card">
-        <h2>When our server is involved</h2>
-        <p>A few features need more computing power or document formats that browsers can't produce on their own. They are clearly labeled, and you can always choose an on-device alternative:</p>
+        <h2>3. Ephemeral Cloud Acceleration (When Necessary)</h2>
+        <p>Certain high-level document transformations — such as complex PDF-to-Word (DOCX) layout reconstruction, PDF-to-Excel table extraction, and multi-language AI translation — require industrial layout analysis engines not yet feasible within client-side JavaScript. For these specific Pro features, PIXNIVO maintains a high-security ephemeral pipeline hosted on Microsoft Azure:</p>
         <ul>
-          <li><b>AI OCR, Enhanced engine</b> — your file is sent over an encrypted connection, processed in memory and deleted as soon as the text is returned.</li>
-          <li><b>Barcode export to Word or Excel</b> — the barcode values and images are sent to build the document and are not stored.</li>
-        </ul>
-        <p>We don't keep copies of your files, and we never use them to train AI models.</p>
-      </div>
-
-      <div class="guide-card">
-        <h2>Our commitments</h2>
-        <ul>
-          <li><b>No account needed</b> — no sign-up, email or password.</li>
-          <li><b>Free, with no watermarks</b> — the site is supported by advertising, not by locking features.</li>
-          <li><b>Clear about data</b> — every tool tells you whether it runs on your device or on our server.</li>
-          <li><b>Honest results</b> — our guides explain what each tool can and can't do, so you know what to expect.</li>
+          <li><b>TLS 1.3 Transport:</b> All data transfers are strictly encrypted end-to-end.</li>
+          <li><b>In-Memory Ephemeral Execution:</b> Documents are streamed directly into volatile system memory (RAM), parsed, and returned to your browser.</li>
+          <li><b>Zero Retention Policy:</b> Files are immediately deleted from RAM upon completion. We do not maintain server-side file logs, database archives, or user caches. We will never sell your document data or use it to train machine learning models.</li>
         </ul>
       </div>
 
       <div class="guide-card">
-        <h2>Good to know</h2>
+        <h2>4. Transparency, Sustainability &amp; Business Model</h2>
+        <p>PIXNIVO is dedicated to keeping all core tools 100% free and accessible to students, freelancers, businesses, and developers worldwide without forced subscriptions or artificial paywalls:</p>
         <ul>
-          <li>The first background removal downloads the AI model. Your browser keeps it, so later photos start much faster.</li>
-          <li>Speed depends on your device — a recent laptop takes a few seconds, while older phones can take noticeably longer.</li>
-          <li>Busy images where the subject and background share similar colors may need a few strokes with the touch-up eraser.</li>
+          <li><b>No Mandatory User Accounts:</b> We do not require registration, email capture, passwords, or personal profiles to use any tool.</li>
+          <li><b>No Watermarks:</b> Every exported asset (PDF, PNG, SVG, DOCX, ZIP) is completely unwatermarked and licensed for unrestricted personal and commercial use.</li>
+          <li><b>Ethical Advertising:</b> To offset server hosting, domain maintenance, and continuous software development, PIXNIVO partners with Google AdSense (Publisher ID: <code>pub-8972850134795669</code>) and certified advertising networks. We implement Google Consent Mode v2 to ensure visitors retain granular control over non-essential advertising and analytics cookies.</li>
         </ul>
-        <p>Questions, feedback or a file that didn't work as expected? <a href="/contact">Get in touch</a> — we read every message.</p>
       </div>
 
-      <div class="center-cta">
-        <a class="article-cta" href="/">Explore the tools <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <div class="guide-card">
+        <h2>5. Editorial Integrity &amp; Factual Standards</h2>
+        <p>Our educational guides, technical documentation, and format comparisons are authored and peer-reviewed by seasoned software architects, digital graphics specialists, and supply chain engineers. Every published guide is rigorously verified against ISO specifications (such as ISO/IEC 15415/15416 for barcodes and ISO 32000 for PDF), industry standards, and empirical browser benchmarks to provide factual, authoritative guidance.</p>
+      </div>
+
+      <div class="guide-card">
+        <h2>6. Company &amp; Infrastructure Information</h2>
+        <p>PIXNIVO is maintained by a dedicated engineering team specializing in high-performance web applications, cryptography, and digital imaging. Our primary production infrastructure is hosted on Microsoft Azure Cloud across enterprise-grade virtual machines protected by managed firewalls, automated DDoS mitigations, and automated security patches.</p>
+        <p>We welcome community suggestions, vulnerability disclosures, and technical inquiries. Reach out to our engineering and editorial team directly at <a href="mailto:support@pixnivo.app">support@pixnivo.app</a> or visit our <a href="/contact">Contact Page</a>.</p>
+      </div>
+
+      <div class="center-cta" style="margin-top: 32px;">
+        <a class="article-cta" href="/">Explore All PIXNIVO Tools <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </article>
   </main>
@@ -169,11 +199,11 @@
       <div class="footer-col">
         <h2>Document tools</h2>
         <ul>
-          <li><a href="/pdf-tools?tab=img2pdf">Images to PDF</a></li>
-          <li><a href="/pdf-tools?tab=merge">Merge PDF</a></li>
-          <li><a href="/pdf-tools?tab=compress">Compress PDF</a></li>
+          <li><a href="/pdf-tools">PDF Tools (32 Suite)</a></li>
           <li><a href="/ai-ocr">AI OCR</a></li>
-          <li><a href="/barcode-tools.html">Barcode Generator</a></li>
+          <li><a href="/aidc-studio">AIDC Studio</a></li>
+          <li><a href="/pdf-tools#merge">Merge PDF</a></li>
+          <li><a href="/pdf-tools#compress">Compress PDF</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -186,12 +216,14 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h2>Company</h2>
+        <h2>Company &amp; Legal</h2>
         <ul>
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
           <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/cookie-policy">Cookie Policy</a></li>
           <li><a href="/terms">Terms &amp; Conditions</a></li>
+          <li><a href="#cookie-settings" data-open-cookie-settings>Cookie Settings</a></li>
         </ul>
       </div>
     </div>

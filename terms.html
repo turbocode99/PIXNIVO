@@ -4,26 +4,57 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Terms &amp; Conditions — PIXNIVO</title>
-  <meta name="description" content="Terms of service and usage conditions for PIXNIVO in-browser tools." />
+  <meta name="description" content="Official Terms &amp; Conditions for using PIXNIVO. Covers permitted use, intellectual property, advertising disclosures, and service limitations." />
   <meta name="theme-color" content="#fafafa" />
 
   <!-- Open Graph / Social Meta -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://pixnivo.app/terms" />
   <meta property="og:title" content="Terms &amp; Conditions — PIXNIVO" />
+  <meta property="og:description" content="Read the official Terms of Service governing use of the PIXNIVO platform." />
+  <meta property="og:image" content="https://pixnivo.app/assets/og-image.png" />
+
+  <!-- Google Consent Mode v2 Default (MUST run before Gtag & AdSense) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    try {
+      var savedConsent = localStorage.getItem('pixnivo_consent_v2');
+      if (savedConsent) {
+        var parsed = JSON.parse(savedConsent);
+        gtag('consent', 'default', {
+          'analytics_storage': parsed.analytics ? 'granted' : 'denied',
+          'ad_storage': parsed.advertising ? 'granted' : 'denied',
+          'ad_user_data': parsed.advertising ? 'granted' : 'denied',
+          'ad_personalization': parsed.advertising ? 'granted' : 'denied'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'analytics_storage': 'denied',
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied'
+        });
+      }
+    } catch(e) {
+      gtag('consent', 'default', {
+        'analytics_storage': 'denied',
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied'
+      });
+    }
+  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9RDW8F1H9D"></script>
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-9RDW8F1H9D');
   </script>
 
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8972850134795669" crossorigin="anonymous"></script>
-
 
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -46,7 +77,6 @@
 </head>
 <body>
 
-
   <a class="skip-link" href="#main">Skip to main content</a>
 
   <header class="site-header">
@@ -61,7 +91,7 @@
         <a class="nav-link" href="/logo-generator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg><span>Logo Generator</span></a>
         <a class="nav-link" href="/pdf-tools"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>PDF Tools</span></a>
         <a class="nav-link" href="/ai-ocr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 8h8"/><path d="M7 12h10"/><path d="M7 16h6"/></svg><span>AI OCR</span></a>
-        <a class="nav-link" href="/barcode-tools.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5v14"/><path d="M8 5v14"/><path d="M12 5v14"/><path d="M17 5v14"/><path d="M21 5v14"/></svg><span>Barcode Tools</span></a>
+        <a class="nav-link" href="/aidc-studio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5v14"/><path d="M8 5v14"/><path d="M12 5v14"/><path d="M17 5v14"/><path d="M21 5v14"/></svg><span>AIDC Studio</span></a>
         <a class="nav-link" href="/blog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>Guides</span></a>
         <div class="nav-divider" role="separator"></div>
         <a class="nav-link nav-secondary" href="/about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span>About</span></a>
@@ -83,29 +113,76 @@
 
   <!-- Main Content -->
   <main id="main" class="article-wrap">
-    <a class="back-link" href="/">← Back to Home</a>
+    <a class="back-link" href="/"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Back to home</a>
 
     <header class="article-header">
-      <div class="article-eyebrow">Legal</div>
-      <h1>Terms &amp; Conditions</h1>
-      <p class="article-meta">Last updated: August 2026</p>
+      <div class="article-eyebrow">Legal Terms</div>
+      <h1>Terms &amp; Conditions of Service</h1>
+      <p class="article-meta">Last updated: November 2026 &middot; Effective immediately for all visitors and software users</p>
     </header>
 
     <article class="article-content">
-      <h2>1. Acceptance of Terms</h2>
-      <p>By accessing or using PIXNIVO (<a href="https://pixnivo.app">pixnivo.app</a>), you agree to be bound by these Terms &amp; Conditions and all applicable laws and regulations.</p>
+      <div class="callout-box" style="margin-bottom: 28px;">
+        <p><b>Summary:</b> PIXNIVO provides free, browser-based file conversion, image optimization, PDF editing, and AIDC barcode generation tools. You retain 100% intellectual property ownership of all files you process. We do not store, view, or train AI models on your files. By accessing our services, you agree to these Terms and our Privacy and Cookie Policies.</p>
+      </div>
 
-      <h2>2. Permitted Use</h2>
-      <p>PIXNIVO provides free in-browser graphics and document utility tools for personal and commercial usage. You agree not to use the service for any unlawful activities or in a manner that attempts to disrupt or impair the site's delivery infrastructure.</p>
+      <h2>1. Acceptance and Scope of Agreement</h2>
+      <p>These Terms &amp; Conditions ("Terms") constitute a legally binding agreement between you ("User", "you", or "your") and PIXNIVO ("PIXNIVO", "we", "us", or "our") governing your access to and use of the website located at <code>https://pixnivo.app</code> and all associated subdomains, web utilities, application programming interfaces (APIs), and digital tools.</p>
+      <p>By accessing, browsing, or utilizing any PIXNIVO tool, you acknowledge that you have read, understood, and agree to be bound by these Terms, as well as our <a href="/privacy">Privacy Policy</a> and <a href="/cookie-policy">Cookie Policy</a>. If you do not agree to these Terms, you must immediately discontinue use of the site.</p>
 
-      <h2>3. Intellectual Property on Your Files</h2>
-      <p>You retain 100% full copyright, title, and intellectual property rights to all images, graphics, and documents processed using PIXNIVO. We claim no ownership over any content you load into the software.</p>
+      <h2>2. Nature of Services and Client-Side Execution</h2>
+      <p>PIXNIVO provides on-demand digital productivity tools designed to operate primarily within modern client-side web browsers via WebAssembly, HTML5 Canvas, Web Workers, and local JavaScript engines. These services include, but are not limited to:</p>
+      <ul>
+        <li>Image compression, cropping, resizing, background removal, and format conversion.</li>
+        <li>32-tool professional PDF suite including merge, split, compress, edit, watermark, sign, protect, unlock, and format conversion.</li>
+        <li>Automatic Identification &amp; Data Capture (AIDC) Studio for linear barcodes, 2D matrix symbols, GS1 identifiers, and batch operations.</li>
+        <li>Optical Character Recognition (OCR) engines for text extraction.</li>
+      </ul>
+      <p>Because the overwhelming majority of processing occurs entirely in your local browser sandbox, PIXNIVO servers never receive or store your uploaded photos, documents, or proprietary business payloads.</p>
 
-      <h2>4. Disclaimer of Warranty</h2>
-      <p>The tools and guides on PIXNIVO are provided "as is", without warranty of any kind, express or implied. While we take immense pride in precision algorithms, we make no warranties regarding fitness for a particular purpose or error-free execution across every historical device.</p>
+      <h2>3. Intellectual Property Rights &amp; User Content</h2>
+      <h3>A. Your Content and Assets</h3>
+      <p>You retain complete, exclusive, and unencumbered copyright, ownership, and all intellectual property rights in and to any files, graphics, trademarks, logos, barcodes, or text documents you import, edit, or generate using PIXNIVO. We claim no title, license, or rights whatsoever over your processed content.</p>
 
-      <h2>5. Changes to Terms</h2>
-      <p>We reserve the right to revise these Terms &amp; Conditions at any time. Continued use of the website following updates constitutes acceptance of the revised terms.</p>
+      <h3>B. PIXNIVO Proprietary Rights</h3>
+      <p>All software code, user interface designs, stylesheets, typography, documentation, educational articles, algorithms, and brand assets constituting the PIXNIVO website are the exclusive intellectual property of PIXNIVO and are protected under international copyright, trademark, and intellectual property treaties. You may not scrape, mirror, reverse engineer, or redistribute our proprietary software without prior written authorization.</p>
+
+      <h2>4. Permitted and Prohibited Conduct</h2>
+      <p>You are granted a revocable, non-exclusive, non-transferable, worldwide license to utilize PIXNIVO for personal, educational, non-profit, or commercial purposes. However, you explicitly agree that you shall NOT:</p>
+      <ul>
+        <li>Use any tool to generate fraudulent, deceptive, or infringing barcodes, counterfeit product identifiers, or unauthorized official government identification credentials.</li>
+        <li>Engage in abusive automated requests, denial-of-service attacks, or excessive scripted crawling that degrades site availability for other users.</li>
+        <li>Upload files or inject payloads containing malicious software, spyware, trojans, rootkits, or exploitative scripts into our web forms.</li>
+        <li>Circumvent or attempt to circumvent security headers, rate limits, or content restrictions implemented by our hosting infrastructure.</li>
+      </ul>
+
+      <h2>5. Third-Party Advertising and Monetization (Google AdSense)</h2>
+      <p>To provide high-performance, enterprise-grade tools free of charge without requiring subscriptions, credit cards, or paywalls, PIXNIVO partners with Google AdSense (Publisher ID: <code>pub-8972850134795669</code>) and third-party advertising exchanges. You acknowledge and agree that:</p>
+      <ul>
+        <li>Advertisements may be presented across various tool stages, guides, and pages in accordance with Google Publisher Policies.</li>
+        <li>Third-party ad networks may place or read cookies on your browser to serve contextual or personalized advertisements as detailed in our <a href="/cookie-policy">Cookie Policy</a>.</li>
+        <li>We integrate Google Consent Mode v2 to provide users residing in the European Economic Area (EEA), United Kingdom (UK), and Switzerland full statutory autonomy to grant or withhold consent for advertising cookies without losing access to our core tool suite.</li>
+        <li>PIXNIVO does not endorse or guarantee any third-party products, services, or claims advertised through external ad networks.</li>
+      </ul>
+
+      <h2>6. Disclaimer of Warranties</h2>
+      <p>THE PIXNIVO PLATFORM, SOFTWARE, CODE, AND DOCUMENTATION ARE PROVIDED STRICTLY ON AN "AS IS" AND "AS AVAILABLE" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, PIXNIVO DISCLAIMS ALL WARRANTIES, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT.</p>
+      <p>While our algorithms are engineered to comply with strict ISO/IEC and GS1 standards, we do not warrant that output files will meet every individual hardware scanner's tolerance, that operations will be uninterrupted, or that software execution will be completely bug-free across all legacy operating systems.</p>
+
+      <h2>7. Limitation of Liability</h2>
+      <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL PIXNIVO, ITS DIRECTORS, EMPLOYEES, CONTRACTORS, OR AFFILIATES BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES (INCLUDING LOSS OF PROFITS, LOSS OF REVENUE, BUSINESS INTERRUPTION, LOSS OF DATA, OR PRODUCT PACKAGING REPRINT COSTS) ARISING OUT OF OR IN CONNECTION WITH YOUR USE OR INABILITY TO USE THE TOOLS, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</p>
+
+      <h2>8. Digital Millennium Copyright Act (DMCA) Notice</h2>
+      <p>PIXNIVO respects the intellectual property rights of others. If you believe that any material appearing on our website infringes upon your copyright, please forward a formal written notice containing the statutory elements specified in 17 U.S.C. &sect; 512(c)(3) to our designated copyright agent at <a href="mailto:privacy@pixnivo.app">privacy@pixnivo.app</a>.</p>
+
+      <h2>9. Modifications to Terms and Services</h2>
+      <p>We reserve the right to amend, update, or revise these Terms at any time to align with legal developments, technological improvements, or Google AdSense publisher requirements. Changes become effective immediately upon posting to this URL. Your continued use of the website following any update signifies your agreement to the modified Terms.</p>
+
+      <h2>10. Governing Law &amp; Severability</h2>
+      <p>These Terms and any disputes arising out of your access to PIXNIVO shall be governed by and construed in accordance with standard commercial laws. If any provision of these Terms is deemed unlawful, void, or unenforceable, that provision shall be deemed severable and shall not affect the validity and enforceability of any remaining provisions.</p>
+
+      <h2>11. Contact Details</h2>
+      <p>For any questions or legal notices regarding these Terms, please contact our legal desk at <a href="mailto:support@pixnivo.app">support@pixnivo.app</a> or <a href="mailto:privacy@pixnivo.app">privacy@pixnivo.app</a>.</p>
     </article>
   </main>
 
@@ -131,11 +208,11 @@
       <div class="footer-col">
         <h2>Document tools</h2>
         <ul>
-          <li><a href="/pdf-tools?tab=img2pdf">Images to PDF</a></li>
-          <li><a href="/pdf-tools?tab=merge">Merge PDF</a></li>
-          <li><a href="/pdf-tools?tab=compress">Compress PDF</a></li>
+          <li><a href="/pdf-tools">PDF Tools (32 Suite)</a></li>
           <li><a href="/ai-ocr">AI OCR</a></li>
-          <li><a href="/barcode-tools.html">Barcode Generator</a></li>
+          <li><a href="/aidc-studio">AIDC Studio</a></li>
+          <li><a href="/pdf-tools#merge">Merge PDF</a></li>
+          <li><a href="/pdf-tools#compress">Compress PDF</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -148,12 +225,14 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h2>Company</h2>
+        <h2>Company &amp; Legal</h2>
         <ul>
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
           <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/cookie-policy">Cookie Policy</a></li>
           <li><a href="/terms">Terms &amp; Conditions</a></li>
+          <li><a href="#cookie-settings" data-open-cookie-settings>Cookie Settings</a></li>
         </ul>
       </div>
     </div>

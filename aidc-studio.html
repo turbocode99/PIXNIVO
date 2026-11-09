@@ -14,6 +14,48 @@
   <meta property="og:description" content="Create GS1-compliant barcodes, QR codes, Data Matrix, and GTINs in bulk with instant vector exports." />
   <meta property="og:image" content="https://pixnivo.app/assets/og-image.png" />
 
+  <!-- Google Consent Mode v2 Default (MUST run before Gtag & AdSense) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    try {
+      var savedConsent = localStorage.getItem('pixnivo_consent_v2');
+      if (savedConsent) {
+        var parsed = JSON.parse(savedConsent);
+        gtag('consent', 'default', {
+          'analytics_storage': parsed.analytics ? 'granted' : 'denied',
+          'ad_storage': parsed.advertising ? 'granted' : 'denied',
+          'ad_user_data': parsed.advertising ? 'granted' : 'denied',
+          'ad_personalization': parsed.advertising ? 'granted' : 'denied'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'analytics_storage': 'denied',
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied'
+        });
+      }
+    } catch(e) {
+      gtag('consent', 'default', {
+        'analytics_storage': 'denied',
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied'
+      });
+    }
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9RDW8F1H9D"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-9RDW8F1H9D');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8972850134795669" crossorigin="anonymous"></script>
+
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -773,6 +815,162 @@
       </section>
 
     </div>
+
+    <!-- ==================== COMPREHENSIVE AIDC TECHNICAL SPECIFICATION & GUIDE ==================== -->
+    <section class="studio-container" style="margin-top: 48px; margin-bottom: 64px;">
+      <article class="article-content" style="max-width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 36px;">
+        <header class="article-header" style="text-align: left; margin-bottom: 32px; border-bottom: 1px solid var(--border); padding-bottom: 20px;">
+          <div class="article-eyebrow">Enterprise Reference</div>
+          <h2 style="font-size: 2rem; font-weight: 700; margin: 8px 0; color: var(--text);">Complete Guide to Automatic Identification &amp; Data Capture (AIDC)</h2>
+          <p style="font-size: 1.05rem; color: var(--text-2); margin: 0;">In-depth technical specifications, GS1 standards compliance, check digit calculation, and industrial barcode symbology reference.</p>
+        </header>
+
+        <div class="callout-box" style="margin-bottom: 32px;">
+          <p><b>Executive Overview:</b> Automatic Identification and Data Capture (AIDC) encompasses the methods and technologies used to automatically recognize, capture, verify, and input data directly into computerized systems without manual keystrokes. Pixnivo AIDC Studio provides enterprise-grade in-browser generation for over 25 industrial 1D linear and 2D matrix symbologies, GS1 Digital Links, and ISO-compliant product identifiers.</p>
+        </div>
+
+        <h3>1. The Architecture of Modern Barcodes</h3>
+        <p>A barcode is an optical machine-readable representation of data. Data is encoded by varying the widths and spacings of parallel lines (in 1D linear barcodes) or geometric modules arranged within a grid (in 2D matrix symbologies). Scanners emit optical laser or CCD image sensor signals to measure reflectance differences between dark bars/modules (low reflectance) and light spaces/background (high reflectance).</p>
+
+        <h4>A. Linear 1D Barcodes</h4>
+        <p>1D barcodes encode alphanumeric or numeric payloads along a single horizontal axis. Their height exists solely to assist line-of-sight laser sweeps. Key specifications include:</p>
+        <ul>
+          <li><b>UPC-A (Universal Product Code):</b> The foundational North American point-of-sale retail standard. Encodes a 12-digit numeric payload comprising a GS1 Company Prefix, Item Reference, and a terminal Modulo-10 check digit.</li>
+          <li><b>EAN-13 (International Article Number):</b> The global retail point-of-sale standard used in over 150 nations. Encodes 13 digits where the leading 2 or 3 digits represent the GS1 Member Organization country prefix.</li>
+          <li><b>Code 128:</b> High-density alphanumeric symbology supporting the full 128 ASCII character set via three character sets (A, B, and C). Widely adopted across logistics, shipping labels, and inventory tracking.</li>
+          <li><b>GS1-128:</b> A specialized application subset of Code 128 utilizing Application Identifiers (AIs) and the FNC1 (Function 1) character to parse multiple structured data fields (batch number, expiration dates, serial numbers, weights) within a single barcode string.</li>
+          <li><b>ITF-14 (Interleaved 2 of 5):</b> Encodes 14 numeric digits with thick bearer bars designed specifically to withstand direct flexographic printing on corrugated cardboard cartons and shipping master cases.</li>
+        </ul>
+
+        <h4>B. Two-Dimensional (2D) Matrix Codes</h4>
+        <p>2D matrix symbologies encode data across both horizontal and vertical axes, drastically increasing data density while occupying a fraction of physical packaging space:</p>
+        <ul>
+          <li><b>QR Code (Quick Response Code - ISO/IEC 18004):</b> Capable of storing up to 7,089 numeric characters or 4,296 alphanumeric characters. Features distinctive square position detection patterns at three corners and built-in Reed-Solomon error correction across four user-selectable levels (L: 7%, M: 15%, Q: 25%, H: 30%).</li>
+          <li><b>Data Matrix (ISO/IEC 16022):</b> A square or rectangular 2D code recognized for exceptional density. Required in healthcare (FDA UDI medical device tracking) and aerospace (direct part marking - DPM) due to its readable fidelity down to 2-3 mm square footprints.</li>
+          <li><b>PDF417 (ISO/IEC 15438):</b> A continuous, stacked 2D barcode format commonly mandated on official boarding passes, commercial shipping manifests, and North American driver's licenses (AAMVA specification), capable of encoding over a kilobyte of biometric and text records.</li>
+          <li><b>Aztec Code (ISO/IEC 24778):</b> A 2D matrix featuring a central concentric square bullseye finder pattern. Aztec requires no surrounding quiet zone, making it the dominant standard in airline mobile ticketing and rail transportation.</li>
+        </ul>
+
+        <h3>2. Symbology Comparison Matrix</h3>
+        <div style="overflow-x: auto; margin: 24px 0;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;">
+            <thead>
+              <tr style="background: var(--surface-2); border-bottom: 2px solid var(--border);">
+                <th style="padding: 12px 14px; font-weight: 700;">Symbology</th>
+                <th style="padding: 12px 14px; font-weight: 700;">Dimensions</th>
+                <th style="padding: 12px 14px; font-weight: 700;">Max Capacity</th>
+                <th style="padding: 12px 14px; font-weight: 700;">Error Correction</th>
+                <th style="padding: 12px 14px; font-weight: 700;">Primary Industry Application</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding: 10px 14px; font-weight: 600;">UPC-A</td>
+                <td style="padding: 10px 14px;">1D Linear</td>
+                <td style="padding: 10px 14px;">12 digits</td>
+                <td style="padding: 10px 14px;">Modulo-10 Check</td>
+                <td style="padding: 10px 14px;">North American Retail POS</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding: 10px 14px; font-weight: 600;">EAN-13</td>
+                <td style="padding: 10px 14px;">1D Linear</td>
+                <td style="padding: 10px 14px;">13 digits</td>
+                <td style="padding: 10px 14px;">Modulo-10 Check</td>
+                <td style="padding: 10px 14px;">Global Retail Point-of-Sale</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding: 10px 14px; font-weight: 600;">Code 128</td>
+                <td style="padding: 10px 14px;">1D Linear</td>
+                <td style="padding: 10px 14px;">Variable (~80 chars)</td>
+                <td style="padding: 10px 14px;">Modulo-103 Check</td>
+                <td style="padding: 10px 14px;">Logistics, Distribution, Manufacturing</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding: 10px 14px; font-weight: 600;">GS1-128</td>
+                <td style="padding: 10px 14px;">1D Linear</td>
+                <td style="padding: 10px 14px;">48 chars per symbol</td>
+                <td style="padding: 10px 14px;">AI + Modulo-103</td>
+                <td style="padding: 10px 14px;">Pallet Shipping (SSCC), Traceability</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding: 10px 14px; font-weight: 600;">QR Code</td>
+                <td style="padding: 10px 14px;">2D Matrix</td>
+                <td style="padding: 10px 14px;">7,089 numeric / 4,296 alpha</td>
+                <td style="padding: 10px 14px;">Reed-Solomon (7%–30%)</td>
+                <td style="padding: 10px 14px;">Mobile Marketing, Payments, GS1 Digital Link</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding: 10px 14px; font-weight: 600;">Data Matrix</td>
+                <td style="padding: 10px 14px;">2D Matrix</td>
+                <td style="padding: 10px 14px;">3,116 numeric / 2,335 alpha</td>
+                <td style="padding: 10px 14px;">ECC 200 (Reed-Solomon)</td>
+                <td style="padding: 10px 14px;">Healthcare (FDA UDI), Electronics DPM</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding: 10px 14px; font-weight: 600;">PDF417</td>
+                <td style="padding: 10px 14px;">2D Stacked</td>
+                <td style="padding: 10px 14px;">1,850 text characters</td>
+                <td style="padding: 10px 14px;">Reed-Solomon (Level 0–8)</td>
+                <td style="padding: 10px 14px;">Aviation Boarding, Identity Cards, DMV</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>3. GS1 Identification Standard &amp; Modulo-10 Calculation</h3>
+        <p>Global Trade Item Numbers (GTINs) uniquely identify trade items worldwide. Whether formatted as GTIN-8, GTIN-12, GTIN-13, or GTIN-14, all standard GS1 identifiers employ the standardized <b>Modulo-10 Check Digit Algorithm</b> to ensure data integrity during scanning.</p>
+
+        <h4>The Modulo-10 Mathematical Algorithm:</h4>
+        <ol>
+          <li>Start with the rightmost payload digit (excluding the check digit) and step towards the left.</li>
+          <li>Multiply alternate digits by 3 and 1, starting with a multiplier of 3 on the position immediately preceding the check digit.</li>
+          <li>Sum the multiplied products together.</li>
+          <li>Calculate the smallest multiple of 10 that is greater than or equal to the sum.</li>
+          <li>Subtract the sum from that multiple of 10. The result is the official GS1 check digit (if the difference is 10, the check digit is 0).</li>
+        </ol>
+
+        <div style="background: var(--surface-2); border-left: 4px solid var(--brand); padding: 16px; border-radius: var(--radius-sm); margin: 18px 0; font-family: var(--font-mono); font-size: 0.85rem;">
+          <b>Worked Example for GTIN-13:</b> 629104150021[?]<br />
+          Digits: 6 &middot; 2 &middot; 9 &middot; 1 &middot; 0 &middot; 4 &middot; 1 &middot; 5 &middot; 0 &middot; 0 &middot; 2 &middot; 1<br />
+          Weights: 1 &middot; 3 &middot; 1 &middot; 3 &middot; 1 &middot; 3 &middot; 1 &middot; 3 &middot; 1 &middot; 3 &middot; 1 &middot; 3<br />
+          Multiplication: 6 + 6 + 9 + 3 + 0 + 12 + 1 + 15 + 0 + 0 + 2 + 3 = 57<br />
+          Nearest multiple of 10: 60<br />
+          Check Digit: 60 - 57 = <b>3</b>. Resulting Valid GTIN: <code>6291041500213</code>.
+        </div>
+
+        <h3>4. The GS1 Sunrise 2027 Transition to 2D Barcodes</h3>
+        <p>By the target year 2027 ("Sunrise 2027"), the global retail industry and GS1 are standardizing on 2D barcodes (QR Code with GS1 Digital Link syntax or GS1 DataMatrix) at retail points of sale alongside or replacing traditional 1D UPC/EAN barcodes.</p>
+        <p>A single 2D code provides a dual-purpose solution: point-of-sale laser scanners read the encoded GTIN for instant item lookup, while consumer smartphones scan the same QR code URL to access nutritional facts, recycling instructions, allergen warnings, warranty registration, and real-time product authentication.</p>
+
+        <h3>5. Print Quality &amp; Quiet Zone Specifications</h3>
+        <p>Ensuring first-time read rates on commercial scanners requires adherence to optical physics standards (ISO/IEC 15415 for 2D and ISO/IEC 15416 for 1D):</p>
+        <ul>
+          <li><b>Quiet Zone (Margin):</b> The clean, unprinted margin surrounding the barcode. For 1D barcodes, the quiet zone must be at least 10 times the width of the narrowest bar (X-dimension) or 6.35 mm (0.25 in). For QR codes, a minimum quiet zone of 4 modules is required on all four sides.</li>
+          <li><b>Optical Contrast:</b> Laser scanners illuminate bars using red light (~660 nm). Barcodes printed with red, orange, or yellow bars will reflect identical wavelengths to white paper and cannot be read. Optimal print contrast is achieved with solid black, dark blue, or dark green bars on a stark white or light-yellow background.</li>
+          <li><b>Resolution &amp; Vector Scaling:</b> When exporting barcodes for physical offset, flexographic, or packaging press runs, always export as vector <b>SVG</b> or high-resolution <b>PDF</b> to eliminate raster pixelation and edge bleeding.</li>
+        </ul>
+
+        <h3>6. Frequently Asked Questions (FAQ)</h3>
+        <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 16px;">
+          <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 18px;">
+            <h4 style="margin: 0 0 8px 0; font-size: 1rem; color: var(--text);">How do I obtain a legal, registered GS1 Company Prefix for retail distribution?</h4>
+            <p style="margin: 0; font-size: 0.9rem; color: var(--text-2); line-height: 1.55;">Official GTINs and UPCs for major retail channels (Amazon, Walmart, Target, Kroger) must be licensed directly from your country's national GS1 member organization (e.g., GS1 US, GS1 UK, GS1 Canada). Once GS1 assigns your official Company Prefix, you can input it into Pixnivo AIDC Studio Settings to automatically generate consecutive, compliant item references.</p>
+          </div>
+          <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 18px;">
+            <h4 style="margin: 0 0 8px 0; font-size: 1rem; color: var(--text);">What is the difference between UPC-A and EAN-13?</h4>
+            <p style="margin: 0; font-size: 0.9rem; color: var(--text-2); line-height: 1.55;">UPC-A is a 12-digit standard primarily used in the United States and Canada. EAN-13 is a 13-digit standard used in Europe and throughout the rest of the world. Any UPC-A can be converted into an equivalent EAN-13 by prepending a leading zero (e.g., UPC-A <code>012345678905</code> becomes EAN-13 <code>0012345678905</code>), and modern POS scanners can process both interchangeably.</p>
+          </div>
+          <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 18px;">
+            <h4 style="margin: 0 0 8px 0; font-size: 1rem; color: var(--text);">How does batch generation work in Pixnivo AIDC Studio?</h4>
+            <p style="margin: 0; font-size: 0.9rem; color: var(--text-2); line-height: 1.55;">You can upload standard CSV or Microsoft Excel (.xlsx) spreadsheets containing columns such as Product Name, SKU, and GTIN/Payload. The client-side batch processor verifies each record against official checksum rules, renders high-resolution barcode assets in parallel, and compiles them into a single organized ZIP archive alongside an audit log.</p>
+          </div>
+          <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 18px;">
+            <h4 style="margin: 0 0 8px 0; font-size: 1rem; color: var(--text);">Are generated barcodes stored on your servers?</h4>
+            <p style="margin: 0; font-size: 0.9rem; color: var(--text-2); line-height: 1.55;">No. True to Pixnivo's privacy architecture, barcode rendering, vector generation, and validation occur 100% locally within your browser using JavaScript and HTML5 Canvas. Your proprietary SKU identifiers, customer names, and product numbers are never transmitted to or logged on remote servers.</p>
+          </div>
+        </div>
+      </article>
+    </section>
   </main>
 
   <!-- Main Site Footer -->
@@ -798,20 +996,31 @@
       <div class="footer-col">
         <h2>Document tools</h2>
         <ul>
-          <li><a href="/aidc-studio">AIDC Studio (New)</a></li>
-          <li><a href="/pdf-tools?tab=img2pdf">Images to PDF</a></li>
-          <li><a href="/pdf-tools?tab=merge">Merge PDF</a></li>
-          <li><a href="/pdf-tools?tab=compress">Compress PDF</a></li>
+          <li><a href="/pdf-tools">PDF Tools (32 Suite)</a></li>
           <li><a href="/ai-ocr">AI OCR</a></li>
+          <li><a href="/aidc-studio">AIDC Studio</a></li>
+          <li><a href="/pdf-tools#merge">Merge PDF</a></li>
+          <li><a href="/pdf-tools#compress">Compress PDF</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h2>Company</h2>
+        <h2>Resources</h2>
+        <ul>
+          <li><a href="/blog">All guides</a></li>
+          <li><a href="/compress-images-for-whatsapp">Compress for WhatsApp</a></li>
+          <li><a href="/jpg-vs-png-vs-webp">JPG vs PNG vs WebP</a></li>
+          <li><a href="/passport-size-photo-at-home">Passport photos at home</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Company &amp; Legal</h2>
         <ul>
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
           <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/cookie-policy">Cookie Policy</a></li>
           <li><a href="/terms">Terms &amp; Conditions</a></li>
+          <li><a href="#cookie-settings" data-open-cookie-settings>Cookie Settings</a></li>
         </ul>
       </div>
     </div>

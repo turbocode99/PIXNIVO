@@ -267,3 +267,4 @@ async def translate_pdf_endpoint(
             )
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"PDF Translation failed: {str(e)}")
+

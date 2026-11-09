@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cookie Policy — PIXNIVO</title>
+  <meta name="description" content="Detailed Cookie Policy for PIXNIVO. Explains how we use essential cookies, analytics, and Google AdSense advertising cookies in compliance with GDPR, ePrivacy, and CCPA." />
+  <meta name="theme-color" content="#fafafa" />
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pixnivo.app/cookie-policy" />
+  <meta property="og:title" content="Cookie Policy — PIXNIVO" />
+  <meta property="og:description" content="Learn how PIXNIVO and our advertising partners use cookies and how you can manage your preferences." />
+  <meta property="og:image" content="https://pixnivo.app/assets/og-image.png" />
+
+  <!-- Google Consent Mode v2 Default (MUST run before Gtag & AdSense) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    try {
+      var savedConsent = localStorage.getItem('pixnivo_consent_v2');
+      if (savedConsent) {
+        var parsed = JSON.parse(savedConsent);
+        gtag('consent', 'default', {
+          'analytics_storage': parsed.analytics ? 'granted' : 'denied',
+          'ad_storage': parsed.advertising ? 'granted' : 'denied',
+          'ad_user_data': parsed.advertising ? 'granted' : 'denied',
+          'ad_personalization': parsed.advertising ? 'granted' : 'denied'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'analytics_storage': 'denied',
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied'
+        });
+      }
+    } catch(e) {
+      gtag('consent', 'default', {
+        'analytics_storage': 'denied',
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied'
+      });
+    }
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9RDW8F1H9D"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-9RDW8F1H9D');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8972850134795669" crossorigin="anonymous"></script>
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="/assets/css/main.css?v=20261010" />
+  <script src="/assets/js/site.js?v=20261010"></script>
+
+  <!-- Instant Theme Detection Script -->
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('pixnivo_theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="nav-container">
+      <a class="brand" href="/" aria-label="PIXNIVO home">
+        <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+        <span class="brand-name">PIX<span>NIVO</span></span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Main">
+        <a class="nav-link" href="/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg><span>Image Tools</span></a>
+        <a class="nav-link" href="/logo-generator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg><span>Logo Generator</span></a>
+        <a class="nav-link" href="/pdf-tools"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>PDF Tools</span></a>
+        <a class="nav-link" href="/ai-ocr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 8h8"/><path d="M7 12h10"/><path d="M7 16h6"/></svg><span>AI OCR</span></a>
+        <a class="nav-link" href="/aidc-studio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5v14"/><path d="M8 5v14"/><path d="M12 5v14"/><path d="M17 5v14"/><path d="M21 5v14"/></svg><span>AIDC Studio</span></a>
+        <a class="nav-link" href="/blog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>Guides</span></a>
+        <div class="nav-divider" role="separator"></div>
+        <a class="nav-link nav-secondary" href="/about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span>About</span></a>
+        <a class="nav-link nav-secondary" href="/contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><span>Contact</span></a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+          <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main" class="article-wrap">
+    <a class="back-link" href="/"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Back to home</a>
+
+    <header class="article-header">
+      <div class="article-eyebrow">Privacy &amp; Compliance</div>
+      <h1>Cookie Policy</h1>
+      <p class="article-meta">Last updated: November 2026 &middot; Compliant with GDPR, ePrivacy Directive, CCPA/CPRA, and Google Publisher Policies</p>
+    </header>
+
+    <article class="article-content">
+      <div class="callout-box">
+        <p><b>Summary:</b> PIXNIVO uses cookies and local browser storage to keep our client-side processing tools functional, remember your appearance settings (such as dark mode), collect aggregated usage metrics via Google Analytics 4, and display non-intrusive advertisements through Google AdSense. You can adjust your cookie settings at any time using the control button below.</p>
+        <div style="margin-top: 14px;">
+          <button type="button" class="btn btn-primary btn-sm" data-open-cookie-settings>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            Manage Cookie Preferences
+          </button>
+        </div>
+      </div>
+
+      <h2>1. What Are Cookies and Local Storage?</h2>
+      <p>A cookie is a small piece of data (text file) that a website asks your browser to store on your device when you visit in order to remember information about you, such as your language preferences, theme choice, or session state. Similar technologies include <code>localStorage</code>, <code>sessionStorage</code>, and IndexedDB, which store client-side state directly within your modern browser without transmitting it across the network on every HTTP request.</p>
+      <p>Pixnivo is engineered on an in-browser processing architecture (WebAssembly, Web Workers, Canvas, PDF.js, and ONNX Runtime). Your uploaded documents, images, and barcodes remain completely private on your local hardware. Cookies are strictly utilized to ensure technical operation, analyze aggregate traffic, and serve advertisements that fund our free platform.</p>
+
+      <h2>2. Categories of Cookies We Use</h2>
+      <p>We classify the cookies and browser storage keys used on <code>pixnivo.app</code> into three distinct tiers:</p>
+
+      <h3>Tier A: Strictly Necessary (Essential)</h3>
+      <p>These identifiers are required for core technical functionality, security, and user accessibility. They cannot be deactivated without degrading essential site features.</p>
+      <ul>
+        <li><code>pixnivo_theme</code> (localStorage): Stores your dark/light UI mode selection. Persists indefinitely until cleared.</li>
+        <li><code>pixnivo_consent_v2</code> (localStorage): Records your cookie preferences and Google Consent Mode v2 choices so you are not repeatedly prompted. Persists for 12 months.</li>
+        <li><code>pixnivo_aidc_history</code> (localStorage): Stores your local generated barcode history and favorites directly on your device. Never transmitted to our servers.</li>
+        <li>Security tokens and load-balancing cookies: Issued by Azure Infrastructure and Nginx to maintain active HTTPS sessions and prevent Distributed Denial of Service (DDoS) attacks.</li>
+      </ul>
+
+      <h3>Tier B: Performance and Analytics</h3>
+      <p>We utilize Google Analytics 4 (Measurement ID: <code>G-9RDW8F1H9D</code>) to measure how visitors interact with Pixnivo. These cookies collect aggregated, anonymized telemetry such as page navigation paths, session duration, device operating systems, screen resolutions, and country-level geographic location.</p>
+      <ul>
+        <li><code>_ga</code> (HTTP Cookie): Used to distinguish unique anonymous users across browsing sessions. Lifespan: 2 years.</li>
+        <li><code>_ga_9RDW8F1H9D</code> (HTTP Cookie): Used to persist session state across page reloads. Lifespan: 2 years.</li>
+      </ul>
+      <p>All analytics data is processed with IP anonymization enabled by default, ensuring your complete IP address is never stored or logged by Google Analytics.</p>
+
+      <h3>Tier C: Advertising and Marketing (Google AdSense)</h3>
+      <p>To provide all 32+ PDF tools, image compressors, background removers, OCR, and AIDC barcode suites 100% free of charge without requiring subscriptions or paywalls, Pixnivo partners with Google AdSense (Publisher ID: <code>pub-8972850134795669</code>) and Google-certified ad networks.</p>
+      <ul>
+        <li><code>__gads</code>, <code>__gpi</code>: Set by Google AdSense to measure ad impressions, frequency capping (preventing you from seeing the same ad repeatedly), and fraud prevention. Lifespan: 13 months.</li>
+        <li><code>IDE</code>, <code>DSID</code>, <code>NID</code>: Set by Google's DoubleClick ad exchange on the domain <code>doubleclick.net</code> to serve relevant, contextual, or personalized advertisements based on user interests. Lifespan: up to 12 months.</li>
+      </ul>
+
+      <h2>3. Google AdSense &amp; DoubleClick DART Cookie Disclosure</h2>
+      <p>Under Google AdSense Program Policies, we explicitly disclose the following mechanisms:</p>
+      <ul>
+        <li>Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to Pixnivo or other websites on the Internet.</li>
+        <li>Google's use of advertising cookies enables it and its certified partners to serve targeted advertisements to users based on their browsing patterns across the web.</li>
+        <li>Users residing in the European Economic Area (EEA), United Kingdom (UK), and Switzerland are provided with a Google Consent Mode v2 consent prompt upon their initial visit. When non-essential cookies are declined, Google AdSense automatically switches to serving non-personalized contextual ads, and advertising cookies are withheld.</li>
+      </ul>
+
+      <h2>4. How to Control and Opt Out of Advertising Cookies</h2>
+      <p>You have full legal control over how your data is utilized for digital advertising. You can exercise your choices through any of the following independent avenues:</p>
+      <ul>
+        <li><b>Pixnivo Preferences Center:</b> Click <a href="#cookie-settings" data-open-cookie-settings>Cookie Settings</a> at any time to disable Analytics or Advertising cookies directly on this site.</li>
+        <li><b>Google Ads Settings:</b> Manage or turn off personalized advertising across Google services at <a href="https://adssettings.google.com/" target="_blank" rel="noopener noreferrer">https://adssettings.google.com/</a>.</li>
+        <li><b>Digital Advertising Alliance (DAA):</b> Opt out of interest-based ads from hundreds of participating ad networks at <a href="https://optout.aboutads.info/" target="_blank" rel="noopener noreferrer">https://optout.aboutads.info/</a>.</li>
+        <li><b>European Interactive Digital Advertising Alliance (EDAA):</b> For European users, manage ad preferences at <a href="https://www.youronlinechoices.eu/" target="_blank" rel="noopener noreferrer">https://www.youronlinechoices.eu/</a>.</li>
+        <li><b>Network Advertising Initiative (NAI):</b> Opt out at <a href="https://optout.networkadvertising.org/" target="_blank" rel="noopener noreferrer">https://optout.networkadvertising.org/</a>.</li>
+      </ul>
+
+      <h2>5. Managing Cookies in Your Browser</h2>
+      <p>Most modern web browsers allow you to manage, inspect, block, or delete cookies through their internal settings. Please refer to your browser's official support documentation:</p>
+      <ul>
+        <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener noreferrer">Google Chrome Cookie Management</a></li>
+        <li><a href="https://support.apple.com/guide/safari/manage-cookies-sfri11471/mac" target="_blank" rel="noopener noreferrer">Apple Safari Cookie Settings</a></li>
+        <li><a href="https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop" target="_blank" rel="noopener noreferrer">Mozilla Firefox Enhanced Tracking Protection</a></li>
+        <li><a href="https://support.microsoft.com/en-us/windows/microsoft-edge-browsing-data-and-privacy-bb8174ba-9d73-dcf2-9b4a-c582b4e640dd" target="_blank" rel="noopener noreferrer">Microsoft Edge Privacy &amp; Cookies</a></li>
+      </ul>
+      <p><em>Please note: Blocking all cookies may cause certain visual customizations (such as your dark mode preference) to reset on subsequent visits.</em></p>
+
+      <h2>6. Regulatory Compliance Statements</h2>
+      <h3>European General Data Protection Regulation (GDPR &amp; ePrivacy Directive)</h3>
+      <p>In adherence to EU Article 6(1)(a) and the ePrivacy Directive, non-essential cookies (Analytics and Advertising) are not placed on your device until affirmative consent has been granted through our Google Consent Mode v2 compliant banner. You can revoke or alter this consent at any moment.</p>
+
+      <h3>California Consumer Privacy Act (CCPA / CPRA)</h3>
+      <p>California residents have the right to opt out of the "sale" or "sharing" of personal information for cross-context behavioral advertising. Pixnivo does not sell personal user information. However, you may disable targeted advertising cookies anytime via our <a href="#cookie-settings" data-open-cookie-settings>Cookie Settings</a> or by transmitting the Global Privacy Control (GPC) signal.</p>
+
+      <h2>7. Updates to This Policy</h2>
+      <p>We may update this Cookie Policy from time to time to reflect changes in legal mandates, technology standards, or Google Publisher requirements. The "Last updated" date at the top of this page indicates the effective date of the latest revisions.</p>
+
+      <h2>8. Inquiries and Contact</h2>
+      <p>If you have questions regarding our use of cookies or wish to submit a privacy request, please contact our data privacy desk:</p>
+      <ul>
+        <li><b>Privacy Officer:</b> <a href="mailto:privacy@pixnivo.app">privacy@pixnivo.app</a></li>
+        <li><b>Technical Support:</b> <a href="mailto:support@pixnivo.app">support@pixnivo.app</a></li>
+        <li><b>Physical Jurisdiction:</b> PIXNIVO Digital Solutions, Infrastructure Hosted on Microsoft Azure Cloud.</li>
+      </ul>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="/" aria-label="PIXNIVO home">
+          <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+          <span class="brand-name">PIX<span>NIVO</span></span>
+        </a>
+        <p>Fast, privacy-first image, PDF and document tools that run right in your browser. No sign-up, no watermarks.</p>
+      </div>
+      <div class="footer-col">
+        <h2>Image tools</h2>
+        <ul>
+          <li><a href="/?tab=compress">Image Compressor</a></li>
+          <li><a href="/?tab=edit">Photo Editor</a></li>
+          <li><a href="/?tab=bg">Background Remover</a></li>
+          <li><a href="/?tab=upscale">Image Upscaler</a></li>
+          <li><a href="/logo-generator">Logo Generator</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Document tools</h2>
+        <ul>
+          <li><a href="/pdf-tools">PDF Tools (32 Suite)</a></li>
+          <li><a href="/ai-ocr">AI OCR</a></li>
+          <li><a href="/aidc-studio">AIDC Studio</a></li>
+          <li><a href="/pdf-tools#merge">Merge PDF</a></li>
+          <li><a href="/pdf-tools#compress">Compress PDF</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Resources</h2>
+        <ul>
+          <li><a href="/blog">All guides</a></li>
+          <li><a href="/compress-images-for-whatsapp">Compress for WhatsApp</a></li>
+          <li><a href="/jpg-vs-png-vs-webp">JPG vs PNG vs WebP</a></li>
+          <li><a href="/passport-size-photo-at-home">Passport photos at home</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>Company &amp; Legal</h2>
+        <ul>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/cookie-policy">Cookie Policy</a></li>
+          <li><a href="/terms">Terms &amp; Conditions</a></li>
+          <li><a href="#cookie-settings" data-open-cookie-settings>Cookie Settings</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span data-year>2026</span> PIXNIVO. All rights reserved.</span>
+      <span>Privacy-first tools &middot; Most processing happens on your device.</span>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -468,6 +468,211 @@
     }
 
     document.querySelectorAll('[data-year]').forEach(el => { el.textContent = new Date().getFullYear(); });
+    initCookieConsent();
+  }
+
+  /* ---------------------------------------------------------------------
+     Cookie Consent & Google Consent Mode v2 Manager (GDPR/ePrivacy/TCF)
+     --------------------------------------------------------------------- */
+  const CONSENT_KEY = 'pixnivo_consent_v2';
+
+  function getStoredConsent() {
+    try {
+      const raw = localStorage.getItem(CONSENT_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function saveConsent(consent) {
+    try {
+      localStorage.setItem(CONSENT_KEY, JSON.stringify(consent));
+    } catch (e) {}
+    applyConsent(consent);
+  }
+
+  function applyConsent(consent) {
+    if (typeof window.gtag === 'function') {
+      window.gtag('consent', 'update', {
+        analytics_storage: consent.analytics ? 'granted' : 'denied',
+        ad_storage: consent.advertising ? 'granted' : 'denied',
+        ad_user_data: consent.advertising ? 'granted' : 'denied',
+        ad_personalization: consent.advertising ? 'granted' : 'denied'
+      });
+    }
+    document.dispatchEvent(new CustomEvent('pixnivo:consentupdated', { detail: consent }));
+  }
+
+  function closeConsentBanner() {
+    const banner = document.getElementById('pixnivoConsentBanner');
+    if (banner) banner.remove();
+  }
+
+  function closeConsentModal() {
+    const modalBackdrop = document.getElementById('pixnivoConsentModalBackdrop');
+    if (modalBackdrop) modalBackdrop.remove();
+  }
+
+  function showConsentBanner() {
+    if (document.getElementById('pixnivoConsentBanner') || getStoredConsent()) return;
+
+    const banner = document.createElement('div');
+    banner.id = 'pixnivoConsentBanner';
+    banner.className = 'pixnivo-consent-banner';
+    banner.setAttribute('role', 'region');
+    banner.setAttribute('aria-label', 'Privacy and Cookie Consent');
+    banner.innerHTML = `
+      <div class="pixnivo-consent-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        <h3 class="pixnivo-consent-title">Your Privacy &amp; Cookie Choices</h3>
+      </div>
+      <p class="pixnivo-consent-text">
+        Pixnivo processes documents and images directly in your browser. We and our advertising partners (including Google AdSense) use cookies and device identifiers to provide our service, analyze usage, and deliver relevant advertisements in compliance with GDPR, CCPA, and Google Publisher Policies. You can accept all cookies, continue with strictly necessary cookies only, or customize your preferences anytime. Learn more in our <a href="/cookie-policy">Cookie Policy</a> and <a href="/privacy">Privacy Policy</a>.
+      </p>
+      <div class="pixnivo-consent-actions">
+        <button type="button" class="btn btn-ghost" id="pixnivoConsentCustomizeBtn">Customize Preferences</button>
+        <button type="button" class="btn btn-secondary" id="pixnivoConsentRejectBtn">Reject Non-Essential</button>
+        <button type="button" class="btn btn-primary" id="pixnivoConsentAcceptAllBtn">Accept All</button>
+      </div>
+    `;
+
+    document.body.appendChild(banner);
+
+    const acceptBtn = document.getElementById('pixnivoConsentAcceptAllBtn');
+    if (acceptBtn) {
+      acceptBtn.addEventListener('click', () => {
+        saveConsent({ necessary: true, analytics: true, advertising: true, timestamp: new Date().toISOString() });
+        closeConsentBanner();
+        toast('Cookie preferences saved: All enabled', 'success');
+      });
+    }
+
+    const rejectBtn = document.getElementById('pixnivoConsentRejectBtn');
+    if (rejectBtn) {
+      rejectBtn.addEventListener('click', () => {
+        saveConsent({ necessary: true, analytics: false, advertising: false, timestamp: new Date().toISOString() });
+        closeConsentBanner();
+        toast('Cookie preferences saved: Non-essential declined', 'info');
+      });
+    }
+
+    const custBtn = document.getElementById('pixnivoConsentCustomizeBtn');
+    if (custBtn) {
+      custBtn.addEventListener('click', () => {
+        openCookieSettings();
+      });
+    }
+  }
+
+  function openCookieSettings() {
+    closeConsentModal();
+    const current = getStoredConsent() || { necessary: true, analytics: true, advertising: true };
+
+    const backdrop = document.createElement('div');
+    backdrop.id = 'pixnivoConsentModalBackdrop';
+    backdrop.className = 'pixnivo-modal-backdrop';
+    backdrop.innerHTML = `
+      <div class="pixnivo-consent-modal" role="dialog" aria-modal="true" aria-labelledby="consentModalTitle">
+        <div class="pixnivo-modal-head">
+          <h2 id="consentModalTitle">Cookie &amp; Privacy Preferences</h2>
+          <button type="button" class="pixnivo-modal-close" id="pixnivoModalCloseBtn" aria-label="Close modal">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-2); line-height: 1.5; margin: 0 0 16px 0;">
+          Manage how cookies, analytics, and advertising identifiers are stored on your device. Pixnivo respects your privacy and complies with the Google Consent Mode v2 standard.
+        </p>
+
+        <div class="pixnivo-consent-group">
+          <div class="pixnivo-consent-group-head">
+            <span class="pixnivo-consent-group-title">Strictly Necessary Cookies</span>
+            <span class="pixnivo-badge-always-active">Always Active</span>
+          </div>
+          <p>Essential for site operation, theme preservation (dark/light), session tokens, workspace routing, and security. Cannot be disabled.</p>
+        </div>
+
+        <div class="pixnivo-consent-group">
+          <div class="pixnivo-consent-group-head">
+            <label class="pixnivo-consent-group-title" for="pixConsentAnalytics">Analytics &amp; Performance</label>
+            <label class="switch">
+              <input type="checkbox" id="pixConsentAnalytics" ${current.analytics !== false ? 'checked' : ''} />
+              <span class="track"></span>
+            </label>
+          </div>
+          <p>Collects anonymous aggregated metrics (Google Analytics 4) to understand how tools are used and help us improve rendering speed and UX.</p>
+        </div>
+
+        <div class="pixnivo-consent-group">
+          <div class="pixnivo-consent-group-head">
+            <label class="pixnivo-consent-group-title" for="pixConsentAds">Advertising &amp; Personalization</label>
+            <label class="switch">
+              <input type="checkbox" id="pixConsentAds" ${current.advertising !== false ? 'checked' : ''} />
+              <span class="track"></span>
+            </label>
+          </div>
+          <p>Used by Google AdSense and advertising networks to display relevant advertisements that keep Pixnivo's 32+ professional tools 100% free.</p>
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; flex-wrap: wrap;">
+          <button type="button" class="btn btn-secondary" id="pixModalSaveBtn">Save Selected</button>
+          <button type="button" class="btn btn-primary" id="pixModalAcceptAllBtn">Accept All</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(backdrop);
+
+    const closeModal = () => closeConsentModal();
+    const closeBtn = document.getElementById('pixnivoModalCloseBtn');
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) closeModal();
+    });
+
+    const acceptAllBtn = document.getElementById('pixModalAcceptAllBtn');
+    if (acceptAllBtn) {
+      acceptAllBtn.addEventListener('click', () => {
+        saveConsent({ necessary: true, analytics: true, advertising: true, timestamp: new Date().toISOString() });
+        closeModal();
+        closeConsentBanner();
+        toast('All cookie categories enabled', 'success');
+      });
+    }
+
+    const saveBtn = document.getElementById('pixModalSaveBtn');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', () => {
+        const analyticsEl = document.getElementById('pixConsentAnalytics');
+        const adsEl = document.getElementById('pixConsentAds');
+        saveConsent({
+          necessary: true,
+          analytics: analyticsEl ? analyticsEl.checked : true,
+          advertising: adsEl ? adsEl.checked : true,
+          timestamp: new Date().toISOString()
+        });
+        closeModal();
+        closeConsentBanner();
+        toast('Preferences successfully updated', 'success');
+      });
+    }
+  }
+
+  function initCookieConsent() {
+    const existing = getStoredConsent();
+    if (existing) {
+      applyConsent(existing);
+    } else {
+      setTimeout(showConsentBanner, 800);
+    }
+
+    document.addEventListener('click', (e) => {
+      const trigger = e.target.closest('[data-open-cookie-settings], a[href="#cookie-settings"], a[href="/cookie-policy#settings"]');
+      if (trigger) {
+        e.preventDefault();
+        openCookieSettings();
+      }
+    });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initChrome);
@@ -492,6 +697,8 @@
     setLoading,
     refreshRanges,
     nextFrame,
+    openCookieSettings,
+    getStoredConsent,
     icons: ICONS
   };
 })();

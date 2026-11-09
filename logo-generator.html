@@ -15,6 +15,38 @@
   <meta property="og:description" content="Create custom app icons and vector logos with neural AI themes, badge frames, and scalable SVG export." />
   <meta property="og:image" content="https://pixnivo.app/assets/og-image.png" />
 
+    <!-- Google Consent Mode v2 Default (MUST run before Gtag & AdSense) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    try {
+      var savedConsent = localStorage.getItem('pixnivo_consent_v2');
+      if (savedConsent) {
+        var parsed = JSON.parse(savedConsent);
+        gtag('consent', 'default', {
+          'analytics_storage': parsed.analytics ? 'granted' : 'denied',
+          'ad_storage': parsed.advertising ? 'granted' : 'denied',
+          'ad_user_data': parsed.advertising ? 'granted' : 'denied',
+          'ad_personalization': parsed.advertising ? 'granted' : 'denied'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'analytics_storage': 'denied',
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied'
+        });
+      }
+    } catch(e) {
+      gtag('consent', 'default', {
+        'analytics_storage': 'denied',
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied'
+      });
+    }
+  </script>
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9RDW8F1H9D"></script>
   <script>
@@ -309,12 +341,14 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h2>Company</h2>
+        <h2>Company &amp; Legal</h2>
         <ul>
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
           <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/cookie-policy">Cookie Policy</a></li>
           <li><a href="/terms">Terms &amp; Conditions</a></li>
+          <li><a href="#cookie-settings" data-open-cookie-settings>Cookie Settings</a></li>
         </ul>
       </div>
     </div>

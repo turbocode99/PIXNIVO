@@ -3,27 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact &amp; Feedback — PIXNIVO</title>
-  <meta name="description" content="Get in touch with the PIXNIVO team. Report edge-case bugs, request features, or send feedback." />
+  <title>Contact &amp; Customer Support — PIXNIVO</title>
+  <meta name="description" content="Contact the PIXNIVO engineering and support team. Inquiries for technical support, advertising, bug reports, and data privacy requests." />
   <meta name="theme-color" content="#fafafa" />
 
   <!-- Open Graph / Social Meta -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://pixnivo.app/contact" />
-  <meta property="og:title" content="Contact &amp; Feedback — PIXNIVO" />
+  <meta property="og:title" content="Contact &amp; Support — PIXNIVO" />
+  <meta property="og:description" content="Reach PIXNIVO support, editorial, business, and privacy teams." />
+  <meta property="og:image" content="https://pixnivo.app/assets/og-image.png" />
+
+  <!-- Google Consent Mode v2 Default (MUST run before Gtag & AdSense) -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    try {
+      var savedConsent = localStorage.getItem('pixnivo_consent_v2');
+      if (savedConsent) {
+        var parsed = JSON.parse(savedConsent);
+        gtag('consent', 'default', {
+          'analytics_storage': parsed.analytics ? 'granted' : 'denied',
+          'ad_storage': parsed.advertising ? 'granted' : 'denied',
+          'ad_user_data': parsed.advertising ? 'granted' : 'denied',
+          'ad_personalization': parsed.advertising ? 'granted' : 'denied'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'analytics_storage': 'denied',
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied'
+        });
+      }
+    } catch(e) {
+      gtag('consent', 'default', {
+        'analytics_storage': 'denied',
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied'
+      });
+    }
+  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9RDW8F1H9D"></script>
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-9RDW8F1H9D');
   </script>
 
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8972850134795669" crossorigin="anonymous"></script>
-
 
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -46,7 +77,6 @@
 </head>
 <body>
 
-
   <a class="skip-link" href="#main">Skip to main content</a>
 
   <header class="site-header">
@@ -61,7 +91,7 @@
         <a class="nav-link" href="/logo-generator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg><span>Logo Generator</span></a>
         <a class="nav-link" href="/pdf-tools"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>PDF Tools</span></a>
         <a class="nav-link" href="/ai-ocr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 8h8"/><path d="M7 12h10"/><path d="M7 16h6"/></svg><span>AI OCR</span></a>
-        <a class="nav-link" href="/barcode-tools.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5v14"/><path d="M8 5v14"/><path d="M12 5v14"/><path d="M17 5v14"/><path d="M21 5v14"/></svg><span>Barcode Tools</span></a>
+        <a class="nav-link" href="/aidc-studio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5v14"/><path d="M8 5v14"/><path d="M12 5v14"/><path d="M17 5v14"/><path d="M21 5v14"/></svg><span>AIDC Studio</span></a>
         <a class="nav-link" href="/blog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>Guides</span></a>
         <div class="nav-divider" role="separator"></div>
         <a class="nav-link nav-secondary" href="/about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span>About</span></a>
@@ -83,35 +113,75 @@
 
   <!-- Main Content -->
   <main id="main" class="article-wrap">
-    <a class="back-link" href="/">← Back to Home</a>
+    <a class="back-link" href="/"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Back to home</a>
 
     <header class="article-header">
-      <div class="article-eyebrow">Get in Touch</div>
-      <h1>Contact &amp; Feedback</h1>
-      <p class="hero-subtitle" style="text-align:left; margin: 12px 0 0;">Have feedback, a feature request, or an image file that encountered an unexpected edge-case? We read every submission.</p>
+      <div class="article-eyebrow">Direct Communications</div>
+      <h1>Contact &amp; Customer Support</h1>
+      <p class="hero-subtitle">Have technical feedback, a feature proposal, an enterprise barcode inquiry, or need assistance? Our engineering, editorial, and operations teams review every transmission.</p>
     </header>
 
     <article class="article-content">
-      <div class="guide-card" style="margin-bottom:24px;">
-        <h2 style="margin-top:0; color:var(--primary-light);">Direct Email</h2>
-        <p>For inquiries, support, or partnership discussions, reach out directly at:</p>
-        <p><a href="mailto:support@pixnivo.app" style="font-size:18px; font-weight:700; color:var(--primary-light) !important;">support@pixnivo.app</a></p>
+      <div class="callout-box" style="margin-bottom: 28px;">
+        <p><b>Service Level Agreement (SLA):</b> All email inquiries sent to our official desks receive an initial technical response within <b>24 to 48 business hours</b>. For security and privacy, please do not include sensitive personal identification numbers or passwords in your message.</p>
       </div>
 
-      <div class="guide-card" style="margin-bottom:24px;">
-        <h2 style="margin-top:0; color:var(--primary-light);">Reporting Bugs Effectively</h2>
-        <p>To help us reproduce and resolve technical quirks quickly, please include:</p>
-        <ul>
-          <li>Your browser name and version (e.g., Safari 17 on iOS, Chrome 124 on Windows).</li>
-          <li>The specific tool being used (Compressor, Editor, AI Background Remover, or PDF Studio).</li>
-          <li>The file format and approximate size of the image or PDF.</li>
-          <li>Any error messages displayed on screen or in the browser developer console.</li>
-        </ul>
+      <h2>1. Departmental Email Directories</h2>
+      <p>To ensure your communication reaches the appropriate team without delay, please direct your message to one of our dedicated desks:</p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 24px 0;">
+        <div class="guide-card" style="margin-bottom: 0;">
+          <h3 style="margin-top: 0; color: var(--brand);">Technical &amp; User Support</h3>
+          <p style="font-size: 0.9rem; color: var(--text-2);">For bug reports, edge-case image rendering issues, PDF compilation errors, or questions about in-browser tool operations.</p>
+          <p><a href="mailto:support@pixnivo.app" style="font-weight: 700; color: var(--brand);">support@pixnivo.app</a></p>
+        </div>
+
+        <div class="guide-card" style="margin-bottom: 0;">
+          <h3 style="margin-top: 0; color: var(--brand);">Business &amp; Advertising</h3>
+          <p style="font-size: 0.9rem; color: var(--text-2);">For advertising inquiries, Google AdSense mediation, commercial licensing, high-volume API access, or brand sponsorships.</p>
+          <p><a href="mailto:business@pixnivo.app" style="font-weight: 700; color: var(--brand);">business@pixnivo.app</a></p>
+        </div>
+
+        <div class="guide-card" style="margin-bottom: 0;">
+          <h3 style="margin-top: 0; color: var(--brand);">Privacy &amp; Data Protection</h3>
+          <p style="font-size: 0.9rem; color: var(--text-2);">For GDPR/CCPA data subject access requests, cookie policy clarifications, or queries regarding ephemeral cloud processing.</p>
+          <p><a href="mailto:privacy@pixnivo.app" style="font-weight: 700; color: var(--brand);">privacy@pixnivo.app</a></p>
+        </div>
+
+        <div class="guide-card" style="margin-bottom: 0;">
+          <h3 style="margin-top: 0; color: var(--brand);">Editorial &amp; Content</h3>
+          <p style="font-size: 0.9rem; color: var(--text-2);">For factual corrections, suggestions regarding technical guides, or editorial contributions to our knowledge base.</p>
+          <p><a href="mailto:editorial@pixnivo.app" style="font-weight: 700; color: var(--brand);">editorial@pixnivo.app</a></p>
+        </div>
       </div>
 
-      <div class="guide-card">
-        <h2 style="margin-top:0; color:var(--primary-light);">Feature Suggestions</h2>
-        <p>Many of our features — such as the manual eraser touch-up brush and the before/after comparison handle — originated from user suggestions. If you have an idea that fits our privacy-first philosophy, we'd love to hear it.</p>
+      <h2>2. Effective Technical Bug Submissions</h2>
+      <p>Because PIXNIVO tools execute directly inside your browser's WebAssembly and JavaScript environment, bugs are often dependent on specific device memory, GPU hardware acceleration, or browser version quirks. When reporting an issue, including the following diagnostics dramatically speeds resolution:</p>
+      <ul>
+        <li><b>Exact Tool &amp; Subview:</b> E.g., PDF Tools (Rotate PDF), AIDC Studio (Batch Generator), or Image Compressor.</li>
+        <li><b>Browser &amp; Operating System:</b> E.g., Google Chrome 128 on Windows 11, Safari 17.5 on macOS Sonoma, or Mobile Safari on iOS 17.</li>
+        <li><b>Input File Metadata:</b> Approximate file size (e.g., 18 MB), dimensions (e.g., 4000x3000 px), and format (.png, .webp, .pdf, .csv).</li>
+        <li><b>Console Output:</b> Any JavaScript warning or red error message visible in the browser developer console (F12 &rarr; Console).</li>
+      </ul>
+
+      <h2>3. Enterprise Operations &amp; Hosting Architecture</h2>
+      <p>PIXNIVO is operated under modern cloud governance standards:</p>
+      <ul>
+        <li><b>Primary Cloud Provider:</b> Microsoft Azure Cloud (East US Region).</li>
+        <li><b>Edge &amp; CDN Acceleration:</b> Encrypted TLS 1.3 endpoints with automatic HTTP/2 multiplexing.</li>
+        <li><b>Physical Headquarters / Jurisdiction:</b> PIXNIVO Digital Solutions, Infrastructure Hosted on Microsoft Azure Cloud.</li>
+      </ul>
+
+      <h2>4. Support &amp; Service FAQ</h2>
+      <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 16px;">
+        <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px;">
+          <h4 style="margin: 0 0 6px 0; font-size: 0.95rem; color: var(--text);">Why does PIXNIVO not offer live telephone support?</h4>
+          <p style="margin: 0; font-size: 0.88rem; color: var(--text-2); line-height: 1.5;">To maintain all 32+ PDF and image tools as 100% free web utilities without imposing monthly user fees or paywalls, we operate a lean, engineer-staffed email desk. This ensures you speak directly with full-stack software engineers who can inspect code and fix issues immediately.</p>
+        </div>
+        <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px;">
+          <h4 style="margin: 0 0 6px 0; font-size: 0.95rem; color: var(--text);">How do I manage my cookie consent preferences?</h4>
+          <p style="margin: 0; font-size: 0.88rem; color: var(--text-2); line-height: 1.5;">You can open our preferences center at any time by clicking <a href="#cookie-settings" data-open-cookie-settings>Cookie Settings</a> in the footer of any page or reviewing our complete <a href="/cookie-policy">Cookie Policy</a>.</p>
+        </div>
       </div>
     </article>
   </main>
@@ -138,11 +208,11 @@
       <div class="footer-col">
         <h2>Document tools</h2>
         <ul>
-          <li><a href="/pdf-tools?tab=img2pdf">Images to PDF</a></li>
-          <li><a href="/pdf-tools?tab=merge">Merge PDF</a></li>
-          <li><a href="/pdf-tools?tab=compress">Compress PDF</a></li>
+          <li><a href="/pdf-tools">PDF Tools (32 Suite)</a></li>
           <li><a href="/ai-ocr">AI OCR</a></li>
-          <li><a href="/barcode-tools.html">Barcode Generator</a></li>
+          <li><a href="/aidc-studio">AIDC Studio</a></li>
+          <li><a href="/pdf-tools#merge">Merge PDF</a></li>
+          <li><a href="/pdf-tools#compress">Compress PDF</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -155,12 +225,14 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h2>Company</h2>
+        <h2>Company &amp; Legal</h2>
         <ul>
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
           <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/cookie-policy">Cookie Policy</a></li>
           <li><a href="/terms">Terms &amp; Conditions</a></li>
+          <li><a href="#cookie-settings" data-open-cookie-settings>Cookie Settings</a></li>
         </ul>
       </div>
     </div>

@@ -1,4 +1,12 @@
 User-agent: *
 Allow: /
 
+# Google AdSense Crawler
+User-agent: Mediapartners-Google
+Allow: /
+
+# Google Search Crawler
+User-agent: Googlebot
+Allow: /
+
 Sitemap: https://pixnivo.app/sitemap.xml
