@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photo Studio Pro &mdash; Online Photoshop Alternative | PIXNIVO</title>
+  <meta name="description" content="Professional browser-based photo editor with layers, masks, blend modes, retouching, vector shapes, typography, and on-device AI tools. 100% private & free." />
+  <meta name="theme-color" content="#0f172a" />
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+  
+  <link rel="stylesheet" href="/assets/css/main.css?v=20261109_v3" />
+  <link rel="stylesheet" href="/assets/css/editor.css?v=20261109_v1" />
+
+  <!-- Instant Theme Detection Script -->
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('pixnivo_theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body class="photo-studio-root">
+
+  <!-- ==================== STUDIO TOP NAV & MENUBAR ==================== -->
+  <header class="studio-top-nav">
+    <div class="studio-logo-area">
+      <a class="brand-name" href="/" aria-label="PIXNIVO home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" width="20" height="20" style="color:var(--brand);"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        PIX<span>NIVO</span>
+      </a>
+      <span class="studio-badge-pro">Studio Pro</span>
+
+      <nav class="studio-menubar" aria-label="Editor Menu">
+        <!-- File Menu -->
+        <div class="studio-menu-item">
+          <button class="studio-menu-btn" type="button">File</button>
+          <div class="studio-dropdown">
+            <button class="studio-dropdown-item" type="button" id="menuFileNew">New Project… <span class="shortcut">Ctrl+N</span></button>
+            <button class="studio-dropdown-item" type="button" id="menuFileOpen">Open Image… <span class="shortcut">Ctrl+O</span></button>
+            <div class="studio-dropdown-divider"></div>
+            <button class="studio-dropdown-item" type="button" id="menuFileExport">Export As… <span class="shortcut">Ctrl+Shift+E</span></button>
+          </div>
+        </div>
+
+        <!-- Edit Menu -->
+        <div class="studio-menu-item">
+          <button class="studio-menu-btn" type="button">Edit</button>
+          <div class="studio-dropdown">
+            <button class="studio-dropdown-item" type="button" id="menuEditUndo">Undo <span class="shortcut">Ctrl+Z</span></button>
+            <button class="studio-dropdown-item" type="button" id="menuEditRedo">Redo <span class="shortcut">Ctrl+Y</span></button>
+            <div class="studio-dropdown-divider"></div>
+            <button class="studio-dropdown-item" type="button" id="menuEditCutout">AI Subject Cutout</button>
+            <button class="studio-dropdown-item" type="button" id="menuEditInpaint">AI Inpaint Object</button>
+          </div>
+        </div>
+
+        <!-- Image Menu -->
+        <div class="studio-menu-item">
+          <button class="studio-menu-btn" type="button">Image</button>
+          <div class="studio-dropdown">
+            <button class="studio-dropdown-item" type="button" id="menuImgAutoEnhance">Auto Tone &amp; Contrast</button>
+            <button class="studio-dropdown-item" type="button" id="menuImgPortrait">Portrait Skin Polish</button>
+            <div class="studio-dropdown-divider"></div>
+            <button class="studio-dropdown-item" type="button" id="menuImgBW">Black &amp; White</button>
+            <button class="studio-dropdown-item" type="button" id="menuImgInvert">Invert Colors</button>
+          </div>
+        </div>
+
+        <!-- Layer Menu -->
+        <div class="studio-menu-item">
+          <button class="studio-menu-btn" type="button">Layer</button>
+          <div class="studio-dropdown">
+            <button class="studio-dropdown-item" type="button" id="menuLayerNew">New Layer <span class="shortcut">Ctrl+Shift+N</span></button>
+            <button class="studio-dropdown-item" type="button" id="menuLayerDup">Duplicate Layer <span class="shortcut">Ctrl+J</span></button>
+            <button class="studio-dropdown-item" type="button" id="menuLayerDelete">Delete Layer</button>
+            <div class="studio-dropdown-divider"></div>
+            <button class="studio-dropdown-item" type="button" id="menuLayerMerge">Merge Down <span class="shortcut">Ctrl+E</span></button>
+            <button class="studio-dropdown-item" type="button" id="menuLayerFlatten">Flatten Image</button>
+          </div>
+        </div>
+
+        <!-- Filter Menu -->
+        <div class="studio-menu-item">
+          <button class="studio-menu-btn" type="button">Filter</button>
+          <div class="studio-dropdown">
+            <button class="studio-dropdown-item" type="button" id="menuFilterBlur">Gaussian Blur…</button>
+            <button class="studio-dropdown-item" type="button" id="menuFilterSharpen">Sharpen</button>
+            <button class="studio-dropdown-item" type="button" id="menuFilterOilPaint">Oil Paint…</button>
+            <button class="studio-dropdown-item" type="button" id="menuFilterNoise">Add Noise…</button>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Quick Action Header Buttons -->
+    <div class="studio-quick-actions">
+      <a href="/" class="studio-btn-sm" style="text-decoration:none;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> Image Tools</a>
+      <a href="/pdf-tools" class="studio-btn-sm" style="text-decoration:none;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/></svg> PDF Tools</a>
+      <button class="studio-btn-sm studio-btn-primary" type="button" id="btnQuickExport">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export
+      </button>
+    </div>
+  </header>
+
+  <!-- ==================== DYNAMIC OPTIONS BAR ==================== -->
+  <div class="studio-options-bar" id="optionsBar">
+    <div class="opt-group">
+      <span class="opt-label" id="activeToolTitle" style="font-weight:700; color:var(--studio-active-tool);">BRUSH</span>
+    </div>
+    <div class="opt-divider"></div>
+    <div class="opt-group">
+      <span class="opt-label">Size:</span>
+      <input type="number" class="opt-input-number" id="brushSizeInput" value="35" min="1" max="500" />
+      <span class="opt-label">px</span>
+    </div>
+    <div class="opt-group">
+      <span class="opt-label">Hardness:</span>
+      <input type="number" class="opt-input-number" id="brushHardnessInput" value="80" min="0" max="100" />
+      <span class="opt-label">%</span>
+    </div>
+    <div class="opt-group">
+      <span class="opt-label">Opacity:</span>
+      <input type="number" class="opt-input-number" id="brushOpacityInput" value="100" min="1" max="100" />
+      <span class="opt-label">%</span>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN STUDIO BODY ==================== -->
+  <div class="studio-main-body">
+
+    <!-- Left Vertical Tool Palette -->
+    <aside class="studio-toolbar" aria-label="Tool Palette">
+      <button class="tool-btn" data-tool="move" title="Move Tool (V)" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 9 2 12 5 15"/><polyline points="9 5 12 2 15 5"/><polyline points="15 19 12 22 9 19"/><polyline points="19 9 22 12 19 15"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+      </button>
+
+      <button class="tool-btn" data-tool="marquee_rect" title="Rectangular Marquee (M)" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3"><rect x="3" y="3" width="18" height="18" rx="1"/></svg>
+      </button>
+
+      <button class="tool-btn" data-tool="marquee_ellipse" title="Elliptical Marquee" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3"><circle cx="12" cy="12" r="9"/></svg>
+      </button>
+
+      <button class="tool-btn" data-tool="lasso" title="Lasso Tool (L)" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 22a5 5 0 0 1-2-4c0-4 4-6 6-6s6 2 6 6a5 5 0 0 1-2 4"/><path d="M12 2a4 4 0 0 0-4 4c0 3 4 6 4 6s4-3 4-6a4 4 0 0 0-4-4z"/></svg>
+      </button>
+
+      <button class="tool-btn" data-tool="crop" title="Crop Tool (C)" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></svg>
+      </button>
+
+      <button class="tool-btn" data-tool="eyedropper" title="Eyedropper Tool (I)" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 22 1-1h3l9-9"/><path d="M16 4a2 2 0 0 1 2.8 0l1.4 1.4a2 2 0 0 1 0 2.8l-8.4 8.4-4.2 1.4 1.4-4.2L16 4z"/></svg>
+      </button>
+
+      <button class="tool-btn" data-tool="heal" title="Spot Healing Brush (J)" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 5 4 4"/><path d="M13 3l6 6a2 2 0 0 1 0 2.8l-8 8a2 2 0 0 1-2.8 0l-6-6a2 2 0 0 1 0-2.8l8-8a2 2 0 0 1 2.8 0z"/><circle cx="12" cy="12" r="1"/></svg>
+      </button>
+
+      <button class="tool-btn active" data-tool="brush" title="Brush Tool (B)" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08"/><path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z"/></svg>
+      </button>
+
+      <button class="tool-btn" data-tool="clone" title="Clone Stamp (S)" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 22h14"/><path d="M19 17H5"/><path d="M12 17V7"/><path d="M8 7h8l-1-4H9L8 7z"/></svg>
+      </button>
+
+      <button class="tool-btn" data-tool="eraser" title="Eraser Tool (E)" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></svg>
+      </button>
+
+      <button class="tool-btn" data-tool="bucket" title="Paint Bucket (G)" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m19 11-8-8-8.6 8.6a2 2 0 0 0 0 2.8l5.2 5.2c.8.8 2 .8 2.8 0L19 11Z"/><path d="m5 2 5 5"/><path d="M2 13h15"/><path d="M22 20a2 2 0 1 1-4 0c0-1.6 1.7-2.4 2-4 .3 1.6 2 2.4 2 4Z"/></svg>
+      </button>
+
+      <button class="tool-btn" data-tool="text" title="Text Tool (T)" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+      </button>
+
+      <button class="tool-btn" data-tool="shape" title="Shape Tool (U)" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+      </button>
+
+      <!-- Color Wells -->
+      <div class="tool-color-wells">
+        <button class="btn-swap-colors" id="btnSwapColors" title="Swap Colors (X)" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="8 21 3 21 3 16"/></svg>
+        </button>
+        <div class="well-fg" id="wellFg" title="Foreground Color"></div>
+        <div class="well-bg" id="wellBg" title="Background Color"></div>
+      </div>
+    </aside>
+
+    <!-- Center Canvas Area -->
+    <main class="studio-canvas-area" id="canvasArea">
+      <div class="ruler-corner"></div>
+      <div class="ruler-top"><canvas id="rulerTopCanvas" class="ruler-canvas"></canvas></div>
+      <div class="ruler-left"><canvas id="rulerLeftCanvas" class="ruler-canvas"></canvas></div>
+
+      <div class="canvas-viewport-container" id="canvasViewport">
+        <div class="canvas-artboard" id="canvasArtboard">
+          <canvas id="mainCanvas"></canvas>
+          <canvas id="overlayCanvas" class="canvas-overlay"></canvas>
+        </div>
+      </div>
+    </main>
+
+    <!-- Right Sidebar Panels (Layers, History, Adjustments, AI Lab) -->
+    <aside class="studio-panels-sidebar" id="panelsSidebar">
+      <nav class="panel-tabs-bar" role="tablist">
+        <button class="panel-tab active" data-panel="panelLayers" role="tab" type="button">Layers</button>
+        <button class="panel-tab" data-panel="panelAdjustments" role="tab" type="button">Adjustments</button>
+        <button class="panel-tab" data-panel="panelAi" role="tab" type="button">AI Lab</button>
+        <button class="panel-tab" data-panel="panelHistory" role="tab" type="button">History</button>
+      </nav>
+
+      <!-- 1. Layers Panel -->
+      <div class="panel-body" id="panelLayers">
+        <div class="layers-header-controls">
+          <select class="layer-blend-select" id="layerBlendSelect" aria-label="Blend Mode">
+            <option value="normal">Normal</option>
+            <option value="multiply">Multiply</option>
+            <option value="screen">Screen</option>
+            <option value="overlay">Overlay</option>
+            <option value="darken">Darken</option>
+            <option value="lighten">Lighten</option>
+            <option value="color-dodge">Color Dodge</option>
+            <option value="color-burn">Color Burn</option>
+            <option value="hard-light">Hard Light</option>
+            <option value="soft-light">Soft Light</option>
+            <option value="difference">Difference</option>
+            <option value="exclusion">Exclusion</option>
+            <option value="hue">Hue</option>
+            <option value="saturation">Saturation</option>
+            <option value="color">Color</option>
+            <option value="luminosity">Luminosity</option>
+          </select>
+          <div class="layer-opacity-wrap">
+            <span style="font-size:0.75rem; color:var(--studio-text-3);">Op:</span>
+            <input type="number" id="layerOpacityInput" value="100" min="0" max="100" />
+            <span style="font-size:0.75rem; color:var(--studio-text-3);">%</span>
+          </div>
+        </div>
+
+        <div class="layers-list" id="layersList"></div>
+
+        <div class="layers-footer-actions">
+          <button class="layer-action-btn" id="btnAddMask" title="Add Layer Mask" type="button">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 4v16"/></svg>
+          </button>
+          <button class="layer-action-btn" id="btnMergeDown" title="Merge Down (Ctrl+E)" type="button">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 13 12 18 17 13"/><polyline points="7 6 12 11 17 6"/></svg>
+          </button>
+          <button class="layer-action-btn" id="btnDuplicateLayer" title="Duplicate Layer (Ctrl+J)" type="button">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+          <button class="layer-action-btn" id="btnAddLayer" title="Create New Layer" type="button">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <button class="layer-action-btn" id="btnDeleteLayer" title="Delete Layer" type="button">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. Adjustments Panel -->
+      <div class="panel-body" id="panelAdjustments" hidden>
+        <div class="adjustments-grid">
+          <button class="adj-btn" id="adjBrightnessBtn" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            Brightness
+          </button>
+          <button class="adj-btn" id="adjHueBtn" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10c0 5.5-4.5 10-10 10S2 17.5 2 12"/></svg>
+            Hue / Sat
+          </button>
+          <button class="adj-btn" id="adjBWBtn" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v20"/></svg>
+            Black &amp; White
+          </button>
+          <button class="adj-btn" id="adjInvertBtn" type="button">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 22 22 22 12 2"/></svg>
+            Invert
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. AI Lab Panel (100% Client-Side WebGPU) -->
+      <div class="panel-body" id="panelAi" hidden>
+        <div class="ai-card">
+          <h4><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--brand);"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Smart Subject Cutout</h4>
+          <p>Automatically isolates foreground subjects and generates a pixel-exact layer mask on your device.</p>
+          <button class="studio-btn-sm studio-btn-primary" type="button" id="btnAiCutout">Extract Subject Mask</button>
+        </div>
+
+        <div class="ai-card">
+          <h4><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--brand);"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> AI Object Inpainting</h4>
+          <p>Seamlessly erases unwanted objects using Poisson boundary synthesis.</p>
+          <button class="studio-btn-sm" type="button" id="btnAiInpaint">Inpaint Selection</button>
+        </div>
+
+        <div class="ai-card">
+          <h4><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--brand);"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg> Portrait Polish</h4>
+          <p>Softens blemishes and balances skin tones while preserving fine hair and edge sharpness.</p>
+          <button class="studio-btn-sm" type="button" id="btnAiPortraitPolish">Polish Portrait</button>
+        </div>
+
+        <div class="ai-card">
+          <h4><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--brand);"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Auto Tone &amp; Contrast</h4>
+          <p>One-click dynamic range expansion and color balance normalization.</p>
+          <button class="studio-btn-sm" type="button" id="btnAiAutoEnhance">Auto Enhance</button>
+        </div>
+      </div>
+
+      <!-- 4. History Panel -->
+      <div class="panel-body" id="panelHistory" hidden>
+        <div style="display:flex; justify-content:flex-end;">
+          <button class="studio-btn-sm" id="btnHistorySnapshot" type="button">Create Snapshot</button>
+        </div>
+        <div class="layers-list" id="historyList"></div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- ==================== BOTTOM STATUS BAR ==================== -->
+  <footer class="studio-status-bar">
+    <div class="status-left">
+      <span id="statusDims">1920 × 1080 px</span>
+      <span id="statusLayers">1 Layer</span>
+      <span id="statusCoords">X: 0 Y: 0</span>
+    </div>
+    <div class="status-right">
+      <span id="statusZoom">100%</span>
+      <span>sRGB 8-bit</span>
+      <span>WebGPU Accelerated</span>
+    </div>
+  </footer>
+
+  <!-- ==================== MODAL DIALOGS ==================== -->
+
+  <!-- Modal: New Document -->
+  <div class="studio-modal-backdrop" id="modalNewDoc" hidden>
+    <div class="studio-modal">
+      <div class="studio-modal-header">
+        <h3>New Project</h3>
+        <button class="studio-modal-close" data-modal-close type="button">&times;</button>
+      </div>
+      <div class="studio-modal-body">
+        <label style="font-weight:600; font-size:0.85rem;">Popular Presets:</label>
+        <div class="preset-grid">
+          <div class="preset-card" data-w="1080" data-h="1080">
+            <div class="preset-name">Square Post</div>
+            <div class="preset-dims">1080 × 1080</div>
+          </div>
+          <div class="preset-card" data-w="1080" data-h="1920">
+            <div class="preset-name">Story / Reel</div>
+            <div class="preset-dims">1080 × 1920</div>
+          </div>
+          <div class="preset-card" data-w="1280" data-h="720">
+            <div class="preset-name">YouTube 720p</div>
+            <div class="preset-dims">1280 × 720</div>
+          </div>
+          <div class="preset-card" data-w="1920" data-h="1080">
+            <div class="preset-name">Full HD 1080p</div>
+            <div class="preset-dims">1920 × 1080</div>
+          </div>
+          <div class="preset-card" data-w="2480" data-h="3508">
+            <div class="preset-name">Print A4 (300DPI)</div>
+            <div class="preset-dims">2480 × 3508</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Export As -->
+  <div class="studio-modal-backdrop" id="modalExport" hidden>
+    <div class="studio-modal" style="max-width:440px;">
+      <div class="studio-modal-header">
+        <h3>Export Image</h3>
+        <button class="studio-modal-close" data-modal-close type="button">&times;</button>
+      </div>
+      <div class="studio-modal-body" style="display:flex; flex-direction:column; gap:14px;">
+        <div>
+          <label style="font-size:0.82rem; font-weight:600; display:block; margin-bottom:6px;">Format:</label>
+          <select class="opt-select" id="exportFormatSelect" style="width:100%; padding:8px;">
+            <option value="png">PNG (Lossless, Transparency)</option>
+            <option value="jpg">JPEG (High Quality Photos)</option>
+            <option value="webp">WebP (Modern, Smallest Size)</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:0.82rem; font-weight:600; display:block; margin-bottom:6px;">Quality:</label>
+          <select class="opt-select" id="exportQualitySelect" style="width:100%; padding:8px;">
+            <option value="1.0">Maximum (100%)</option>
+            <option value="0.92" selected>Very High (92%)</option>
+            <option value="0.80">Medium (80%)</option>
+            <option value="0.65">Web Compressed (65%)</option>
+          </select>
+        </div>
+      </div>
+      <div class="studio-modal-footer">
+        <button class="studio-btn-sm" data-modal-close type="button">Cancel</button>
+        <button class="studio-btn-sm studio-btn-primary" id="btnConfirmExport" type="button">Download</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Core Studio Scripts -->
+  <script src="/assets/js/site.js?v=20261109_v3"></script>
+  <script src="/assets/js/editor/core-engine.js?v=20261109_v1"></script>
+  <script src="/assets/js/editor/tools-engine.js?v=20261109_v1"></script>
+  <script src="/assets/js/editor/filters-engine.js?v=20261109_v1"></script>
+  <script src="/assets/js/editor/ai-engine.js?v=20261109_v1"></script>
+  <script src="/assets/js/editor/editor-studio.js?v=20261109_v1"></script>
+</body>
+</html>

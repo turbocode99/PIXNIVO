@@ -26,6 +26,8 @@ http://admin.pixnivo.app               /admin.html                              
 
 # Netlify Clean URL Rewrites for PIXNIVO
 /pdf-tools                             /pdf-tools.html                          200
+/photo-editor                          /photo-editor.html                       200
+/photo-studio                          /photo-editor.html                       200
 /ai-ocr                                /ai-ocr.html                             200
 /ocr                                   /ai-ocr.html                             200
 # AIDC Studio (Automatic Identification & Data Capture) & Barcode Redirection
