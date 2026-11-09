@@ -503,3 +503,4 @@
   window.PixnivoStudio.ToolManager = ToolManager;
 
 })(window);
+
