@@ -166,3 +166,52 @@ class SecurityService:
         out_buf = io.BytesIO()
         writer.write(out_buf)
         return out_buf.getvalue()
+
+    @staticmethod
+    def protect_pdf(pdf_bytes: bytes, password: str) -> bytes:
+        """
+        Encrypts PDF with standard AES encryption.
+        Requires password to open.
+        """
+        if not PdfReader or not PdfWriter:
+            raise RuntimeError("pypdf is required")
+        if not password or not password.strip():
+            raise ValueError("A non-empty password is required to protect the PDF.")
+
+        reader = PdfReader(io.BytesIO(pdf_bytes))
+        writer = PdfWriter()
+        for page in reader.pages:
+            writer.add_page(page)
+
+        writer.encrypt(user_password=password.strip(), owner_password=password.strip())
+        out_buf = io.BytesIO()
+        writer.write(out_buf)
+        return out_buf.getvalue()
+
+    @staticmethod
+    def unlock_pdf(pdf_bytes: bytes, password: str = "") -> bytes:
+        """
+        Decrypts a password-protected PDF.
+        If encrypted, attempts decryption with provided password.
+        Returns clean unencrypted PDF bytes.
+        """
+        if not PdfReader or not PdfWriter:
+            raise RuntimeError("pypdf is required")
+
+        reader = PdfReader(io.BytesIO(pdf_bytes))
+        if reader.is_encrypted:
+            # Try provided password or empty string
+            success = reader.decrypt(password.strip())
+            if not success and password:
+                success = reader.decrypt(password)
+            if not success:
+                raise ValueError("Incorrect password. Unable to unlock this PDF.")
+
+        writer = PdfWriter()
+        for page in reader.pages:
+            writer.add_page(page)
+
+        out_buf = io.BytesIO()
+        writer.write(out_buf)
+        return out_buf.getvalue()
+

@@ -675,6 +675,16 @@
     });
   }
 
+  function escapeHtml(str) {
+    if (str == null) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initChrome);
   else initChrome();
 
@@ -684,6 +694,7 @@
     toast,
     formatBytes,
     baseName,
+    escapeHtml,
     downloadBlob,
     canvasToBlob,
     loadScript,

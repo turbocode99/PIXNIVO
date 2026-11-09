@@ -17,7 +17,6 @@ copy its values into scripts, tests or commit messages.
 | `ADMIN_PASSWORD` | first run only | Used only when the admin credentials file does not exist yet. Creates the admin account with this password. Remove it after the first login. |
 | `ADMIN_USERNAME` | no | Admin login name for a newly created account. Default `admin@pixnivo.app`. |
 | `ADMIN_AUTH_FILE` | no | Path of the admin credentials file. Default: `data/auth.json` next to `main.py`, which is `/opt/pixnivo-backend/data/auth.json` on the server. |
-| `AGENTROUTER_API_KEY` | no | API key for the logo generator proxy, if used. |
 
 Create the file as root. Generate a fresh secret on the server; never reuse a value that has been in git:
 

@@ -268,3 +268,108 @@ async def translate_pdf_endpoint(
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"PDF Translation failed: {str(e)}")
 
+
+# ==============================================================================
+# MERGE, SPLIT, PROTECT & UNLOCK ENDPOINTS
+# ==============================================================================
+
+@router.post("/protect")
+async def protect_pdf_endpoint(file: UploadFile = File(...), password: str = Form(...)):
+    """Encrypts uploaded PDF with password using AES."""
+    try:
+        content = await file.read()
+        enc_bytes = SecurityService.protect_pdf(content, password)
+        base_name = os.path.splitext(file.filename or "document")[0]
+        return Response(
+            content=enc_bytes,
+            media_type="application/pdf",
+            headers={"Content-Disposition": f'attachment; filename="{base_name}-protected.pdf"'}
+        )
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"PDF Protection failed: {str(e)}")
+
+
+@router.post("/unlock")
+async def unlock_pdf_endpoint(file: UploadFile = File(...), password: str = Form("")):
+    """Decrypts password-protected PDF and outputs clean unencrypted PDF."""
+    try:
+        content = await file.read()
+        dec_bytes = SecurityService.unlock_pdf(content, password)
+        base_name = os.path.splitext(file.filename or "document")[0]
+        return Response(
+            content=dec_bytes,
+            media_type="application/pdf",
+            headers={"Content-Disposition": f'attachment; filename="{base_name}-unlocked.pdf"'}
+        )
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"PDF Unlock failed: {str(e)}")
+
+
+@router.post("/merge")
+async def merge_pdfs_endpoint(files: List[UploadFile] = File(...)):
+    """Merges multiple uploaded PDF files into a single document."""
+    try:
+        byte_list = []
+        for f in files:
+            byte_list.append(await f.read())
+        merged_bytes = AdvancedService.merge_pdfs(byte_list)
+        return Response(
+            content=merged_bytes,
+            media_type="application/pdf",
+            headers={"Content-Disposition": 'attachment; filename="merged-pixnivo.pdf"'}
+        )
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"PDF Merge failed: {str(e)}")
+
+
+@router.post("/split")
+async def split_pdf_endpoint(
+    file: UploadFile = File(...),
+    pages: str = Form(""),
+    as_zip: bool = Form(False)
+):
+    """
+    Splits PDF. If pages is empty, splits all pages into a ZIP.
+    If pages is specified and as_zip is True, outputs separate PDFs inside ZIP.
+    If pages is specified and as_zip is False, extracts pages into single PDF.
+    """
+    try:
+        content = await file.read()
+        base_name = os.path.splitext(file.filename or "document")[0]
+
+        indices = []
+        if pages.strip():
+            for part in pages.split(","):
+                p = part.strip()
+                if "-" in p:
+                    sub = p.split("-")
+                    s = int(sub[0].strip())
+                    e = int(sub[1].strip())
+                    if s > e:
+                        s, e = e, s
+                    for k in range(s, e + 1):
+                        if (k - 1) not in indices:
+                            indices.push(k - 1) if hasattr(indices, 'push') else indices.append(k - 1)
+                else:
+                    k = int(p)
+                    if (k - 1) not in indices:
+                        indices.append(k - 1)
+
+        if not pages.strip() or as_zip:
+            zip_bytes = AdvancedService.split_pdf_to_zip(content, indices if indices else None)
+            return Response(
+                content=zip_bytes,
+                media_type="application/zip",
+                headers={"Content-Disposition": f'attachment; filename="{base_name}-split.zip"'}
+            )
+        else:
+            pdf_bytes = AdvancedService.split_pdf(content, indices)
+            return Response(
+                content=pdf_bytes,
+                media_type="application/pdf",
+                headers={"Content-Disposition": f'attachment; filename="{base_name}-extracted.pdf"'}
+            )
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"PDF Split failed: {str(e)}")
+
+

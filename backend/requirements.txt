@@ -10,3 +10,6 @@ pillow-heif
 python-docx
 openpyxl
 reportlab
+pypdf
+python-pptx
+

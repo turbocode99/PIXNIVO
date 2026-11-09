@@ -293,3 +293,95 @@ class AdvancedService:
             "pages_translated": len(extracted_pages),
             "pdf_bytes": pdf_bytes_out
         }
+
+    @staticmethod
+    def merge_pdfs(pdf_bytes_list: List[bytes]) -> bytes:
+        """Merges multiple PDF byte arrays into a single combined document."""
+        if not PdfReader or not PdfWriter:
+            raise RuntimeError("pypdf is required")
+        if not pdf_bytes_list:
+            raise ValueError("No PDF files provided for merge.")
+
+        writer = PdfWriter()
+        total_pages = 0
+        for b in pdf_bytes_list:
+            reader = PdfReader(io.BytesIO(b))
+            if reader.is_encrypted:
+                try:
+                    reader.decrypt("")
+                except Exception:
+                    pass
+            for page in reader.pages:
+                writer.add_page(page)
+                total_pages += 1
+
+        if total_pages == 0:
+            raise ValueError("All uploaded documents were empty or unreadable.")
+
+        writer.add_metadata({
+            "/Producer": "Pixnivo PDF Merge Core",
+            "/Title": "Merged Document"
+        })
+        out = io.BytesIO()
+        writer.write(out)
+        return out.getvalue()
+
+    @staticmethod
+    def split_pdf(pdf_bytes: bytes, page_indices: List[int]) -> bytes:
+        """Extracts specified page indices (0-based) into a new single PDF."""
+        if not PdfReader or not PdfWriter:
+            raise RuntimeError("pypdf is required")
+        reader = PdfReader(io.BytesIO(pdf_bytes))
+        if reader.is_encrypted:
+            try:
+                reader.decrypt("")
+            except Exception:
+                pass
+
+        writer = PdfWriter()
+        num_pages = len(reader.pages)
+        added = 0
+        for idx in page_indices:
+            if 0 <= idx < num_pages:
+                writer.add_page(reader.pages[idx])
+                added += 1
+
+        if added == 0:
+            raise ValueError("No valid pages selected for extraction.")
+
+        writer.add_metadata({
+            "/Producer": "Pixnivo PDF Split Core",
+            "/Title": "Split Document"
+        })
+        out = io.BytesIO()
+        writer.write(out)
+        return out.getvalue()
+
+    @staticmethod
+    def split_pdf_to_zip(pdf_bytes: bytes, page_indices: Optional[List[int]] = None) -> bytes:
+        """Splits PDF pages into separate individual PDF files packaged inside a ZIP archive."""
+        import zipfile
+        if not PdfReader or not PdfWriter:
+            raise RuntimeError("pypdf is required")
+        reader = PdfReader(io.BytesIO(pdf_bytes))
+        if reader.is_encrypted:
+            try:
+                reader.decrypt("")
+            except Exception:
+                pass
+
+        num_pages = len(reader.pages)
+        indices = page_indices if page_indices is not None else list(range(num_pages))
+
+        zip_buf = io.BytesIO()
+        with zipfile.ZipFile(zip_buf, "w", zipfile.ZIP_DEFLATED) as zf:
+            for idx in indices:
+                if 0 <= idx < num_pages:
+                    w = PdfWriter()
+                    w.add_page(reader.pages[idx])
+                    p_buf = io.BytesIO()
+                    w.write(p_buf)
+                    zf.writestr(f"page-{idx + 1}.pdf", p_buf.getvalue())
+
+        return zip_buf.getvalue()
+

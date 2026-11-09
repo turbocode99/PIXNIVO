@@ -51,4 +51,4 @@ It writes the systemd unit with `--port 8000` but only patches nginx's `/api/` p
 
 ## tests/
 
-Node smoke tests for the logo-generator ES modules, run from the repo root: `for f in tests/*.js; do node "$f" || break; done`
+Automated end-to-end and integration test suites run from repo root: `node tests/test_all_32_tools.js`

@@ -19,6 +19,7 @@ sudo chmod -R 777 /var/www/html/assets/uploads
 sudo cp /var/www/html/backend/main.py /var/www/html/backend/ocr_worker.py /opt/pixnivo-backend/
 sudo cp /var/www/html/backend/requirements.txt /opt/pixnivo-backend/
 sudo cp -r /var/www/html/backend/aidc /opt/pixnivo-backend/
+sudo cp -r /var/www/html/backend/pdf /opt/pixnivo-backend/
 sudo cp -r /var/www/html/backend/migrations /opt/pixnivo-backend/
 if [ ! -f /opt/pixnivo-backend/data/blogs.json ]; then
     sudo cp -r /var/www/html/backend/data/* /opt/pixnivo-backend/data/ || true

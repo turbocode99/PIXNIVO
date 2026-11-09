@@ -112,6 +112,60 @@ class TestPdfSuite(unittest.TestCase):
         self.assertGreater(res["pages_translated"], 0)
         self.assertTrue(res["pdf_bytes"].startswith(b'%PDF-'))
 
+    def test_14_protect_and_unlock_pdf(self):
+        password = "SecurePassword2026!"
+        protected = SecurityService.protect_pdf(self.sample_pdf, password)
+        self.assertTrue(protected.startswith(b'%PDF-'))
+        from pypdf import PdfReader
+        r = PdfReader(io.BytesIO(protected))
+        self.assertTrue(r.is_encrypted)
+
+        # Unlocking with correct password
+        unlocked = SecurityService.unlock_pdf(protected, password)
+        self.assertTrue(unlocked.startswith(b'%PDF-'))
+        r2 = PdfReader(io.BytesIO(unlocked))
+        self.assertFalse(r2.is_encrypted)
+        self.assertGreaterEqual(len(r2.pages), 1)
+
+        # Wrong password raises error
+        with self.assertRaises(ValueError):
+            SecurityService.unlock_pdf(protected, "WrongPassword")
+
+    def test_15_merge_pdfs(self):
+        # Merge 2 copies of sample_pdf
+        merged = AdvancedService.merge_pdfs([self.sample_pdf, self.sample_pdf])
+        self.assertTrue(merged.startswith(b'%PDF-'))
+        from pypdf import PdfReader
+        r = PdfReader(io.BytesIO(merged))
+        self.assertEqual(len(r.pages), 2)
+
+    def test_16_split_pdf(self):
+        # First create a 3-page PDF
+        from reportlab.pdfgen import canvas
+        buf = io.BytesIO()
+        c = canvas.Canvas(buf, pagesize=letter)
+        for i in range(1, 4):
+            c.drawString(100, 700, f"Page {i}")
+            c.showPage()
+        c.save()
+        three_page = buf.getvalue()
+
+        # Extract page 2
+        split_one = AdvancedService.split_pdf(three_page, [1])
+        from pypdf import PdfReader
+        r = PdfReader(io.BytesIO(split_one))
+        self.assertEqual(len(r.pages), 1)
+
+        # Extract all pages to ZIP
+        zip_bytes = AdvancedService.split_pdf_to_zip(three_page)
+        import zipfile
+        zf = zipfile.ZipFile(io.BytesIO(zip_bytes))
+        self.assertEqual(len(zf.namelist()), 3)
+        self.assertIn("page-1.pdf", zf.namelist())
+        self.assertIn("page-2.pdf", zf.namelist())
+        self.assertIn("page-3.pdf", zf.namelist())
+
+
 
 if __name__ == '__main__':
     unittest.main()
