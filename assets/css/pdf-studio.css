@@ -3,6 +3,15 @@
    Follows Pixnivo Design System Tokens & Fluid Typography
    ========================================================================== */
 
+/* Page & Grid Container Alignment */
+.page-container {
+  width: 100%;
+  max-width: var(--container, 1200px);
+  margin: 0 auto;
+  padding: 0 var(--gutter, 24px);
+  box-sizing: border-box;
+}
+
 /* Category Navigation Filter */
 .pdf-cat-nav {
   display: flex;
@@ -10,117 +19,172 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  margin: 20px auto 28px;
-  max-width: 1000px;
+  margin: 22px auto 30px;
+  padding: 6px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  max-width: fit-content;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 .pdf-cat-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   height: 38px;
-  padding: 0 14px;
+  padding: 0 16px;
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-2);
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-full, 9999px);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 9999px;
   cursor: pointer;
   white-space: nowrap;
-  transition: all var(--transition-fast);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
 }
 
 .pdf-cat-btn:hover {
   color: var(--text);
-  border-color: var(--text-2);
   background: var(--surface);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
 .pdf-cat-btn.active {
   color: #ffffff;
-  background: var(--brand);
-  border-color: var(--brand);
-  box-shadow: 0 2px 8px rgba(207, 74, 12, 0.25);
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+  border-color: transparent;
+  box-shadow: 0 3px 12px rgba(207, 74, 12, 0.3);
 }
 
 .pdf-cat-btn .count {
   font-size: 0.72rem;
-  padding: 1px 6px;
+  font-weight: 700;
+  padding: 1px 7px;
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--surface-3);
+  color: var(--text-3);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .pdf-cat-btn.active .count {
   background: rgba(255, 255, 255, 0.25);
-  color: #fff;
+  color: #ffffff;
 }
 
 /* Search Bar */
 .pdf-search-wrapper {
-  max-width: 600px;
-  margin: 0 auto 30px;
+  max-width: 580px;
+  margin: 0 auto 34px;
   position: relative;
 }
 
 .pdf-search-input {
   width: 100%;
-  height: 46px;
-  padding: 0 16px 0 44px;
-  font-size: 0.95rem;
+  height: 48px;
+  padding: 0 20px 0 48px;
+  font-size: 0.94rem;
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-strong);
+  border-radius: 9999px;
   color: var(--text);
   outline: none;
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  transition: all 0.2s var(--ease-out);
   box-sizing: border-box;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 .pdf-search-input:focus {
-  border-color: var(--brand);
-  box-shadow: 0 0 0 3px rgba(207, 74, 12, 0.15);
+  border-color: var(--brand-vivid);
+  box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.12), 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
 .pdf-search-icon {
   position: absolute;
-  left: 14px;
+  left: 18px;
   top: 50%;
   transform: translateY(-50%);
   width: 18px;
   height: 18px;
   color: var(--text-3, #94a3b8);
   pointer-events: none;
+  transition: color 0.2s var(--ease-out);
 }
 
-/* Tool Catalog Grid */
+.pdf-search-wrapper:focus-within .pdf-search-icon {
+  color: var(--brand-vivid);
+}
+
+/* Tool Catalog Grid with Symmetrical Centered Alignment */
 .pdf-catalog-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-  margin-bottom: 40px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+  margin: 0 auto 48px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 1120px) {
+  .pdf-catalog-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 1119px) and (min-width: 840px) {
+  .pdf-catalog-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+}
+
+@media (max-width: 839px) and (min-width: 580px) {
+  .pdf-catalog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 579px) {
+  .pdf-catalog-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
 }
 
 .pdf-tool-card {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 20px;
+  gap: 12px;
+  padding: 22px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-lg, 14px);
   cursor: pointer;
   text-decoration: none;
   color: inherit;
-  transition: all var(--transition-fast);
+  transition: transform 0.22s var(--ease-out), border-color 0.22s var(--ease-out), box-shadow 0.22s var(--ease-out), background-color 0.22s var(--ease-out);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
 }
 
 .pdf-tool-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--brand);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  transform: translateY(-3px);
+  border-color: rgba(234, 88, 12, 0.45);
+  box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.08), 0 4px 10px -2px rgba(234, 88, 12, 0.06);
+}
+
+html[data-theme="dark"] .pdf-tool-card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+html[data-theme="dark"] .pdf-tool-card:hover {
+  border-color: rgba(251, 146, 60, 0.5);
+  box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.6), 0 4px 12px -2px rgba(234, 88, 12, 0.15);
 }
 
 .pdf-tool-card-head {
@@ -135,9 +199,15 @@
   justify-content: center;
   width: 44px;
   height: 44px;
-  border-radius: var(--radius-md);
+  border-radius: 12px;
   background: rgba(207, 74, 12, 0.08);
   color: var(--brand);
+  transition: transform 0.2s var(--ease-out);
+  flex-shrink: 0;
+}
+
+.pdf-tool-card:hover .pdf-tool-card-icon {
+  transform: scale(1.06);
 }
 
 .pdf-tool-card-icon svg {
@@ -145,23 +215,81 @@
   height: 22px;
 }
 
-.pdf-badge-tag {
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  padding: 2px 7px;
-  border-radius: 4px;
-  letter-spacing: 0.03em;
+/* Category Palettes */
+.pdf-tool-card[data-category="organize"] .pdf-tool-card-icon {
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.12), rgba(59, 130, 246, 0.12));
+  color: #0284c7;
 }
 
-.pdf-badge-device {
-  background: rgba(16, 185, 129, 0.12);
+.pdf-tool-card[data-category="security"] .pdf-tool-card-icon {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(20, 184, 166, 0.12));
   color: #059669;
 }
 
+.pdf-tool-card[data-category="convert"] .pdf-tool-card-icon {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.12), rgba(234, 88, 12, 0.14));
+  color: #ea580c;
+}
+
+.pdf-tool-card[data-category="edit"] .pdf-tool-card-icon {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(139, 92, 246, 0.12));
+  color: #7c3aed;
+}
+
+html[data-theme="dark"] .pdf-tool-card[data-category="organize"] .pdf-tool-card-icon {
+  color: #38bdf8;
+  background: rgba(14, 165, 233, 0.18);
+}
+
+html[data-theme="dark"] .pdf-tool-card[data-category="security"] .pdf-tool-card-icon {
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.18);
+}
+
+html[data-theme="dark"] .pdf-tool-card[data-category="convert"] .pdf-tool-card-icon {
+  color: #fb923c;
+  background: rgba(249, 115, 22, 0.18);
+}
+
+html[data-theme="dark"] .pdf-tool-card[data-category="edit"] .pdf-tool-card-icon {
+  color: #c084fc;
+  background: rgba(168, 85, 247, 0.18);
+}
+
+.pdf-badge-tag {
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.pdf-badge-device {
+  background: rgba(16, 185, 129, 0.09);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.22);
+}
+
 .pdf-badge-cloud {
-  background: rgba(59, 130, 246, 0.12);
-  color: #2563eb;
+  background: rgba(99, 102, 241, 0.09);
+  color: #4f46e5;
+  border: 1px solid rgba(99, 102, 241, 0.22);
+}
+
+html[data-theme="dark"] .pdf-badge-device {
+  background: rgba(16, 185, 129, 0.16);
+  color: #34d399;
+  border-color: rgba(52, 211, 153, 0.3);
+}
+
+html[data-theme="dark"] .pdf-badge-cloud {
+  background: rgba(99, 102, 241, 0.16);
+  color: #818cf8;
+  border-color: rgba(129, 140, 248, 0.3);
 }
 
 .pdf-tool-card h3 {
@@ -171,22 +299,26 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  letter-spacing: -0.015em;
+  color: var(--text);
 }
 
 .pdf-tool-card h3 .arrow {
   color: var(--text-3, #94a3b8);
-  transition: transform var(--transition-fast), color var(--transition-fast);
+  font-size: 1rem;
+  line-height: 1;
+  transition: transform 0.2s var(--ease-out), color 0.2s var(--ease-out);
 }
 
 .pdf-tool-card:hover h3 .arrow {
   transform: translateX(4px);
-  color: var(--brand);
+  color: var(--brand-vivid);
 }
 
 .pdf-tool-card p {
-  font-size: 0.84rem;
+  font-size: 0.85rem;
   color: var(--text-2);
-  line-height: 1.45;
+  line-height: 1.5;
   margin: 0;
   flex-grow: 1;
 }
