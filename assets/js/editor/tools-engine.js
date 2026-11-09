@@ -182,6 +182,8 @@
       const layer = doc.getActiveLayer();
       if (!layer || layer.locked) return;
 
+      const localPt = { x: pt.x - (layer.x || 0), y: pt.y - (layer.y || 0) };
+
       switch (this.activeTool) {
         // --- 1. Selection Tools ---
         case 'marquee_rect':
@@ -201,7 +203,7 @@
           break;
 
         case 'magic_wand':
-          this.selectMagicWand(layer.ctx, pt.x, pt.y, 32);
+          this.selectMagicWand(layer.ctx, Math.round(localPt.x), Math.round(localPt.y), 32);
           break;
 
         case 'object_selection':
@@ -215,34 +217,34 @@
         case 'pencil':
         case 'mixer_brush':
         case 'color_replace':
-          this.drawBrushDab(layer.ctx, pt, e.pressure || 0.5);
+          this.drawBrushDab(layer.ctx, localPt, e.pressure || 0.5);
           this.editor.render();
           break;
 
         case 'history_brush':
         case 'art_history_brush':
-          this.drawHistoryBrushDab(layer.ctx, pt);
+          this.drawHistoryBrushDab(layer.ctx, localPt);
           this.editor.render();
           break;
 
         case 'eraser':
         case 'bg_eraser':
-          this.eraseDab(layer.ctx, pt);
+          this.eraseDab(layer.ctx, localPt);
           this.editor.render();
           break;
 
         case 'magic_eraser':
-          this.floodErase(layer.ctx, pt.x, pt.y, 32);
+          this.floodErase(layer.ctx, Math.round(localPt.x), Math.round(localPt.y), 32);
           this.editor.render();
           break;
 
         // --- 3. Retouching Tools ---
         case 'clone':
           if (e.altKey) {
-            this.cloneSource = { x: pt.x, y: pt.y };
+            this.cloneSource = { x: localPt.x, y: localPt.y };
             this.editor.toast(`Clone source set at (${Math.round(pt.x)}, ${Math.round(pt.y)})`);
           } else if (this.cloneSource) {
-            this.drawCloneDab(layer.ctx, pt);
+            this.drawCloneDab(layer.ctx, localPt);
           } else {
             this.editor.toast('Alt+Click first to sample clone source point.', { type: 'warning' });
           }
@@ -251,7 +253,7 @@
         case 'heal':
         case 'healing_brush':
         case 'blemish_removal':
-          this.spotHealDab(layer.ctx, pt);
+          this.spotHealDab(layer.ctx, localPt);
           break;
 
         case 'patch_tool':
@@ -312,31 +314,34 @@
       const layer = doc.getActiveLayer();
       if (!layer) return;
 
+      const localPt = { x: pt.x - (layer.x || 0), y: pt.y - (layer.y || 0) };
+      const localLast = { x: this.lastPoint.x - (layer.x || 0), y: this.lastPoint.y - (layer.y || 0) };
+
       switch (this.activeTool) {
         // Brushes
         case 'brush':
         case 'pencil':
         case 'mixer_brush':
         case 'color_replace':
-          this.drawBrushStroke(layer.ctx, this.lastPoint, pt, e.pressure || 0.5);
+          this.drawBrushStroke(layer.ctx, localLast, localPt, e.pressure || 0.5);
           this.editor.render();
           break;
 
         case 'eraser':
         case 'bg_eraser':
-          this.eraseStroke(layer.ctx, this.lastPoint, pt);
+          this.eraseStroke(layer.ctx, localLast, localPt);
           this.editor.render();
           break;
 
         case 'clone':
           if (this.cloneSource && !e.altKey) {
-            this.drawCloneDab(layer.ctx, pt);
+            this.drawCloneDab(layer.ctx, localPt);
           }
           break;
 
         case 'heal':
         case 'blemish_removal':
-          this.spotHealDab(layer.ctx, pt);
+          this.spotHealDab(layer.ctx, localPt);
           break;
 
         case 'move':

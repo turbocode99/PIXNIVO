@@ -69,6 +69,8 @@
       // Expose globally
       window.PixnivoStudio.app = this;
       window.pixnivoEditor = this;
+      console.log('%c PixNivo Studio Pro v2.5 [Calibrated 0-px offset] active %c', 'background:#059669;color:#ffffff;font-weight:bold;padding:4px 8px;border-radius:4px;', '');
+      setTimeout(() => this.toast('PixNivo Studio Pro v2.5 (Calibrated) Active'), 300);
     }
 
     newDocument(width, height, name = 'Untitled-1', bgFill = '#ffffff') {
