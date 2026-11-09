@@ -268,6 +268,31 @@ html[data-theme="light"] {
   accent-color: var(--studio-active-tool);
 }
 
+.opt-pill-btn {
+  background: var(--studio-surface-2);
+  border: 1px solid var(--studio-border-strong);
+  color: var(--studio-text-2);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.opt-pill-btn:hover,
+.opt-pill-btn.active {
+  background: var(--studio-active-tool);
+  color: #ffffff;
+  border-color: var(--studio-active-tool);
+}
+
+.canvas-viewport-container.drag-over {
+  outline: 2px dashed var(--studio-active-tool);
+  outline-offset: -8px;
+  background: rgba(249, 115, 22, 0.05);
+}
+
 .opt-divider {
   width: 1px;
   height: 18px;
@@ -451,10 +476,7 @@ html[data-theme="light"] {
   right: 0;
   bottom: 0;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: default;
+  cursor: crosshair;
 }
 
 .canvas-viewport-container.panning {
@@ -466,7 +488,12 @@ html[data-theme="light"] {
 
 /* Checkered Background for Transparency */
 .canvas-artboard {
-  position: relative;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  flex-shrink: 0;
+  box-sizing: content-box;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
   background-image: 
     linear-gradient(45deg, #e2e8f0 25%, transparent 25%), 
@@ -476,8 +503,7 @@ html[data-theme="light"] {
   background-size: 16px 16px;
   background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
   background-color: #cbd5e1;
-  transition: transform 0.05s linear;
-  transform-origin: center center;
+  transition: none;
 }
 
 html[data-theme="dark"] .canvas-artboard {
