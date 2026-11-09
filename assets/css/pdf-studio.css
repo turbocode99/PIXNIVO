@@ -673,6 +673,56 @@ html[data-theme="dark"] .pdf-badge-cloud {
   touch-action: manipulation;
 }
 
+/* Ensure file lists for tools like Merge PDF and Images to PDF are visible when populated */
+.filelist {
+  display: flex !important;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.filelist:empty {
+  display: none !important;
+}
+
+/* Dropzone native clickable overlay pattern */
+.dropzone {
+  position: relative;
+  cursor: pointer;
+}
+
+.dropzone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 10;
+  display: block !important;
+}
+
+/* File selection badges across all tools */
+p.hint[id$="FileInfo"],
+.pdf-file-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: var(--radius-md, 8px);
+  background: var(--surface-2, rgba(207, 74, 12, 0.08));
+  border: 1px solid var(--border-strong, rgba(207, 74, 12, 0.25));
+  color: var(--text, #1e293b);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+p.hint[id$="FileInfo"][hidden] {
+  display: none !important;
+}
+
 .file-item {
   display: flex;
   align-items: center;

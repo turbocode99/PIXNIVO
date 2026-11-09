@@ -320,7 +320,9 @@
     if (!zone.hasAttribute('tabindex')) zone.setAttribute('tabindex', '0');
     if (!zone.hasAttribute('role')) zone.setAttribute('role', 'button');
 
-    const open = () => input.click();
+    const open = () => {
+      try { input.click(); } catch(e) {}
+    };
     zone.addEventListener('click', e => { if (e.target !== input) open(); });
     zone.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
@@ -334,13 +336,13 @@
       e.preventDefault();
       depth = 0;
       zone.classList.remove('drag');
-      const files = e.dataTransfer ? [...e.dataTransfer.files] : [];
+      const files = e.dataTransfer ? Array.from(e.dataTransfer.files) : [];
       if (files.length) onFiles(files);
     });
 
     input.addEventListener('change', () => {
-      const files = [...(input.files || [])];
-      input.value = '';
+      const files = Array.from(input.files || []);
+      try { input.value = ''; } catch(e) {}
       if (files.length) onFiles(files);
     });
   }

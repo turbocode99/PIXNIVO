@@ -69,7 +69,10 @@
   if (P && !P.escapeHtml) P.escapeHtml = escapeHtml;
 
   function isPdf(file) {
-    return file && (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'));
+    if (!file) return false;
+    const name = (file.name || '').toLowerCase();
+    const type = (file.type || '').toLowerCase();
+    return name.endsWith('.pdf') || type.includes('pdf');
   }
 
 
@@ -308,9 +311,14 @@
         listEl.innerHTML = '';
         if (files.length === 0) {
           goBtn.disabled = true;
+          listEl.classList.remove('active', 'on');
+          listEl.style.display = 'none';
           hideResult(res);
           return;
         }
+
+        listEl.classList.add('active', 'on');
+        listEl.style.display = 'flex';
 
         let totalPages = 0;
         files.forEach((item, idx) => {
@@ -2021,10 +2029,15 @@
         if (!listEl) return;
         listEl.innerHTML = '';
         if (images.length === 0) {
+          listEl.classList.remove('active', 'on');
+          listEl.style.display = 'none';
           if (goBtn) goBtn.disabled = true;
           hideResult(res);
           return;
         }
+
+        listEl.classList.add('active', 'on');
+        listEl.style.display = 'flex';
 
         images.forEach((imgFile, idx) => {
           const item = document.createElement('div');
